@@ -10,6 +10,15 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="if.codestyle" />
+    <None Include="hugo.relatorio" />
+    <None Include="Hugo.todo" />
+    <None Include="lista.assertivas" />
+    <None Include="nomenclatura.codestyle" />
+    <None Include="robert.relatorio" />
+    <None Include="Robert.todo" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3B4D0F77-1F54-4314-B2FB-4F5A8B755300}</ProjectGuid>
     <RootNamespace>Documentos</RootNamespace>
@@ -59,8 +68,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

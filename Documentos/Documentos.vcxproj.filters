@@ -1,17 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="TODO">
+      <UniqueIdentifier>{6eab1c2b-7984-4748-baca-9cfd0838d259}</UniqueIdentifier>
+      <Extensions>todo</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Assertivas">
+      <UniqueIdentifier>{ea9cbf9f-25ca-47c1-8dd2-6245ec8fb170}</UniqueIdentifier>
+      <Extensions>assertivas</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Relatorios">
+      <UniqueIdentifier>{a56a435b-4263-4915-9bfe-dddfaf46de0d}</UniqueIdentifier>
+      <Extensions>relatorio</Extensions>
     </Filter>
+    <Filter Include="Codestyle">
+      <UniqueIdentifier>{dba1af67-38f1-48d7-974f-3d4020315ceb}</UniqueIdentifier>
+      <Extensions>codestyle</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lista.assertivas">
+      <Filter>Assertivas</Filter>
+    </None>
+    <None Include="Hugo.todo">
+      <Filter>TODO</Filter>
+    </None>
+    <None Include="Robert.todo">
+      <Filter>TODO</Filter>
+    </None>
+    <None Include="hugo.relatorio">
+      <Filter>Relatorios</Filter>
+    </None>
+    <None Include="robert.relatorio">
+      <Filter>Relatorios</Filter>
+    </None>
+    <None Include="nomenclatura.codestyle">
+      <Filter>Codestyle</Filter>
+    </None>
+    <None Include="if.codestyle">
+      <Filter>Codestyle</Filter>
+    </None>
   </ItemGroup>
 </Project>
