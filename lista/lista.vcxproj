@@ -78,14 +78,14 @@
     <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\LISTA.C" />
-    <ClCompile Include="..\src\TESTLIS.C" />
+    <ClCompile Include="..\src\lista.c" />
+    <ClCompile Include="..\src\test_lis.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\LISTA.H" />
+    <ClInclude Include="..\src\lista.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\TesteLista.script" />
+    <None Include="..\src\teste_lista.script" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

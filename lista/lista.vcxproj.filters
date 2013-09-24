@@ -22,20 +22,20 @@
     <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\LISTA.C">
+    <ClCompile Include="..\src\test_lis.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\TESTLIS.C">
+    <ClCompile Include="..\src\lista.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\LISTA.H">
+    <ClInclude Include="..\src\lista.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\TesteLista.script">
+    <None Include="..\src\teste_lista.script">
       <Filter>Script Files</Filter>
     </None>
   </ItemGroup>
