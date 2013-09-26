@@ -37,7 +37,13 @@
     <None Include="nomenclatura.codestyle">
       <Filter>Codestyle</Filter>
     </None>
-    <None Include="if.codestyle">
+    <None Include="if_for_while.codestyle">
+      <Filter>Codestyle</Filter>
+    </None>
+    <None Include="struct.codestyle">
+      <Filter>Codestyle</Filter>
+    </None>
+    <None Include="documentacao.codestyle">
       <Filter>Codestyle</Filter>
     </None>
   </ItemGroup>
