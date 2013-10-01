@@ -32,7 +32,7 @@
 
    typedef struct tagElemLista {
 
-         char  valor ;
+         char * pValor ;
                /* valor contido no elemento */
 
          struct tagElemLista * pAnt ;
@@ -72,7 +72,7 @@
                                 tpElemLista  * pElem   ) ;
 
    static tpElemLista * CriarElemento( LIS_tppLista pLista ,
-                                       char    valor  ) ;
+                                       char * pValor ) ;
 
    static void LimparCabeca( LIS_tppLista pLista ) ;
 
@@ -155,7 +155,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoAntes( LIS_tppLista pLista ,
-                                           char  valor)
+                                           char * pValor)
    {
 
       tpElemLista * pElem ;
@@ -166,7 +166,7 @@
 
       /* Criar elemento a inerir antes */
 
-         pElem = CriarElemento( pLista , valor ) ;
+         pElem = CriarElemento( pLista , pValor ) ;
          if ( pElem == NULL )
          {
             return LIS_CondRetFaltouMemoria ;
@@ -205,7 +205,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
-                                          char  valor        )
+                                          char * pValor)
       
    {
 
@@ -217,7 +217,7 @@
 
       /* Criar elemento a inerir após */
 
-         pElem = CriarElemento( pLista , valor ) ;
+         pElem = CriarElemento( pLista , pValor ) ;
          if ( pElem == NULL )
          {
             return LIS_CondRetFaltouMemoria ;
@@ -304,7 +304,7 @@
 *  Função: LIS  &Obter o valor contido no elemento
 *  ****/
 
-   LIS_tpCondRet LIS_ObterValor(LIS_tppLista pLista, char* valor )
+   LIS_tpCondRet LIS_ObterValor(LIS_tppLista pLista, char ** ppValor )
    {
 
       #ifdef _DEBUG
@@ -316,7 +316,7 @@
 		  return LIS_CondRetListaVazia ;
       } /* if */
 
-	  *valor = pLista->pElemCorr->valor ;
+	  *ppValor = pLista->pElemCorr->pValor ;
 
 	  return LIS_CondRetOK ;
    } /* Fim função: LIS  &Obter o valor contido no elemento */
@@ -447,7 +447,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
-                                    char valor        )
+                                    char * pValor)
    {
 
       tpElemLista * pElem ;
@@ -465,7 +465,7 @@
             pElem != NULL ;
             pElem  = pElem->pProx )
       {
-         if ( pElem->valor == valor )
+         if ( *pElem->pValor == *pValor )
          {
             pLista->pElemCorr = pElem ;
             return LIS_CondRetOK ;
@@ -483,7 +483,7 @@
 ***********************************************************************/
 
    tpElemLista * CriarElemento( LIS_tppLista pLista ,
-                                char        valor  )
+                                char * pValor )
    {
       tpElemLista * pElem ;
 
@@ -493,7 +493,7 @@
          return NULL ;
       } /* if */
 
-      pElem->valor = valor ;
+      pElem->pValor = pValor ;
       pElem->pAnt   = NULL  ;
       pElem->pProx  = NULL  ;
 
@@ -513,7 +513,8 @@
    void LiberarElemento( LIS_tppLista   pLista ,
                          tpElemLista  * pElem   )
    {
-
+	   
+	  free( pElem->pValor ) ;
       free( pElem ) ;
 
       pLista->numElem-- ;

@@ -145,16 +145,19 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
          else if ( strcmp ( ComandoTeste , INS_ELEM_ANTES_CMD ) == 0 )
          {
             char dadoAInserir = 0;
+			char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
 
             numLidos = LER_LerParametros( "ici", 
 				&inxLista , &dadoAInserir, &CondRetEsp ) ;
+
+			*pDado = dadoAInserir;
 
             if ( ( numLidos != 3 ) || ( ! ValidarInxLista( inxLista , NAO_VAZIO ) ) )
             {
                return TST_CondRetParm ;
             } /* if */
    
-            CondRet = LIS_InserirElementoAntes( vtListas[ inxLista ] , dadoAInserir ) ;
+            CondRet = LIS_InserirElementoAntes( vtListas[ inxLista ] , pDado ) ;
 
             if ( CondRet != LIS_CondRetOK )
             {
@@ -170,10 +173,13 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
 
          else if ( strcmp ( ComandoTeste , INS_ELEM_APOS_CMD ) == 0 )
          {
-			char dadoAInserir;
+			char dadoAInserir = 0;
+			char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
 
             numLidos = LER_LerParametros( "ici" , 
 				  &inxLista, &dadoAInserir , &CondRetEsp ) ;
+
+			*pDado = dadoAInserir;
 
             if ( ( numLidos != 3 ) 
 				|| ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
@@ -181,7 +187,7 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
                return TST_CondRetParm ;
             } /* if */
 
-            CondRet = LIS_InserirElementoApos( vtListas [ inxLista ], dadoAInserir ) ;
+            CondRet = LIS_InserirElementoApos( vtListas [ inxLista ], pDado ) ;
 
             if ( CondRet != LIS_CondRetOK )
             {
@@ -217,7 +223,7 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
 
          else if ( strcmp ( ComandoTeste , OBTER_VALOR_CMD ) == 0 )
          {
-			char dadoObtido = 0;
+			char * pDadoObtido;
 			char dadoEsperado = 0;
 
             numLidos = LER_LerParametros("ici", 
@@ -228,14 +234,14 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
                return TST_CondRetParm ;
             } /* if */
 
-            CondRet = LIS_ObterValor( vtListas[inxLista] , &dadoObtido ) ;
+            CondRet = LIS_ObterValor( vtListas[inxLista] , &pDadoObtido ) ;
 
 			if( CondRet != TST_CondOK )
 			{
 				return CondRet;
 			}
 
-			return TST_CompararChar(dadoEsperado,dadoObtido,"Valor do elemento errado.");
+			return TST_CompararChar(dadoEsperado,*pDadoObtido,"Valor do elemento errado.");
 
          } /* fim ativa: Testar obter valor do elemento corrente */
 
@@ -333,7 +339,7 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
             } /* if */
 
             return TST_CompararInt( CondRetEsp ,
-                      LIS_ProcurarValor(vtListas[ inxLista ], dadoASerProcurado),
+                      LIS_ProcurarValor(vtListas[ inxLista ], &dadoASerProcurado),
                       "Condicao de retorno errada ao avancar" ) ;
 
          } /* fim ativa: LIS  &Avançar elemento */
