@@ -134,7 +134,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *
 *  $EP Parâmetros
 *     pLista - ponteiro para a lista onde deve ser inserido o elemento
-*     valor  - valor do novo elemento
+*     pValor  - ponteiro para valor do novo elemento
 *
 *  $FV Valor retornado
 *     LIS_CondRetOK
@@ -157,7 +157,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *  $EP Parâmetros
 *     Parâmetros
 *        pLista - ponteiro para a lista onde deve ser inserido o elemento
-*        valor  -  valor do novo elemento
+*        pValor  -  ponteiro para o valor do novo elemento
 *           
 *
 *  $FV Valor retornado
@@ -220,6 +220,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *
 *  $EP Parâmetros
 *     pLista - ponteiro para a lista a manipular
+*     ppValor - ponteiro para o ponteiro do valor
 *
 ***********************************************************************/
 
@@ -276,7 +277,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *
 *  $EP Parâmetros
 *     pLista  - ponteiro para a lista onde procura
-*     valor   - o valor procurado
+*     pValor   - ponteiro para o ponteiro do valor procurado
 *
 *  $FV Valor retornado
 *     LIS_CondRetOK  - se encontrou.
