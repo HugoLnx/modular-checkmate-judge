@@ -1,5 +1,5 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: LIS  Lista duplamente encadeada para o tipo char
+*  $MCI Módulo de implementação: LIS  Lista duplamente encadeada genérica
 *
 *  Arquivo gerado:              LISTA.c
 *  Letras identificadoras:      LIS
@@ -32,7 +32,7 @@
 
    typedef struct tagElemLista {
 
-         char * pValor ;
+         void * pValor ;
                /* valor contido no elemento */
 
          struct tagElemLista * pAnt ;
@@ -79,7 +79,7 @@
                                 tpElemLista  * pElem   ) ;
 
    static tpElemLista * CriarElemento( LIS_tppLista pLista ,
-                                       char * pValor ) ;
+                                       void * pValor ) ;
 
    static void LimparCabeca( LIS_tppLista pLista ) ;
 
@@ -167,7 +167,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoAntes( LIS_tppLista pLista ,
-                                           char * pValor)
+                                           void * pValor)
    {
 
       tpElemLista * pElem ;
@@ -217,7 +217,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
-                                          char * pValor)
+                                          void * pValor)
       
    {
 
@@ -316,7 +316,7 @@
 *  Função: LIS  &Obter o valor contido no elemento
 *  ****/
 
-   LIS_tpCondRet LIS_ObterValor(LIS_tppLista pLista, char ** ppValor )
+   LIS_tpCondRet LIS_ObterValor(LIS_tppLista pLista, void ** ppValor )
    {
 
       #ifdef _DEBUG
@@ -459,7 +459,7 @@
 *  ****/
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
-                                    char * pValor)
+                                    void * pValor)
    {
 
       tpElemLista * pElem ;
@@ -495,7 +495,7 @@
 ***********************************************************************/
 
    tpElemLista * CriarElemento( LIS_tppLista pLista ,
-                                char * pValor )
+                                void * pValor )
    {
       tpElemLista * pElem ;
 
@@ -548,5 +548,5 @@
 
    } /* Fim função: LIS  -Limpar a cabeça da lista */
 
-/********** Fim do módulo de implementação: LIS  Lista duplamente encadeada de char **********/
+/********** Fim do módulo de implementação: LIS  Lista duplamente encadeada genérica **********/
 

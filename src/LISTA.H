@@ -2,7 +2,7 @@
 #define LISTA_
 /***************************************************************************
 *
-*  $MCD Módulo de definição: LIS  Lista duplamente encadeada para o tipo char
+*  $MCD Módulo de definição: LIS  Lista duplamente encadeada genérica
 *
 *  Arquivo gerado:              LISTA.h
 *  Letras identificadoras:      LIS
@@ -15,7 +15,7 @@
 *     2       rc    15/set/2013 Implementação e adaptação do restante das funções para trabalhar somente com o tipo char.
 *
 *  $ED Descrição do módulo
-*     Implementa listas de char duplamente encadeadas com manipulação,
+*     Implementa listas genéricas duplamente encadeadas com manipulação,
 *	  ou seja, é possivel criar, inserir elementos na lista, antes,
 *     ou após além de esvaziar a lista, remover elementos, procurar elementos,
 *	  navegar para o inicio e final da lista e destruir a lista
@@ -23,7 +23,7 @@
 *     Podem existir n listas em operação simultaneamente.
 *     As listas possuem uma cabeça encapsulando o seu estado.
 *	  
-*     Cada lista armazena apenas dados do tipo char.
+*     Cada lista armazena dados genéricos.
 *     Cada elemento da lista não possui uma referencia e sim o próprio valor.
 ***************************************************************************/
  
@@ -75,7 +75,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *  $FC Função: LIS  &Criar lista
 *
 *  $ED Descrição da função
-*     Cria uma lista de char duplamente encadeada.
+*     Cria uma lista genérica duplamente encadeada.
 *
 *
 *  $FV Valor retornado
@@ -143,7 +143,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_InserirElementoAntes( LIS_tppLista pLista ,
-                                           char * pValor) ;
+                                           void * pValor) ;
 
 
 /***********************************************************************
@@ -167,7 +167,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
-                                          char * pValor);
+                                          void * pValor);
 
 
 /***********************************************************************
@@ -208,7 +208,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *
 ***********************************************************************/
 
-   LIS_tpCondRet LIS_ObterValor( LIS_tppLista pLista, char ** ppValor ) ;
+   LIS_tpCondRet LIS_ObterValor( LIS_tppLista pLista, void ** ppValor ) ;
 
 /***********************************************************************
 *
@@ -291,7 +291,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
-                                    char * pValor) ;
+                                    void * pValor) ;
 
 /***********************************************************************/
 #undef LISTA_EXT
