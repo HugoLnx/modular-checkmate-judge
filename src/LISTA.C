@@ -64,6 +64,9 @@
          int numElem ;
                /* Número de elementos da lista */
 
+		 void (*destruirValor)(void * pValor);
+			   /* Lógica responsável por destruir o valor da lista */
+
    } LIS_tpLista ;
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -83,7 +86,7 @@
 *  Função: LIS  &Criar lista
 *  ****/
 
-   LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista)
+   LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista, void (*destruirValor)(void * pValor) )
    {
 	  LIS_tpLista* pLista;
 
@@ -94,6 +97,8 @@
       } /* if */
 
       LimparCabeca(pLista);
+
+	  pLista->destruirValor = destruirValor;
 
 	  *ppLista = pLista;
 
@@ -514,7 +519,7 @@
                          tpElemLista  * pElem   )
    {
 	   
-	  free( pElem->pValor ) ;
+	  pLista->destruirValor( pElem->pValor ) ;
       free( pElem ) ;
 
       pLista->numElem-- ;

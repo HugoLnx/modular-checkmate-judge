@@ -107,7 +107,7 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
                return TST_CondRetParm ;
             } /* if */
 
-			CondRet = LIS_CriarLista( &ppLista );
+			CondRet = LIS_CriarLista( &ppLista , DestruirValor );
 
 			if( CondRet ==  LIS_CondRetOK )
 			{
