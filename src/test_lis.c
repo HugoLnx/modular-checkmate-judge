@@ -56,6 +56,8 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
 /***** Protótipos das funções encapuladas no módulo *****/
 
    static void DestruirValor( void * pValor ) ;
+   
+   static int CompararValores( void * pValor1 , void * pValor2 ) ;
 
    static int ValidarInxLista( int inxLista , int Modo ) ;
 
@@ -107,7 +109,7 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
                return TST_CondRetParm ;
             } /* if */
 
-			CondRet = LIS_CriarLista( &ppLista , DestruirValor );
+			CondRet = LIS_CriarLista( &ppLista , DestruirValor , CompararValores );
 
 			if( CondRet ==  LIS_CondRetOK )
 			{
@@ -364,6 +366,32 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
       free( pValor ) ;
 
    } /* Fim função: TLIS -Destruir valor */
+
+
+/***********************************************************************
+*
+*  $FC Função: TLIS -Comparar valores
+*
+***********************************************************************/
+
+   int CompararValores( void * pValor1 , void * pValor2 )
+   {
+	   char valor1 = (char) * (char *) pValor1;
+	   char valor2 = (char) * (char *) pValor2;
+
+      if ( valor1 > valor2 )
+	  {
+		  return 1;
+	  }
+	  
+      if ( valor1 < valor2 )
+	  {
+		  return -1;
+	  }
+
+	  return 0;
+
+   } /* Fim função: TLIS -Comparar valores */
 
 
 /***********************************************************************

@@ -67,6 +67,10 @@
 		 void (*destruirValor)(void * pValor);
 			   /* Lógica responsável por destruir o valor da lista */
 
+		 
+		 int (*compararValores)(void * pValor1 , void * pValor2);
+			   /* Lógica responsável por comparar dois valores */
+
    } LIS_tpLista ;
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -86,7 +90,9 @@
 *  Função: LIS  &Criar lista
 *  ****/
 
-   LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista, void (*destruirValor)(void * pValor) )
+   LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista,
+		void (*destruirValor)(void * pValor),
+		int (*compararValores)(void * pValor1, void * pValor2) )
    {
 	  LIS_tpLista* pLista;
 
@@ -99,6 +105,7 @@
       LimparCabeca(pLista);
 
 	  pLista->destruirValor = destruirValor;
+	  pLista->compararValores = compararValores;
 
 	  *ppLista = pLista;
 
@@ -470,7 +477,7 @@
             pElem != NULL ;
             pElem  = pElem->pProx )
       {
-         if ( *pElem->pValor == *pValor )
+         if ( pLista->compararValores(pElem->pValor, pValor) == 0 )
          {
             pLista->pElemCorr = pElem ;
             return LIS_CondRetOK ;
