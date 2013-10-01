@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="documentacao.codestyle" />
+    <None Include="grafo_direcionado.assertivas" />
     <None Include="if_for_while.codestyle" />
     <None Include="hugo.relatorio" />
     <None Include="Hugo.todo" />

@@ -46,5 +46,8 @@
     <None Include="documentacao.codestyle">
       <Filter>Codestyle</Filter>
     </None>
+    <None Include="grafo_direcionado.assertivas">
+      <Filter>Assertivas</Filter>
+    </None>
   </ItemGroup>
 </Project>
