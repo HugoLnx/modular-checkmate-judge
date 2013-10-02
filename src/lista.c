@@ -1,12 +1,13 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: LIS  Lista duplamente encadeada genérica
+*  Módulo de implementação: LIS  Lista duplamente encadeada genérica
 *
-*  Arquivo gerado:              LISTA.c
+*  Arquivo gerado:              lista.c
 *  Letras identificadoras:      LIS
 *
-*	Autor: rc - Robert Correa
+*	Autores:
+*     - rc: Robert Correa
 *
-*  $HA Histórico de evolução:
+*  Histórico de evolução:
 *     Versão  Autor    Data     Observações
 *     1       rc    12/set/2013 Adaptação da função CriarLista para ser testavel e inserção de somente valores char.
 *     2       rc    15/set/2013 Implementação e adaptação do restante das funções para trabalhar somente com o tipo char.
@@ -24,10 +25,7 @@
 #undef LISTA_OWN
 
 /***********************************************************************
-*
-*  $TC Tipo de dados: LIS Elemento da lista
-*
-*
+*  Tipo de dados: LIS Elemento da lista
 ***********************************************************************/
 
    typedef struct estElemLista {
@@ -44,10 +42,7 @@
    } tpElemLista ;
 
 /***********************************************************************
-*
-*  $TC Tipo de dados: LIS Descritor da cabeça de lista
-*
-*
+*  Tipo de dados: LIS Descritor da cabeça de lista
 ***********************************************************************/
 
    typedef struct LIS_estLista {
@@ -87,7 +82,7 @@
 
 /***************************************************************************
 *
-*  Função: LIS  &Criar lista
+*  Função: LIS Criar lista
 *  ****/
 
    LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista,
@@ -111,11 +106,11 @@
 
 	  return LIS_CondRetOK;
 
-   } /* Fim função: LIS  &Criar lista */
+   }
 
 /***************************************************************************
 *
-*  Função: LIS  &Destruir lista
+*  Função: LIS Destruir lista
 *  ****/
 
    LIS_tpCondRet LIS_DestruirLista( LIS_tppLista pLista )
@@ -131,11 +126,11 @@
 
 	  return LIS_CondRetOK;
 
-   } /* Fim função: LIS  &Destruir lista */
+   }
 
 /***************************************************************************
 *
-*  Função: LIS  &Esvaziar lista
+*  Função: LIS Esvaziar lista
 *  ****/
 
    LIS_tpCondRet LIS_EsvaziarLista( LIS_tppLista pLista )
@@ -160,10 +155,12 @@
 
 	  return LIS_CondRetOK;
 
-   } /* Fim função: LIS  &Esvaziar lista */
+   }
+
+
 /***************************************************************************
 *
-*  Função: LIS  &Inserir elemento antes
+*  Função: LIS Inserir elemento antes
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoAntes( LIS_tppLista pLista ,
@@ -209,11 +206,12 @@
 
          return LIS_CondRetOK ;
 
-   } /* Fim função: LIS  &Inserir elemento antes */
+   }
+
 
 /***************************************************************************
 *
-*  Função: LIS  &Inserir elemento após
+*  Função: LIS Inserir elemento após
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
@@ -261,11 +259,12 @@
                   
          return LIS_CondRetOK ;
 
-   } /* Fim função: LIS  &Inserir elemento após */
+   }
+
 
 /***************************************************************************
 *
-*  Função: LIS  &Excluir elemento
+*  Função: LIS Excluir elemento
 *  ****/
 
    LIS_tpCondRet LIS_ExcluirElemento( LIS_tppLista pLista )
@@ -309,11 +308,11 @@
 
       return LIS_CondRetOK ;
 
-   } /* Fim função: LIS  &Excluir elemento */
+   }
 
 /***************************************************************************
 *
-*  Função: LIS  &Obter o valor contido no elemento
+*  Função: LIS Obter o valor contido no elemento
 *  ****/
 
    LIS_tpCondRet LIS_ObterValor(LIS_tppLista pLista, void ** ppValor )
@@ -331,11 +330,11 @@
 	  *ppValor = pLista->pElemCorr->pValor ;
 
 	  return LIS_CondRetOK ;
-   } /* Fim função: LIS  &Obter o valor contido no elemento */
+   }
 
 /***************************************************************************
 *
-*  Função: LIS  &Ir para o elemento inicial
+*  Função: LIS Ir para o elemento inicial
 *  ****/
 
    LIS_tpCondRet LIS_IrInicioLista( LIS_tppLista pLista )
@@ -349,11 +348,11 @@
 
 	  return LIS_CondRetOK ;
 
-   } /* Fim função: LIS  &Ir para o elemento inicial */
+   }
 
-   /***************************************************************************
+/***************************************************************************
 *
-*  Função: LIS  &Ir para o elemento final
+*  Função: LIS Ir para o elemento final
 *  ****/
 
    LIS_tpCondRet LIS_IrFinalLista( LIS_tppLista pLista )
@@ -369,9 +368,9 @@
 
    } /* Fim função: LIS  &Ir para o elemento final */
 
-   /***************************************************************************
+/***************************************************************************
 *
-*  Função: LIS  &Avançar elemento
+*  Função: LIS Avançar elemento
 *  ****/
 
    LIS_tpCondRet LIS_AvancarElementoCorrente( LIS_tppLista pLista ,
@@ -451,11 +450,11 @@
 
          return LIS_CondRetOK ;
 
-   } /* Fim função: LIS  &Avançar elemento */
+   }
 
-   /***************************************************************************
+/***************************************************************************
 *
-*  Função: LIS  &Procurar elemento contendo valor
+*  Função: LIS Procurar elemento contendo 
 *  ****/
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
@@ -486,11 +485,17 @@
 
       return LIS_CondRetNaoAchou ;
 
-   } /* Fim função: LIS  &Procurar elemento contendo valor */
+   }
+
+
+/*****  Código das funções encapsuladas no módulo  *****/
 
 /***********************************************************************
 *
-*  $FC Função: LIS  -Criar o elemento
+*  Função: LIS Criar o elemento
+*
+*  Descrição:
+*    <descrição da função>
 *
 ***********************************************************************/
 
@@ -513,12 +518,14 @@
 
       return pElem ;
 
-   } /* Fim função: LIS  -Criar o elemento */
+   }
 
 /***********************************************************************
 *
-*  $FC Função: LIS  -Liberar elemento da lista
+*  Função: LIS Liberar elemento da lista
 *
+*  Descrição:
+*    <descrição da função>
 *
 ***********************************************************************/
 
@@ -531,10 +538,14 @@
 
       pLista->numElem-- ;
 
-   } /* Fim função: LIS  -Liberar elemento da lista */
+   }
+
 /***********************************************************************
 *
-*  $FC Função: LIS  -Limpar a cabeça da lista
+*  Função: LIS Limpar a cabeça da lista
+*
+*  Descrição:
+*    <descrição da função>
 *
 ***********************************************************************/
 
@@ -546,7 +557,6 @@
       pLista->pElemCorr    = NULL ;
       pLista->numElem      = 0 ;
 
-   } /* Fim função: LIS  -Limpar a cabeça da lista */
+   }
 
-/********** Fim do módulo de implementação: LIS  Lista duplamente encadeada genérica **********/
-
+/********** Fim do módulo de implementação: LIS Lista duplamente encadeada genérica **********/
