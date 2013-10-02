@@ -40,7 +40,7 @@
 
 /* Tipo referência para uma lista */
 
-typedef struct LIS_estLista * LIS_tppLista ;
+typedef struct LIS_stLista * LIS_tppLista ;
 
 
 /***********************************************************************

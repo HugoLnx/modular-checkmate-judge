@@ -28,15 +28,15 @@
 *  Tipo de dados: LIS Elemento da lista
 ***********************************************************************/
 
-   typedef struct estElemLista {
+   typedef struct stElemLista {
 
          void * pValor ;
                /* valor contido no elemento */
 
-         struct estElemLista * pAnt ;
+         struct stElemLista * pAnt ;
                /* Ponteiro para o elemento predecessor */
 
-         struct estElemLista * pProx ;
+         struct stElemLista * pProx ;
                /* Ponteiro para o elemento sucessor */
 
    } tpElemLista ;
@@ -45,7 +45,7 @@
 *  Tipo de dados: LIS Descritor da cabeça de lista
 ***********************************************************************/
 
-   typedef struct LIS_estLista {
+   typedef struct LIS_stLista {
 
          tpElemLista * pOrigemLista ;
                /* Ponteiro para a origem da lista */

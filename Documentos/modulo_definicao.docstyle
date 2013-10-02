@@ -82,6 +82,15 @@ typedef <estrutura exportada> * <nome do tipo> ;
 *  Assertivas de saida
 *     <assertivas de saida>
 *
+*  Requisitos
+*     <lista de requisitos>
+*
+*  Hipóteses
+*     <lista de hipóteses>
+*
+*  Restrições
+*     <lista de restrições>
+*
 ***********************************************************************/
 
 
