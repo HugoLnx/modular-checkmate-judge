@@ -11,12 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="documentacao.codestyle" />
+    <None Include="modulo_definicao.docstyle" />
     <None Include="grafo_direcionado.assertivas" />
     <None Include="if_for_while.codestyle" />
     <None Include="hugo.relatorio" />
     <None Include="Hugo.todo" />
     <None Include="lista.assertivas" />
+    <None Include="modulo_implementacao.docstyle" />
     <None Include="nomenclatura.codestyle" />
     <None Include="robert.relatorio" />
     <None Include="Robert.todo" />

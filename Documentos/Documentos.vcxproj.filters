@@ -17,6 +17,10 @@
       <UniqueIdentifier>{dba1af67-38f1-48d7-974f-3d4020315ceb}</UniqueIdentifier>
       <Extensions>codestyle</Extensions>
     </Filter>
+    <Filter Include="Docstyle">
+      <UniqueIdentifier>{88184510-4399-47a5-8289-5f98c32317c1}</UniqueIdentifier>
+      <Extensions>docstyle</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="lista.assertivas">
@@ -43,11 +47,14 @@
     <None Include="struct.codestyle">
       <Filter>Codestyle</Filter>
     </None>
-    <None Include="documentacao.codestyle">
-      <Filter>Codestyle</Filter>
-    </None>
     <None Include="grafo_direcionado.assertivas">
       <Filter>Assertivas</Filter>
+    </None>
+    <None Include="modulo_definicao.docstyle">
+      <Filter>Docstyle</Filter>
+    </None>
+    <None Include="modulo_implementacao.docstyle">
+      <Filter>Docstyle</Filter>
     </None>
   </ItemGroup>
 </Project>
