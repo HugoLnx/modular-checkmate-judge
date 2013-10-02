@@ -2,19 +2,22 @@
 #define LISTA_
 /***************************************************************************
 *
-*  $MCD Módulo de definição: LIS  Lista duplamente encadeada genérica
+*  Módulo de definição: LIS  Lista duplamente encadeada genérica
 *
-*  Arquivo gerado:              LISTA.h
+*  Arquivo gerado:              lista.h
 *  Letras identificadoras:      LIS
 *
-*	Autor: rc - Robert Correa
+*	Autores:
+*     - rc: Robert Correa
+*     - hg: Hugo Roque
 *
-*  $HA Histórico de evolução:
+*  Histórico de evolução:
 *     Versão  Autor    Data     Observações
 *     1       rc    12/set/2013 Adaptação da função CriarLista para ser testavel e inserção de somente valores char.
 *     2       rc    15/set/2013 Implementação e adaptação do restante das funções para trabalhar somente com o tipo char.
+*     3       hg    10/out/2013 Adaptação do módulo para trabalhar com uma lista cujos valores terão um tipo genérico.
 *
-*  $ED Descrição do módulo
+*  Descrição do módulo
 *     Implementa listas genéricas duplamente encadeadas com manipulação,
 *	  ou seja, é possivel criar, inserir elementos na lista, antes,
 *     ou após além de esvaziar a lista, remover elementos, procurar elementos,
@@ -42,10 +45,10 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: LIS Condições de retorno
+*  Tipo de dados: LIS Condições de retorno
 *
 *
-*  $ED Descrição do tipo
+*  Descrição do tipo
 *     Condições de retorno das funções da lista
 *
 ***********************************************************************/
@@ -72,13 +75,13 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Criar lista
+*  Função: LIS Criar lista
 *
-*  $ED Descrição da função
+*  Descrição
 *     Cria uma lista genérica duplamente encadeada.
 *
 *
-*  $FV Valor retornado
+*  Retorno
 *     Se executou corretamente retorna o ponteiro para a lista.
 *     Este ponteiro será utilizado pelas funções que manipulem esta lista.
 *
@@ -94,17 +97,23 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Destruir lista
+*  Função: LIS Destruir lista
 *
-*  $ED Descrição da função
+*  Descrição
 *     Destrói a lista fornecida.
 *     O parâmetro ponteiro para a lista não é modificado.
 *     Se ocorrer algum erro durante a destruição, a lista resultará
 *     estruturalmente incorreta.
 *     OBS. não existe previsão para possíveis falhas de execução.
 *
-*  $FV Valor retornado
+*  Retorno
 *     LIS_CondRetOK    - destruiu sem problemas
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -112,13 +121,19 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Esvaziar lista
+*  Função: LIS Esvaziar lista
 *
-*  $ED Descrição da função
+*  Descrição
 *     Elimina todos os elementos, sem contudo eliminar a lista
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista - ponteiro para a lista a ser esvaziada
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -126,19 +141,25 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Inserir elemento antes
+*  Função: LIS Inserir elemento antes
 *
-*  $ED Descrição da função
+*  Descrição
 *     Insere novo elemento antes do elemento corrente.
 *     Caso a lista esteja vazia, insere o primeiro elemento da lista.
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista - ponteiro para a lista onde deve ser inserido o elemento
 *     pValor  - ponteiro para valor do novo elemento
 *
-*  $FV Valor retornado
+*  Retorno
 *     LIS_CondRetOK
 *     LIS_CondRetFaltouMemoria
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -148,21 +169,26 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Inserir elemento após
+*  Função: LIS  Inserir elemento após
 *
-*  $ED Descrição da função
+*  Descrição da função
 *     Insere novo elemento após o elemento corrente.
 *     Caso a lista esteja vazia, insere o primeiro elemento da lista.
 *
-*  $EP Parâmetros
-*     Parâmetros
-*        pLista - ponteiro para a lista onde deve ser inserido o elemento
-*        pValor  -  ponteiro para o valor do novo elemento
+*  Parâmetros
+*    pLista - ponteiro para a lista onde deve ser inserido o elemento
+*    pValor  -  ponteiro para o valor do novo elemento
 *           
 *
-*  $FV Valor retornado
+*  Retorno
 *        LIS_CondRetOK
 *        LIS_CondRetFaltouMemoria
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -172,20 +198,26 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Excluir elemento
+*  Função: LIS  Excluir elemento
 *
-*  $ED Descrição da função
+*  Descrição
 *     Exclui o elemento corrente da lista dada.
 *     Se existir o elemento à esquerda do corrente será o novo corrente.
 *     Se não existir e existir o elemento à direita, este se tornará corrente.
 *     Se este também não existir a lista tornou-se vazia.
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista    - ponteiro para a lista na qual deve excluir.
 *
-*  $FV Valor retornado
+*  Retorno
 *     LIS_CondRetOK         - se o elemento foi excluido
 *     LIS_CondRetListaVazia - se a lista estiver vazia
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -193,18 +225,24 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Obter o valor contido no elemento
+*  Função: LIS Obter o valor contido no elemento
 *
-*  $ED Descrição da função
+*  Descrição
 *     Obtem o valor contido no elemento corrente da lista
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista - ponteiro para a lista de onde se quer o valor
 *     pValor - ponteiro que terá o valor obtido.
 *
-*  $FV Valor retornado
+*  Retorno
 *     CondRetOK         - se o elemento foi obtido
 *	  CondRetListaVazia - se a lista estiver vazia
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -212,15 +250,21 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Ir para o elemento inicial
+*  Função: LIS Ir para o elemento inicial
 *
-*  $ED Descrição da função
+*  Descrição
 *     Torna corrente o primeiro elemento da lista.
 *     Faz nada se a lista está vazia.
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista - ponteiro para a lista a manipular
 *     ppValor - ponteiro para o ponteiro do valor
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -228,14 +272,20 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Ir para o elemento final
+*  Função: LIS Ir para o elemento final
 *
-*  $ED Descrição da função
+*  Descrição
 *     Torna corrente o elemento final da lista.
 *     Faz nada se a lista está vazia.
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista - ponteiro para a lista a manipular
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -243,9 +293,9 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
    /***********************************************************************
 *
-*  $FC Função: LIS  &Avançar elemento
+*  Função: LIS Avançar elemento
 *
-*  $ED Descrição da função
+*  Descrição
 *     Avança o elemento corrente numElem elementos na lista
 *     Se numElem for positivo avança em direção ao final
 *     Se numElem for negativo avança em direção ao início
@@ -253,15 +303,21 @@ typedef struct LIS_estLista * LIS_tppLista ;
 *               direção desejada
 *     Se numElem for zero somente verifica se a lista está vazia
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista  - ponteiro para a lista a ser manipulada
 *     numElem - o número de elementos a andar
 *
-*  $FV Valor retornado
+*  Retorno
 *     CondRetOK         - se numElem elementos tiverem sido andados
 *     CondRetFimLista   - se encontrou o fim da lista antes de andar numElem
 *                         elementos
 *     CondRetListaVazia - se a lista está vazia
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
@@ -270,16 +326,16 @@ typedef struct LIS_estLista * LIS_tppLista ;
 
 /***********************************************************************
 *
-*  $FC Função: LIS  &Procurar elemento contendo valor
+*  Função: LIS Procurar elemento contendo valor
 *
-*  $ED Descrição da função
+*  Descrição
 *     Procura o elemento que referencia o valor dado.
 *
-*  $EP Parâmetros
+*  Parâmetros
 *     pLista  - ponteiro para a lista onde procura
 *     pValor   - ponteiro para o ponteiro do valor procurado
 *
-*  $FV Valor retornado
+*  Retorno
 *     LIS_CondRetOK  - se encontrou.
 *                      O elemento corrente é o primeiro elemento do
 *                      elemento corrente inclusive para o fim da lista
@@ -288,6 +344,12 @@ typedef struct LIS_estLista * LIS_tppLista ;
 *     LIS_CondRetNaoEncontrou - se o ponteiro não foi encontrado
 *                      O elemento corrente continua o mesmo
 *     LIS_CondRetListaVazia   - se a lista estiver vazia
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
 *
 ***********************************************************************/
 
