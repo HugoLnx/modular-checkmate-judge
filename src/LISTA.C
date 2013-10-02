@@ -30,15 +30,15 @@
 *
 ***********************************************************************/
 
-   typedef struct tagElemLista {
+   typedef struct estElemLista {
 
          void * pValor ;
                /* valor contido no elemento */
 
-         struct tagElemLista * pAnt ;
+         struct estElemLista * pAnt ;
                /* Ponteiro para o elemento predecessor */
 
-         struct tagElemLista * pProx ;
+         struct estElemLista * pProx ;
                /* Ponteiro para o elemento sucessor */
 
    } tpElemLista ;
@@ -50,7 +50,7 @@
 *
 ***********************************************************************/
 
-   typedef struct LIS_tagLista {
+   typedef struct LIS_estLista {
 
          tpElemLista * pOrigemLista ;
                /* Ponteiro para a origem da lista */

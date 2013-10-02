@@ -37,7 +37,7 @@
 
 /* Tipo referência para uma lista */
 
-typedef struct LIS_tagLista * LIS_tppLista ;
+typedef struct LIS_estLista * LIS_tppLista ;
 
 
 /***********************************************************************
