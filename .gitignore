@@ -10,3 +10,4 @@ ipch/
 *.log
 *.stat
 *.zip
+*.suo
