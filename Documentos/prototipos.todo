@@ -9,7 +9,7 @@
 Grafo (grafo.c/aresta.c/vertice.c)
 /* criar e destruir grafo */
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-	(void)(*DestruirConteudo)(void *pConteudo))
+	void (*DestruirConteudo)(void *pConteudo))
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 
 
