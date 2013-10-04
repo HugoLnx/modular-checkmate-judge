@@ -62,3 +62,13 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
 
 	return CON_CondRetOK;
 }
+
+CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo ppConteudo, char **ppValor)
+{
+	CON_tpConteudo *pConteudo;
+	pConteudo = ppConteudo;
+
+	*ppValor = pConteudo->Valor;
+
+	return CON_CondRetOK;
+}

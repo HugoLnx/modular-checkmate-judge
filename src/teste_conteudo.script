@@ -11,7 +11,14 @@
 =declararparm   OK             int  0
 //*********************************
 
-== Testar criação do Conteudo
+== Testar criação do conteudo
 
 =criarConteudo		conteudo0	"conteudo 1"	OK
+
+== Testar criação do conteudo
+
 =destruirConteudo	conteudo0					OK
+
+== Testar obter conteudo
+=criarConteudo		conteudo0	"conteudo 1"	OK
+=obterValor			conteudo0	"conteudo 1"	OK

@@ -96,9 +96,33 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 		return TST_CondRetErro;
 
-	} /* fim ativa: Testar CriarConteudo */
+	} /* fim ativa: Testar DestruirConteudo */
 
+	/* Testar ObterValorDoConteudo */
 
+	if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
+	{
+		char dado_esperado[DIM_BUFFER_VALOR];
+		char* dado_obtido;
+
+		numLidos = LER_LerParametros( "isi", &inxConteudo, dado_esperado, &CondRetEsp);
+
+		if (numLidos != 3)
+		{
+			return TST_CondRetParm ;
+		} 
+
+		CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &dado_obtido);
+
+		if(CondRet ==  CON_CondRetOK)
+		{
+			CondRet = TST_CompararString(dado_esperado,dado_obtido,"Dado esperado não é igual ao obtido");
+			return CondRet;	
+		}
+
+		return TST_CondRetErro;
+
+	} /* fim ativa: Testar ObterValorDoConteudo */
 
 	return TST_CondRetNaoConhec ;
 
