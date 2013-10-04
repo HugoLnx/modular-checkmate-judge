@@ -92,8 +92,8 @@ typedef struct LIS_stLista * LIS_tppLista ;
 ***********************************************************************/
 
    LIS_tpCondRet LIS_CriarLista(LIS_tppLista* pLista , 
-	   void (*destruirValor)(void * pValor) ,
-	   int (*compararValores)(void * pValor1, void * pValor2) ) ;
+      void (*destruirValor)(void * pValor) ,
+      int (*compararValores)(void * pValor1, void * pValor2) ) ;
 
 /***********************************************************************
 *

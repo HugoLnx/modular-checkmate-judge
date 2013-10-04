@@ -42,8 +42,8 @@
                /* Ponteiro para os vértices que têm arestas 
                   direcionadas para este vértice */
          
-		   void (*DestruirConteudo)(void *pConteudo);
-			 /* Lógica responsável por destruir o valor do vértice do grafo */
+         void (*DestruirConteudo)(void *pConteudo);
+          /* Lógica responsável por destruir o valor do vértice do grafo */
 
          void * pValor;
                /* valor contido no vértice */
@@ -80,8 +80,8 @@
          tpVertice * pCorrente;
                /* Vértice corrente */
 
-		 void (*destruirConteudo)(void *pConteudo);
-			 /* Lógica responsável por destruir o valor do vértice do grafo */
+       void (*destruirConteudo)(void *pConteudo);
+          /* Lógica responsável por destruir o valor do vértice do grafo */
 
    } tpGrafo;
 
@@ -96,17 +96,17 @@
 /*****  Código das funções exportadas pelo módulo  *****/
 //
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-	void (*destruirConteudo)(void *pConteudo))
+   void (*destruirConteudo)(void *pConteudo))
 {
-	tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
+   tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
 
-	pGrafo->pCorrente = NULL;
-	pGrafo->destruirConteudo = destruirConteudo;
+   pGrafo->pCorrente = NULL;
+   pGrafo->destruirConteudo = destruirConteudo;
 
-	LIS_CriarLista(&(pGrafo->pOrigens), NaoFazNada, CompararVertices);
-	LIS_CriarLista(&(pGrafo->pVertices), DestruirVertice, CompararVertices);
-	
-	*ppGrafo = pGrafo;
+   LIS_CriarLista(&(pGrafo->pOrigens), NaoFazNada, CompararVertices);
+   LIS_CriarLista(&(pGrafo->pVertices), DestruirVertice, CompararVertices);
+   
+   *ppGrafo = pGrafo;
 
     return GRA_CondRetOK;
 }

@@ -45,17 +45,17 @@ typedef struct GRA_stGrafo * GRA_tppGrafo ;
 
 typedef enum {
 
-	GRA_CondRetOK,
-		/* Concluiu corretamente */
+   GRA_CondRetOK,
+      /* Concluiu corretamente */
 
-	GRA_CondRetGrafoVazia,
-		/* A grafo não contém elementos */
+   GRA_CondRetGrafoVazia,
+      /* A grafo não contém elementos */
 
-	GRA_CondRetNaoAchou,
-		/* Não encontrou o valor procurado */
+   GRA_CondRetNaoAchou,
+      /* Não encontrou o valor procurado */
 
-	GRA_CondRetFaltouMemoria,
-		/* Faltou memória ao tentar alocar algo */
+   GRA_CondRetFaltouMemoria,
+      /* Faltou memória ao tentar alocar algo */
 
    GRA_CondRetErroLIS
       /* Erro na manipulação da lista */

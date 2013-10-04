@@ -83,19 +83,19 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm ;
             }
 
-			CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
+         CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
 
-			if( CondRet ==  GRA_CondRetOK )
-			{
-				CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
-				return CondRet;
-			}
+         if( CondRet ==  GRA_CondRetOK )
+         {
+            CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
+            return CondRet;
+         }
 
-			return TST_CondRetErro;
+         return TST_CondRetErro;
 
          }
 
-		 /* Testar Destruir grafo */
+       /* Testar Destruir grafo */
 
          else if ( strcmp( ComandoTeste , DESTRUIR_GRAFO_CMD ) == 0 )
          {
@@ -118,12 +118,12 @@ static GRA_tppGrafo pGrafo;
    //      else if ( strcmp ( ComandoTeste , INS_ELEM_ANTES_CMD ) == 0 )
    //      {
    //         char dadoAInserir = 0;
-			//char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
+         //char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
 
    //         numLidos = LER_LerParametros( "ici", 
-			//	&inxLista , &dadoAInserir, &CondRetEsp ) ;
+         //	&inxLista , &dadoAInserir, &CondRetEsp ) ;
 
-			//*pDado = dadoAInserir;
+         //*pDado = dadoAInserir;
 
    //         if ( ( numLidos != 3 ) || ( ! ValidarInxLista( inxLista , NAO_VAZIO ) ) )
    //         {
@@ -135,7 +135,7 @@ static GRA_tppGrafo pGrafo;
    //         if ( CondRet != LIS_CondRetOK )
    //         {
    //             TST_NotificarFalha( "Não foi possivel inserir elemento antes" ) ;
-			//	return TST_CondRetErro;
+         //	return TST_CondRetErro;
    //         } /* if */
 
    //         return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir antes." ) ;
@@ -146,16 +146,16 @@ static GRA_tppGrafo pGrafo;
 
    //      else if ( strcmp ( ComandoTeste , INS_ELEM_APOS_CMD ) == 0 )
    //      {
-			//char dadoAInserir = 0;
-			//char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
+         //char dadoAInserir = 0;
+         //char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
 
    //         numLidos = LER_LerParametros( "ici" , 
-			//	  &inxLista, &dadoAInserir , &CondRetEsp ) ;
+         //	  &inxLista, &dadoAInserir , &CondRetEsp ) ;
 
-			//*pDado = dadoAInserir;
+         //*pDado = dadoAInserir;
 
    //         if ( ( numLidos != 3 ) 
-			//	|| ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
+         //	|| ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
    //         {
    //            return TST_CondRetParm ;
    //         } /* if */
@@ -164,15 +164,15 @@ static GRA_tppGrafo pGrafo;
 
    //         if ( CondRet != LIS_CondRetOK )
    //         {
-			//	TST_NotificarFalha ( "Não foi possivel inserir elemento apos" ) ;
-			//	return TST_CondRetErro;
+         //	TST_NotificarFalha ( "Não foi possivel inserir elemento apos" ) ;
+         //	return TST_CondRetErro;
    //         } /* if */
 
    //         return TST_CompararInt( CondRetEsp, CondRet, "Condicao de retorno errada ao inserir apos." ) ;
 
    //      } /* fim ativa: Testar inserir elemento apos */
 
-		 // /* Testar excluir simbolo */
+       // /* Testar excluir simbolo */
 
    //      else if ( strcmp( ComandoTeste , EXC_ELEM_CMD ) == 0 )
    //      {
@@ -192,15 +192,15 @@ static GRA_tppGrafo pGrafo;
 
    //      } /* fim ativa: Testar excluir simbolo */
 
-		 ///* Testar obter valor do elemento corrente */
+       ///* Testar obter valor do elemento corrente */
 
    //      else if ( strcmp ( ComandoTeste , OBTER_VALOR_CMD ) == 0 )
    //      {
-			//char * pDadoObtido;
-			//char dadoEsperado = 0;
+         //char * pDadoObtido;
+         //char dadoEsperado = 0;
 
    //         numLidos = LER_LerParametros("ici", 
-			//	&inxLista , &dadoEsperado , &CondRetEsp ) ;
+         //	&inxLista , &dadoEsperado , &CondRetEsp ) ;
 
    //         if ( ( numLidos != 3 ) || ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
    //         {
@@ -209,23 +209,23 @@ static GRA_tppGrafo pGrafo;
 
    //         CondRet = LIS_ObterValor( vtListas[inxLista] , &pDadoObtido ) ;
 
-			//if( CondRet != TST_CondOK )
-			//{
-			//	return CondRet;
-			//}
+         //if( CondRet != TST_CondOK )
+         //{
+         //	return CondRet;
+         //}
 
-			//return TST_CompararChar(dadoEsperado,*pDadoObtido,"Valor do elemento errado.");
+         //return TST_CompararChar(dadoEsperado,*pDadoObtido,"Valor do elemento errado.");
 
    //      } /* fim ativa: Testar obter valor do elemento corrente */
 
 
-		 ///* Testar ir para o elemento inicial */
+       ///* Testar ir para o elemento inicial */
 
    //      else if ( strcmp( ComandoTeste , IR_INICIO_CMD ) == 0 )
    //      {
 
    //         numLidos = LER_LerParametros( "ii" ,
-			//	&inxLista, &CondRetEsp ) ;
+         //	&inxLista, &CondRetEsp ) ;
 
    //         if ( ( numLidos != 2 )
    //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
@@ -235,17 +235,17 @@ static GRA_tppGrafo pGrafo;
 
    //         LIS_IrInicioLista( vtListas[ inxLista ] ) ;
 
-			//return TST_CompararInt(CondRetEsp, LIS_IrInicioLista( vtListas[ inxLista ] ), "Erro ao ir para o inicio da lista" );
+         //return TST_CompararInt(CondRetEsp, LIS_IrInicioLista( vtListas[ inxLista ] ), "Erro ao ir para o inicio da lista" );
 
    //      } /* fim ativa: Testar ir para o elemento inicial */
 
-		 // /* LIS  &Ir para o elemento final */
+       // /* LIS  &Ir para o elemento final */
 
    //      else if ( strcmp( ComandoTeste , IR_FIM_CMD ) == 0 )
    //      {
 
    //         numLidos = LER_LerParametros( "ii" , 
-			//	&inxLista ,  &CondRetEsp) ;
+         //	&inxLista ,  &CondRetEsp) ;
 
    //         if ( ( numLidos != 2 )
    //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
@@ -257,13 +257,13 @@ static GRA_tppGrafo pGrafo;
 
    //      } /* fim ativa: LIS  &Ir para o elemento final */
 
-		 ///* Testar Esvaziar lista lista */
+       ///* Testar Esvaziar lista lista */
 
    //      else if ( strcmp( ComandoTeste , ESVAZIAR_LISTA_CMD ) == 0 )
    //      {
 
    //         numLidos = LER_LerParametros( "ii" ,
-			//	&inxLista , &CondRetEsp ) ;
+         //	&inxLista , &CondRetEsp ) ;
 
    //         if ( ( numLidos != 2 )
    //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )))
@@ -271,15 +271,15 @@ static GRA_tppGrafo pGrafo;
    //            return TST_CondRetParm ;
    //         } /* if */
 
-			//return TST_CompararInt(CondRetEsp, LIS_EsvaziarLista( vtListas[ inxLista ] ), "Erro ao esvaziar a lista" ) ;
+         //return TST_CompararInt(CondRetEsp, LIS_EsvaziarLista( vtListas[ inxLista ] ), "Erro ao esvaziar a lista" ) ;
 
    //      } /* fim ativa: Testar Esvaziar lista lista */
 
-	  ///* LIS  &Avançar elemento */
+     ///* LIS  &Avançar elemento */
 
    //      else if ( strcmp( ComandoTeste , AVANCAR_ELEM_CMD ) == 0 )
    //      {
-			// int numElem = -1;
+         // int numElem = -1;
 
    //         numLidos = LER_LerParametros( "iii" , &inxLista , &numElem ,
    //                             &CondRetEsp ) ;
@@ -296,11 +296,11 @@ static GRA_tppGrafo pGrafo;
 
    //      } /* fim ativa: LIS  &Avançar elemento */
 
-		 // /* LIS  &Procurar elemento */
+       // /* LIS  &Procurar elemento */
 
    //      else if ( strcmp( ComandoTeste , PROCURAR_ELEM_CMD ) == 0 )
    //      {
-			//char dadoASerProcurado = -1;
+         //char dadoASerProcurado = -1;
 
    //         numLidos = LER_LerParametros( "ici" , &inxLista , &dadoASerProcurado ,
    //                             &CondRetEsp ) ;
@@ -347,20 +347,20 @@ static GRA_tppGrafo pGrafo;
 
    int CompararValores( void * pValor1 , void * pValor2 )
    {
-	   char valor1 = (char) * (char *) pValor1;
-	   char valor2 = (char) * (char *) pValor2;
+      char valor1 = (char) * (char *) pValor1;
+      char valor2 = (char) * (char *) pValor2;
 
       if ( valor1 > valor2 )
-	  {
-		  return 1;
-	  }
-	  
+     {
+        return 1;
+     }
+     
       if ( valor1 < valor2 )
-	  {
-		  return -1;
-	  }
+     {
+        return -1;
+     }
 
-	  return 0;
+     return 0;
 
    } /* Fim função: TLIS -Comparar valores */
 

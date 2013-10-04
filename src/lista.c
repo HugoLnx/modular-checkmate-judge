@@ -59,12 +59,12 @@
          int numElem ;
                /* Número de elementos da lista */
 
-		 void (*destruirValor)(void * pValor);
-			   /* Lógica responsável por destruir o valor da lista */
+       void (*destruirValor)(void * pValor);
+            /* Lógica responsável por destruir o valor da lista */
 
-		 
-		 int (*compararValores)(void * pValor1 , void * pValor2);
-			   /* Lógica responsável por comparar dois valores */
+       
+       int (*compararValores)(void * pValor1 , void * pValor2);
+            /* Lógica responsável por comparar dois valores */
 
    } LIS_tpLista ;
 
@@ -86,10 +86,10 @@
 *  ****/
 
    LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista,
-		void (*destruirValor)(void * pValor),
-		int (*compararValores)(void * pValor1, void * pValor2) )
+      void (*destruirValor)(void * pValor),
+      int (*compararValores)(void * pValor1, void * pValor2) )
    {
-	  LIS_tpLista* pLista;
+     LIS_tpLista* pLista;
 
       pLista = ( LIS_tpLista *) malloc( sizeof( LIS_tpLista )) ;
       if ( pLista == NULL )
@@ -99,12 +99,12 @@
 
       LimparCabeca(pLista);
 
-	  pLista->destruirValor = destruirValor;
-	  pLista->compararValores = compararValores;
+     pLista->destruirValor = destruirValor;
+     pLista->compararValores = compararValores;
 
-	  *ppLista = pLista;
+     *ppLista = pLista;
 
-	  return LIS_CondRetOK;
+     return LIS_CondRetOK;
 
    }
 
@@ -124,7 +124,7 @@
 
       free( pLista ) ;
 
-	  return LIS_CondRetOK;
+     return LIS_CondRetOK;
 
    }
 
@@ -153,7 +153,7 @@
 
       LimparCabeca( pLista ) ;
 
-	  return LIS_CondRetOK;
+     return LIS_CondRetOK;
 
    }
 
@@ -324,12 +324,12 @@
 
       if ( pLista->pElemCorr == NULL )
       {
-		  return LIS_CondRetListaVazia ;
+        return LIS_CondRetListaVazia ;
       } /* if */
 
-	  *ppValor = pLista->pElemCorr->pValor ;
+     *ppValor = pLista->pElemCorr->pValor ;
 
-	  return LIS_CondRetOK ;
+     return LIS_CondRetOK ;
    }
 
 /***************************************************************************
@@ -346,7 +346,7 @@
 
       pLista->pElemCorr = pLista->pOrigemLista ;
 
-	  return LIS_CondRetOK ;
+     return LIS_CondRetOK ;
 
    }
 
@@ -364,7 +364,7 @@
 
       pLista->pElemCorr = pLista->pFimLista ;
 
-	  return LIS_CondRetOK ;
+     return LIS_CondRetOK ;
 
    } /* Fim função: LIS  &Ir para o elemento final */
 
@@ -532,8 +532,8 @@
    void LiberarElemento( LIS_tppLista   pLista ,
                          tpElemLista  * pElem   )
    {
-	   
-	  pLista->destruirValor( pElem->pValor ) ;
+      
+     pLista->destruirValor( pElem->pValor ) ;
       free( pElem ) ;
 
       pLista->numElem-- ;
