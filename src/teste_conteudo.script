@@ -14,3 +14,4 @@
 == Testar criação do Conteudo
 
 =criarConteudo		conteudo0	"conteudo 1"	OK
+=destruirConteudo	conteudo0					OK

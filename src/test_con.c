@@ -8,10 +8,10 @@
 
 #include    "conteudo.h"
 
-static const char * CRIAR_CONTEUDO_CMD      = "=criarConteudo"        ;
-static const char * DESTRUIR_GRAFO_CMD		= "=destruirConteudo"     ;
-static const char * OBTER_VALOR_CMD			= "=obterValor"			  ;
-static const char * ALTER_VALOR_CMD			= "=alterarValor"         ;
+static const char * CRIAR_CONTEUDO_CMD          = "=criarConteudo"        ;
+static const char * DESTRUIR_CONTEUDO_CMD		= "=destruirConteudo"     ;
+static const char * OBTER_VALOR_CMD				= "=obterValor"			  ;
+static const char * ALTER_VALOR_CMD				= "=alterarValor"         ;
 
 #define TRUE  1
 #define FALSE 0
@@ -34,49 +34,72 @@ CON_tppConteudo   vtConteudos[DIM_VT_CONTEUDO];
 *
 *     Comandos disponíveis:
 *
-*     =criarGrafo					inxConteudo	string			CondRetEsp
-*     =destruirGrafo				inxConteudo					CondRetEsp
+*     =criarConteudo				inxConteudo	string			CondRetEsp
+*     =destruirConteudo				inxConteudo					CondRetEsp
 *     =obterValor                   inxConteudo string			CondRetEsp
 *     =alterarValor                 inxConteudo string  string  CondRetEsp
 *
 ***********************************************************************/
 
-   TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
-   {
-      int inxConteudo   = -1,
-          numLidos      = -1,
-          CondRetEsp    = -1;
+TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
+{
+	int inxConteudo   = -1,
+		numLidos      = -1,
+		CondRetEsp    = -1;
 
-      TST_tpCondRet CondRet;
-	  CON_tppConteudo ppConteudo = NULL;
+	TST_tpCondRet CondRet;
+	CON_tppConteudo ppConteudo = NULL;
 
-      /* Testar CriarConteudo */
+	/* Testar CriarConteudo */
 
-         if ( strcmp ( ComandoTeste , CRIAR_CONTEUDO_CMD ) == 0 )
-         {
-			char dado[DIM_BUFFER_VALOR];  
-            numLidos = LER_LerParametros( "is", &CondRetEsp, dado);
+	if (strcmp(ComandoTeste, CRIAR_CONTEUDO_CMD) == 0)
+	{
+		char dado[DIM_BUFFER_VALOR];  
+		numLidos = LER_LerParametros( "isi", &inxConteudo, dado, &CondRetEsp);
 
-            if (numLidos != 2 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
+		if (numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		}
 
-			CondRet = CON_CriarConteudo(&ppConteudo, dado);
+		CondRet = (TST_tpCondRet)CON_CriarConteudo(&ppConteudo, dado);
 
-			if( CondRet ==  CON_CondRetOK )
-			{
-				vtConteudos[ inxConteudo ] = ppConteudo;
-				CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
-				return CondRet;
-			}
+		if( CondRet ==  CON_CondRetOK )
+		{
+			vtConteudos[ inxConteudo ] = ppConteudo;
+			CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
+			return CondRet;
+		}
 
-			return TST_CondRetErro;
+		return TST_CondRetErro;
 
-         } /* fim ativa: Testar CriarConteudo */
+	} /* fim ativa: Testar CriarConteudo */
 
-		 
+	/* Testar DestruirConteudo */
 
-      return TST_CondRetNaoConhec ;
+	if (strcmp(ComandoTeste, DESTRUIR_CONTEUDO_CMD) == 0)
+	{
+		numLidos = LER_LerParametros( "ii", &inxConteudo, &CondRetEsp);
 
-   } /* Fim função: TCON &Testar conteudo */
+		if (numLidos != 2)
+		{
+			return TST_CondRetParm ;
+		} 
+
+		CondRet = (TST_tpCondRet) CON_DestruirConteudo(&(vtConteudos[inxConteudo]));
+
+		if(CondRet ==  CON_CondRetOK)
+		{
+			CondRet = TST_CompararPonteiroNulo(0, vtConteudos[inxConteudo], "Erro em ponteiro ao destruir conteudo.");
+			return CondRet;
+		}
+
+		return TST_CondRetErro;
+
+	} /* fim ativa: Testar CriarConteudo */
+
+
+
+	return TST_CondRetNaoConhec ;
+
+} /* Fim função: TCON &Testar conteudo */

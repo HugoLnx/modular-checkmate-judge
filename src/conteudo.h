@@ -84,7 +84,7 @@ typedef enum {
 ***********************************************************************/
 
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
-//CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
+CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
 //CON_tpCondRet CON_ObterConteudo(CON_tppConteudo *ppConteudo, char **ppValor);
 //CON_tpCondRet CON_AlterarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
 

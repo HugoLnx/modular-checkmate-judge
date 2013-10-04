@@ -16,6 +16,7 @@
 ***************************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 
 #define CONTEUDO_OWN
 #include "conteudo.h"
@@ -27,21 +28,21 @@
 
    typedef struct stConteudo {
 
-         char * pValor;
+         char Valor[255];
                /* Valor do conteúdo */
    } CON_tpConteudo;
 
    /*****  Código das funções exportadas pelo módulo  *****/
 
 
-   CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
+CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
    {
 		CON_tpConteudo *pConteudo = (CON_tpConteudo *)malloc(sizeof(CON_tpConteudo));
 
 		if(pConteudo == NULL)
 			return CON_CondRetFaltouMemoria;
 
-		pConteudo->pValor = pValor;
+		strcpy(pConteudo->Valor,pValor);
 
 		*ppConteudo = pConteudo;
 
@@ -49,3 +50,15 @@
 
 
    }
+
+CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
+{
+	CON_tpConteudo *pConteudo;
+	pConteudo = *ppConteudo;
+
+	free(pConteudo);
+	pConteudo = NULL;
+	*ppConteudo = NULL;
+
+	return CON_CondRetOK;
+}
