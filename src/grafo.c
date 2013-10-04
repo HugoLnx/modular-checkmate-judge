@@ -42,7 +42,7 @@
                /* Ponteiro para os vértices que têm arestas 
                   direcionadas para este vértice */
          
-         void (*DestruirConteudo)(void *pConteudo);
+         void (*destruirConteudo)(void *pConteudo);
           /* Lógica responsável por destruir o valor do vértice do grafo */
 
          void * pValor;
@@ -92,6 +92,7 @@
    static void DestruirVertice(void *pVazio);
    static void DestruirAresta(void *pVazio);
    static int CompararVertices (void *pVazio1, void *pVazio2);
+   static int CompararArestas (void *pVazio1, void *pVazio2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 //
@@ -124,13 +125,34 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 }
 
 
-//   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
-//   {
-//      return GRA_CondRetGrafoVazia;
-//   }
-//
-//
-//
+   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
+   {
+      tpGrafo *pGraf = (tpGrafo*) pGrafo;
+      tpVertice *pVertice;
+      LIS_tpCondRet lisCondRet;
+
+      
+      if(pGraf == NULL)
+      {
+         return GRA_CondRetGrafoNaoFoiCriado;
+      }
+
+      pVertice = (tpVertice*) malloc(sizeof(tpVertice));
+      if(pVertice == NULL)
+      {
+         return GRA_CondRetFaltouMemoria;
+      }
+
+      pVertice->nome = pNomeVertice;
+      pVertice->pValor = pValor;
+      pVertice->destruirConteudo = pGraf->destruirConteudo;
+      
+      LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVertices);
+      LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestas);
+   }
+
+
+
 //   GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
 //      char *nomeAresta, char *nomeVerticeDestino)
 //   {
@@ -212,7 +234,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
       LIS_DestruirLista(pVertice->pAntecessores);
       LIS_DestruirLista(pVertice->pSucessores);
       
-      pVertice->DestruirConteudo(pVertice->pValor);
+      pVertice->destruirConteudo(pVertice->pValor);
       free(pVertice->nome);
       free(pVertice);
    }
@@ -236,6 +258,14 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
      tpVertice *pVertice2 = (tpVertice*) pVazio2;
 
      return strcmp(pVertice1->nome, pVertice2->nome);
+  }
+  
+  int CompararArestas( void *pVazio1, void *pVazio2 )
+  {
+     tpAresta *pAresta1 = (tpAresta*) pVazio1;
+     tpAresta *pAresta2 = (tpAresta*) pVazio2;
+
+     return strcmp(pAresta1->nome, pAresta2->nome);
   }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/

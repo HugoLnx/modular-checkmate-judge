@@ -48,8 +48,11 @@ typedef enum {
    GRA_CondRetOK,
       /* Concluiu corretamente */
 
-   GRA_CondRetGrafoVazia,
-      /* A grafo não contém elementos */
+   GRA_CondRetGrafoVazio,
+      /* O grafo não contém elementos */
+
+   GRA_CondRetGrafoNaoFoiCriado,
+      /* O grafo não contém elementos */
 
    GRA_CondRetNaoAchou,
       /* Não encontrou o valor procurado */
@@ -90,7 +93,7 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*DestruirConteudo)(voi
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 
 ///* Construir grafo */
-//GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor);
+GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor);
 ///* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
 //GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo, char *nomeAresta, char *nomeVerticeDestino)
 //
