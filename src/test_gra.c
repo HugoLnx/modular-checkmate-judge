@@ -105,7 +105,7 @@ static GRA_tppGrafo pGrafo;
             if (numLidos != 1)
             {
                return TST_CondRetParm ;
-            } /* if */
+            }
 
             CondRet = GRA_DestruirGrafo(&pGrafo) ;
 
@@ -113,34 +113,37 @@ static GRA_tppGrafo pGrafo;
 
          }
      
-   //   /* Testar inserir elemento antes */
+      /* Testar inserir vertice */
 
-   //      else if ( strcmp ( ComandoTeste , INS_ELEM_ANTES_CMD ) == 0 )
-   //      {
-   //         char dadoAInserir = 0;
-         //char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
+         else if (strcmp(ComandoTeste, INS_VERT_CMD) == 0)
+         {
+            char nome = 0;
+            char dadoAInserir = 0;
+            
+            char *pNome = (char*) malloc(sizeof(char));
+            char *pDado = (char*) malloc(sizeof(char));
 
-   //         numLidos = LER_LerParametros( "ici", 
-         //	&inxLista , &dadoAInserir, &CondRetEsp ) ;
+            numLidos = LER_LerParametros( "cci", &nome, &dadoAInserir, &CondRetEsp );
 
-         //*pDado = dadoAInserir;
+            *pDado = dadoAInserir;
+            *pNome = nome;
 
-   //         if ( ( numLidos != 3 ) || ( ! ValidarInxLista( inxLista , NAO_VAZIO ) ) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-   //
-   //         CondRet = LIS_InserirElementoAntes( vtListas[ inxLista ] , pDado ) ;
+            if (numLidos != 3)
+            {
+               return TST_CondRetParm;
+            }
+   
+            CondRet = GRA_InserirVertice(pGrafo, pNome, pDado);
 
-   //         if ( CondRet != LIS_CondRetOK )
-   //         {
-   //             TST_NotificarFalha( "Não foi possivel inserir elemento antes" ) ;
-         //	return TST_CondRetErro;
-   //         } /* if */
+            if ( CondRet != GRA_CondRetOK )
+            {
+                TST_NotificarFalha( "Não foi possivel inserir vertice" ) ;
+         	return TST_CondRetErro;
+            }
 
-   //         return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir antes." ) ;
+            return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir vértice." ) ;
 
-   //      } /* fim ativa: Testar inserir elemento antes */
+         }
 
    //   /* Testar inserir elemento apos */
 
