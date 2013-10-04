@@ -144,36 +144,38 @@ static GRA_tppGrafo pGrafo;
             return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir vértice." ) ;
 
          }
+    
+      /* Testar inserir aresta */
 
-   //   /* Testar inserir elemento apos */
+         else if (strcmp(ComandoTeste, INS_ARESTA_CMD) == 0)
+         {
+            char nomeAresta = 0;
+            char nomeVertice = 0;
+            
+            char *pNomeAresta = (char*) malloc(sizeof(char));
+            char *pNomeVertice = (char*) malloc(sizeof(char));
 
-   //      else if ( strcmp ( ComandoTeste , INS_ELEM_APOS_CMD ) == 0 )
-   //      {
-         //char dadoAInserir = 0;
-         //char * pDado = ( char * ) malloc( sizeof( dadoAInserir ) );
+            numLidos = LER_LerParametros( "cci", &nomeAresta, &nomeVertice, &CondRetEsp );
 
-   //         numLidos = LER_LerParametros( "ici" , 
-         //	  &inxLista, &dadoAInserir , &CondRetEsp ) ;
+            *pNomeAresta = nomeAresta;
+            *pNomeVertice = nomeVertice;
 
-         //*pDado = dadoAInserir;
+            if (numLidos != 3)
+            {
+               return TST_CondRetParm;
+            }
+   
+            CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, pNomeAresta, pNomeVertice);
 
-   //         if ( ( numLidos != 3 ) 
-         //	|| ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
+            if ( CondRet != GRA_CondRetOK )
+            {
+                TST_NotificarFalha( "Não foi possivel inserir aresta" ) ;
+         	return TST_CondRetErro;
+            }
 
-   //         CondRet = LIS_InserirElementoApos( vtListas [ inxLista ], pDado ) ;
+            return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir aresta." ) ;
 
-   //         if ( CondRet != LIS_CondRetOK )
-   //         {
-         //	TST_NotificarFalha ( "Não foi possivel inserir elemento apos" ) ;
-         //	return TST_CondRetErro;
-   //         } /* if */
-
-   //         return TST_CompararInt( CondRetEsp, CondRet, "Condicao de retorno errada ao inserir apos." ) ;
-
-   //      } /* fim ativa: Testar inserir elemento apos */
+         }
 
        // /* Testar excluir simbolo */
 

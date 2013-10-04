@@ -149,15 +149,18 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
       
       LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVertices);
       LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestas);
+
+      pGraf->pCorrente = pVertice;
+      LIS_InserirElementoApos(pGraf->pVertices, pVertice);
    }
 
 
 
-//   GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
-//      char *nomeAresta, char *nomeVerticeDestino)
-//   {
-//      return GRA_CondRetGrafoVazia;
-//   }
+GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
+   char *nomeAresta, char *nomeVerticeDestino)
+{
+   return GRA_CondRetGrafoVazio;
+}
 //
 //
 //

@@ -16,5 +16,8 @@
 =criarGrafo			OK
 
 =insVertice      'A'    'X'     OK
+=insVertice      'B'    'X'     OK
+
+=insAresta       'a'    'A'     OK
 
 =destruirGrafo                  OK
