@@ -1,0 +1,16 @@
+// Script:    teste_grafo.script
+// Autor:     Robert Correa
+// Data:      03/out/2013
+// Propósito: Testar completamente o módulo grafo genérico
+//
+
+== Declarar as condicoes de retorno
+
+=declararparm   grafo0  int 0
+
+=declararparm   OK             int  0
+//*********************************
+
+== Testar criação do grafo
+
+=criarGrafo			OK

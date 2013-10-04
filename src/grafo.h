@@ -83,31 +83,30 @@ typedef enum {
 *
 ***********************************************************************/
 
-GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-	void (*DestruirConteudo)(void *pConteudo))
-GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
-
-
-/* Construir grafo */
-GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor);
-/* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
-GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo, char *nomeAresta, char *nomeVerticeDestino)
-
-/* Destruir grafo */
-GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo);
-GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta);
-
-/* Outros */
-GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo);
-
-/* Navegaçao */
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafo, char *nomeVertice);
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafo, char *nomeAresta);
-GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice);
-
-/* Obter e alterar */
-GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor);
-GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor);
+GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*DestruirConteudo)(void *pConteudo));
+//GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
+//
+//
+///* Construir grafo */
+//GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor);
+///* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
+//GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo, char *nomeAresta, char *nomeVerticeDestino)
+//
+///* Destruir grafo */
+//GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo);
+//GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta);
+//
+///* Outros */
+//GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo);
+//
+///* Navegaçao */
+//GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafo, char *nomeVertice);
+//GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafo, char *nomeAresta);
+//GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice);
+//
+///* Obter e alterar */
+//GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor);
+//GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor);
 
 /***********************************************************************/
 #undef GRAFO_EXT

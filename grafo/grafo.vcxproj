@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9AB30F96-8D64-4481-AFA8-7E51AF08C8AE}</ProjectGuid>
+    <ProjectGuid>{4B777B00-C358-4B5B-9824-3EE75BFC5983}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>grafo</RootNamespace>
   </PropertyGroup>
@@ -74,19 +74,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib">
-      <FileType>Document</FileType>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\test_gra.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\grafo.h" />
+    <ClInclude Include="..\src\lista.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\teste_grafo.script" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\src\lista.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

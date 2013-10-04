@@ -77,95 +77,109 @@
          tpVertice * pCorrente;
                /* Vértice corrente */
 
-   } tpGrafo;
+		 void (*DestruirConteudo)(void *pConteudo);
+			 /* Lógica responsável por destruir o valor do vértice do grafo */
+
+   } GRA_tpGrafo;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
    static void DestruirVertice(tpVertice *pVertice);
    static void DestruirAresta(tpVertice *pVertice);
+   static int CompararValores (void *pValor1, void *pValor2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
-
+//
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	void (*DestruirConteudo)(void *pConteudo))
 {
-   return GRA_CondRetGrafoVazia;
+	GRA_tpGrafo *pGrafo = (GRA_tpGrafo*)malloc(sizeof(GRA_tpGrafo));
+
+	pGrafo->pCorrente = NULL;
+	pGrafo->DestruirConteudo = DestruirConteudo;
+
+	LIS_CriarLista(&(pGrafo->pOrigens), pGrafo->DestruirConteudo, CompararValores);
+	LIS_CriarLista(&(pGrafo->pVertices), pGrafo->DestruirConteudo, CompararValores);
+	
+	*ppGrafo = pGrafo;
+
+    return GRA_CondRetOK;
 }
-
-
-
-GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
-
-
-   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
-      char *nomeAresta, char *nomeVerticeDestino)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafo, char *nomeVertice)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafo, char *nomeAresta)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
-
-
-
-   GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
-   {
-      return GRA_CondRetGrafoVazia;
-   }
+//
+//
+//
+//GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
+//
+//
+//   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
+//      char *nomeAresta, char *nomeVerticeDestino)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafo, char *nomeVertice)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafo, char *nomeAresta)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
+//
+//
+//
+//   GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
+//   {
+//      return GRA_CondRetGrafoVazia;
+//   }
 
  
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -179,9 +193,14 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 *
 ***********************************************************************/
 
-   void FuncaoEncapsulada( )
+   /*void FuncaoEncapsulada( )
    {
 
-   }
+   }*/
+
+  int CompararValores( void * pValor1 , void * pValor2 )
+  {
+	return 0;
+  }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/
