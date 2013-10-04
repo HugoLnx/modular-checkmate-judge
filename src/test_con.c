@@ -37,7 +37,7 @@ CON_tppConteudo   vtConteudos[DIM_VT_CONTEUDO];
 *     =criarConteudo				inxConteudo	string			CondRetEsp
 *     =destruirConteudo				inxConteudo					CondRetEsp
 *     =obterValor                   inxConteudo string			CondRetEsp
-*     =alterarValor                 inxConteudo string  string  CondRetEsp
+*     =alterarValor                 inxConteudo string			CondRetEsp
 *
 ***********************************************************************/
 
@@ -123,6 +123,33 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 		return TST_CondRetErro;
 
 	} /* fim ativa: Testar ObterValorDoConteudo */
+
+	/* Testar AlterarValorDoConteudo */
+
+	if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
+	{
+		char dado_esperado[DIM_BUFFER_VALOR];
+		char dado_para_alterar[DIM_BUFFER_VALOR];
+		char* dado_obtido;
+		numLidos = LER_LerParametros( "isi", &inxConteudo, dado_para_alterar, &CondRetEsp);
+
+		if (numLidos != 3)
+		{
+			return TST_CondRetParm ;
+		} 
+
+		CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(&(vtConteudos[inxConteudo]),dado_para_alterar);
+
+		if(CondRet ==  CON_CondRetOK)
+		{
+			CON_ObterValorDoConteudo(vtConteudos[inxConteudo],&dado_obtido);
+			CondRet = TST_CompararString(dado_para_alterar,dado_obtido,"Dado não foi alterado");
+			return CondRet;	
+		}
+
+		return TST_CondRetErro;
+
+	} /* fim ativa: Testar AlterarValorDoConteudo */
 
 	return TST_CondRetNaoConhec ;
 

@@ -1,6 +1,11 @@
-Data		Horas Trabalhadas	Tipo de Tarefa			Descrição
-30/set/2013	3			projetar			Começamos a projetar o modelo físico.
-01/out/2013	3			projetar			Finalizamos o modelo físico.
-02/out/2013	1.5			projetar			Finalizamos as assertivas.
-02/out/2013	1			especificar os módulos		Especificamos os módulos a serem criados.
-02/out/2013	1			especificar os funções		Especificamos as funções a serem criadas.
+Data		        Horas Trabalhadas	 Tipo de Tarefa			                                    Descrição
+30/set/2013	        3			         projetar			                                        Começamos a projetar o modelo físico.
+01/out/2013	        3			         projetar			                                        Finalizamos o modelo físico.
+02/out/2013	        1.5			         projetar			                                        Finalizamos as assertivas.
+02/out/2013	        1			         especificar os módulos		                                Especificamos os módulos a serem criados.
+02/out/2013	        1			         especificar os funções		                                Especificamos as funções a serem criadas.
+03/out/2013	        1			         codificar módulo			                                Codificação do módulo Conteudo do vértice
+03/out/2013	        0.5			         redigir script de teste		                            Redigir script de teste para o módulo conteudo do vértice
+03/out/2013	        0.5			         revisar script de teste		                            revisar script de teste para o módulo conteudo do vértice
+03/out/2013	        1.5			         diagnosticar e corrigir os problemas encontrados			realizar os testes do módulo conteudo do vértice
+

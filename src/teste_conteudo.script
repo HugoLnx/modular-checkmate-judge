@@ -12,13 +12,20 @@
 //*********************************
 
 == Testar criação do conteudo
-
 =criarConteudo		conteudo0	"conteudo 1"	OK
 
-== Testar criação do conteudo
-
+== Testar destruição do conteudo
 =destruirConteudo	conteudo0					OK
 
-== Testar obter conteudo
+== Testar obter valor do conteudo
 =criarConteudo		conteudo0	"conteudo 1"	OK
 =obterValor			conteudo0	"conteudo 1"	OK
+=destruirConteudo	conteudo0					OK
+
+== Testar alterar valor do conteudo
+=criarConteudo		conteudo0	"conteudo 1"	OK
+=obterValor			conteudo0	"conteudo 1"	OK
+=alterarValor		conteudo0	"conteudo 2"	OK
+=obterValor			conteudo0	"conteudo 1"	OK
+=recuperar
+=obterValor			conteudo0	"conteudo 2"	OK
