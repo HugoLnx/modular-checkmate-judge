@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4B777B00-C358-4B5B-9824-3EE75BFC5983}</ProjectGuid>
+    <ProjectGuid>{2CC7B701-70AE-4BF6-A021-6129E1F2A533}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>grafo</RootNamespace>
+    <RootNamespace>conteudo</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,19 +74,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\grafo.c" />
-    <ClCompile Include="..\src\test_gra.c" />
+    <ClCompile Include="..\src\conteudo.c" />
+    <ClCompile Include="..\src\test_con.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\conteudo.h" />
-    <ClInclude Include="..\src\grafo.h" />
-    <ClInclude Include="..\src\lista.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\teste_grafo.script" />
+    <None Include="..\src\teste_conteudo.script" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\src\lista.lib" />
+    <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

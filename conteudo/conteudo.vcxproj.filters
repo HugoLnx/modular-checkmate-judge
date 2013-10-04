@@ -14,34 +14,28 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Script Files">
-      <UniqueIdentifier>{e5a3a581-a222-471a-a126-bf136f9c380e}</UniqueIdentifier>
+      <UniqueIdentifier>{5ed44583-41d2-440e-a9c1-4391fff8b1aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\test_gra.c">
+    <ClCompile Include="..\src\conteudo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\grafo.c">
+    <ClCompile Include="..\src\test_con.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\grafo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\lista.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\conteudo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\teste_grafo.script">
+    <None Include="..\src\teste_conteudo.script">
       <Filter>Script Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\src\lista.lib" />
+    <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
 </Project>
