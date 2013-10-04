@@ -32,9 +32,7 @@ static const char * TORNAR_ORIGEM_CMD    = "=tornarCorrOrigem"  ;
 #define VAZIO     0
 #define NAO_VAZIO 1
 
-GRA_tppGrafo   vtGrafos[DIM_VT_GRAFO];
-
-//GRA_tppGrafo * ppGrafo;
+static GRA_tppGrafo pGrafo;
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
@@ -72,9 +70,8 @@ GRA_tppGrafo   vtGrafos[DIM_VT_GRAFO];
           CondRetEsp = -1;
 
       TST_tpCondRet CondRet;
-	  GRA_tppGrafo ppGrafo = NULL;
 
-      /* Testar CriarLista */
+      /* Testar CriarGrafo */
 
          if ( strcmp ( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
          {
@@ -84,42 +81,38 @@ GRA_tppGrafo   vtGrafos[DIM_VT_GRAFO];
             if (numLidos != 1 )
             {
                return TST_CondRetParm ;
-            } /* if */
+            }
 
-			CondRet = GRA_CriarGrafo( &ppGrafo , DestruirValor );
+			CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
 
 			if( CondRet ==  GRA_CondRetOK )
 			{
-				vtGrafos[ inxGrafo ] = ppGrafo;
-				CondRet = TST_CompararPonteiroNulo( 1 ,vtGrafos[ inxGrafo] , "Erro em ponteiro de nova lista." ) ;
+				CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
 				return CondRet;
 			}
 
 			return TST_CondRetErro;
 
-         } /* fim ativa: Testar CriarLista */
+         }
 
-		 ///* Testar Destruir lista */
+		 /* Testar Destruir grafo */
 
-   //      else if ( strcmp( ComandoTeste , DESTRUIR_LISTA_CMD ) == 0 )
-   //      {
+         else if ( strcmp( ComandoTeste , DESTRUIR_GRAFO_CMD ) == 0 )
+         {
 
-   //         numLidos = LER_LerParametros( "ii" ,
-			//	&inxLista, &CondRetEsp ) ;
+            numLidos = LER_LerParametros( "i", &CondRetEsp ) ;
 
-   //         if ( ( numLidos != 2 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )))
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
+            if (numLidos != 1)
+            {
+               return TST_CondRetParm ;
+            } /* if */
 
-   //         CondRet = LIS_DestruirLista( vtListas[ inxLista ] ) ;
-   //         vtListas[ inxLista ] = NULL ;
+            CondRet = GRA_DestruirGrafo(&pGrafo) ;
 
-   //        return TST_CompararInt( CondRetEsp, CondRet, "Erro ao destruir lista" ) ;
+           return TST_CompararInt( CondRetEsp, CondRet, "Erro ao destruir grafo" ) ;
 
-   //      } /* fim ativa: Testar Destruir lista */
-   //  
+         }
+     
    //   /* Testar inserir elemento antes */
 
    //      else if ( strcmp ( ComandoTeste , INS_ELEM_ANTES_CMD ) == 0 )

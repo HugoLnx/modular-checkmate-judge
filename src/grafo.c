@@ -41,6 +41,9 @@
          LIS_tppLista pAntecessores;
                /* Ponteiro para os vértices que têm arestas 
                   direcionadas para este vértice */
+         
+		   void (*DestruirConteudo)(void *pConteudo);
+			 /* Lógica responsável por destruir o valor do vértice do grafo */
 
          void * pValor;
                /* valor contido no vértice */
@@ -77,41 +80,50 @@
          tpVertice * pCorrente;
                /* Vértice corrente */
 
-		 void (*DestruirConteudo)(void *pConteudo);
+		 void (*destruirConteudo)(void *pConteudo);
 			 /* Lógica responsável por destruir o valor do vértice do grafo */
 
-   } GRA_tpGrafo;
+   } tpGrafo;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   static void DestruirVertice(tpVertice *pVertice);
-   static void DestruirAresta(tpVertice *pVertice);
-   static int CompararValores (void *pValor1, void *pValor2);
+   static void NaoFazNada(void *pVazio);
+   static void DestruirVertice(void *pVazio);
+   static void DestruirAresta(void *pVazio);
+   static int CompararVertices (void *pVazio1, void *pVazio2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 //
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-	void (*DestruirConteudo)(void *pConteudo))
+	void (*destruirConteudo)(void *pConteudo))
 {
-	GRA_tpGrafo *pGrafo = (GRA_tpGrafo*)malloc(sizeof(GRA_tpGrafo));
+	tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
 
 	pGrafo->pCorrente = NULL;
-	pGrafo->DestruirConteudo = DestruirConteudo;
+	pGrafo->destruirConteudo = destruirConteudo;
 
-	LIS_CriarLista(&(pGrafo->pOrigens), pGrafo->DestruirConteudo, CompararValores);
-	LIS_CriarLista(&(pGrafo->pVertices), pGrafo->DestruirConteudo, CompararValores);
+	LIS_CriarLista(&(pGrafo->pOrigens), NaoFazNada, CompararVertices);
+	LIS_CriarLista(&(pGrafo->pVertices), DestruirVertice, CompararVertices);
 	
 	*ppGrafo = pGrafo;
 
     return GRA_CondRetOK;
 }
-//
-//
-//
-//GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
-//
-//
+
+
+GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
+{
+   tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
+   
+   LIS_DestruirLista(pGrafo->pVertices);
+   LIS_DestruirLista(pGrafo->pOrigens);
+   free(pGrafo);
+
+   return GRA_CondRetOK;
+}
+
+
 //   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
 //   {
 //      return GRA_CondRetGrafoVazia;
@@ -193,14 +205,37 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 *
 ***********************************************************************/
 
-   /*void FuncaoEncapsulada( )
+   void DestruirVertice(void *pVazio)
    {
+      tpVertice *pVertice = (tpVertice*) pVazio;
+      
+      LIS_DestruirLista(pVertice->pAntecessores);
+      LIS_DestruirLista(pVertice->pSucessores);
+      
+      pVertice->DestruirConteudo(pVertice->pValor);
+      free(pVertice->nome);
+      free(pVertice);
+   }
 
-   }*/
+   void DestruirAresta(void *pVazio)
+   {
+      tpAresta *pAresta = (tpAresta*) pVazio;
 
-  int CompararValores( void * pValor1 , void * pValor2 )
+      free(pAresta->nome);
+      free(pAresta);
+   }
+
+   // A lista de origens não deve destruir os vertices, pois
+   // estes já serão destruidos na pela lista de vertices mesmo
+   // Provavelmente será melhor preparar o módulo lista para receber NULL
+   void NaoFazNada(void *pVazio) {}
+
+  int CompararVertices( void *pVazio1, void *pVazio2 )
   {
-	return 0;
+     tpVertice *pVertice1 = (tpVertice*) pVazio1;
+     tpVertice *pVertice2 = (tpVertice*) pVazio2;
+
+     return strcmp(pVertice1->nome, pVertice2->nome);
   }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/

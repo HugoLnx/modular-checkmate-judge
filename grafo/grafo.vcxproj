@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4B777B00-C358-4B5B-9824-3EE75BFC5983}</ProjectGuid>
+    <ProjectGuid>{9AB30F96-8D64-4481-AFA8-7E51AF08C8AE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>grafo</RootNamespace>
   </PropertyGroup>

@@ -45,17 +45,20 @@ typedef struct GRA_stGrafo * GRA_tppGrafo ;
 
 typedef enum {
 
-	GRA_CondRetOK ,
+	GRA_CondRetOK,
 		/* Concluiu corretamente */
 
-	GRA_CondRetGrafoVazia ,
+	GRA_CondRetGrafoVazia,
 		/* A grafo não contém elementos */
 
-	GRA_CondRetNaoAchou ,
+	GRA_CondRetNaoAchou,
 		/* Não encontrou o valor procurado */
 
-	GRA_CondRetFaltouMemoria
+	GRA_CondRetFaltouMemoria,
 		/* Faltou memória ao tentar alocar algo */
+
+   GRA_CondRetErroLIS
+      /* Erro na manipulação da lista */
 
 } GRA_tpCondRet ;
 
@@ -84,9 +87,8 @@ typedef enum {
 ***********************************************************************/
 
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*DestruirConteudo)(void *pConteudo));
-//GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
-//
-//
+GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
+
 ///* Construir grafo */
 //GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor);
 ///* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
