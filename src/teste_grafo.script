@@ -13,13 +13,17 @@
 
 == Testar criação do grafo
 
-=criarGrafo			OK
+=criarGrafo			 OK
 
-=insVertice      "A"    "vA"    OK
-=insVertice      "B"    "vB"    OK
+=insVertice      "A"    "vA"     OK
+=insVertice      "B"    "vvB"    OK
 
-=insAresta       "ba"   "A"     OK
+=insAresta       "ba"   "A"      OK
 
-=obterValor      "vB"           OK
+=obterValor      "vvB"           OK
 
-=destruirGrafo                  OK
+
+
+=alterarValor    "vB"            OK
+
+=destruirGrafo                   OK

@@ -219,7 +219,10 @@ GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
 
 GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
 {
-   return GRA_CondRetGrafoVazio;
+   tpGrafo *pGraf = (tpGrafo*) pGrafo;
+   pGraf->pCorrente->pValor = pValor;
+
+   return GRA_CondRetOK;
 }
 
 

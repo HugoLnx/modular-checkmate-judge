@@ -178,6 +178,24 @@ static GRA_tppGrafo pGrafo;
             return TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
          }
 
+       /* Testar alterar valor do vértice corrente */
+
+         else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
+         {
+            char *pNovoValor = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", pNovoValor , &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+            CondRet = GRA_AlterarConteudoCorrente(pGrafo, pNovoValor);
+
+            return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao alterar o valor.");
+         }
+
        // /* Testar excluir simbolo */
 
    //      else if ( strcmp( ComandoTeste , EXC_ELEM_CMD ) == 0 )
