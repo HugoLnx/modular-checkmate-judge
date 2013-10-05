@@ -518,11 +518,6 @@
                                       int *pNumElementos)
 
    {
-	   if(pLista == NULL)
-	   {
-			int a= 0;
-	   }
-
 	   *pNumElementos = pLista->numElem;
 	   return LIS_CondRetOK;
    }
