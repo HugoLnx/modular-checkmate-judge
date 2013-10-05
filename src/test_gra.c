@@ -61,7 +61,7 @@ static GRA_tppGrafo pGrafo;
 *     =irPelaAresta                 nome CondRetEsp
 *     =destruirCorr                 CondRetEsp
 *     =destruirAresta               nome CondRetEsp
-*     =tornarOrigem             CondRetEsp
+*     =tornarOrigem                 CondRetEsp
 *
 ***********************************************************************/
 
