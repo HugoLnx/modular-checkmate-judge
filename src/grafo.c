@@ -290,6 +290,14 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 
 GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAresta)
 {
+	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
+	return GRA_CondRetGrafoVazio;
+}
+
+
+
+GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
+{
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
 	LIS_tpCondRet lisCondRet;
@@ -308,7 +316,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAr
 
 	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
 
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeDaAresta);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
 
 	if(lisCondRet != LIS_CondRetOK)
 	{
@@ -320,14 +328,6 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAr
 	pGrafo->pCorrente = pAresta->pVertice;
 
 	return GRA_CondRetOK;
-}
-
-
-
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
-{
-	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-	return GRA_CondRetGrafoVazio;
 }
 
 

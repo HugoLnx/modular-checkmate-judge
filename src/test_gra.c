@@ -241,7 +241,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
 		  /* Testar ir para um vertice adjacente */
 
-         else if (strcmp(ComandoTeste, IR_VERTICE_CMD) == 0)
+		 else if (strcmp(ComandoTeste, IR_ARESTA_CMD) == 0)
          {
 			 char* nomeDaAresta = AlocarEspacoParaNome();
 
@@ -252,7 +252,7 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeDaAresta);
+			CondRet = GRA_SeguirPelaAresta(pGrafo, nomeDaAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }

@@ -58,28 +58,28 @@
 =destruirGrafo                   OK
 
 
-== Testar ir para vértice adjacente
+== Testar seguir pela aresta
 =criarGrafo                      OK
 =insVertice      "A"    "vA"     OK
 =insVertice      "B"    "vB"     OK
 =insVertice      "C"    "vC"     OK
 =insAresta       "ca"   "A"      OK
 =insAresta       "cb"   "B"      OK
-=irVertice       "cb"            OK
+=irPelaAresta    "cb"            OK
 =obterValor      "vB"            OK
 =destruirGrafo                   OK
 
-== Testar ir para vértice adjacente com grafo vazio
+== Testar seguir pela aresta com grafo vazio
 =criarGrafo                      OK
-=irVertice       "cb"            EstaVazio
+=irPelaAresta    "cb"            EstaVazio
 =destruirGrafo                   OK
 
-== Testar ir para vértice adjacente inexistente
+== Testar seguir pela aresta com aresta inexistente
 =criarGrafo                      OK
 =insVertice      "A"    "vA"     OK
 =insVertice      "B"    "vB"     OK
 =insVertice      "C"    "vC"     OK
 =insAresta       "ca"   "A"      OK
 =insAresta       "cb"   "B"      OK
-=irVertice       "zz"            NaoAchou
+=irPelaAresta    "zz"            NaoAchou
 =destruirGrafo                   OK
