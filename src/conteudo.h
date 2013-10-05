@@ -49,11 +49,8 @@ typedef enum {
 	CON_CondRetOK ,
 		/* Concluiu corretamente */
 
-	CON_CondRetGrafoVazia ,
-		/* A grafo não contém elementos */
-
-	CON_CondRetNaoAchou ,
-		/* Não encontrou o valor procurado */
+	CON_CondRetConteudoNaoExiste ,
+		/* Conteúdo não foi criado */
 
 	CON_CondRetFaltouMemoria
 		/* Faltou memória ao tentar alocar algo */
@@ -85,8 +82,8 @@ typedef enum {
 
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
 CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
-CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo ppConteudo, char **ppValor);
-CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo *ppConteudo, char *pValor);
+CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor);
+CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor);
 
 /********** Fim do módulo de definição: CON Conteudo **********/
 

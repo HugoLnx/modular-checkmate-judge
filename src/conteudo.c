@@ -35,10 +35,13 @@ typedef struct CON_stConteudo {
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
+// assertiva de entrada, o ponteiro não aponta para um
+// conteudo q foi criado anteriormente
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
 {
-	tpConteudo *pConteudo = (tpConteudo *)malloc(sizeof(tpConteudo));
+	tpConteudo *pConteudo;
 
+   pConteudo = (tpConteudo *)malloc(sizeof(tpConteudo));
 	if(pConteudo == NULL)
 		return CON_CondRetFaltouMemoria;
 
@@ -54,6 +57,11 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
 	tpConteudo *pConteudo;
 	pConteudo = *ppConteudo;
 
+   if (*ppConteudo == NULL)
+   {
+      return CON_CondRetOK;
+   }
+
 	free(pConteudo);
 	pConteudo = NULL;
 	*ppConteudo = NULL;
@@ -61,20 +69,29 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
 	return CON_CondRetOK;
 }
 
-CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo ppConteudo, char **ppValor)
+CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor)
 {
-	tpConteudo *pConteudo;
-	pConteudo = ppConteudo;
+	tpConteudo *pConteudo = pConteudoParm;
+
+   if (pConteudo == NULL)
+   {
+      *ppValor = NULL;
+      return CON_CondRetConteudoNaoExiste;
+   }
 
 	*ppValor = pConteudo->Valor;
 
 	return CON_CondRetOK;
 }
 
-CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo *ppConteudo, char *pValor)
+CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor)
 {
-	tpConteudo *pConteudo;
-	pConteudo = *ppConteudo;
+	tpConteudo *pConteudo = pConteudoParm;
+   
+   if (pConteudo == NULL)
+   {
+      return CON_CondRetConteudoNaoExiste;
+   }
 
 	strcpy(pConteudo->Valor,pValor);
 	return CON_CondRetOK;
