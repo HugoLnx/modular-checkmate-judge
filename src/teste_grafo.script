@@ -6,7 +6,7 @@
 
 == Declarar as condicoes de retorno
 =declararparm   OK             int  0
-=declararparm   Vazio          int  1
+=declararparm   EstaVazio      int  1
 =declararparm   NaoExiste      int  2
 =declararparm   NaoAchou       int  3
 
@@ -24,7 +24,23 @@
 == Destruir funciona antes da criação do grafo
 =destruirGrafo                   OK
 
+
+== Testando recuperar
+=tornarOrigem                    OK
+=recuperar
+
+== testando criação do grafo
 =criarGrafo			 OK
+
+== Operações inválidas com grafo vazio
+=obterValor      NULL            EstaVazio
+=alterarValor    "x"             EstaVazio
+=tornarOrigem                    EstaVazio
+
+== Destruir funciona com grafo vazio
+=destruirGrafo                   OK
+== Recriar grafo
+=criarGrafo                      OK
 
 =insVertice      "A"    "vA"     OK
 =tornarOrigem                    OK

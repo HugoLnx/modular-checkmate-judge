@@ -220,6 +220,12 @@ GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
       return GRA_CondRetGrafoNaoFoiCriado;
    }
 
+   if (pGraf->pCorrente == NULL)
+   {
+      *ppValor = NULL;
+      return GRA_CondRetGrafoVazio; 
+   }
+
    *ppValor = pGraf->pCorrente->pValor;
    return GRA_CondRetOK;
 }
@@ -233,6 +239,11 @@ GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
    if (pGraf == NULL)
    {
       return GRA_CondRetGrafoNaoFoiCriado;
+   }
+   
+   if (pGraf->pCorrente == NULL)
+   {
+      return GRA_CondRetGrafoVazio;
    }
 
    pGraf->pCorrente->pValor = pValor;
@@ -248,6 +259,11 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
    if (pGraf == NULL)
    {
       return GRA_CondRetGrafoNaoFoiCriado;
+   }
+
+   if (pGraf->pCorrente == NULL)
+   {
+      return GRA_CondRetGrafoVazio;
    }
 
    LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
