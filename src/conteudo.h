@@ -31,7 +31,7 @@
 
 /* Tipo referência para um conteudo */
 
-typedef struct CON_tpConteudo * CON_tppConteudo;
+typedef struct CON_stConteudo * CON_tppConteudo;
 
 
 /***********************************************************************
