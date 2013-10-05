@@ -96,179 +96,179 @@
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-   void (*destruirConteudo)(void *pConteudo))
-{
-   tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
-
-   pGrafo->pCorrente = NULL;
-   pGrafo->destruirConteudo = destruirConteudo;
-
-   LIS_CriarLista(&pGrafo->pOrigens, NaoFazNada, CompararVerticeENome);
-   LIS_CriarLista(&pGrafo->pVertices, DestruirVertice, CompararVerticeENome);
-   
-   *ppGrafo = (GRA_tppGrafo) pGrafo;
-
-    return GRA_CondRetOK;
-}
-
-
-GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
-{
-   tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
-   
-   if (pGrafo == NULL)
+   GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
+      void (*destruirConteudo)(void *pConteudo))
    {
+      tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
+
+      pGrafo->pCorrente = NULL;
+      pGrafo->destruirConteudo = destruirConteudo;
+
+      LIS_CriarLista(&pGrafo->pOrigens, NaoFazNada, CompararVerticeENome);
+      LIS_CriarLista(&pGrafo->pVertices, DestruirVertice, CompararVerticeENome);
+   
+      *ppGrafo = (GRA_tppGrafo) pGrafo;
+
+       return GRA_CondRetOK;
+   }
+
+
+   GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
+   {
+      tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
+   
+      if (pGrafo == NULL)
+      {
+         return GRA_CondRetOK;
+      }
+      LIS_DestruirLista(pGrafo->pVertices);
+      LIS_DestruirLista(pGrafo->pOrigens);
+      free(pGrafo);
+   
+
       return GRA_CondRetOK;
    }
-   LIS_DestruirLista(pGrafo->pVertices);
-   LIS_DestruirLista(pGrafo->pOrigens);
-   free(pGrafo);
-   
-
-   return GRA_CondRetOK;
-}
 
 
-   GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
+      GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *pValor)
+      {
+         tpGrafo *pGraf = (tpGrafo*) pGrafo;
+         tpVertice *pVertice;
+
+         if (pGraf == NULL)
+         {
+            return GRA_CondRetGrafoNaoFoiCriado;
+         }
+
+         pVertice = (tpVertice*) malloc(sizeof(tpVertice));
+         if (pVertice == NULL)
+         {
+            return GRA_CondRetFaltouMemoria;
+         }
+
+         pVertice->nome = pNomeVertice;
+         pVertice->pValor = pValor;
+         pVertice->destruirConteudo = pGraf->destruirConteudo;
+      
+         LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVerticeENome);
+         LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestaENome);
+
+         pGraf->pCorrente = pVertice;
+         LIS_InserirElementoApos(pGraf->pVertices, pVertice);
+
+         return GRA_CondRetOK;
+      }
+
+
+
+   GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
+      char *nomeAresta, char *nomeVerticeDestino)
    {
       tpGrafo *pGraf = (tpGrafo*) pGrafo;
-      tpVertice *pVertice;
+      tpAresta *pAresta;
+      LIS_tpCondRet lisCondRet;
+      
+      if (pGraf == NULL)
+      {
+         return GRA_CondRetGrafoNaoFoiCriado;
+      }
+
+      pAresta = (tpAresta*) malloc(sizeof(tpAresta));
+      if (pAresta == NULL)
+      {
+         return GRA_CondRetFaltouMemoria;
+      }
+
+      LIS_IrInicioLista(pGraf->pVertices);
+      lisCondRet = LIS_ProcurarValor(pGraf->pVertices, nomeVerticeDestino);
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return GRA_CondRetFaltouMemoria;
+      }
+      else
+      {
+          void * pVazio;
+         LIS_ObterValor(pGraf->pVertices, &pVazio);
+         pAresta->pVertice = (tpVertice*) pVazio;
+         lisCondRet = LIS_InserirElementoApos(pAresta->pVertice->pAntecessores, pGraf->pCorrente);
+         if (lisCondRet == LIS_CondRetFaltouMemoria)
+         {
+            return GRA_CondRetFaltouMemoria;
+         }
+      }
+   
+      lisCondRet = LIS_InserirElementoApos(pGraf->pCorrente->pSucessores, pAresta);
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return GRA_CondRetFaltouMemoria;
+      }
+
+      pAresta->nome = nomeAresta;
+
+      return GRA_CondRetOK;
+   }
+
+
+
+   GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
+   {
+      tpGrafo *pGraf = (tpGrafo*) pGrafo;
+
+      if (pGraf == NULL)
+      {
+         *ppValor = NULL;
+         return GRA_CondRetGrafoNaoFoiCriado;
+      }
+
+      if (pGraf->pCorrente == NULL)
+      {
+         *ppValor = NULL;
+         return GRA_CondRetGrafoVazio; 
+      }
+
+      *ppValor = pGraf->pCorrente->pValor;
+      return GRA_CondRetOK;
+   }
+
+
+
+   GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
+   {
+      tpGrafo *pGraf = (tpGrafo*) pGrafo;
+   
+      if (pGraf == NULL)
+      {
+         return GRA_CondRetGrafoNaoFoiCriado;
+      }
+   
+      if (pGraf->pCorrente == NULL)
+      {
+         return GRA_CondRetGrafoVazio;
+      }
+
+      pGraf->pCorrente->pValor = pValor;
+      return GRA_CondRetOK;
+   }
+
+
+
+   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
+   {
+      tpGrafo *pGraf = (tpGrafo*) pGrafo;
 
       if (pGraf == NULL)
       {
          return GRA_CondRetGrafoNaoFoiCriado;
       }
 
-      pVertice = (tpVertice*) malloc(sizeof(tpVertice));
-      if (pVertice == NULL)
+      if (pGraf->pCorrente == NULL)
       {
-         return GRA_CondRetFaltouMemoria;
+         return GRA_CondRetGrafoVazio;
       }
 
-      pVertice->nome = pNomeVertice;
-      pVertice->pValor = pValor;
-      pVertice->destruirConteudo = pGraf->destruirConteudo;
-      
-      LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVerticeENome);
-      LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestaENome);
-
-      pGraf->pCorrente = pVertice;
-      LIS_InserirElementoApos(pGraf->pVertices, pVertice);
-
+      LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
       return GRA_CondRetOK;
    }
-
-
-
-GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
-   char *nomeAresta, char *nomeVerticeDestino)
-{
-   tpGrafo *pGraf = (tpGrafo*) pGrafo;
-   tpAresta *pAresta;
-   LIS_tpCondRet lisCondRet;
-      
-   if (pGraf == NULL)
-   {
-      return GRA_CondRetGrafoNaoFoiCriado;
-   }
-
-   pAresta = (tpAresta*) malloc(sizeof(tpAresta));
-   if (pAresta == NULL)
-   {
-      return GRA_CondRetFaltouMemoria;
-   }
-
-   LIS_IrInicioLista(pGraf->pVertices);
-   lisCondRet = LIS_ProcurarValor(pGraf->pVertices, nomeVerticeDestino);
-   if (lisCondRet == LIS_CondRetFaltouMemoria)
-   {
-      return GRA_CondRetFaltouMemoria;
-   }
-   else
-   {
-       void * pVazio;
-      LIS_ObterValor(pGraf->pVertices, &pVazio);
-      pAresta->pVertice = (tpVertice*) pVazio;
-      lisCondRet = LIS_InserirElementoApos(pAresta->pVertice->pAntecessores, pGraf->pCorrente);
-      if (lisCondRet == LIS_CondRetFaltouMemoria)
-      {
-         return GRA_CondRetFaltouMemoria;
-      }
-   }
-   
-   lisCondRet = LIS_InserirElementoApos(pGraf->pCorrente->pSucessores, pAresta);
-   if (lisCondRet == LIS_CondRetFaltouMemoria)
-   {
-      return GRA_CondRetFaltouMemoria;
-   }
-
-   pAresta->nome = nomeAresta;
-
-   return GRA_CondRetOK;
-}
-
-
-
-GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
-{
-   tpGrafo *pGraf = (tpGrafo*) pGrafo;
-
-   if (pGraf == NULL)
-   {
-      *ppValor = NULL;
-      return GRA_CondRetGrafoNaoFoiCriado;
-   }
-
-   if (pGraf->pCorrente == NULL)
-   {
-      *ppValor = NULL;
-      return GRA_CondRetGrafoVazio; 
-   }
-
-   *ppValor = pGraf->pCorrente->pValor;
-   return GRA_CondRetOK;
-}
-
-
-
-GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
-{
-   tpGrafo *pGraf = (tpGrafo*) pGrafo;
-   
-   if (pGraf == NULL)
-   {
-      return GRA_CondRetGrafoNaoFoiCriado;
-   }
-   
-   if (pGraf->pCorrente == NULL)
-   {
-      return GRA_CondRetGrafoVazio;
-   }
-
-   pGraf->pCorrente->pValor = pValor;
-   return GRA_CondRetOK;
-}
-
-
-
-GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
-{
-   tpGrafo *pGraf = (tpGrafo*) pGrafo;
-
-   if (pGraf == NULL)
-   {
-      return GRA_CondRetGrafoNaoFoiCriado;
-   }
-
-   if (pGraf->pCorrente == NULL)
-   {
-      return GRA_CondRetGrafoVazio;
-   }
-
-   LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
-   return GRA_CondRetOK;
-}
 
 
 
