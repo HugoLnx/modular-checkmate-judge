@@ -29,7 +29,7 @@
 typedef struct CON_stConteudo {
 
 	char Valor[255];
-	/* Valor do conteúdo */
+		/* Valor do conteúdo */
 } tpConteudo;
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -39,7 +39,7 @@ CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
 {
 	tpConteudo *pConteudo;
 
-   pConteudo = (tpConteudo *)malloc(sizeof(tpConteudo));
+	pConteudo = (tpConteudo *)malloc(sizeof(tpConteudo));
 	if(pConteudo == NULL)
 		return CON_CondRetFaltouMemoria;
 
@@ -55,10 +55,10 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
 	tpConteudo *pConteudo;
 	pConteudo = *ppConteudo;
 
-   if (*ppConteudo == NULL)
-   {
-      return CON_CondRetOK;
-   }
+	if (*ppConteudo == NULL)
+	{
+		return CON_CondRetOK;
+	}
 
 	free(pConteudo);
 	pConteudo = NULL;
@@ -71,11 +71,11 @@ CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppV
 {
 	tpConteudo *pConteudo = pConteudoParm;
 
-   if (pConteudo == NULL)
-   {
-      *ppValor = NULL;
-      return CON_CondRetConteudoNaoExiste;
-   }
+	if (pConteudo == NULL)
+	{
+		*ppValor = NULL;
+		return CON_CondRetConteudoNaoExiste;
+	}
 
 	*ppValor = pConteudo->Valor;
 
@@ -85,11 +85,11 @@ CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppV
 CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor)
 {
 	tpConteudo *pConteudo = pConteudoParm;
-   
-   if (pConteudo == NULL)
-   {
-      return CON_CondRetConteudoNaoExiste;
-   }
+
+	if (pConteudo == NULL)
+	{
+		return CON_CondRetConteudoNaoExiste;
+	}
 
 	strcpy(pConteudo->Valor,pValor);
 	return CON_CondRetOK;

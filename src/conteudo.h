@@ -20,11 +20,11 @@
 *     Módulo extremamente simples que representa o conteúdo utilizado pelo grafo.
 *
 ***************************************************************************/
- 
+
 #if defined( CONTEUDO_OWN )
-   #define CONTEUDO_EXT
+#define CONTEUDO_EXT
 #else
-   #define CONTEUDO_EXT extern
+#define CONTEUDO_EXT extern
 #endif
 
 
@@ -48,13 +48,13 @@ typedef struct CON_stConteudo * CON_tppConteudo;
 typedef enum {
 
 	CON_CondRetOK ,
-		/* Concluiu corretamente */
+	    /* Concluiu corretamente */
 
 	CON_CondRetConteudoNaoExiste ,
-		/* Conteúdo não foi criado */
+	    /* Conteúdo não foi criado */
 
 	CON_CondRetFaltouMemoria
-		/* Faltou memória ao tentar alocar algo */
+	    /* Faltou memória ao tentar alocar algo */
 
 } CON_tpCondRet ;
 

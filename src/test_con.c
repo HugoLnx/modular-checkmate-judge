@@ -8,7 +8,7 @@
 
 #include    "conteudo.h"
 
-static const char * CRIAR_CONTEUDO_CMD       = "=criarConteudo"        ;
+static const char * CRIAR_CONTEUDO_CMD          = "=criarConteudo"        ;
 static const char * DESTRUIR_CONTEUDO_CMD		= "=destruirConteudo"     ;
 static const char * OBTER_VALOR_CMD				= "=obterValor"			  ;
 static const char * ALTER_VALOR_CMD				= "=alterarValor"         ;
@@ -36,137 +36,137 @@ CON_tppConteudo   vtConteudos[DIM_VT_CONTEUDO];
 *
 *     Comandos disponíveis:
 *
-*     =criarConteudo				inxConteudo	string		CondRetEsp
-*     =destruirConteudo			inxConteudo					CondRetEsp
-*     =obterValor             inxConteudo string		CondRetEsp
-*     =alterarValor           inxConteudo string		CondRetEsp
+*     =criarConteudo          inxConteudo	string      CondRetEsp
+*     =destruirConteudo       inxConteudo               CondRetEsp
+*     =obterValor             inxConteudo   string      CondRetEsp
+*     =alterarValor           inxConteudo   string      CondRetEsp
 *
 ***********************************************************************/
 
 TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 {
-   int inxConteudo   = -1,
-      numLidos      = -1,
-      CondRetEsp    = -1;
+	int inxConteudo   = -1,
+		numLidos      = -1,
+		CondRetEsp    = -1;
 
-   TST_tpCondRet CondRet;
-   CON_tppConteudo ppConteudo = NULL;
+	TST_tpCondRet CondRet;
+	CON_tppConteudo ppConteudo = NULL;
 
-   /* Testar CriarConteudo */
+	/* Testar CriarConteudo */
 
-   if (strcmp(ComandoTeste, CRIAR_CONTEUDO_CMD) == 0)
-   {
-      char dado[DIM_BUFFER_VALOR];  
-      numLidos = LER_LerParametros( "isi", &inxConteudo, dado, &CondRetEsp);
+	if (strcmp(ComandoTeste, CRIAR_CONTEUDO_CMD) == 0)
+	{
+		char dado[DIM_BUFFER_VALOR];  
+		numLidos = LER_LerParametros( "isi", &inxConteudo, dado, &CondRetEsp);
 
-      if (numLidos != 3 )
-      {
-         return TST_CondRetParm ;
-      }
+		if (numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		}
 
-      CondRet = (TST_tpCondRet)CON_CriarConteudo(&ppConteudo, dado);
+		CondRet = (TST_tpCondRet)CON_CriarConteudo(&ppConteudo, dado);
 
-      if( CondRet ==  CON_CondRetOK )
-      {
-         vtConteudos[ inxConteudo ] = ppConteudo;
-         CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
-         return CondRet;
-      }
+		if( CondRet ==  CON_CondRetOK )
+		{
+			vtConteudos[ inxConteudo ] = ppConteudo;
+			CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
+			return CondRet;
+		}
 
-      return TST_CondRetErro;
+		return TST_CondRetErro;
 
-   }
+	}
 
-   /* Testar DestruirConteudo */
+	/* Testar DestruirConteudo */
 
-   if (strcmp(ComandoTeste, DESTRUIR_CONTEUDO_CMD) == 0)
-   {
-      numLidos = LER_LerParametros( "ii", &inxConteudo, &CondRetEsp);
+	if (strcmp(ComandoTeste, DESTRUIR_CONTEUDO_CMD) == 0)
+	{
+		numLidos = LER_LerParametros( "ii", &inxConteudo, &CondRetEsp);
 
-      if (numLidos != 2)
-      {
-         return TST_CondRetParm ;
-      } 
+		if (numLidos != 2)
+		{
+			return TST_CondRetParm ;
+		} 
 
-      CondRet = (TST_tpCondRet) CON_DestruirConteudo(&(vtConteudos[inxConteudo]));
+		CondRet = (TST_tpCondRet) CON_DestruirConteudo(&(vtConteudos[inxConteudo]));
 
-      if(CondRet ==  CON_CondRetOK)
-      {
-         CondRet = TST_CompararPonteiroNulo(0, vtConteudos[inxConteudo], "Erro em ponteiro ao destruir conteudo.");
-         return CondRet;
-      }
+		if(CondRet ==  CON_CondRetOK)
+		{
+			CondRet = TST_CompararPonteiroNulo(0, vtConteudos[inxConteudo], "Erro em ponteiro ao destruir conteudo.");
+			return CondRet;
+		}
 
-      return TST_CondRetErro;
+		return TST_CondRetErro;
 
-   }
+	}
 
-   /* Testar ObterValorDoConteudo */
+	/* Testar ObterValorDoConteudo */
 
-   if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
-   {
-      char *pDadoEsperado = (char*) malloc(sizeof(char) * DIM_BUFFER_VALOR);
-      char *pDadoObtido;
+	if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
+	{
+		char *pDadoEsperado = (char*) malloc(sizeof(char) * DIM_BUFFER_VALOR);
+		char *pDadoObtido;
 
-      numLidos = LER_LerParametros( "isi", &inxConteudo, pDadoEsperado, &CondRetEsp);
+		numLidos = LER_LerParametros( "isi", &inxConteudo, pDadoEsperado, &CondRetEsp);
 
-      if (numLidos != 3)
-      {
-         return TST_CondRetParm ;
-      }
+		if (numLidos != 3)
+		{
+			return TST_CondRetParm ;
+		}
 
-      if(strcmp(pDadoEsperado, SIMBOLO_PARA_NULL) == 0)
-      {
-         pDadoEsperado = NULL;
-      }
+		if(strcmp(pDadoEsperado, SIMBOLO_PARA_NULL) == 0)
+		{
+			pDadoEsperado = NULL;
+		}
 
-      CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
+		CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 
-      if(CondRet ==  CON_CondRetOK)
-      {
-         CondRet = TST_CompararString(pDadoEsperado,pDadoObtido,"Dado esperado não é igual ao obtido");
-         return CondRet;	
-      }
-      else
-      {
-         if (pDadoObtido != NULL)
-         {
-            return TST_NotificarFalha("Não foi obtido null como valor ao ocorrer um erro."); 
-         }
+		if(CondRet ==  CON_CondRetOK)
+		{
+			CondRet = TST_CompararString(pDadoEsperado,pDadoObtido,"Dado esperado não é igual ao obtido");
+			return CondRet;	
+		}
+		else
+		{
+			if (pDadoObtido != NULL)
+			{
+				return TST_NotificarFalha("Não foi obtido null como valor ao ocorrer um erro."); 
+			}
 
-         return TST_CompararInt(CondRetEsp, CondRet, "Não ocorreu o erro esperado na obtenção do valor.");
-      }
+			return TST_CompararInt(CondRetEsp, CondRet, "Não ocorreu o erro esperado na obtenção do valor.");
+		}
 
-      return TST_CondRetErro;
+		return TST_CondRetErro;
 
-   }
+	}
 
-   /* Testar AlterarValorDoConteudo */
+	/* Testar AlterarValorDoConteudo */
 
-   if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
-   {
-      char pDadoEsperado[DIM_BUFFER_VALOR];
-      char pDadoParaAlterar[DIM_BUFFER_VALOR];
-      char* pDadoObtido;
-      numLidos = LER_LerParametros( "isi", &inxConteudo, pDadoParaAlterar, &CondRetEsp);
+	if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
+	{
+		char pDadoEsperado[DIM_BUFFER_VALOR];
+		char pDadoParaAlterar[DIM_BUFFER_VALOR];
+		char* pDadoObtido;
 
-      if (numLidos != 3)
-      {
-         return TST_CondRetParm ;
-      } 
+		numLidos = LER_LerParametros("isi", &inxConteudo, pDadoParaAlterar, &CondRetEsp);
 
-      CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
+		if (numLidos != 3)
+		{
+			return TST_CondRetParm;
+		} 
 
-      if(CondRet == CON_CondRetOK)
-      {
-         CON_ObterValorDoConteudo(vtConteudos[inxConteudo],&pDadoObtido);
-         CondRet = TST_CompararString(pDadoParaAlterar,pDadoObtido,"Dado não foi alterado");
-         return CondRet;	
-      }
+		CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
 
-       return TST_CompararInt(CondRetEsp, CondRet, "Não ocorreu o erro esperado na alteração do valor.");
+		if(CondRet == CON_CondRetOK)
+		{
+			CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
+			CondRet = TST_CompararString(pDadoParaAlterar, pDadoObtido, "Dado não foi alterado");
+			return CondRet;	
+		}
 
-   }
+		return TST_CompararInt(CondRetEsp, CondRet, "Não ocorreu o erro esperado na alteração do valor.");
+	}
 
-   return TST_CondRetNaoConhec ;
+	return TST_CondRetNaoConhec ;
 
 }
