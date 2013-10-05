@@ -2,21 +2,22 @@
 #define CONTEUDO_
 /***************************************************************************
 *
-*  Módulo de definição: <abreviação>  <estrutura manipulada pelo módulo>
+*  Módulo de definição: CON  Conteúdo do módulo
 *
-*  Arquivo gerado:              <nome-do-arquivo>.h
-*  Letras identificadoras:      <abreviação>
+*  Arquivo gerado:              conteudo.h
+*  Letras identificadoras:      CON
 *
 *	Autores:
-*     - <nick>: <nome>
-*     - <nick>: <nome>
+*     - Hugo Roque: hg
+*     - Robert Corrêa: rc
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data        Observações
-*     1       <nick>   <data>      <observações>
+*     1.0     rc       02/out/13   Criação do módulo e as operações básicas.
+*     1.1     hg       05/out/13   Checagem de erros caso o conteúdo não tenha sido criado.
 *
 *  Descrição do módulo
-*     <descrição do módulo>
+*     Módulo extremamente simples que representa o conteúdo utilizado pelo grafo.
 *
 ***************************************************************************/
  
@@ -60,26 +61,39 @@ typedef enum {
 
 /***********************************************************************
 *
-*  Função: <abreviacao do modulo> <nome da funcao por extenso>
+*  Função: CON Criar conteudo
 *
 *  Descrição
-*     <descricao da função>
+*     Cria uma instância da estrutura.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     ppConteudo - Referência para o ponteiro do conteúdo que será criado.
+*     pValor     - Valor que será atribuido à estrutura.
 *
-*  Retorno
-*     <descricao do retorno, listar os possíveis tpCondRet>
+*  Condições de retorno
+*     - CON_CondRetOK
+*     - CON_CondRetFaltouMemoria
+* 
+*  Retorno por referência
+*     Ponteiro para o conteúdo que será criado.
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     ppConteudo não contém um Conteúdo criado anteriormente.
 *
 *  Assertivas de saida
 *     <assertivas de saida>
 *
+*  Requisitos
+*     <lista de requisitos>
+*
+*  Hipóteses
+*     Não é necessário validar se ppConteudo contém já um conteúdo
+*     pois só é permitido passar um ppConteudo sem conteúdo.
+*
+*  Restrições
+*     <lista de restrições>
+*
 ***********************************************************************/
-
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
 CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
 CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor);

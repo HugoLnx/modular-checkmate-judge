@@ -35,8 +35,6 @@ typedef struct CON_stConteudo {
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
-// assertiva de entrada, o ponteiro não aponta para um
-// conteudo q foi criado anteriormente
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
 {
 	tpConteudo *pConteudo;
