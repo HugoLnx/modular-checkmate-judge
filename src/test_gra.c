@@ -23,7 +23,7 @@ static const char * IR_VERTICE_CMD       = "=irVertice"         ;
 static const char * IR_ARESTA_CMD        = "=irPelaAresta"      ;
 static const char * DESTRUIR_VERT_CMD    = "=destruirCorr"      ;
 static const char * DESTRUIR_ARESTA_CMD  = "=destruirAresta"    ;
-static const char * TORNAR_ORIGEM_CMD    = "=tornarOrigem"  ;
+static const char * TORNAR_ORIGEM_CMD    = "=tornarOrigem"      ;
 
 #define TRUE  1
 #define FALSE 0
@@ -237,6 +237,24 @@ static GRA_tppGrafo pGrafo = NULL;
             CondRet = GRA_TornarCorrenteUmaOrigem(pGrafo);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
+         }
+
+		  /* Testar ir para um vertice adjacente */
+
+         else if (strcmp(ComandoTeste, IR_VERTICE_CMD) == 0)
+         {
+			 char* nomeDaAresta = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", nomeDaAresta, &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+			CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeDaAresta);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
 
        // /* Testar excluir simbolo */

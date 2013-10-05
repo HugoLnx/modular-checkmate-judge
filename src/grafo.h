@@ -56,9 +56,9 @@ typedef enum {
    GRA_CondRetNaoAchou,
       /* Não encontrou o vértice/aresta procurado(a) */
 
-   GRA_CondRetFaltouMemoria
+   GRA_CondRetFaltouMemoria,
       /* Faltou memória ao tentar alocar algo */
-
+ 
 } GRA_tpCondRet ;
 
 
@@ -101,7 +101,7 @@ GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 
 /* Navegaçao */
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice);
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAresta);
 GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta);
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice);
 
