@@ -117,9 +117,14 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 {
    tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
    
+   if (pGrafo == NULL)
+   {
+      return GRA_CondRetOK;
+   }
    LIS_DestruirLista(pGrafo->pVertices);
    LIS_DestruirLista(pGrafo->pOrigens);
    free(pGrafo);
+   
 
    return GRA_CondRetOK;
 }
@@ -205,13 +210,17 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
 
 
 
-
-
 GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
 {
    tpGrafo *pGraf = (tpGrafo*) pGrafo;
-   *ppValor = pGraf->pCorrente->pValor;
 
+   if (pGraf == NULL)
+   {
+      *ppValor = NULL;
+      return GRA_CondRetGrafoNaoFoiCriado;
+   }
+
+   *ppValor = pGraf->pCorrente->pValor;
    return GRA_CondRetOK;
 }
 
@@ -220,20 +229,30 @@ GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
 GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
 {
    tpGrafo *pGraf = (tpGrafo*) pGrafo;
-   pGraf->pCorrente->pValor = pValor;
+   
+   if (pGraf == NULL)
+   {
+      return GRA_CondRetGrafoNaoFoiCriado;
+   }
 
+   pGraf->pCorrente->pValor = pValor;
    return GRA_CondRetOK;
 }
 
 
-   // validar: grafo != null e grafo.corrente != null
-   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
-   {
-      tpGrafo *pGraf = (tpGrafo*) pGrafo;
-      LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
 
-      return GRA_CondRetOK;
+GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
+{
+   tpGrafo *pGraf = (tpGrafo*) pGrafo;
+
+   if (pGraf == NULL)
+   {
+      return GRA_CondRetGrafoNaoFoiCriado;
    }
+
+   LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
+   return GRA_CondRetOK;
+}
 
 
 

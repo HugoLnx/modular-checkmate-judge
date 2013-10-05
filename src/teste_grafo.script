@@ -5,13 +5,24 @@
 //
 
 == Declarar as condicoes de retorno
-
-=declararparm   grafo0  int 0
-
 =declararparm   OK             int  0
+=declararparm   Vazio          int  1
+=declararparm   NaoExiste      int  2
+=declararparm   NaoAchou       int  3
+
+== Declarar outros parâmetros
+=declararparm   NULL           string "!N!"
 //*********************************
 
-== Testar criação do grafo
+== Operações inválidas antes da criação do grafo
+=insVertice      "X"    "x"      NaoExiste
+=insAresta       "ba"   "A"      NaoExiste
+=obterValor      NULL            NaoExiste
+=alterarValor    "x"             NaoExiste
+=tornarOrigem                    NaoExiste
+
+== Destruir funciona antes da criação do grafo
+=destruirGrafo                   OK
 
 =criarGrafo			 OK
 

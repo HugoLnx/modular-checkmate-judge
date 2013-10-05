@@ -28,13 +28,14 @@ static const char * TORNAR_ORIGEM_CMD    = "=tornarOrigem"  ;
 #define TRUE  1
 #define FALSE 0
 #define MAX_CHARS_NOME 3
+#define SIMBOLO_PARA_NULL "!N!"
 
 #define DIM_VT_GRAFO   10
 
 #define VAZIO     0
 #define NAO_VAZIO 1
 
-static GRA_tppGrafo pGrafo;
+static GRA_tppGrafo pGrafo = NULL;
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
@@ -173,16 +174,29 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm;
             }
 
-            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pConteudoObtido);
-
-            CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
-
-            if(CondRet != TST_CondOK)
+            if (strcmp(pDadoEsperado, SIMBOLO_PARA_NULL) == 0)
             {
-         	   return TST_NotificarFalha("Um erro ocorreu ao obter o valor.");
+               pDadoEsperado = NULL;
             }
 
-            return TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
+            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pConteudoObtido);
+
+
+            if (CondRetEsp == TST_CondRetOK)
+            {
+               CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
+
+               return TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
+            }
+            else
+            {
+               if (pConteudoObtido != NULL)
+               {
+                  return TST_NotificarFalha("Não foi obtido null como conteudo ao ocorrer um erro."); 
+               }
+
+               return TST_CompararInt(CondRetEsp, CondRet, "Não ocorreu o erro esperado na obtenção do conteudo.");
+            }
          }
 
        /* Testar alterar valor do vértice corrente */
@@ -205,7 +219,7 @@ static GRA_tppGrafo pGrafo;
 
             // TODO: liberar o espaço do antigo corrente?
 
-            return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao alterar o valor.");
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao alterar o valor.");
          }
 
 
@@ -222,7 +236,7 @@ static GRA_tppGrafo pGrafo;
 
             CondRet = GRA_TornarCorrenteUmaOrigem(pGrafo);
 
-            return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
          }
 
        // /* Testar excluir simbolo */
