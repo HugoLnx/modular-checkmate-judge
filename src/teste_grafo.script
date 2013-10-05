@@ -42,6 +42,7 @@
 == Recriar grafo
 =criarGrafo                      OK
 
+== Testes aleatórios (criar uma estratégia consistente depois)
 =insVertice      "A"    "vA"     OK
 =tornarOrigem                    OK
 
