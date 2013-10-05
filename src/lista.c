@@ -487,6 +487,31 @@
 
    }
 
+   LIS_tpCondRet LIS_EstaVazia( LIS_tppLista pLista ,
+                                              int *pResposta )
+   {
+	   if(pLista->pElemCorr == NULL)
+	   {
+	      *pResposta = 1;
+	   }
+	   else
+	   {
+		   *pResposta = 0;
+	   }
+
+	   return LIS_CondRetOK;
+		
+	   
+   }
+
+   LIS_tpCondRet LIS_NumELementos(LIS_tppLista pLista ,
+                                      int *pNumElementos)
+
+   {
+	   *pNumElementos = pLista->numElem;
+	   return LIS_CondRetOK;
+   }
+
 
 /*****  Código das funções encapsuladas no módulo  *****/
 

@@ -83,3 +83,29 @@
 =insAresta       "cb"   "B"      OK
 =irPelaAresta    "zz"            NaoAchou
 =destruirGrafo                   OK
+
+
+== Testar ir para vertice adjacente
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=insVertice      "B"    "vB"     OK
+=insVertice      "C"    "vC"     OK
+=insAresta       "ca"   "A"      OK
+=insAresta       "cb"   "B"      OK
+=irVertice       "B"             OK
+=obterValor      "vB"            OK
+=destruirGrafo                   OK
+
+== Testar ir para vertice adjacente com grafo vazio
+=criarGrafo                      OK
+=irVertice       "B"             EstaVazio
+=destruirGrafo                   OK
+
+== Testar ir para vertice adjacente com vertice nao estando na lista de sucessores do corrente
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=insVertice      "B"    "vB"     OK
+=insVertice      "C"    "vC"     OK
+=insAresta       "ca"   "A"      OK
+=irVertice       "B"             NaoAchou
+=destruirGrafo                   OK

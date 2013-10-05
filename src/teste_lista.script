@@ -245,6 +245,23 @@
 // LIS_CondRetListaVazia
 =criarlista lista2 OK
 =procurarelem    lista2   '1'   ListaVazia
+=destruirlista   lista2			OK
 // FIM LIS_CondRetListaVazia
+
+== Testar se esta vazia
+=criarlista      lista2		    OK
+=estavazia	     lista2    1    OK
+=destruirlista   lista2			OK
+
+=criarlista      lista2		    OK
+=inselemantes    lista2   '1'   OK
+=estavazia	     lista2	   0    OK
+=destruirlista   lista2			OK
+
+=criarlista      lista2		    OK
+=inselemantes    lista2   '1'   OK
+=estavazia	     lista2	   1    OK
+=recuperar
+=destruirlista   lista2			OK
 
 // fim

@@ -39,7 +39,8 @@ static const char EXC_ELEM_CMD            [ ] = "=excluirelem"    ;
 static const char IR_INICIO_CMD           [ ] = "=irinicio"       ;
 static const char IR_FIM_CMD              [ ] = "=irfinal"        ;
 static const char AVANCAR_ELEM_CMD        [ ] = "=avancarelem"    ;
-static const char PROCURAR_ELEM_CMD        [ ] = "=procurarelem"  ;
+static const char PROCURAR_ELEM_CMD       [ ] = "=procurarelem"   ;
+static const char ESTA_VAZIA_CMD          [ ] = "=estavazia"      ;
 
 
 #define TRUE  1
@@ -345,6 +346,33 @@ LIS_tppLista   vtListas[ DIM_VT_LISTA ] ;
                       "Condicao de retorno errada ao avancar" ) ;
 
          } /* fim ativa: LIS  &Avançar elemento */
+
+		  /* LIS  & EstaVazia */
+
+		 else if ( strcmp( ComandoTeste , ESTA_VAZIA_CMD ) == 0 )
+		 {
+			 int resposta = -1;
+			 int respostaEsperada = -1;
+
+			 numLidos = LER_LerParametros( "iii" , &inxLista , &respostaEsperada,
+				 &CondRetEsp ) ;
+
+			 if ( ( numLidos != 3 )
+				 || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
+			 {
+				 return TST_CondRetParm ;
+			 } /* if */
+
+			 CondRet = LIS_EstaVazia(vtListas[ inxLista ], &resposta);
+
+			 if(resposta == respostaEsperada)
+			 {
+				return TST_CompararInt( CondRetEsp , CondRet, "Erro ao checar se a lista esta vazia" ) ;
+			 }
+			 
+			 return TST_NotificarFalha("Retorno da funcao LIS_EstaVazia nao corresponde ao valor esperado");
+
+		 } /* fim ativa: LIS  &Esta Vazia */
 
       return TST_CondRetNaoConhec ;
 

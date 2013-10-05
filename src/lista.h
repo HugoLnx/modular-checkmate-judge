@@ -355,6 +355,33 @@ typedef struct LIS_stLista * LIS_tppLista ;
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
                                     void * pValor) ;
+/***********************************************************************
+*
+*  Função: LIS Esta Vazia
+*
+*  Descrição
+*     Checa se a lista está vazia
+*
+*  Parâmetros
+*     pLista   - ponteiro para a lista onde procura
+*     pResposta - ponteiro para valor de resposta
+*
+*  Retorno
+*     LIS_CondRetOK  - Elemento corrente está nulo, indicando que a lista esta vazia
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
+*
+***********************************************************************/
+
+    LIS_tpCondRet LIS_EstaVazia( LIS_tppLista pLista ,
+                                              int *pResposta ) ;
+
+	LIS_tpCondRet LIS_NumELementos(LIS_tppLista pLista ,
+                                      int *pNumElementos);
 
 /***********************************************************************/
 #undef LISTA_EXT

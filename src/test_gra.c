@@ -239,7 +239,7 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
          }
 
-		  /* Testar ir para um vertice adjacente */
+		  /* Testar seguir pela aresta */
 
 		 else if (strcmp(ComandoTeste, IR_ARESTA_CMD) == 0)
          {
@@ -257,121 +257,28 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
 
+		 /* Testar ir vertice adjacente */
+
+		 else if (strcmp(ComandoTeste, IR_VERTICE_CMD) == 0)
+         {
+			 char* nomeVertice = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", nomeVertice, &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+			CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeVertice);
+
+			free(nomeVertice);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
+         }
+
        // /* Testar excluir simbolo */
 
-   //      else if ( strcmp( ComandoTeste , EXC_ELEM_CMD ) == 0 )
-   //      {
-
-   //         numLidos = LER_LerParametros( "ii" ,
-   //               &inxLista , &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 2 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         return TST_CompararInt( CondRetEsp ,
-   //                   LIS_ExcluirElemento( vtListas[ inxLista ] ) ,
-   //                  "Condição de retorno errada ao excluir."   ) ;
-
-   //      } /* fim ativa: Testar excluir simbolo */
-
-       ///* Testar ir para o elemento inicial */
-
-   //      else if ( strcmp( ComandoTeste , IR_INICIO_CMD ) == 0 )
-   //      {
-
-   //         numLidos = LER_LerParametros( "ii" ,
-         //	&inxLista, &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 2 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         LIS_IrInicioLista( vtListas[ inxLista ] ) ;
-
-         //return TST_CompararInt(CondRetEsp, LIS_IrInicioLista( vtListas[ inxLista ] ), "Erro ao ir para o inicio da lista" );
-
-   //      } /* fim ativa: Testar ir para o elemento inicial */
-
-       // /* LIS  &Ir para o elemento final */
-
-   //      else if ( strcmp( ComandoTeste , IR_FIM_CMD ) == 0 )
-   //      {
-
-   //         numLidos = LER_LerParametros( "ii" , 
-         //	&inxLista ,  &CondRetEsp) ;
-
-   //         if ( ( numLidos != 2 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         return TST_CompararInt(CondRetEsp, LIS_IrFinalLista( vtListas[ inxLista ] ), "Erro ao ir para o final da lista" );
-
-   //      } /* fim ativa: LIS  &Ir para o elemento final */
-
-       ///* Testar Esvaziar lista lista */
-
-   //      else if ( strcmp( ComandoTeste , ESVAZIAR_LISTA_CMD ) == 0 )
-   //      {
-
-   //         numLidos = LER_LerParametros( "ii" ,
-         //	&inxLista , &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 2 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )))
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-         //return TST_CompararInt(CondRetEsp, LIS_EsvaziarLista( vtListas[ inxLista ] ), "Erro ao esvaziar a lista" ) ;
-
-   //      } /* fim ativa: Testar Esvaziar lista lista */
-
-     ///* LIS  &Avançar elemento */
-
-   //      else if ( strcmp( ComandoTeste , AVANCAR_ELEM_CMD ) == 0 )
-   //      {
-         // int numElem = -1;
-
-   //         numLidos = LER_LerParametros( "iii" , &inxLista , &numElem ,
-   //                             &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 3 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         return TST_CompararInt( CondRetEsp ,
-   //                   LIS_AvancarElementoCorrente( vtListas[ inxLista ] , numElem ) ,
-   //                   "Condicao de retorno errada ao avancar" ) ;
-
-   //      } /* fim ativa: LIS  &Avançar elemento */
-
-       // /* LIS  &Procurar elemento */
-
-   //      else if ( strcmp( ComandoTeste , PROCURAR_ELEM_CMD ) == 0 )
-   //      {
-         //char dadoASerProcurado = -1;
-
-   //         numLidos = LER_LerParametros( "ici" , &inxLista , &dadoASerProcurado ,
-   //                             &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 3 )
-   //           || ( ! ValidarInxLista( inxLista , NAO_VAZIO )) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         return TST_CompararInt( CondRetEsp ,
-   //                   LIS_ProcurarValor(vtListas[ inxLista ], &dadoASerProcurado),
-   //                   "Condicao de retorno errada ao avancar" ) ;
 
    //      } /* fim ativa: LIS  &Avançar elemento */
 

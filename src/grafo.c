@@ -286,15 +286,45 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 	return GRA_CondRetGrafoVazio;
 }
 
-
-
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAresta)
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
-	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-	return GRA_CondRetGrafoVazio;
+	tpGrafo *pGrafo = NULL;
+	tpAresta *pAresta = NULL;
+	tpVertice *pVertice = NULL;
+	int numElemLista = 0;
+
+	if(pGrafoParm == NULL)
+	{
+		return GRA_CondRetGrafoNaoFoiCriado;
+	}
+
+	pGrafo = (tpGrafo*) pGrafoParm;
+
+	if(pGrafo->pCorrente == NULL)
+	{
+		return GRA_CondRetGrafoVazio;
+	}
+
+	LIS_NumELementos(pGrafo->pCorrente->pSucessores, &numElemLista);
+	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
+
+	while(numElemLista > 0)
+	{
+		LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
+
+		if(!strcmp(nomeVertice, pAresta->pVertice->nome))
+		{
+			pGrafo->pCorrente = pAresta->pVertice;
+			return GRA_CondRetOK;
+		}
+
+		LIS_AvancarElementoCorrente(pGrafo->pCorrente->pSucessores,1);
+
+		numElemLista--;
+	}
+
+	return GRA_CondRetNaoAchou;
 }
-
-
 
 GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 {
@@ -329,7 +359,6 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 	return GRA_CondRetOK;
 }
-
 
 
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
