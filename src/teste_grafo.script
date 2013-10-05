@@ -15,9 +15,11 @@
 
 =criarGrafo			OK
 
-=insVertice      "A"    "X"     OK
-=insVertice      "B"    "X"     OK
+=insVertice      "A"    "vA"    OK
+=insVertice      "B"    "vB"    OK
 
 =insAresta       "ba"   "A"     OK
+
+=obterValor      "vB"           OK
 
 =destruirGrafo                  OK

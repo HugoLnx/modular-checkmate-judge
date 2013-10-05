@@ -205,6 +205,25 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
 
 
 
+
+
+GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
+{
+   tpGrafo *pGraf = (tpGrafo*) pGrafo;
+   *ppValor = pGraf->pCorrente->pValor;
+
+   return GRA_CondRetOK;
+}
+
+
+
+GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
+{
+   return GRA_CondRetGrafoVazio;
+}
+
+
+
    GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo)
    {
       return GRA_CondRetGrafoVazio;
@@ -241,20 +260,6 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
 
 
    GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice)
-   {
-      return GRA_CondRetGrafoVazio;
-   }
-
-
-
-   GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor)
-   {
-      return GRA_CondRetGrafoVazio;
-   }
-
-
-
-   GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
    {
       return GRA_CondRetGrafoVazio;
    }

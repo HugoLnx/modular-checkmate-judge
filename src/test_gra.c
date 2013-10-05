@@ -154,6 +154,30 @@ static GRA_tppGrafo pGrafo;
             return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir aresta." ) ;
          }
 
+      /* Testar obter valor do vértice corrente */
+
+         else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
+         {
+            char *pDadoObtido = AlocarEspacoParaNome();
+            char *pDadoEsperado = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", pDadoEsperado , &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pDadoObtido);
+
+            if(CondRet != TST_CondOK)
+            {
+         	   return TST_NotificarFalha("Um erro ocorreu ao obter o valor.");
+            }
+
+            return TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
+         }
+
        // /* Testar excluir simbolo */
 
    //      else if ( strcmp( ComandoTeste , EXC_ELEM_CMD ) == 0 )
@@ -173,33 +197,6 @@ static GRA_tppGrafo pGrafo;
    //                  "Condição de retorno errada ao excluir."   ) ;
 
    //      } /* fim ativa: Testar excluir simbolo */
-
-       ///* Testar obter valor do elemento corrente */
-
-   //      else if ( strcmp ( ComandoTeste , OBTER_VALOR_CMD ) == 0 )
-   //      {
-         //char * pDadoObtido;
-         //char dadoEsperado = 0;
-
-   //         numLidos = LER_LerParametros("ici", 
-         //	&inxLista , &dadoEsperado , &CondRetEsp ) ;
-
-   //         if ( ( numLidos != 3 ) || ( ! ValidarInxLista ( inxLista, NAO_VAZIO ) ) )
-   //         {
-   //            return TST_CondRetParm ;
-   //         } /* if */
-
-   //         CondRet = LIS_ObterValor( vtListas[inxLista] , &pDadoObtido ) ;
-
-         //if( CondRet != TST_CondOK )
-         //{
-         //	return CondRet;
-         //}
-
-         //return TST_CompararChar(dadoEsperado,*pDadoObtido,"Valor do elemento errado.");
-
-   //      } /* fim ativa: Testar obter valor do elemento corrente */
-
 
        ///* Testar ir para o elemento inicial */
 

@@ -96,9 +96,9 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafo, char *pNomeVertice, void *
 /* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo, char *nomeAresta, char *nomeVerticeDestino);
 
-/* Destruir grafo */
-GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo);
-GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta);
+/* Obter e alterar */
+GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor);
+GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor);
 
 /* Outros */
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo);
@@ -108,9 +108,9 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafo, char *nomeVertice)
 GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafo, char *nomeAresta);
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafo, char *nomeVertice);
 
-/* Obter e alterar */
-GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafo, void **ppValor);
-GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor);
+/* Destruir grafo */
+GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo);
+GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta);
 
 /***********************************************************************/
 #undef GRAFO_EXT
