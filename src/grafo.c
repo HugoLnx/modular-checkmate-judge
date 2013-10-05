@@ -95,7 +95,7 @@
    static int CompararArestaENome (void *pVazio1, void *pVazio2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
-//
+
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
    void (*destruirConteudo)(void *pConteudo))
 {
