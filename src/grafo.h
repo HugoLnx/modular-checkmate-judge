@@ -56,11 +56,8 @@ typedef enum {
    GRA_CondRetNaoAchou,
       /* Não encontrou o valor procurado */
 
-   GRA_CondRetFaltouMemoria,
+   GRA_CondRetFaltouMemoria
       /* Faltou memória ao tentar alocar algo */
-
-   GRA_CondRetErroLIS
-      /* Erro na manipulação da lista */
 
 } GRA_tpCondRet ;
 

@@ -176,26 +176,26 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafo,
 
    LIS_IrInicioLista(pGraf->pVertices);
    lisCondRet = LIS_ProcurarValor(pGraf->pVertices, nomeVerticeDestino);
-   if (lisCondRet == LIS_CondRetOK)
+   if (lisCondRet == LIS_CondRetFaltouMemoria)
    {
-      void * pVazio;
-      LIS_ObterValor(pGraf->pVertices, &pVazio);
-      pAresta->pVertice = (tpVertice*) pVazio;
-      lisCondRet = LIS_InserirElementoApos(pAresta->pVertice->pAntecessores, pGraf->pCorrente);
-      if (lisCondRet != LIS_CondRetOK)
-      {
-         return GRA_CondRetErroLIS;
-      }
+      return GRA_CondRetFaltouMemoria;
    }
    else
    {
-      return GRA_CondRetErroLIS;
+       void * pVazio;
+      LIS_ObterValor(pGraf->pVertices, &pVazio);
+      pAresta->pVertice = (tpVertice*) pVazio;
+      lisCondRet = LIS_InserirElementoApos(pAresta->pVertice->pAntecessores, pGraf->pCorrente);
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return GRA_CondRetFaltouMemoria;
+      }
    }
    
    lisCondRet = LIS_InserirElementoApos(pGraf->pCorrente->pSucessores, pAresta);
-   if (lisCondRet != LIS_CondRetOK)
+   if (lisCondRet == LIS_CondRetFaltouMemoria)
    {
-      return GRA_CondRetErroLIS;
+      return GRA_CondRetFaltouMemoria;
    }
 
    pAresta->nome = nomeAresta;
