@@ -24,9 +24,15 @@
     <ClCompile Include="..\src\grafo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\lista.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\grafo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lista.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,6 +42,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\src\lista.lib" />
+    <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Documentos", "Documentos\Documentos.vcxproj", "{3B4D0F77-1F54-4314-B2FB-4F5A8B755300}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "grafo", "grafo\grafo.vcxproj", "{9AB30F96-8D64-4481-AFA8-7E51AF08C8AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8CB69F4A-D4B0-4FDF-951F-37615241C0F8} = {8CB69F4A-D4B0-4FDF-951F-37615241C0F8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "conteudo", "conteudo\conteudo.vcxproj", "{2CC7B701-70AE-4BF6-A021-6129E1F2A533}"
 EndProject

@@ -75,16 +75,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\grafo.c" />
+    <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\test_gra.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\grafo.h" />
+    <ClInclude Include="..\src\lista.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\teste_grafo.script" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\src\lista.lib" />
+    <Library Include="..\src\ArcaboucoTeste.lib">
+      <FileType>Document</FileType>
+    </Library>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
