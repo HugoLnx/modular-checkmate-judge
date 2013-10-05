@@ -74,11 +74,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\conteudo.c" />
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\test_gra.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\conteudo.h" />
     <ClInclude Include="..\src\grafo.h" />
     <ClInclude Include="..\src\lista.h" />
   </ItemGroup>

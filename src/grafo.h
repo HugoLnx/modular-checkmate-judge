@@ -54,7 +54,7 @@ typedef enum {
       /* O grafo não contém elementos */
 
    GRA_CondRetNaoAchou,
-      /* Não encontrou o valor procurado */
+      /* Não encontrou o vértice/aresta procurado(a) */
 
    GRA_CondRetFaltouMemoria
       /* Faltou memória ao tentar alocar algo */

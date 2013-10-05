@@ -8,6 +8,7 @@
 #include    "LerParm.h"
 
 #include    "grafo.h"
+#include    "conteudo.h"
 
 
 static const char * CRIAR_GRAFO_CMD      = "=criarGrafo"        ;
@@ -121,6 +122,7 @@ static GRA_tppGrafo pGrafo;
          {
             char *pNome = AlocarEspacoParaNome();
             char *pDado = AlocarEspacoParaNome();
+            CON_tppConteudo pConteudo;
 
             numLidos = LER_LerParametros( "ssi", pNome, pDado, &CondRetEsp );
 
@@ -129,7 +131,9 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm;
             }
    
-            CondRet = GRA_InserirVertice(pGrafo, pNome, pDado);
+            CON_CriarConteudo(&pConteudo, pDado);
+
+            CondRet = GRA_InserirVertice(pGrafo, pNome, pConteudo);
 
             return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir vértice." ) ;
 
@@ -158,8 +162,9 @@ static GRA_tppGrafo pGrafo;
 
          else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
          {
-            char *pDadoObtido = AlocarEspacoParaNome();
+            CON_tppConteudo pConteudoObtido;
             char *pDadoEsperado = AlocarEspacoParaNome();
+            char *pDadoObtido;
 
             numLidos = LER_LerParametros("si", pDadoEsperado , &CondRetEsp);
 
@@ -168,7 +173,9 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm;
             }
 
-            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pDadoObtido);
+            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pConteudoObtido);
+
+            CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
 
             if(CondRet != TST_CondOK)
             {
@@ -183,6 +190,7 @@ static GRA_tppGrafo pGrafo;
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
+            CON_tppConteudo pNovoConteudo;
 
             numLidos = LER_LerParametros("si", pNovoValor , &CondRetEsp);
 
@@ -191,7 +199,11 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm;
             }
 
-            CondRet = GRA_AlterarConteudoCorrente(pGrafo, pNovoValor);
+            CON_CriarConteudo(&pNovoConteudo, pNovoValor);
+
+            CondRet = GRA_AlterarConteudoCorrente(pGrafo, pNovoConteudo);
+
+            // TODO: liberar o espaço do antigo corrente?
 
             return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao alterar o valor.");
          }
@@ -345,48 +357,15 @@ static GRA_tppGrafo pGrafo;
 *
 ***********************************************************************/
 
-   void DestruirValor( void * pValor )
+   void DestruirValor(void *pValor)
    {
-      free( pValor ) ;
+      CON_DestruirConteudo((CON_tppConteudo*) &pValor);
    }
 
    char* AlocarEspacoParaNome()
    {
       return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
    }
-
-/***********************************************************************
-*
-*  $FC Função: TLIS -Validar indice de lista
-*
-***********************************************************************/
-
-   //int ValidarInxLista( int inxLista , int Modo )
-   //{
-
-   //   if ( ( inxLista <  0 )
-   //     || ( inxLista >= DIM_VT_LISTA ))
-   //   {
-   //      return FALSE ;
-   //   } /* if */
-   //      
-   //   if ( Modo == VAZIO )
-   //   {
-   //      if ( vtListas[ inxLista ] != 0 )
-   //      {
-   //         return FALSE ;
-   //      } /* if */
-   //   } else
-   //   {
-   //      if ( vtListas[ inxLista ] == 0 )
-   //      {
-   //         return FALSE ;
-   //      } /* if */
-   //   } /* if */
-   //      
-   //   return TRUE ;
-
-   //} /* Fim função: TLIS -Validar indice de lista */
 
 /********** Fim do módulo de implementação: TLIS Teste lista de símbolos **********/
 
