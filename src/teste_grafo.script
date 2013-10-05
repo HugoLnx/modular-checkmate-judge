@@ -16,14 +16,15 @@
 =criarGrafo			 OK
 
 =insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+
 =insVertice      "B"    "vvB"    OK
 
 =insAresta       "ba"   "A"      OK
 
 =obterValor      "vvB"           OK
 
-
-
 =alterarValor    "vB"            OK
+=tornarOrigem                    OK
 
 =destruirGrafo                   OK

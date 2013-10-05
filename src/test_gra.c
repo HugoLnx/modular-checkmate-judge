@@ -22,7 +22,7 @@ static const char * IR_VERTICE_CMD       = "=irVertice"         ;
 static const char * IR_ARESTA_CMD        = "=irPelaAresta"      ;
 static const char * DESTRUIR_VERT_CMD    = "=destruirCorr"      ;
 static const char * DESTRUIR_ARESTA_CMD  = "=destruirAresta"    ;
-static const char * TORNAR_ORIGEM_CMD    = "=tornarCorrOrigem"  ;
+static const char * TORNAR_ORIGEM_CMD    = "=tornarOrigem"  ;
 
 #define TRUE  1
 #define FALSE 0
@@ -61,7 +61,7 @@ static GRA_tppGrafo pGrafo;
 *     =irPelaAresta                 nome CondRetEsp
 *     =destruirCorr                 CondRetEsp
 *     =destruirAresta               nome CondRetEsp
-*     =tornarCorrOrigem             CondRetEsp
+*     =tornarOrigem             CondRetEsp
 *
 ***********************************************************************/
 
@@ -194,6 +194,23 @@ static GRA_tppGrafo pGrafo;
             CondRet = GRA_AlterarConteudoCorrente(pGrafo, pNovoValor);
 
             return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao alterar o valor.");
+         }
+
+
+       /* Testar tornar corrente uma origem */
+
+         else if (strcmp(ComandoTeste, TORNAR_ORIGEM_CMD) == 0)
+         {
+            numLidos = LER_LerParametros("i", &CondRetEsp);
+
+            if (numLidos != 1)
+            {
+               return TST_CondRetParm;
+            }
+
+            CondRet = GRA_TornarCorrenteUmaOrigem(pGrafo);
+
+            return TST_CompararInt(TST_CondOK, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
          }
 
        // /* Testar excluir simbolo */

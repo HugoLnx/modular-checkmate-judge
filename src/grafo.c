@@ -226,6 +226,16 @@ GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
 }
 
 
+   // validar: grafo != null e grafo.corrente != null
+   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
+   {
+      tpGrafo *pGraf = (tpGrafo*) pGrafo;
+      LIS_InserirElementoApos(pGraf->pOrigens, pGraf->pCorrente);
+
+      return GRA_CondRetOK;
+   }
+
+
 
    GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafo)
    {
@@ -235,13 +245,6 @@ GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafo, void *pValor)
 
 
    GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafo, char *pNomeAresta)
-   {
-      return GRA_CondRetGrafoVazio;
-   }
-
-
-
-   GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafo)
    {
       return GRA_CondRetGrafoVazio;
    }
