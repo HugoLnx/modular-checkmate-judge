@@ -104,31 +104,31 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
    if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
    {
-      char *dado_esperado = (char*) malloc(sizeof(char) * DIM_BUFFER_VALOR);
-      char *dado_obtido;
+      char *pDadoEsperado = (char*) malloc(sizeof(char) * DIM_BUFFER_VALOR);
+      char *pDadoObtido;
 
-      numLidos = LER_LerParametros( "isi", &inxConteudo, dado_esperado, &CondRetEsp);
+      numLidos = LER_LerParametros( "isi", &inxConteudo, pDadoEsperado, &CondRetEsp);
 
       if (numLidos != 3)
       {
          return TST_CondRetParm ;
       }
 
-      if(strcmp(dado_esperado, SIMBOLO_PARA_NULL) == 0)
+      if(strcmp(pDadoEsperado, SIMBOLO_PARA_NULL) == 0)
       {
-         dado_esperado = NULL;
+         pDadoEsperado = NULL;
       }
 
-      CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &dado_obtido);
+      CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 
       if(CondRet ==  CON_CondRetOK)
       {
-         CondRet = TST_CompararString(dado_esperado,dado_obtido,"Dado esperado não é igual ao obtido");
+         CondRet = TST_CompararString(pDadoEsperado,pDadoObtido,"Dado esperado não é igual ao obtido");
          return CondRet;	
       }
       else
       {
-         if (dado_obtido != NULL)
+         if (pDadoObtido != NULL)
          {
             return TST_NotificarFalha("Não foi obtido null como valor ao ocorrer um erro."); 
          }
@@ -144,22 +144,22 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
    if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
    {
-      char dado_esperado[DIM_BUFFER_VALOR];
-      char dado_para_alterar[DIM_BUFFER_VALOR];
-      char* dado_obtido;
-      numLidos = LER_LerParametros( "isi", &inxConteudo, dado_para_alterar, &CondRetEsp);
+      char pDadoEsperado[DIM_BUFFER_VALOR];
+      char pDadoParaAlterar[DIM_BUFFER_VALOR];
+      char* pDadoObtido;
+      numLidos = LER_LerParametros( "isi", &inxConteudo, pDadoParaAlterar, &CondRetEsp);
 
       if (numLidos != 3)
       {
          return TST_CondRetParm ;
       } 
 
-      CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], dado_para_alterar);
+      CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
 
       if(CondRet == CON_CondRetOK)
       {
-         CON_ObterValorDoConteudo(vtConteudos[inxConteudo],&dado_obtido);
-         CondRet = TST_CompararString(dado_para_alterar,dado_obtido,"Dado não foi alterado");
+         CON_ObterValorDoConteudo(vtConteudos[inxConteudo],&pDadoObtido);
+         CondRet = TST_CompararString(pDadoParaAlterar,pDadoObtido,"Dado não foi alterado");
          return CondRet;	
       }
 
