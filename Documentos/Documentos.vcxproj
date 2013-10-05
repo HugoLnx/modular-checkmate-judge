@@ -19,7 +19,6 @@
     <None Include="lista.assertivas" />
     <None Include="modulo_implementacao.docstyle" />
     <None Include="nomenclatura.codestyle" />
-    <None Include="prototipos.todo" />
     <None Include="robert.relatorio" />
     <None Include="Robert.todo" />
     <None Include="struct.codestyle" />

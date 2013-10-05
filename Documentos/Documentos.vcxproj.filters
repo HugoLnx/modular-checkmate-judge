@@ -56,8 +56,5 @@
     <None Include="modulo_implementacao.docstyle">
       <Filter>Docstyle</Filter>
     </None>
-    <None Include="prototipos.todo">
-      <Filter>TODO</Filter>
-    </None>
   </ItemGroup>
 </Project>
