@@ -32,7 +32,6 @@
 
 typedef struct GRA_stGrafo * GRA_tppGrafo ;
 
-
 /***********************************************************************
 *
 *  Tipo de dados: GRA Condições de retorno

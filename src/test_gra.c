@@ -26,6 +26,7 @@ static const char * TORNAR_ORIGEM_CMD    = "=tornarCorrOrigem"  ;
 
 #define TRUE  1
 #define FALSE 0
+#define MAX_CHARS_NOME 3
 
 #define DIM_VT_GRAFO   10
 
@@ -36,14 +37,15 @@ static GRA_tppGrafo pGrafo;
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   static void DestruirValor( void * pValor );
+   static void DestruirValor(void *pValor);
+   static char* AlocarEspacoParaNome();
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
 /***********************************************************************
 *
-*  Função: TGRA Tetar grafo
+*  Função: TGRA Testar grafo
 *
 *     Comandos disponíveis:
 *
@@ -117,16 +119,10 @@ static GRA_tppGrafo pGrafo;
 
          else if (strcmp(ComandoTeste, INS_VERT_CMD) == 0)
          {
-            char nome = 0;
-            char dadoAInserir = 0;
-            
-            char *pNome = (char*) malloc(sizeof(char));
-            char *pDado = (char*) malloc(sizeof(char));
+            char *pNome = AlocarEspacoParaNome();
+            char *pDado = AlocarEspacoParaNome();
 
-            numLidos = LER_LerParametros( "cci", &nome, &dadoAInserir, &CondRetEsp );
-
-            *pDado = dadoAInserir;
-            *pNome = nome;
+            numLidos = LER_LerParametros( "ssi", pNome, pDado, &CondRetEsp );
 
             if (numLidos != 3)
             {
@@ -143,16 +139,10 @@ static GRA_tppGrafo pGrafo;
 
          else if (strcmp(ComandoTeste, INS_ARESTA_CMD) == 0)
          {
-            char nomeAresta = 0;
-            char nomeVertice = 0;
-            
-            char *pNomeAresta = (char*) malloc(sizeof(char));
-            char *pNomeVertice = (char*) malloc(sizeof(char));
+            char *pNomeAresta = AlocarEspacoParaNome();
+            char *pNomeVertice = AlocarEspacoParaNome();
 
-            numLidos = LER_LerParametros( "cci", &nomeAresta, &nomeVertice, &CondRetEsp );
-
-            *pNomeAresta = nomeAresta;
-            *pNomeVertice = nomeVertice;
+            numLidos = LER_LerParametros( "ssi", pNomeAresta, pNomeVertice, &CondRetEsp );
 
             if (numLidos != 3)
             {
@@ -325,9 +315,12 @@ static GRA_tppGrafo pGrafo;
 
    void DestruirValor( void * pValor )
    {
-
       free( pValor ) ;
+   }
 
+   char* AlocarEspacoParaNome()
+   {
+      return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
    }
 
 /***********************************************************************

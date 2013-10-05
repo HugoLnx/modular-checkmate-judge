@@ -129,7 +129,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
    {
       tpGrafo *pGraf = (tpGrafo*) pGrafo;
       tpVertice *pVertice;
-      
+
       if (pGraf == NULL)
       {
          return GRA_CondRetGrafoNaoFoiCriado;
