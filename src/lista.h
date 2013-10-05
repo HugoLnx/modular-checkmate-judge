@@ -380,6 +380,28 @@ typedef struct LIS_stLista * LIS_tppLista ;
     LIS_tpCondRet LIS_EstaVazia( LIS_tppLista pLista ,
                                               int *pResposta ) ;
 
+	/***********************************************************************
+*
+*  Função: LIS Num Elementos
+*
+*  Descrição
+*     Pega o numero de elementos contido na lista
+*
+*  Parâmetros
+*     pLista        - ponteiro para a lista onde procura
+*     pNumElementos - ponteiro que ira armazenar o numero de elementos da lista
+*
+*  Retorno
+*     LIS_CondRetOK  - Retornou o numero de elementos
+*
+*  Assertivas de entrada
+*     <assertivas de entrada>
+*
+*  Assertivas de saída
+*     <assertivas de saída>
+*
+***********************************************************************/
+
 	LIS_tpCondRet LIS_NumELementos(LIS_tppLista pLista ,
                                       int *pNumElementos);
 

@@ -264,4 +264,16 @@
 =recuperar
 =destruirlista   lista2			OK
 
-// fim
+== Testar pegar numero de elementos
+=criarlista lista2 OK
+=inselemantes    lista2   '1'   OK
+=inselemantes    lista2   '2'   OK
+=inselemantes    lista2   '3'   OK
+=inselemantes    lista2   '4'   OK
+=numelementos	 lista2    4    OK
+=destruirlista   lista2			OK
+
+== Testar pegar numero de elementos lista vazia
+=criarlista lista2 OK
+=numelementos	 lista2    0    OK
+=destruirlista   lista2			OK

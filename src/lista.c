@@ -487,6 +487,11 @@
 
    }
 
+   /***************************************************************************
+*
+*  Função: LIS Esta Vazia
+*  ****/
+
    LIS_tpCondRet LIS_EstaVazia( LIS_tppLista pLista ,
                                               int *pResposta )
    {
@@ -504,10 +509,20 @@
 	   
    }
 
+
+   /***************************************************************************
+*
+*  Função: LIS Numero de elementos
+*  ****/
    LIS_tpCondRet LIS_NumELementos(LIS_tppLista pLista ,
                                       int *pNumElementos)
 
    {
+	   if(pLista == NULL)
+	   {
+			int a= 0;
+	   }
+
 	   *pNumElementos = pLista->numElem;
 	   return LIS_CondRetOK;
    }
