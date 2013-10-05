@@ -5,22 +5,21 @@
 //
 
 == Declarar as condicoes de retorno
-
 =declararparm   conteudo0	   int 0
+=declararparm   OK            int 0
 
-=declararparm   OK             int  0
 //*********************************
 
 == Testar criação do conteudo
-=criarConteudo		conteudo0	"conteudo 1"	OK
+=criarConteudo		conteudo0	"conteudo 1"   OK
 
 == Testar destruição do conteudo
-=destruirConteudo	conteudo0					OK
+=destruirConteudo	conteudo0					   OK
 
 == Testar obter valor do conteudo
 =criarConteudo		conteudo0	"conteudo 1"	OK
 =obterValor			conteudo0	"conteudo 1"	OK
-=destruirConteudo	conteudo0					OK
+=destruirConteudo	conteudo0					   OK
 
 == Testar alterar valor do conteudo
 =criarConteudo		conteudo0	"conteudo 1"	OK

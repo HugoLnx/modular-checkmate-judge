@@ -8,7 +8,7 @@
 
 #include    "conteudo.h"
 
-static const char * CRIAR_CONTEUDO_CMD          = "=criarConteudo"        ;
+static const char * CRIAR_CONTEUDO_CMD       = "=criarConteudo"        ;
 static const char * DESTRUIR_CONTEUDO_CMD		= "=destruirConteudo"     ;
 static const char * OBTER_VALOR_CMD				= "=obterValor"			  ;
 static const char * ALTER_VALOR_CMD				= "=alterarValor"         ;
