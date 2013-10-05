@@ -83,15 +83,15 @@ static GRA_tppGrafo pGrafo;
                return TST_CondRetParm ;
             }
 
-         CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
+            CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
 
-         if( CondRet ==  GRA_CondRetOK )
-         {
-            CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
-            return CondRet;
-         }
+            if( CondRet ==  GRA_CondRetOK )
+            {
+               CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
+               return CondRet;
+            }
 
-         return TST_CondRetErro;
+            return TST_CondRetErro;
 
          }
 
@@ -135,12 +135,6 @@ static GRA_tppGrafo pGrafo;
    
             CondRet = GRA_InserirVertice(pGrafo, pNome, pDado);
 
-            if ( CondRet != GRA_CondRetOK )
-            {
-                TST_NotificarFalha( "Não foi possivel inserir vertice" ) ;
-         	return TST_CondRetErro;
-            }
-
             return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir vértice." ) ;
 
          }
@@ -167,14 +161,7 @@ static GRA_tppGrafo pGrafo;
    
             CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, pNomeAresta, pNomeVertice);
 
-            if ( CondRet != GRA_CondRetOK )
-            {
-                TST_NotificarFalha( "Não foi possivel inserir aresta" ) ;
-         	return TST_CondRetErro;
-            }
-
             return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir aresta." ) ;
-
          }
 
        // /* Testar excluir simbolo */
@@ -341,34 +328,7 @@ static GRA_tppGrafo pGrafo;
 
       free( pValor ) ;
 
-   } /* Fim função: TLIS -Destruir valor */
-
-
-/***********************************************************************
-*
-*  $FC Função: TLIS -Comparar valores
-*
-***********************************************************************/
-
-   int CompararValores( void * pValor1 , void * pValor2 )
-   {
-      char valor1 = (char) * (char *) pValor1;
-      char valor2 = (char) * (char *) pValor2;
-
-      if ( valor1 > valor2 )
-     {
-        return 1;
-     }
-     
-      if ( valor1 < valor2 )
-     {
-        return -1;
-     }
-
-     return 0;
-
-   } /* Fim função: TLIS -Comparar valores */
-
+   }
 
 /***********************************************************************
 *
