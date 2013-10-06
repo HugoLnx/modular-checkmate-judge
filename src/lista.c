@@ -62,7 +62,6 @@
        void (*destruirValor)(void * pValor);
             /* Lógica responsável por destruir o valor da lista */
 
-       
        int (*compararValores)(void * pValor1 , void * pValor2);
             /* Lógica responsável por comparar dois valores */
 
@@ -85,22 +84,22 @@
 *  Função: LIS Criar lista
 *  ****/
 
-   LIS_tpCondRet LIS_CriarLista(LIS_tppLista* ppLista,
-      void (*destruirValor)(void * pValor),
-      int (*compararValores)(void * pValor1, void * pValor2) )
+   LIS_tpCondRet LIS_CriarLista(LIS_tppLista *ppLista,
+      void (*destruirValor)(void *pValor),
+      int (*compararValores)(void *pValor1, void *pValor2))
    {
-     LIS_tpLista* pLista;
+      LIS_tpLista *pLista;
 
-      pLista = ( LIS_tpLista *) malloc( sizeof( LIS_tpLista )) ;
-      if ( pLista == NULL )
+      pLista = (LIS_tpLista*) malloc(sizeof( LIS_tpLista)) ;
+      if (pLista == NULL)
       {
          return LIS_CondRetFaltouMemoria ;
-      } /* if */
+      }
 
       LimparCabeca(pLista);
 
-     pLista->destruirValor = destruirValor;
-     pLista->compararValores = compararValores;
+      pLista->destruirValor = destruirValor;
+      pLista->compararValores = compararValores;
 
      *ppLista = pLista;
 
@@ -113,7 +112,7 @@
 *  Função: LIS Destruir lista
 *  ****/
 
-   LIS_tpCondRet LIS_DestruirLista( LIS_tppLista pLista )
+   LIS_tpCondRet LIS_DestruirLista(LIS_tppLista pLista)
    {
 
       #ifdef _DEBUG
@@ -135,7 +134,6 @@
 
    LIS_tpCondRet LIS_EsvaziarLista( LIS_tppLista pLista )
    {
-
       tpElemLista * pElem ;
       tpElemLista * pProx ;
 
@@ -149,7 +147,7 @@
          pProx = pElem->pProx ;
          LiberarElemento( pLista , pElem ) ;
          pElem = pProx ;
-      } /* while */
+      }
 
       LimparCabeca( pLista ) ;
 
@@ -282,6 +280,7 @@
       } /* if */
 
       pElem = pLista->pElemCorr ;
+      pLista->pElemCorr = NULL;
 
       /* Desencadeia à esquerda */
 
@@ -290,19 +289,19 @@
             pElem->pAnt->pProx   = pElem->pProx ;
             pLista->pElemCorr    = pElem->pAnt ;
          } else {
-            pLista->pElemCorr    = pElem->pProx ;
-            pLista->pOrigemLista = pLista->pElemCorr ;
-         } /* if */
+            pLista->pOrigemLista = pElem->pProx ;
+         }
 
       /* Desencadeia à direita */
 
          if ( pElem->pProx != NULL )
          {
             pElem->pProx->pAnt = pElem->pAnt ;
+            pLista->pElemCorr  = pElem->pProx ;
          } else
          {
             pLista->pFimLista = pElem->pAnt ;
-         } /* if */
+         }
 
       LiberarElemento( pLista , pElem ) ;
 
