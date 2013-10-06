@@ -1,17 +1,36 @@
 /***************************************************************************
 *
-*  Módulo de implementação: <abreviação>  <estrutura manipulada pelo módulo>
+*  Módulo de implementação: GRA  Grafo direcionado
 *
-*  Arquivo gerado:              <nome-do-arquivo>.c
-*  Letras identificadoras:      <abreviação>
+*  Arquivo gerado:              grafo.c
+*  Letras identificadoras:      GRA
 *
 *	Autores:
-*     - <nick>: <nome>
-*     - <nick>: <nome>
+*     - rc: Robert Corrêa
+*     - hg: Hugo Roque
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data        Observações
-*     1       <nick>   <data>      <observações>
+*     1.0     hg & rc  06/out/13   Preparação do módulo para trabalhar com grafos direcionados.
+*
+*  Assertivas Estruturais
+*     Antecessor aponta de volta para o vértice como sucessor
+*        Para todo vértice pVerAnt em pVer->pAntecessores existirá uma aresta pAreSuc em pVerAnt->pSucessores tal que pAreSuc->pVertice = pVer
+*     
+*     Sucessor aponta de volta para o vértice como antecessor
+*        Para toda aresta pAreSuc em pVer->pSucessores existirá um vértice pVerAnt em pAreSuc->pVertice->pAntecessores tal que pVerAnt = pVer
+*     
+*     Se está na origem tem que estar na lista de vértices
+*        Para todo vértice pVerOri em pGrafo->pOrigens existirá um vértice pVer em pGrafo->pVertices tal que pVerOri = pVer
+*     
+*     Se tem corrente ele tem q estar na lista de vértices
+*        Se pGrafo->pCorrente != NULL => Existirá um vértice pVer em pGrafo->pVertices tal que pVer = pGrafo->pCorrente
+*     
+*     Todos os antecessores dos vértices de um grafo têm q estar na lista de vértices desse grafo  
+*        Para todo vértice pVer e pVerAnt tal que pVer pertence à pGrafo->pVertices e pVerAnt pertence à pVer->Antecessores existirá um pVer2 pertencente à pGrafo->pVertices tal que pVerAnt = pVer2
+*     
+*     Todas as arestas dos vértices de um grafo G têm que apontar para um vértice que está na lista desse grafo
+*        Para todo vértice pVer e aresta pAre tal que pVer pertence à pGrafo->pVertices e pAre pertence à pVer->pSucessores, existirá um pVer2 pertencente à pGrafo->pVertices tal que pVer2 = pAre->pVertice.
 *
 ***************************************************************************/
 
