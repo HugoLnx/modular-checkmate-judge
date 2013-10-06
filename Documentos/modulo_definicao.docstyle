@@ -73,23 +73,17 @@ typedef <estrutura exportada> * <nome do tipo> ;
 *     <param 1>      - <explicação sobre parametro 1>
 *     <parametro 2>  - <explicação sobre parametro 2>
 *
+*  Condições de retorno
+*     <listar os possíveis tpCondRet>
+*
 *  Retorno
-*     <descricao do retorno, listar os possíveis tpCondRet>
+*     <descrição do retorno>
 *
 *  Assertivas de entrada
 *     <assertivas de entrada>
 *
 *  Assertivas de saida
 *     <assertivas de saida>
-*
-*  Requisitos
-*     <lista de requisitos>
-*
-*  Hipóteses
-*     <lista de hipóteses>
-*
-*  Restrições
-*     <lista de restrições>
 *
 ***********************************************************************/
 
