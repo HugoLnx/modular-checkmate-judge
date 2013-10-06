@@ -277,6 +277,26 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
 
+		  /* Testar ir para origem */
+
+		 else if (strcmp(ComandoTeste, IR_ORIGEM_CMD) == 0)
+         {
+			 char* nomeVertice = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", nomeVertice, &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+			CondRet = GRA_IrParaAOrigem(pGrafo, nomeVertice);
+
+			free(nomeVertice);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para origem.");
+         }
+
        // /* Testar excluir simbolo */
 
 

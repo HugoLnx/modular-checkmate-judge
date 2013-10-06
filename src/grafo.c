@@ -123,9 +123,11 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	}
 	LIS_DestruirLista(pGrafo->pVertices);
 	LIS_DestruirLista(pGrafo->pOrigens);
+
 	free(pGrafo);
-
-
+	pGrafo = NULL;
+	*ppGrafo = NULL;
+	
 	return GRA_CondRetOK;
 }
 
@@ -363,8 +365,34 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
-	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-	return GRA_CondRetGrafoVazio;
+	tpGrafo *pGrafo = NULL;
+	LIS_tpCondRet lisCondRet;
+	tpVertice *pVertice;
+	if(pGrafoParm == NULL)
+	{
+		return GRA_CondRetGrafoNaoFoiCriado;
+	}
+
+	pGrafo = (tpGrafo*) pGrafoParm;
+
+	if(pGrafo->pCorrente == NULL)
+	{
+		return GRA_CondRetGrafoVazio;
+	}
+
+	LIS_IrInicioLista(pGrafo->pOrigens);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nomeVertice);
+
+	if(lisCondRet != LIS_CondRetOK)
+	{
+		return GRA_CondRetNaoAchou;
+	}
+
+	LIS_ObterValor(pGrafo->pOrigens, (void**)&pVertice);
+
+	pGrafo->pCorrente = pVertice;
+
+	return GRA_CondRetOK;
 }
 
 

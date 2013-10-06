@@ -109,3 +109,32 @@
 =insAresta       "ca"   "A"      OK
 =irVertice       "B"             NaoAchou
 =destruirGrafo                   OK
+
+== Testar ir para origem
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=insVertice      "B"    "vB"     OK
+=insVertice      "C"    "vC"     OK
+=irOrigem        "A"             OK
+=destruirGrafo                   OK
+
+== Testar ir para origem inexistente
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=insVertice      "B"    "vB"     OK
+=insVertice      "C"    "vC"     OK
+=irOrigem        "B"             NaoAchou
+=destruirGrafo                   OK
+
+
+== Testar ir para origem com grafo vazio
+=criarGrafo                      OK
+=irOrigem        "A"             EstaVazio
+=destruirGrafo                   OK
+
+
+== Testar ir para origem com grafo nao criado
+=irOrigem        "A"             NaoExiste
+
