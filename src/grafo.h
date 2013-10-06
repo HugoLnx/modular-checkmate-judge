@@ -85,8 +85,11 @@ typedef enum {
 *     <param 1>      - <explicação sobre parametro 1>
 *     <parametro 2>  - <explicação sobre parametro 2>
 *
-*  Retorno
-*     <descricao do retorno, listar os possíveis tpCondRet>
+*  Condições de retorno
+*     <listar os possíveis tpCondRet>
+*
+*  Retorno por referência
+*     <descrição do retorno>
 *
 *  Assertivas de entrada
 *     <assertivas de entrada>

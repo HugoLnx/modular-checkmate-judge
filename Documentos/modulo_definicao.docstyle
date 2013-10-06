@@ -76,7 +76,7 @@ typedef <estrutura exportada> * <nome do tipo> ;
 *  Condições de retorno
 *     <listar os possíveis tpCondRet>
 *
-*  Retorno
+*  Retorno por referência
 *     <descrição do retorno>
 *
 *  Assertivas de entrada
