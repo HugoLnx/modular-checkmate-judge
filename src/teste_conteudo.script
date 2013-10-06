@@ -1,5 +1,6 @@
 // Script:    teste_conteudo.script
 // Autor:     Robert Correa
+// Revisão:   Hugo Roque
 // Data:      03/out/2013
 // Propósito: Testar completamente o módulo conteudo
 //
@@ -10,30 +11,30 @@
 
 
 == Declarando outras constantes
-=declararparm        conteudo0     int 0
-=declararparm        NULL          string        "!N!"
+=declararparm        conteudo0  int 0
+=declararparm        NULL       string  "!N!"
 
 //*********************************
 == Testar criação do conteudo
-=criarConteudo		 conteudo0	   "conteudo 1"  OK
+=criarConteudo       conteudo0      "conteudo 1"  OK
 
 == Testar destruição do conteudo
-=destruirConteudo	 conteudo0					 OK
+=destruirConteudo    conteudo0                    OK
 // funciona mesmo se não existir
-=destruirConteudo    conteudo0                   OK
+=destruirConteudo    conteudo0                    OK
 
 == Testar obter valor do conteudo
-=obterValor          conteudo0     NULL          NaoExiste
-=criarConteudo       conteudo0	   "conteudo 1"  OK
-=obterValor          conteudo0	   "conteudo 1"	 OK
-=destruirConteudo    conteudo0					 OK
+=obterValor          conteudo0      NULL          NaoExiste
+=criarConteudo       conteudo0      "conteudo 1"  OK
+=obterValor          conteudo0      "conteudo 1"  OK
+=destruirConteudo    conteudo0                    OK
 
 == Testar alterar valor do conteudo
-=alterarValor        conteudo0     NULL          NaoExiste
-=criarConteudo       conteudo0	   "conteudo 1"	 OK
-=obterValor          conteudo0	   "conteudo 1"  OK
-=alterarValor        conteudo0	   "conteudo 2"  OK
-=obterValor          conteudo0	   "conteudo 1"  OK
+=alterarValor        conteudo0      NULL          NaoExiste
+=criarConteudo       conteudo0      "conteudo 1"  OK
+=obterValor          conteudo0      "conteudo 1"  OK
+=alterarValor        conteudo0      "conteudo 2"  OK
+=obterValor          conteudo0      "conteudo 1"  OK
 =recuperar
-=obterValor          conteudo0     "conteudo 2"	 OK
-=destruirConteudo    conteudo0                   OK
+=obterValor          conteudo0      "conteudo 2"  OK
+=destruirConteudo    conteudo0                    OK
