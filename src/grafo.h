@@ -2,21 +2,32 @@
 #define GRAFO_
 /***************************************************************************
 *
-*  Módulo de definição: <abreviação>  <estrutura manipulada pelo módulo>
+*  Módulo de definição: GRA  Grafo direcionado
 *
-*  Arquivo gerado:              <nome-do-arquivo>.h
-*  Letras identificadoras:      <abreviação>
+*  Arquivo gerado:              grafo.c
+*  Letras identificadoras:      GRA
 *
 *	Autores:
-*     - <nick>: <nome>
-*     - <nick>: <nome>
+*     - rc: Robert Corrêa
+*     - hg: Hugo Roque
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data        Observações
-*     1       <nick>   <data>      <observações>
+*     1.0     hg & rc  06/out/13   Preparação do módulo para trabalhar com grafos direcionados.
 *
 *  Descrição do módulo
-*     <descrição do módulo>
+*     Implementa grafos direcionados com manipulação, ou seja, é possivel criar, inserir
+*     vértices no grafo, conectá-los através de arestas direcionais além de destruir o grafo,
+*     um vértice ou uma aresta, navegar através das arestas usando o nome da aresta ou do
+*     vértice de destino como referência. É possível também marcar vértices como origem,
+*     estes vértices poderão ser acessados à qualquer momento utilizando a função de navegação
+*     para origens.
+*
+*     Podem existir n grafos em operação simultaneamente.
+*     Os grafos possuem uma cabeça encapsulando o seu estado.
+*
+*     Cada grafo armazena dados genéricos.
+*     Cada vétice do grafo possui uma referência para o valor.
 *
 ***************************************************************************/
  
