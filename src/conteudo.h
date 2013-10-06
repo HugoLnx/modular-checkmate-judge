@@ -67,7 +67,7 @@ typedef enum {
 *     Cria uma instância da estrutura.
 *
 *  Parâmetros
-*     ppConteudo - Referência para o ponteiro do conteúdo que será criado.
+*     ppConteudo - Referência usada para retorno do conteúdo que será criado.
 *     pValor     - Valor que será atribuido à estrutura.
 *
 *  Condições de retorno
@@ -78,25 +78,93 @@ typedef enum {
 *     Ponteiro para o conteúdo que será criado.
 *
 *  Assertivas de entrada
-*     ppConteudo não contém um Conteúdo criado anteriormente.
+*     - ppConteudo não contém um Conteúdo criado anteriormente.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
-*
-*  Requisitos
-*     <lista de requisitos>
-*
-*  Hipóteses
-*     Não é necessário validar se ppConteudo contém já um conteúdo
-*     pois só é permitido passar um ppConteudo sem conteúdo.
-*
-*  Restrições
-*     <lista de restrições>
+*     - Será um conteúdo com valor igual ao passado por parâmetro.
 *
 ***********************************************************************/
 CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
+
+/***********************************************************************
+*
+*  Função: CON Destruir conteúdo
+*
+*  Descrição
+*     Destroi uma instância da estrutura liberando seu espaço na memória.
+*
+*  Parâmetros
+*     ppConteudo - Referência para o ponteiro do conteúdo à ser destruido.
+*     pValor     - Valor que será atribuido à estrutura.
+*
+*  Condições de retorno
+*     - CON_CondRetOK
+* 
+*  Retorno por referência
+*     Referência para NULL.
+*
+*  Assertivas de entrada
+*     - ppConteudo referencia para uma instância da estrutura CON_stConteudo.
+*
+*  Assertivas de saida
+*     - A referência será sempre nula.
+*     - O conteúdo e seu valor foram liberados da memória
+*
+***********************************************************************/
 CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
+
+/***********************************************************************
+*
+*  Função: CON Obter valor do conteúdo
+*
+*  Descrição
+*     Recupera o valor da instância de conteúdo
+*
+*  Parâmetros
+*     pConteudoParm  - Referência para o conteúdo.
+*     ppValor        - Referência usada para retorno do valor.
+*
+*  Condições de retorno
+*     - CON_CondRetOK
+*     - CON_CondRetConteudoNaoExiste
+* 
+*  Retorno por referência
+*     ppValor   - Valor do conteúdo.
+*
+*  Assertivas de entrada
+*     <não tem>
+*
+*  Assertivas de saida
+*     - Será retornado o valor do conteúdo.
+*
+***********************************************************************/
 CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor);
+
+/***********************************************************************
+*
+*  Função: CON Alterar valor do conteúdo
+*
+*  Descrição
+*     Substitui o valor da instância de conteúdo por uma nova.
+*
+*  Parâmetros
+*     pConteudoParm  - Referência para o conteúdo.
+*     pValor         - Referência para o novo valor do conteúdo.
+*
+*  Condições de retorno
+*     - CON_CondRetOK
+*     - CON_CondRetConteudoNaoExiste
+* 
+*  Retorno por referência
+*     <não tem>
+*
+*  Assertivas de entrada
+*     <não tem>
+*
+*  Assertivas de saida
+*     - Só o valor do conteúdo será alterado.
+*
+***********************************************************************/
 CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor);
 
 /********** Fim do módulo de definição: CON Conteudo **********/
