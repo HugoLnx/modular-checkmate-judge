@@ -115,6 +115,9 @@ static int CompararArestaENome (void *pVazio1, void *pVazio2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
+/***********************************************************************
+*  Tipo de dados: GRA Criar grafo
+***********************************************************************/
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	void (*destruirConteudo)(void *pConteudo))
 {
@@ -131,7 +134,9 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	return GRA_CondRetOK;
 }
 
-
+/***********************************************************************
+*  Tipo de dados: GRA Destruir grafo
+***********************************************************************/
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 {
 	tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
@@ -150,7 +155,9 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	return GRA_CondRetOK;
 }
 
-
+/***********************************************************************
+*  Tipo de dados: GRA Inserir vertice
+***********************************************************************/
 GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -181,7 +188,9 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 }
 
 
-
+/***********************************************************************
+*  Tipo de dados: GRA Inserir aresta do corrente para outro vértice
+***********************************************************************/
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 	char *nomeAresta, char *nomeVerticeDestino)
 {
@@ -230,7 +239,9 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 }
 
 
-
+/***********************************************************************
+*  Tipo de dados: GRA Obter conteúdo do vértice corrente
+***********************************************************************/
 GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -272,7 +283,9 @@ GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 }
 
 
-
+/***********************************************************************
+*  Tipo de dados: GRA Tornar vértice corrente uma origem
+***********************************************************************/
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
