@@ -488,10 +488,10 @@
    void LiberarElemento(LIS_tppLista pLista,
                         tpElemLista  *pElem)
    {
-     pLista->destruirValor(pElem->pValor);
-      free(pElem);
+	   pLista->destruirValor(pElem->pValor);
+	   free(pElem);
 
-      pLista->numElem--;
+	   pLista->numElem--;
 
    }
 

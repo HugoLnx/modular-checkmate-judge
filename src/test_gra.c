@@ -297,7 +297,7 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para origem.");
          }
 
-		   /* Testar ir para origem */
+		   /* Testar ir destruir aresta adjacente */
 
 		 else if (strcmp(ComandoTeste, DESTRUIR_ARESTA_CMD) == 0)
          {
@@ -315,6 +315,22 @@ static GRA_tppGrafo pGrafo = NULL;
 			free(nomeAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir aresta adjacente.");
+         }
+
+		    /* Testar ir destruir aresta adjacente */
+
+		 else if (strcmp(ComandoTeste, DESTRUIR_VERT_CMD) == 0)
+         {
+            numLidos = LER_LerParametros("i", &CondRetEsp);
+
+            if (numLidos != 1)
+            {
+               return TST_CondRetParm;
+            }
+
+			CondRet = GRA_DestruirVerticeCorrente(pGrafo);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir vertice corrente.");
          }
 
        // /* Testar excluir simbolo */

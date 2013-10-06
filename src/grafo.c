@@ -276,8 +276,43 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 {
-	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-	return GRA_CondRetGrafoVazio;
+	tpGrafo *pGrafo = NULL;
+	tpVertice  *pVertice = NULL;
+	int estaVazia = -1;
+
+	LIS_tpCondRet lisCondRet;
+
+	if(pGrafoParm == NULL)
+	{
+		return GRA_CondRetGrafoNaoFoiCriado;
+	}
+
+	pGrafo = (tpGrafo*) pGrafoParm;
+
+	if(pGrafo->pCorrente == NULL)
+	{
+		return GRA_CondRetGrafoVazio;
+	}
+
+	LIS_EstaVazia(pGrafo->pOrigens,&estaVazia);
+
+	if(estaVazia)
+	{
+		return GRA_CondRetNaoAchou;
+	}
+
+	// remove corrente vai para origem
+
+	LIS_ObterValor(pGrafo->pOrigens,(void**)&pVertice);
+
+	LIS_IrInicioLista(pGrafo->pVertices);
+	LIS_ProcurarValor(pGrafo->pVertices,pGrafo->pCorrente->nome);
+	LIS_ExcluirElemento(pGrafo->pVertices);
+
+	pGrafo->pCorrente = pVertice;
+	
+
+	return GRA_CondRetOK;
 }
 
 
@@ -446,8 +481,12 @@ void DestruirVertice(void *pVazio)
 	LIS_DestruirLista(pVertice->pSucessores);
 
 	pVertice->destruirConteudo(pVertice->pValor);
+
 	free(pVertice->nome);
+
 	free(pVertice);
+
+	
 }
 
 void DestruirAresta(void *pVazio)

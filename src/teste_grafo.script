@@ -175,5 +175,30 @@
 == Testar Destruir aresta adjacente com grafo nao criado
 =destruirAresta  "11"            NaoExiste
 
+== Testar destruir vertice corrente
+=criarGrafo                      OK
+=insVertice      "1"    "vA"     OK
+=tornarOrigem                    OK
+=insVertice      "2"    "vB"     OK
+=insVertice      "3"    "vC"     OK
+=destruirCorr                    OK
+=destruirGrafo                   OK 
+
+
+== Testar destruir vertice corrente sem ter origem
+=criarGrafo                      OK
+=insVertice      "1"    "vA"     OK
+=insVertice      "2"    "vB"     OK
+=insVertice      "3"    "vC"     OK
+=destruirCorr                    NaoAchou
+=destruirGrafo                   OK 
+
+== Testar destruir vertice corrente grafo vazio
+=criarGrafo                      OK
+=destruirCorr                    EstaVazio
+=destruirGrafo                   OK 
+
+== Testar destruir vertice corrente grafo inexistente
+=destruirCorr                    NaoExiste
 
 
