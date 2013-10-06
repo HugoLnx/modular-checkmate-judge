@@ -76,30 +76,42 @@ typedef enum {
 
 /***********************************************************************
 *
-*  Função: <abreviacao do modulo> <nome da funcao por extenso>
+*  Função: GRA Criar grafo
 *
 *  Descrição
-*     <descricao da função>
+*     Cria um grafo direcionado.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     ppGrafo           - Referência usada para retorno do grafo que será criado.
+*     destruirValor     - Função que será utilizada para destruir o valor
+                          e liberar seu espaço na memória.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
-*
+*     - LIS_CondRetOK
+*     - LIS_CondRetFaltouMemoria
+* 
 *  Retorno por referência
-*     <descrição do retorno>
+*     ppLista:
+*       Se executou corretamente retorna o ponteiro para a lista.
+*       Este ponteiro será utilizado pelas funções que manipulem esta lista.
+*       
+*       Se ocorreu algum erro, por exemplo falta de memória ou dados errados,
+*       a função retornará NULL.
+*       Não será dada mais informação quanto ao problema ocorrido.
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     <não tem>
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - Valem as assertivas estruturais da lista duplamente encadeada com cabeça.
+*     - Ponteiros do corrente, inicio e final da lista não nulos.
+*     - Número de elementos é 0.
+*     - Funções de destruir e comparar serão iguais às passadas por parâmetro.
 *
 ***********************************************************************/
+GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*destruirValor)(void *pValor));
 
-GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*DestruirConteudo)(void *pConteudo));
+
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 
 /* Construir grafo */
@@ -108,8 +120,8 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm, char *nomeAresta, char *nomeVerticeDestino);
 
 /* Obter e alterar */
-GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafoParm, void **ppValor);
-GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
+GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor);
+GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
 
 /* Outros */
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);

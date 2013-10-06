@@ -61,7 +61,7 @@ typedef struct stVerticeGrafo {
 	/* Ponteiro para os vértices que têm arestas 
 	direcionadas para este vértice */
 
-	void (*destruirConteudo)(void *pConteudo);
+	void (*destruirValor)(void *pValor);
 	/* Lógica responsável por destruir o valor do vértice do grafo */
 
 	void * pValor;
@@ -99,7 +99,7 @@ typedef struct stGrafo {
 	tpVertice * pCorrente;
 	/* Vértice corrente */
 
-	void (*destruirConteudo)(void *pConteudo);
+	void (*destruirValor)(void *pValor);
 	/* Lógica responsável por destruir o valor do vértice do grafo */
 
 } tpGrafo;
@@ -119,12 +119,12 @@ static int CompararArestaENome (void *pVazio1, void *pVazio2);
 *  Tipo de dados: GRA Criar grafo
 ***********************************************************************/
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
-	void (*destruirConteudo)(void *pConteudo))
+	void (*destruirValor)(void *pValor))
 {
 	tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
 
 	pGrafo->pCorrente = NULL;
-	pGrafo->destruirConteudo = destruirConteudo;
+	pGrafo->destruirValor = destruirValor;
 
 	LIS_CriarLista(&pGrafo->pOrigens, NaoFazNada, CompararVerticeENome);
 	LIS_CriarLista(&pGrafo->pVertices, DestruirVertice, CompararVerticeENome);
@@ -176,7 +176,7 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 
 	pVertice->nome = pNomeVertice;
 	pVertice->pValor = pValor;
-	pVertice->destruirConteudo = pGrafo->destruirConteudo;
+	pVertice->destruirValor = pGrafo->destruirValor;
 
 	LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVerticeENome);
 	LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestaENome);
@@ -242,7 +242,7 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 /***********************************************************************
 *  Tipo de dados: GRA Obter conteúdo do vértice corrente
 ***********************************************************************/
-GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
+GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 
@@ -264,7 +264,7 @@ GRA_tpCondRet GRA_ObterConteudoCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 
 
 
-GRA_tpCondRet GRA_AlterarConteudoCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
+GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 
@@ -512,7 +512,7 @@ void DestruirVertice(void *pVazio)
 	LIS_DestruirLista(pVertice->pAntecessores);
 	LIS_DestruirLista(pVertice->pSucessores);
 
-	pVertice->destruirConteudo(pVertice->pValor);
+	pVertice->destruirValor(pVertice->pValor);
 
 	free(pVertice->nome);
 

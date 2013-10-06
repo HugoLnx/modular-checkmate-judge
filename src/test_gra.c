@@ -179,7 +179,7 @@ static GRA_tppGrafo pGrafo = NULL;
                pDadoEsperado = NULL;
             }
 
-            CondRet = GRA_ObterConteudoCorrente(pGrafo, (void**) &pConteudoObtido);
+            CondRet = GRA_ObterValorCorrente(pGrafo, (void**) &pConteudoObtido);
 
 
             if (CondRetEsp == TST_CondRetOK)
@@ -204,7 +204,7 @@ static GRA_tppGrafo pGrafo = NULL;
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
-            CON_tppConteudo pNovoConteudo;
+            CON_tppConteudo pNovoConteudo, pAntigoConteudo;
 
             numLidos = LER_LerParametros("si", pNovoValor , &CondRetEsp);
 
@@ -212,12 +212,12 @@ static GRA_tppGrafo pGrafo = NULL;
             {
                return TST_CondRetParm;
             }
-
+            
+            GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoConteudo);
+            CON_DestruirConteudo(&pAntigoConteudo);
             CON_CriarConteudo(&pNovoConteudo, pNovoValor);
 
-            CondRet = GRA_AlterarConteudoCorrente(pGrafo, pNovoConteudo);
-
-            // TODO: liberar o espaço do antigo corrente?
+            CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoConteudo);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao alterar o valor.");
          }
