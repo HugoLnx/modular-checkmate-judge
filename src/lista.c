@@ -12,6 +12,15 @@
 *     1       rc    12/set/2013 Adaptação da função CriarLista para ser testavel e inserção de somente valores char.
 *     2       rc    15/set/2013 Implementação e adaptação do restante das funções para trabalhar somente com o tipo char.
 *
+*  Assertivas estruturais da lista
+*    Referências entre os elementos
+*     - pNo1->pProx = pNo2  <=>  pNo2 = NULL  ou  pNo2->pAnt  = pNo1
+*     - pNo1->pAnt  = pNo2  <=>  pNo2 = NULL  ou  pNo2->pProx = pNo1
+*
+*    Referências dos elementos nas extremidades da lista
+*     - pCabeca->pOrigemLista != NULL  =>  pCabeca->pOrigemLista->pAnt = NULL
+*     - pCabeca->pFimLista    != NULL  =>  pCabeca->pFimLista->pProx = NULL
+*
 ***************************************************************************/
 
 #include   <stdio.h>
@@ -47,17 +56,17 @@
 
    typedef struct LIS_stLista {
 
-         tpElemLista * pOrigemLista ;
-               /* Ponteiro para a origem da lista */
+      tpElemLista * pOrigemLista ;
+            /* Ponteiro para a origem da lista */
 
-         tpElemLista * pFimLista ;
-               /* Ponteiro para o final da lista */
+      tpElemLista * pFimLista ;
+            /* Ponteiro para o final da lista */
 
-         tpElemLista * pElemCorr ;
-               /* Ponteiro para o elemento corrente da lista */
+      tpElemLista * pElemCorr ;
+            /* Ponteiro para o elemento corrente da lista */
 
-         int numElem ;
-               /* Número de elementos da lista */
+      int numElem ;
+            /* Número de elementos da lista */
 
        void (*destruirValor)(void * pValor);
             /* Lógica responsável por destruir o valor da lista */
