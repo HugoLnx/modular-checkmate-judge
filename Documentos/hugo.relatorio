@@ -1,6 +1,8 @@
 Data		Horas Trabalhadas	Tipo de Tarefa			Descrição
 30/set/2013	3			projetar			Começamos a projetar o modelo físico.
 01/out/2013	3			projetar			Finalizamos o modelo físico.
+01/out/2013	4			codificar módulo		Adaptação do módulo lista para ser genérica.
 02/out/2013	1.5			projetar			Finalizamos as assertivas.
 02/out/2013	1			especificar os módulos		Especificamos os módulos a serem criados.
+02/out/2013	1			especificar os funções		Especificamos as funções a serem criadas.
 02/out/2013	1			especificar os funções		Especificamos as funções a serem criadas.
