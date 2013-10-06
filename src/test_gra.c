@@ -333,14 +333,9 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir vertice corrente.");
          }
 
-       // /* Testar excluir simbolo */
-
-
-   //      } /* fim ativa: LIS  &Avançar elemento */
-
       return TST_CondRetNaoConhec ;
 
-   } /* Fim função: TLIS &Testar lista */
+   }
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -348,7 +343,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
 /***********************************************************************
 *
-*  $FC Função: TLIS -Destruir valor
+*  Função: TGRA -Destruir valor
 *
 ***********************************************************************/
 
@@ -357,6 +352,12 @@ static GRA_tppGrafo pGrafo = NULL;
       CON_DestruirConteudo((CON_tppConteudo*) &pValor);
    }
 
+
+/***********************************************************************
+*
+*  Função: TGRA -Alocar espaço para nome
+*
+***********************************************************************/
    char* AlocarEspacoParaNome()
    {
       return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
