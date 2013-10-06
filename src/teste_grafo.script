@@ -138,3 +138,42 @@
 == Testar ir para origem com grafo nao criado
 =irOrigem        "A"             NaoExiste
 
+== Testar Destruir aresta adjacente
+=criarGrafo                      OK
+=insVertice      "1"    "vA"     OK
+=tornarOrigem                    OK
+=insVertice      "2"    "vB"     OK
+=insVertice      "3"    "vC"     OK
+=insVertice      "4"    "vD"     OK
+=irOrigem        "1"             OK
+=insAresta       "12"   "2"      OK
+=insAresta       "13"   "3"      OK
+=insAresta       "14"   "4"      OK
+=destruirAresta  "13"            OK
+=destruirGrafo                   OK
+
+
+== Testar Destruir aresta adjacente com aresta inexistente
+=criarGrafo                      OK
+=insVertice      "1"    "vA"     OK
+=tornarOrigem                    OK
+=insVertice      "2"    "vB"     OK
+=insVertice      "3"    "vC"     OK
+=insVertice      "4"    "vD"     OK
+=irOrigem        "1"             OK
+=insAresta       "12"   "2"      OK
+=insAresta       "13"   "3"      OK
+=insAresta       "14"   "4"      OK
+=destruirAresta  "11"            NaoAchou
+=destruirGrafo                   OK
+
+== Testar Destruir aresta adjacente grafo vazio
+=criarGrafo                      OK
+=destruirAresta  "11"            EstaVazio
+=destruirGrafo                   OK
+
+== Testar Destruir aresta adjacente com grafo nao criado
+=destruirAresta  "11"            NaoExiste
+
+
+

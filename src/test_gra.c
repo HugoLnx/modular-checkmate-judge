@@ -297,6 +297,26 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para origem.");
          }
 
+		   /* Testar ir para origem */
+
+		 else if (strcmp(ComandoTeste, DESTRUIR_ARESTA_CMD) == 0)
+         {
+			 char* nomeAresta = AlocarEspacoParaNome();
+
+            numLidos = LER_LerParametros("si", nomeAresta, &CondRetEsp);
+
+            if (numLidos != 2)
+            {
+               return TST_CondRetParm;
+            }
+
+			CondRet = GRA_DestruirArestaAdjacente(pGrafo, nomeAresta);
+
+			free(nomeAresta);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir aresta adjacente.");
+         }
+
        // /* Testar excluir simbolo */
 
 

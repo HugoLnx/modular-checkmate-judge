@@ -284,8 +284,40 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 
 GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 {
-	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-	return GRA_CondRetGrafoVazio;
+	tpGrafo *pGrafo = NULL;
+	tpAresta *pAresta = NULL;
+	
+	LIS_tpCondRet lisCondRet;
+
+	if(pGrafoParm == NULL)
+	{
+		return GRA_CondRetGrafoNaoFoiCriado;
+	}
+
+	pGrafo = (tpGrafo*) pGrafoParm;
+
+	if(pGrafo->pCorrente == NULL)
+	{
+		return GRA_CondRetGrafoVazio;
+	}
+
+	// Busca Aresta à remover
+	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, pNomeAresta);
+	if(lisCondRet != LIS_CondRetOK)
+	{
+		return GRA_CondRetNaoAchou;
+	}
+	LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
+
+	// Remove referência do vértice corrente
+	LIS_IrInicioLista(pAresta->pVertice->pAntecessores);
+	LIS_ProcurarValor(pAresta->pVertice->pAntecessores,pGrafo->pCorrente->nome);
+
+	LIS_ExcluirElemento(pAresta->pVertice->pAntecessores);
+	LIS_ExcluirElemento(pGrafo->pCorrente->pSucessores);
+
+	return GRA_CondRetOK;
 }
 
 GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice)
@@ -361,7 +393,6 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 	return GRA_CondRetOK;
 }
-
 
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
