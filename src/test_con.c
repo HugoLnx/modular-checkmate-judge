@@ -22,7 +22,7 @@ static const char * ALTER_VALOR_CMD				= "=alterarValor"     ;
 /* Constante string para representar null */
 #define SIMBOLO_PARA_NULL "!N!"
 
-CON_tppConteudo pConteudo = NULL;
+CON_tppConteudo vtConteudos[DIM_VT_CONTEUDO];
 
 /***********************************************************************
 *
@@ -58,11 +58,11 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		}
 
-		CondRet = (TST_tpCondRet) CON_CriarConteudo(&pConteudo, dado);
+		CondRet = (TST_tpCondRet) CON_CriarConteudo(&vtConteudos[inxConteudo], dado);
 
 		if(CondRet == CON_CondRetOK)
 		{
-			CondRet = TST_CompararPonteiroNulo(1, pConteudo, "Erro em ponteiro novo conteudo.");
+			CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
 			return CondRet;
 		}
 
@@ -80,11 +80,11 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		} 
 
-		CondRet = (TST_tpCondRet) CON_DestruirConteudo(&pConteudo);
+		CondRet = (TST_tpCondRet) CON_DestruirConteudo(&vtConteudos[inxConteudo]);
 
 		if(CondRet ==  CON_CondRetOK)
 		{
-			CondRet = TST_CompararPonteiroNulo(0, pConteudo, "Erro em ponteiro ao destruir conteudo.");
+			CondRet = TST_CompararPonteiroNulo(0, vtConteudos[inxConteudo], "Erro em ponteiro ao destruir conteudo.");
 			return CondRet;
 		}
 
@@ -111,7 +111,7 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			pDadoEsperado = NULL;
 		}
 
-		CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(pConteudo, &pDadoObtido);
+		CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 
 		if(CondRet ==  CON_CondRetOK)
 		{
@@ -133,7 +133,6 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 	if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
 	{
-		char pDadoEsperado[DIM_BUFFER_VALOR];
 		char pDadoParaAlterar[DIM_BUFFER_VALOR];
 		char* pDadoObtido;
 
@@ -144,11 +143,11 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		} 
 
-		CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(pConteudo, pDadoParaAlterar);
+		CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
 
 		if(CondRet == CON_CondRetOK)
 		{
-			CON_ObterValorDoConteudo(pConteudo, &pDadoObtido);
+			CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 			CondRet = TST_CompararString(pDadoParaAlterar, pDadoObtido, "Dado não foi alterado");
 			return CondRet;	
 		}
