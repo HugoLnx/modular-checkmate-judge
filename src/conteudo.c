@@ -31,6 +31,7 @@ typedef struct CON_stConteudo {
 
 	char Valor[255];
 		/* Valor do conteúdo */
+
 } tpConteudo;
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -42,11 +43,13 @@ CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
 {
 	tpConteudo *pConteudo;
 
-	pConteudo = (tpConteudo *)malloc(sizeof(tpConteudo));
+	pConteudo = (tpConteudo*)malloc(sizeof(tpConteudo));
 	if(pConteudo == NULL)
+   {
 		return CON_CondRetFaltouMemoria;
+   }
 
-	strcpy(pConteudo->Valor,pValor);
+	strcpy(pConteudo->Valor, pValor);
 
 	*ppConteudo = pConteudo;
 
@@ -103,7 +106,7 @@ CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pV
 		return CON_CondRetConteudoNaoExiste;
 	}
 
-	strcpy(pConteudo->Valor,pValor);
+	strcpy(pConteudo->Valor, pValor);
 	return CON_CondRetOK;
 }
 

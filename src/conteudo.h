@@ -47,16 +47,16 @@ typedef struct CON_stConteudo * CON_tppConteudo;
 
 typedef enum {
 
-	CON_CondRetOK ,
+	CON_CondRetOK,
 	    /* Concluiu corretamente */
 
-	CON_CondRetConteudoNaoExiste ,
+	CON_CondRetConteudoNaoExiste,
 	    /* Conteúdo não foi criado */
 
 	CON_CondRetFaltouMemoria
 	    /* Faltou memória ao tentar alocar algo */
 
-} CON_tpCondRet ;
+} CON_tpCondRet;
 
 
 /***********************************************************************
