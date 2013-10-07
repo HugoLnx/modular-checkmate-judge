@@ -87,43 +87,190 @@ typedef enum {
                           e liberar seu espaço na memória.
 *
 *  Condições de retorno
-*     - LIS_CondRetOK
-*     - LIS_CondRetFaltouMemoria
+*     - GRA_CondRetOK
+*     - GRA_CondRetFaltouMemoria
 * 
 *  Retorno por referência
-*     ppLista:
-*       Se executou corretamente retorna o ponteiro para a lista.
-*       Este ponteiro será utilizado pelas funções que manipulem esta lista.
+*     ppGrafo:
+*       Se executou corretamente retorna o ponteiro para o grafo.
+*       Este ponteiro será utilizado pelas funções que manipulem este grafo.
 *       
-*       Se ocorreu algum erro, por exemplo falta de memória ou dados errados,
-*       a função retornará NULL.
+*       Se ocorreu algum erro, por exemplo falta de memória, a função retornará NULL.
 *       Não será dada mais informação quanto ao problema ocorrido.
 *
 *  Assertivas de entrada
 *     <não tem>
 *
 *  Assertivas de saida
-*     - Valem as assertivas estruturais da lista duplamente encadeada com cabeça.
-*     - Ponteiros do corrente, inicio e final da lista não nulos.
-*     - Número de elementos é 0.
-*     - Funções de destruir e comparar serão iguais às passadas por parâmetro.
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Ponteiros do corrente é nulo e as listas de origens e vértices estão vazias.
+*     - Função de destruir será igual à passada por parâmetro.
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*destruirValor)(void *pValor));
 
 
+/***********************************************************************
+*
+*  Função: GRA Destruir grafo
+*
+*  Descrição
+*     Destrói o grafo fornecido.
+*     OBS. não existe previsão para possíveis falhas de execução.
+*
+*
+*  Parâmetros
+*     ppGrafo  - Referência do a ser destruido.
+*
+*  Condições de retorno
+*     - GRA_CondRetOK
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - A o grafo, seus vértices e suas arestas foram destruidos.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 
-/* Construir grafo */
+
+/***********************************************************************
+*
+*  Função: GRA Inserir elemento antes
+*
+*  Descrição
+*     Insere novo vértice no grafo.
+*     Obs.: Nenhuma relação do novo vértice com qualquer outro vértice ou
+*     aresta existente, para isso é necessário utilizar outras funções.
+*
+*  Parâmetros
+*     pGrafoParm    - ponteiro para o grafo onde deve ser inserido o vértice
+*     pNomeVertice  - nome do vértice à ser criado.
+*     pValor        - ponteiro para valor do novo vértice.
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetFaltouMemoria
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Corrente apontará para o vértice inserido.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor);
-/* Ao criar a aresta, lembrar de inserir a aresta entre os sucessores da origem, e o vertice entre os antecessores do destino */
+
+
+/***********************************************************************
+*
+*  Função: GRA Inserir aresta do corrente para outro vértice
+*
+*  Descrição
+*     Insere nova aresta cuja origem é o vértice corrente e o destino será o vértice
+*     com o nome apontado.
+*
+*  Parâmetros
+*     pGrafoParm           - ponteiro para o grafo onde deve ser inserido a aresta
+*     pNomeAresta          - nome da aresta à ser criada.
+*     pNomeVerticeDestino  - nome do vértice cuja a aresta apontará.
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetFaltouMemoria
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm, char *nomeAresta, char *nomeVerticeDestino);
 
-/* Obter e alterar */
+
+/***********************************************************************
+*
+*  Função: GRA Obter o valor contido no vértice corrente
+*
+*  Descrição
+*     Obtem o valor contido no vértice corrente do grafo
+*
+*  Parâmetros
+*     pGrafoParm - ponteiro para o grafo de onde se quer o valor
+*     ppValor    - ponteiro que terá o valor obtido.
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - O valor retornado será o valor do vértice corrente do grafo.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor);
+
+
+/***********************************************************************
+*
+*  Função: GRA Alterar o valor contido no vértice corrente
+*
+*  Descrição
+*     Substitui o valor contido no vértice corrente do grafo
+*     Obs.: A função não destroi o antigo valor.
+*
+*  Parâmetros
+*     pGrafoParm - ponteiro para o grafo de onde se quer o valor
+*     pValor     - ponteiro para o novo valor.
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - O valor do vértice corrente será o valor do vértice passado por parâmetro.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
 
-/* Outros */
+
+/***********************************************************************
+*
+*  Função: GRA Tornar o vértice corrente uma origem
+*
+*  Descrição
+*     Torna o vértice corrente uma origem.
+*
+*  Parâmetros
+*     pGrafoParm - ponteiro para o grafo de onde se quer o valor
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente é adicionado à lista de origens.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 
 /* Navegaçao */
