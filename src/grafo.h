@@ -75,8 +75,6 @@ typedef enum {
  
 } GRA_tpCondRet ;
 
-
-
 /***********************************************************************
 *
 *  Função: GRA Criar grafo
@@ -112,7 +110,6 @@ typedef enum {
 ***********************************************************************/
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*destruirValor)(void *pValor));
 
-
 /***********************************************************************
 *
 *  Função: GRA Destruir grafo
@@ -136,7 +133,6 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo, void (*destruirValor)(void *
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
-
 
 /***********************************************************************
 *
@@ -171,7 +167,6 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 ***********************************************************************/
 GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, void *pValor);
 
-
 /***********************************************************************
 *
 *  Função: GRA Inserir aresta do corrente para outro vértice
@@ -202,7 +197,6 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 ***********************************************************************/
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm, char *nomeAresta, char *nomeVerticeDestino);
 
-
 /***********************************************************************
 *
 *  Função: GRA Obter o valor contido no vértice corrente
@@ -228,7 +222,6 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm, char *nom
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor);
-
 
 /***********************************************************************
 *
@@ -256,7 +249,6 @@ GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor);
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
-
 
 /***********************************************************************
 *
@@ -338,7 +330,6 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 ***********************************************************************/
 GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta);
 
-
 /***********************************************************************
 *
 *  Função: GRA Ir para a origem
@@ -366,7 +357,6 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta);
 ***********************************************************************/
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice);
 
-
 /***********************************************************************
 *
 *  Função: GRA Destruir vértice corrente
@@ -392,7 +382,6 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice);
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm);
-
 
 /***********************************************************************
 *
