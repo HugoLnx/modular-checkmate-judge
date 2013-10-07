@@ -309,6 +309,7 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
+   LIS_tpCondRet lisCondRet;
 
 	if (pGrafo == NULL)
 	{
@@ -319,6 +320,13 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 	{
 		return GRA_CondRetGrafoVazio;
 	}
+
+   LIS_IrInicioLista(pGrafo->pOrigens);
+   lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, pGrafo->pCorrente->nome);
+   if (lisCondRet == LIS_CondRetOK)
+   {
+      return GRA_CondRetJaExiste;
+   }
 
 	LIS_InserirElementoApos(pGrafo->pOrigens, pGrafo->pCorrente);
 	return GRA_CondRetOK;
