@@ -190,6 +190,8 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 *     GRA_CondRetFaltouMemoria
 *     GRA_CondRetGrafoVazio
 *     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetJaExiste
+*     GRA_CondRetNaoAchou
 *
 *  Assertivas de entrada
 *     - Valem as assertivas estruturais do grafo direcionado.
@@ -270,6 +272,7 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
 *     GRA_CondRetOK
 *     GRA_CondRetGrafoVazio
 *     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetJaExiste
 *
 *  Assertivas de entrada
 *     - Valem as assertivas estruturais do grafo direcionado.

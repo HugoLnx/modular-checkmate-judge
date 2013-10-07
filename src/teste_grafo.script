@@ -41,18 +41,29 @@
 == Destruir funciona com grafo vazio
 =destruirGrafo                   OK
 
+== Teste obter valor
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=obterValor      "vA"            OK
+=destruirGrafo                   OK
+
 == Teste inserir vértice com sucesso
 =criarGrafo                      OK
 =insVertice      "A"    "vA"     OK
+=obterValor      "vA"            OK
 =insVertice      "B"    "vB"     OK
+=obterValor      "vB"            OK
 =insVertice      "C"    "vC"     OK
+=obterValor      "vC"            OK
 =destruirGrafo                   OK
 
 == Teste inserir vértice com nome repetido
 =criarGrafo                      OK
 =insVertice      "A"    "vA"     OK
 =insVertice      "A"    "xx"     JaExiste
+=obterValor      "vA"            OK
 =insVertice      "B"    "vB"     OK
+=obterValor      "vB"            OK
 =destruirGrafo                   OK
 
 == Teste inserir arestas com sucesso
@@ -60,7 +71,9 @@
 =insVertice      "A"    "vA"     OK
 =insVertice      "B"    "vB"     OK
 =insAresta       "ba"   "A"      OK
-=insAresta       "ab"   "B"      OK
+=obterValor      "vB"            OK
+=insAresta       "bb"   "B"      OK
+=obterValor      "vB"            OK
 =destruirGrafo                   OK
 
 == Teste inserir arestas com nome repetido
@@ -77,6 +90,26 @@
 =criarGrafo                      OK
 =insVertice      "A"    "x"      OK
 =insAresta       "a"    "B"      NaoAchou
+=destruirGrafo                   OK
+
+== Testar alterar valor do corrente
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=alterarValor    "xx"            OK
+=obterValor      "xx"            OK
+=destruirGrafo                   OK
+
+== Testar tornar origem
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=destruirGrafo                   OK
+
+== Testar tornar origem duas vezes seguidas
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=tornarOrigem                    JaExiste
 =destruirGrafo                   OK
 
 == Testar seguir pela aresta
