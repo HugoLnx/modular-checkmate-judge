@@ -24,6 +24,7 @@ static const char *IR_ARESTA_CMD        = "=irPelaAresta"     ;
 static const char *DESTRUIR_VERT_CMD    = "=destruirCorr"     ;
 static const char *DESTRUIR_ARESTA_CMD  = "=destruirAresta"   ;
 static const char *TORNAR_ORIGEM_CMD    = "=tornarOrigem"     ;
+static const char *DEIXAR_ORIGEM_CMD    = "=deixarOrigem"     ;
 
 #define MAX_CHARS_NOME 3
 #define SIMBOLO_PARA_NULL "!N!"
@@ -238,6 +239,24 @@ static GRA_tppGrafo pGrafo = NULL;
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
          }
+
+
+       /*Testar tornar corrente uma origem */
+
+         else if (strcmp(ComandoTeste, DEIXAR_ORIGEM_CMD) == 0)
+         {
+            numLidos = LER_LerParametros("i", &CondRetEsp);
+
+            if (numLidos != 1)
+            {
+               return TST_CondRetParm;
+            }
+
+            CondRet = GRA_DeixarDeSerOrigem(pGrafo);
+
+            return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro remover uma origem.");
+         }
+
 
         /*Testar seguir pela aresta */
 

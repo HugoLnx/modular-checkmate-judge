@@ -21,6 +21,11 @@
 =obterValor      NULL            NaoExiste
 =alterarValor    "x"             NaoExiste
 =tornarOrigem                    NaoExiste
+=deixarOrigem                    NaoExiste
+=irOrigem        "A"             NaoExiste
+=destruirAresta  "11"            NaoExiste
+=destruirCorr                    NaoExiste
+
 
 == Destruir funciona antes da criação do grafo
 =destruirGrafo                   OK
@@ -31,12 +36,20 @@
 =recuperar
 
 == testando criação do grafo
-=criarGrafo			 OK
+=criarGrafo                      OK
 
 == Operações inválidas com grafo vazio
 =obterValor      NULL            EstaVazio
 =alterarValor    "x"             EstaVazio
 =tornarOrigem                    EstaVazio
+=deixarOrigem                    EstaVazio
+=destruirCorr                    EstaVazio
+=irPelaAresta    "cb"            EstaVazio
+=irVertice       "B"             EstaVazio
+=destruirAresta  "11"            EstaVazio
+=irOrigem        "A"             EstaVazio
+
+
 
 == Destruir funciona com grafo vazio
 =destruirGrafo                   OK
@@ -123,10 +136,6 @@
 =obterValor      "vB"            OK
 =destruirGrafo                   OK
 
-== Testar seguir pela aresta com grafo vazio
-=criarGrafo                      OK
-=irPelaAresta    "cb"            EstaVazio
-=destruirGrafo                   OK
 
 == Testar seguir pela aresta com aresta inexistente
 =criarGrafo                      OK
@@ -150,10 +159,6 @@
 =obterValor      "vB"            OK
 =destruirGrafo                   OK
 
-== Testar ir para vertice adjacente com grafo vazio
-=criarGrafo                      OK
-=irVertice       "B"             EstaVazio
-=destruirGrafo                   OK
 
 == Testar ir para vertice adjacente com vertice nao estando na lista de sucessores do corrente
 =criarGrafo                      OK
@@ -183,14 +188,32 @@
 =destruirGrafo                   OK
 
 
-== Testar ir para origem com grafo vazio
+
+
+== Testar deixar de ser origem
 =criarGrafo                      OK
-=irOrigem        "A"             EstaVazio
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=deixarOrigem                    OK
 =destruirGrafo                   OK
 
 
-== Testar ir para origem com grafo nao criado
-=irOrigem        "A"             NaoExiste
+== Testar deixar de ser origem em uma não-origem
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=deixarOrigem                    NaoAchou
+=destruirGrafo                   OK
+
+
+== Testar se deixar de ser origem não é possível ir
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=tornarOrigem                    OK
+=deixarOrigem                    OK
+=insVertice      "B"    "vB"     OK
+=irOrigem        "A"             NaoAchou
+=destruirGrafo                   OK
+
 
 == Testar Destruir aresta adjacente
 =criarGrafo                      OK
@@ -221,13 +244,6 @@
 =destruirAresta  "11"            NaoAchou
 =destruirGrafo                   OK
 
-== Testar Destruir aresta adjacente grafo vazio
-=criarGrafo                      OK
-=destruirAresta  "11"            EstaVazio
-=destruirGrafo                   OK
-
-== Testar Destruir aresta adjacente com grafo nao criado
-=destruirAresta  "11"            NaoExiste
 
 == Testar destruir vertice corrente
 =criarGrafo                      OK
@@ -246,11 +262,3 @@
 =insVertice      "3"    "vC"     OK
 =destruirCorr                    NaoAchou
 =destruirGrafo                   OK 
-
-== Testar destruir vertice corrente grafo vazio
-=criarGrafo                      OK
-=destruirCorr                    EstaVazio
-=destruirGrafo                   OK 
-
-== Testar destruir vertice corrente grafo inexistente
-=destruirCorr                    NaoExiste

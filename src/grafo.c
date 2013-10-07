@@ -333,6 +333,36 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 
 
 /***************************************************************************
+*  Função: GRA Deixar de ser origem
+******/
+GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm)
+{
+   tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
+   LIS_tpCondRet lisCondRet;
+
+   if (pGrafo == NULL)
+   {
+      return GRA_CondRetGrafoNaoFoiCriado;
+   }
+
+   if (pGrafo->pCorrente == NULL)
+   {
+      return GRA_CondRetGrafoVazio;
+   }
+
+   LIS_IrInicioLista(pGrafo->pOrigens);
+   lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, pGrafo->pCorrente->nome);
+   if (lisCondRet != LIS_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+
+   LIS_ExcluirElemento(pGrafo->pOrigens);
+
+   return GRA_CondRetOK;
+}
+
+/***************************************************************************
 *  Função: GRA Destruir vértice corrente
 ******/
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)

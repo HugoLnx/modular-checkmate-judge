@@ -276,6 +276,33 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
 ***********************************************************************/
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 
+
+/***********************************************************************
+*
+*  Função: GRA Deixar de ser origem
+*
+*  Descrição
+*     Vértice corrente deixa de ser origem.
+*
+*  Parâmetros
+*     pGrafoParm - ponteiro para o grafo de onde se quer o valor
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetGrafoNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente é removido da lista de origens.
+*
+***********************************************************************/
+GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm);
+
 /***********************************************************************
 *
 *  Função: GRA Ir para o vértice adjacente
