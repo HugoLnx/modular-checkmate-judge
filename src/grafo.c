@@ -145,6 +145,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	{
 		return GRA_CondRetOK;
 	}
+
 	LIS_DestruirLista(pGrafo->pVertices);
 	LIS_DestruirLista(pGrafo->pOrigens);
 
@@ -354,7 +355,7 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 	}
 
 	// remove corrente vai para origem
-
+	LIS_IrInicioLista(pGrafo->pOrigens);
 	LIS_ObterValor(pGrafo->pOrigens,(void**)&pVertice);
 
 	LIS_IrInicioLista(pGrafo->pVertices);
@@ -407,7 +408,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 	return GRA_CondRetOK;
 }
 
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice)
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
@@ -433,7 +434,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 	{
 		LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
 
-		if(!strcmp(nomeVertice, pAresta->pVertice->nome))
+		if(!strcmp(pNomeVertice, pAresta->pVertice->nome))
 		{
 			pGrafo->pCorrente = pAresta->pVertice;
 			return GRA_CondRetOK;
@@ -447,7 +448,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 	return GRA_CondRetNaoAchou;
 }
 
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
+GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
@@ -467,7 +468,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
 
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, pNomeAresta);
 
 	if(lisCondRet != LIS_CondRetOK)
 	{
@@ -481,7 +482,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 	return GRA_CondRetOK;
 }
 
-GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
+GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
 	LIS_tpCondRet lisCondRet;
@@ -499,7 +500,7 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 	}
 
 	LIS_IrInicioLista(pGrafo->pOrigens);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nomeVertice);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, pNomeVertice);
 
 	if(lisCondRet != LIS_CondRetOK)
 	{

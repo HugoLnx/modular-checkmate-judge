@@ -281,13 +281,141 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor);
 ***********************************************************************/
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 
-/* Navegaçao */
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeDaAresta);
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta);
-GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice);
+/***********************************************************************
+*
+*  Função: GRA Ir para o vértice adjacente
+*
+*  Descrição
+*     Navega com o vértice corrente para o vértice contendo o nome passado como argumento.
+*
+*  Parâmetros
+*     pGrafoParm   - ponteiro para o grafo
+*     pNomeVertice - ponteiro para o nome do vértice
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente aponta para vértice com o nome passado como argumento.
+*
+***********************************************************************/
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVertice);
 
-/* Destruir grafo */
+/***********************************************************************
+*
+*  Função: GRA Seguir pela aresta
+*
+*  Descrição
+*     Navega com o vértice corrente para o vértice apontado pela aresta contendo nome passado como argumento.
+*
+*  Parâmetros
+*     pGrafoParm  - ponteiro para o grafo
+*     pNomeAresta - ponteiro para o nome da aresta que irá seguir
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente aponta para vértice apontado pela aresta passada como argumento.
+*
+***********************************************************************/
+GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
+
+
+/***********************************************************************
+*
+*  Função: GRA Ir para a origem
+*
+*  Descrição
+*     Navega com o vértice corrente para um vértice origem
+*
+*  Parâmetros
+*     pGrafoParm   - ponteiro para o grafo
+*     pNomeVertice - ponteiro para o nome do vertice
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente aponta para vértice origem contido na lista de origens.
+*
+***********************************************************************/
+GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice);
+
+
+/***********************************************************************
+*
+*  Função: GRA Destruir vértice corrente
+*
+*  Descrição
+*     Destroi vértice corrente, liberando-o da memória
+*
+*  Parâmetros
+*     pGrafoParm   - ponteiro para o grafo
+*
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Vértice corrente passa a apontar para o primeiro vértice de origem.
+*
+***********************************************************************/
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm);
+
+
+/***********************************************************************
+*
+*  Função: GRA Destruir aresta adjacente
+*
+*  Descrição
+*     Destroi aresta do vertice corrente
+*
+*  Parâmetros
+*     pGrafoParm   - ponteiro para o grafo
+*     pNomeAresta  - ponteiro para o nome da aresta a ser destruida
+
+*  Condições de retorno
+*     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetNaoAchou
+*
+*  Assertivas de entrada
+*     - Valem as assertivas estruturais do grafo direcionado.
+*
+*  Assertivas de saída
+*     - Valem as assertivas estruturais do grafo direcionado.
+*     - Removido referencia do vértice corrente da lista de antecessores do vertice apontado pela aresta a ser destruida.
+
+***********************************************************************/
 GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
 
 /***********************************************************************/
