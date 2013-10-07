@@ -374,21 +374,21 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 
 	LIS_tpCondRet lisCondRet;
 
-	if(pGrafoParm == NULL)
+	if (pGrafoParm == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(EstaVazio(pGrafo))
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
 
 	LIS_EstaVazia(pGrafo->pOrigens,&estaVazia);
 
-	if(estaVazia)
+	if (estaVazia)
 	{
 		return GRA_CondRetNaoAchou;
 	}
@@ -418,14 +418,14 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 	
 	LIS_tpCondRet lisCondRet;
 
-	if(pGrafoParm == NULL)
+	if (pGrafoParm == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(EstaVazio(pGrafo))
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -433,7 +433,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 	// Busca Aresta à remover
 	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
-	if(lisCondRet != LIS_CondRetOK)
+	if (lisCondRet != LIS_CondRetOK)
 	{
 		return GRA_CondRetNaoAchou;
 	}
@@ -459,14 +459,14 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 	tpVertice *pVertice = NULL;
 	int numElemLista = 0;
 
-	if(pGrafoParm == NULL)
+	if (pGrafoParm == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(EstaVazio(pGrafo))
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -478,7 +478,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 	{
 		LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
 
-		if(!strcmp(nomeVertice, pAresta->pVertice->nome))
+		if (!strcmp(nomeVertice, pAresta->pVertice->nome))
 		{
 			pGrafo->pCorrente = pAresta->pVertice;
 			return GRA_CondRetOK;
@@ -501,14 +501,14 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 	tpAresta *pAresta = NULL;
 	LIS_tpCondRet lisCondRet;
 
-	if(pGrafoParm == NULL)
+	if (pGrafoParm == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(EstaVazio(pGrafo))
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -517,7 +517,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
 
-	if(lisCondRet != LIS_CondRetOK)
+	if (lisCondRet != LIS_CondRetOK)
 	{
 		return GRA_CondRetNaoAchou;
 	}
@@ -537,14 +537,14 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 	tpGrafo *pGrafo = NULL;
 	LIS_tpCondRet lisCondRet;
 	tpVertice *pVertice;
-	if(pGrafoParm == NULL)
+	if (pGrafoParm == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(EstaVazio(pGrafo))
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -552,7 +552,7 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 	LIS_IrInicioLista(pGrafo->pOrigens);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nomeVertice);
 
-	if(lisCondRet != LIS_CondRetOK)
+	if (lisCondRet != LIS_CondRetOK)
 	{
 		return GRA_CondRetNaoAchou;
 	}
