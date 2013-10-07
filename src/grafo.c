@@ -115,9 +115,9 @@ static int CompararArestaENome (void *pVazio1, void *pVazio2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-/***********************************************************************
-*  Tipo de dados: GRA Criar grafo
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Criar grafo
+******/
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	void (*destruirValor)(void *pValor))
 {
@@ -134,9 +134,9 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	return GRA_CondRetOK;
 }
 
-/***********************************************************************
-*  Tipo de dados: GRA Destruir grafo
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Destruir grafo
+******/
 GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 {
 	tpGrafo *pGrafo = (tpGrafo*) *ppGrafo;
@@ -156,9 +156,9 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	return GRA_CondRetOK;
 }
 
-/***********************************************************************
-*  Tipo de dados: GRA Inserir vertice
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Inserir vertice
+******/
 GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -197,10 +197,9 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 	return GRA_CondRetOK;
 }
 
-
-/***********************************************************************
-*  Tipo de dados: GRA Inserir aresta do corrente para outro vértice
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Inserir aresta do corrente para outro vértice
+******/
 GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 	char *nomeAresta, char *nomeVerticeDestino)
 {
@@ -259,10 +258,9 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 	return GRA_CondRetOK;
 }
 
-
-/***********************************************************************
-*  Tipo de dados: GRA Obter conteúdo do vértice corrente
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Obter valor do vértice corrente
+******/
 GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -283,8 +281,9 @@ GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 	return GRA_CondRetOK;
 }
 
-
-
+/***************************************************************************
+*  Função: GRA Alterar valor do vértice corrente
+******/
 GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -304,9 +303,9 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 }
 
 
-/***********************************************************************
-*  Tipo de dados: GRA Tornar vértice corrente uma origem
-***********************************************************************/
+/***************************************************************************
+*  Função: GRA Tornar vértice corrente uma origem
+******/
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
@@ -334,7 +333,9 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 }
 
 
-
+/***************************************************************************
+*  Função: GRA Destruir vértice corrente
+******/
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = NULL;
@@ -377,7 +378,9 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 }
 
 
-
+/***************************************************************************
+*  Função: GRA Destruir aresta adjacente
+******/
 GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
@@ -416,6 +419,9 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 	return GRA_CondRetOK;
 }
 
+/***************************************************************************
+*  Função: GRA Ir para o vértice adjacente
+******/
 GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
@@ -456,6 +462,9 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVer
 	return GRA_CondRetNaoAchou;
 }
 
+/***************************************************************************
+*  Função: GRA Seguir pela aresta
+******/
 GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
@@ -490,6 +499,9 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 	return GRA_CondRetOK;
 }
 
+/***************************************************************************
+*  Função: GRA Ir para a origem
+******/
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
@@ -527,13 +539,12 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 
 /***********************************************************************
 *
-*  Função: <abreviacao> <nome da funcao por extenso>
+*  Função: GRA Destruir vértice
 *
 *  Descrição:
-*    <descrição da função>
+*    Função responsável por destruir vértices. Passada como ponteiro de funcao para listas de vértices.
 *
 ***********************************************************************/
-
 void DestruirVertice(void *pVazio)
 {
 	tpVertice *pVertice = (tpVertice*) pVazio;
@@ -550,6 +561,14 @@ void DestruirVertice(void *pVazio)
 	
 }
 
+/***********************************************************************
+*
+*  Função: GRA Destruir aresta
+*
+*  Descrição:
+*    Função responsável por destruir arestas. Passada como ponteiro de funcao para listas de sucessores do vértice.
+*
+***********************************************************************/
 void DestruirAresta(void *pVazio)
 {
 	tpAresta *pAresta = (tpAresta*) pVazio;
@@ -563,7 +582,14 @@ void DestruirAresta(void *pVazio)
 // Provavelmente será melhor preparar o módulo lista para receber NULL
 void NaoFazNada(void *pVazio) {}
 
-// usado para fazer a busca na lista de vertices
+/***********************************************************************
+*
+*  Função: GRA Comparar vértice e nome
+*
+*  Descrição:
+*    Função responsável por comparar vértices pelo nome. Usado para fazer a busca na lista de vertices.
+*
+***********************************************************************/
 int CompararVerticeENome( void *pVazio1, void *pVazio2 )
 {
 	tpVertice *pVertice1 = (tpVertice*) pVazio1;
@@ -572,7 +598,14 @@ int CompararVerticeENome( void *pVazio1, void *pVazio2 )
 	return strcmp(pVertice1->nome, nomeBuscado);
 }
 
-// usado para fazer a busca na lista de arestas
+/***********************************************************************
+*
+*  Função: GRA Comparar aresta e nome
+*
+*  Descrição:
+*    Função responsável por comparar arestas pelo nome. Usado para fazer a busca na lista de arestas.
+*
+***********************************************************************/
 int CompararArestaENome( void *pVazio1, void *pVazio2 )
 {
 	tpAresta *pAresta1 = (tpAresta*) pVazio1;
