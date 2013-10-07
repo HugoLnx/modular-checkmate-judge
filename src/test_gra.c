@@ -11,87 +11,81 @@
 #include    "conteudo.h"
 
 
-static const char * CRIAR_GRAFO_CMD      = "=criarGrafo"        ;
-static const char * DESTRUIR_GRAFO_CMD   = "=destruirGrafo"     ;
-static const char * INS_VERT_CMD         = "=insVertice"        ;
-static const char * INS_ARESTA_CMD       = "=insAresta"         ;
-static const char * OBTER_VALOR_CMD      = "=obterValor"        ;
-static const char * ALTER_VALOR_CMD      = "=alterarValor"      ;
-static const char * EXC_VERT_CMD         = "=excluirVertice"    ;
-static const char * IR_ORIGEM_CMD        = "=irOrigem"          ;
-static const char * IR_VERTICE_CMD       = "=irVertice"         ;
-static const char * IR_ARESTA_CMD        = "=irPelaAresta"      ;
-static const char * DESTRUIR_VERT_CMD    = "=destruirCorr"      ;
-static const char * DESTRUIR_ARESTA_CMD  = "=destruirAresta"    ;
-static const char * TORNAR_ORIGEM_CMD    = "=tornarOrigem"      ;
+static const char *CRIAR_GRAFO_CMD      = "=criarGrafo"       ;
+static const char *DESTRUIR_GRAFO_CMD   = "=destruirGrafo"    ;
+static const char *INS_VERT_CMD         = "=insVertice"       ;
+static const char *INS_ARESTA_CMD       = "=insAresta"        ;
+static const char *OBTER_VALOR_CMD      = "=obterValor"       ;
+static const char *ALTER_VALOR_CMD      = "=alterarValor"     ;
+static const char *EXC_VERT_CMD         = "=excluirVertice"   ;
+static const char *IR_ORIGEM_CMD        = "=irOrigem"         ;
+static const char *IR_VERTICE_CMD       = "=irVertice"        ;
+static const char *IR_ARESTA_CMD        = "=irPelaAresta"     ;
+static const char *DESTRUIR_VERT_CMD    = "=destruirCorr"     ;
+static const char *DESTRUIR_ARESTA_CMD  = "=destruirAresta"   ;
+static const char *TORNAR_ORIGEM_CMD    = "=tornarOrigem"     ;
 
-#define TRUE  1
-#define FALSE 0
 #define MAX_CHARS_NOME 3
 #define SIMBOLO_PARA_NULL "!N!"
 
 #define DIM_VT_GRAFO   10
 
-#define VAZIO     0
-#define NAO_VAZIO 1
-
 static GRA_tppGrafo pGrafo = NULL;
 
-/***** Protótipos das funções encapuladas no módulo *****/
+/*****Protótipos das funções encapuladas no módulo *****/
 
    static void DestruirValor(void *pValor);
-   static char* AlocarEspacoParaNome();
+   static char*AlocarEspacoParaNome();
 
-/*****  Código das funções exportadas pelo módulo  *****/
+/***** Código das funções exportadas pelo módulo  *****/
 
 
 /***********************************************************************
 *
-*  Função: TGRA Testar grafo
+* Função: TGRA Testar grafo
 *
-*     Comandos disponíveis:
+*    Comandos disponíveis:
 *
-*     =criarGrafo                   CondRetEsp
-*     =destruirGrafo                CondRetEsp
-*     =insVertice                   nome valor   CondRetEsp
-*     =insAresta                    nome vertice CondRetEsp
-*     =obterValor                   string CondRetEsp
-*     =alterarValor                 string CondRetEsp
-*     =excluirVertice               CondRetEsp
-*     =irOrigem                     nome CondRetEsp
-*     =irVertice                    nome CondRetEsp
-*     =irPelaAresta                 nome CondRetEsp
-*     =destruirCorr                 CondRetEsp
-*     =destruirAresta               nome CondRetEsp
-*     =tornarOrigem                 CondRetEsp
+*    =criarGrafo                   CondRetEsp
+*    =destruirGrafo                CondRetEsp
+*    =insVertice                   nome valor   CondRetEsp
+*    =insAresta                    nome vertice CondRetEsp
+*    =obterValor                   string CondRetEsp
+*    =alterarValor                 string CondRetEsp
+*    =excluirVertice               CondRetEsp
+*    =irOrigem                     nome CondRetEsp
+*    =irVertice                    nome CondRetEsp
+*    =irPelaAresta                 nome CondRetEsp
+*    =destruirCorr                 CondRetEsp
+*    =destruirAresta               nome CondRetEsp
+*    =tornarOrigem                 CondRetEsp
 *
 ***********************************************************************/
 
-   TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
+   TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
    {
-      int inxGrafo   = -1,
-          numLidos   = -1,
+      int numLidos   = -1,
           CondRetEsp = -1;
 
       TST_tpCondRet CondRet;
 
-      /* Testar CriarGrafo */
+      /*Testar CriarGrafo */
 
-         if ( strcmp ( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
+         if (strcmp (ComandoTeste, CRIAR_GRAFO_CMD) == 0)
          {
 
-            numLidos = LER_LerParametros( "i", &CondRetEsp );
+            numLidos = LER_LerParametros("i", &CondRetEsp);
 
-            if (numLidos != 1 )
+            if (numLidos != 1)
             {
-               return TST_CondRetParm ;
+               return TST_CondRetParm;
             }
 
-            CondRet = GRA_CriarGrafo( &pGrafo , DestruirValor );
+            CondRet = GRA_CriarGrafo(&pGrafo, DestruirValor);
 
-            if( CondRet ==  GRA_CondRetOK )
+            if(CondRet ==  GRA_CondRetOK)
             {
-               CondRet = TST_CompararPonteiroNulo(1 , pGrafo , "Erro em ponteiro de nova lista." ) ;
+               CondRet = TST_CompararPonteiroNulo(1, pGrafo, "Erro em ponteiro de nova lista.");
                return CondRet;
             }
 
@@ -99,25 +93,25 @@ static GRA_tppGrafo pGrafo = NULL;
 
          }
 
-       /* Testar Destruir grafo */
+     /*Testar Destruir grafo */
 
-         else if ( strcmp( ComandoTeste , DESTRUIR_GRAFO_CMD ) == 0 )
+         else if (strcmp(ComandoTeste, DESTRUIR_GRAFO_CMD) == 0)
          {
 
-            numLidos = LER_LerParametros( "i", &CondRetEsp ) ;
+            numLidos = LER_LerParametros("i", &CondRetEsp);
 
             if (numLidos != 1)
             {
-               return TST_CondRetParm ;
+               return TST_CondRetParm;
             }
 
-            CondRet = GRA_DestruirGrafo(&pGrafo) ;
+            CondRet = GRA_DestruirGrafo(&pGrafo);
 
-           return TST_CompararInt( CondRetEsp, CondRet, "Erro ao destruir grafo" ) ;
+            return TST_CompararInt(CondRetEsp, CondRet, "Erro ao destruir grafo");
 
          }
      
-      /* Testar inserir vertice */
+      /*Testar inserir vertice */
 
          else if (strcmp(ComandoTeste, INS_VERT_CMD) == 0)
          {
@@ -125,7 +119,7 @@ static GRA_tppGrafo pGrafo = NULL;
             char *pDado = AlocarEspacoParaNome();
             CON_tppConteudo pConteudo;
 
-            numLidos = LER_LerParametros( "ssi", pNome, pDado, &CondRetEsp );
+            numLidos = LER_LerParametros("ssi", pNome, pDado, &CondRetEsp);
 
             if (numLidos != 3)
             {
@@ -136,18 +130,18 @@ static GRA_tppGrafo pGrafo = NULL;
 
             CondRet = GRA_InserirVertice(pGrafo, pNome, pConteudo);
 
-            return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir vértice." ) ;
+            return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir vértice.");
 
          }
     
-      /* Testar inserir aresta */
+      /*Testar inserir aresta */
 
          else if (strcmp(ComandoTeste, INS_ARESTA_CMD) == 0)
          {
             char *pNomeAresta = AlocarEspacoParaNome();
             char *pNomeVertice = AlocarEspacoParaNome();
 
-            numLidos = LER_LerParametros( "ssi", pNomeAresta, pNomeVertice, &CondRetEsp );
+            numLidos = LER_LerParametros("ssi", pNomeAresta, pNomeVertice, &CondRetEsp);
 
             if (numLidos != 3)
             {
@@ -156,10 +150,10 @@ static GRA_tppGrafo pGrafo = NULL;
    
             CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, pNomeAresta, pNomeVertice);
 
-            return TST_CompararInt( CondRetEsp, CondRet , "Condicao de retorno errada ao inserir aresta." ) ;
+            return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir aresta.");
          }
 
-      /* Testar obter valor do vértice corrente */
+      /*Testar obter valor do vértice corrente */
 
          else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
          {
@@ -167,7 +161,7 @@ static GRA_tppGrafo pGrafo = NULL;
             char *pDadoEsperado = AlocarEspacoParaNome();
             char *pDadoObtido;
 
-            numLidos = LER_LerParametros("si", pDadoEsperado , &CondRetEsp);
+            numLidos = LER_LerParametros("si", pDadoEsperado, &CondRetEsp);
 
             if (numLidos != 2)
             {
@@ -199,14 +193,14 @@ static GRA_tppGrafo pGrafo = NULL;
             }
          }
 
-       /* Testar alterar valor do vértice corrente */
+       /*Testar alterar valor do vértice corrente */
 
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
             CON_tppConteudo pNovoConteudo, pAntigoConteudo;
 
-            numLidos = LER_LerParametros("si", pNovoValor , &CondRetEsp);
+            numLidos = LER_LerParametros("si", pNovoValor, &CondRetEsp);
 
             if (numLidos != 2)
             {
@@ -223,7 +217,7 @@ static GRA_tppGrafo pGrafo = NULL;
          }
 
 
-       /* Testar tornar corrente uma origem */
+       /*Testar tornar corrente uma origem */
 
          else if (strcmp(ComandoTeste, TORNAR_ORIGEM_CMD) == 0)
          {
@@ -239,11 +233,11 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao tornar o corrente uma origem.");
          }
 
-		  /* Testar seguir pela aresta */
+        /*Testar seguir pela aresta */
 
-		 else if (strcmp(ComandoTeste, IR_ARESTA_CMD) == 0)
+       else if (strcmp(ComandoTeste, IR_ARESTA_CMD) == 0)
          {
-			 char* nomeDaAresta = AlocarEspacoParaNome();
+            char *nomeDaAresta = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeDaAresta, &CondRetEsp);
 
@@ -252,16 +246,16 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_SeguirPelaAresta(pGrafo, nomeDaAresta);
+            CondRet = GRA_SeguirPelaAresta(pGrafo, nomeDaAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
 
-		 /* Testar ir vertice adjacente */
+       /*Testar ir vertice adjacente */
 
-		 else if (strcmp(ComandoTeste, IR_VERTICE_CMD) == 0)
+       else if (strcmp(ComandoTeste, IR_VERTICE_CMD) == 0)
          {
-			 char* nomeVertice = AlocarEspacoParaNome();
+            char *nomeVertice = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeVertice, &CondRetEsp);
 
@@ -270,18 +264,18 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeVertice);
+            CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeVertice);
 
-			free(nomeVertice);
+            free(nomeVertice);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
 
-		  /* Testar ir para origem */
+        /*Testar ir para origem */
 
-		 else if (strcmp(ComandoTeste, IR_ORIGEM_CMD) == 0)
+       else if (strcmp(ComandoTeste, IR_ORIGEM_CMD) == 0)
          {
-			 char* nomeVertice = AlocarEspacoParaNome();
+            char*nomeVertice = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeVertice, &CondRetEsp);
 
@@ -290,18 +284,18 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_IrParaAOrigem(pGrafo, nomeVertice);
+            CondRet = GRA_IrParaAOrigem(pGrafo, nomeVertice);
 
-			free(nomeVertice);
+            free(nomeVertice);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para origem.");
          }
 
-		   /* Testar ir destruir aresta adjacente */
+         /*Testar ir destruir aresta adjacente */
 
-		 else if (strcmp(ComandoTeste, DESTRUIR_ARESTA_CMD) == 0)
+       else if (strcmp(ComandoTeste, DESTRUIR_ARESTA_CMD) == 0)
          {
-			 char* nomeAresta = AlocarEspacoParaNome();
+            char*nomeAresta = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeAresta, &CondRetEsp);
 
@@ -310,16 +304,16 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_DestruirArestaAdjacente(pGrafo, nomeAresta);
+            CondRet = GRA_DestruirArestaAdjacente(pGrafo, nomeAresta);
 
-			free(nomeAresta);
+            free(nomeAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir aresta adjacente.");
          }
 
-		    /* Testar ir destruir aresta adjacente */
+          /*Testar ir destruir aresta adjacente */
 
-		 else if (strcmp(ComandoTeste, DESTRUIR_VERT_CMD) == 0)
+       else if (strcmp(ComandoTeste, DESTRUIR_VERT_CMD) == 0)
          {
             numLidos = LER_LerParametros("i", &CondRetEsp);
 
@@ -328,22 +322,22 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
 
-			CondRet = GRA_DestruirVerticeCorrente(pGrafo);
+            CondRet = GRA_DestruirVerticeCorrente(pGrafo);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir vertice corrente.");
          }
 
-      return TST_CondRetNaoConhec ;
+      return TST_CondRetNaoConhec;
 
    }
 
 
-/*****  Código das funções encapsuladas no módulo  *****/
+/***** Código das funções encapsuladas no módulo  *****/
 
 
 /***********************************************************************
 *
-*  Função: TGRA -Destruir valor
+* Função: TGRA -Destruir valor
 *
 ***********************************************************************/
 
@@ -355,13 +349,13 @@ static GRA_tppGrafo pGrafo = NULL;
 
 /***********************************************************************
 *
-*  Função: TGRA -Alocar espaço para nome
+* Função: TGRA -Alocar espaço para nome
 *
 ***********************************************************************/
-   char* AlocarEspacoParaNome()
+   char*AlocarEspacoParaNome()
    {
       return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
    }
 
-/********** Fim do módulo de implementação: TLIS Teste lista de símbolos **********/
+/**********Fim do módulo de implementação: TGRA Teste Grafo direcionado **********/
 

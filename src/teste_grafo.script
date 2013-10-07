@@ -254,5 +254,3 @@
 
 == Testar destruir vertice corrente grafo inexistente
 =destruirCorr                    NaoExiste
-
-
