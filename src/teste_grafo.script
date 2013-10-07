@@ -9,6 +9,7 @@
 =declararparm   EstaVazio      int  1
 =declararparm   NaoExiste      int  2
 =declararparm   NaoAchou       int  3
+=declararparm   JaExiste       int  4
 
 == Declarar outros parâmetros
 =declararparm   NULL           string "!N!"
@@ -39,24 +40,20 @@
 
 == Destruir funciona com grafo vazio
 =destruirGrafo                   OK
-== Recriar grafo
+
+== Teste inserir vértice com sucesso
 =criarGrafo                      OK
-
-== Testes aleatórios (criar uma estratégia consistente depois)
 =insVertice      "A"    "vA"     OK
-=tornarOrigem                    OK
-
-=insVertice      "B"    "vvB"    OK
-
-=insAresta       "ba"   "A"      OK
-
-=obterValor      "vvB"           OK
-
-=alterarValor    "vB"            OK
-=tornarOrigem                    OK
-
+=insVertice      "B"    "vB"     OK
+=insVertice      "C"    "vC"     OK
 =destruirGrafo                   OK
 
+== Teste inserir vértice com nome repetido
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=insVertice      "A"    "xx"     JaExiste
+=insVertice      "B"    "vB"     OK
+=destruirGrafo                   OK
 
 == Testar seguir pela aresta
 =criarGrafo                      OK

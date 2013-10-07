@@ -66,6 +66,9 @@ typedef enum {
 
    GRA_CondRetNaoAchou,
       /* Não encontrou o vértice/aresta procurado(a) */
+      
+   GRA_CondRetJaExiste,
+      /* Nome do vértice ou aresta está repetido */
 
    GRA_CondRetFaltouMemoria,
       /* Faltou memória ao tentar alocar algo */
@@ -137,7 +140,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 
 /***********************************************************************
 *
-*  Função: GRA Inserir elemento antes
+*  Função: GRA Inserir vértice
 *
 *  Descrição
 *     Insere novo vértice no grafo.
@@ -151,6 +154,9 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 *
 *  Condições de retorno
 *     GRA_CondRetOK
+*     GRA_CondRetGrafoVazio
+*     GRA_CondRetGrafoNaoFoiCriado
+*     GRA_CondRetJaExiste
 *     GRA_CondRetFaltouMemoria
 *
 *  Assertivas de entrada
@@ -159,6 +165,8 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 *  Assertivas de saída
 *     - Valem as assertivas estruturais do grafo direcionado.
 *     - Corrente apontará para o vértice inserido.
+*     - Se já existe vértice com esse nome, nenhum vértice é adicionado e o
+*       corrente permanece o mesmo.
 *
 ***********************************************************************/
 GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor);

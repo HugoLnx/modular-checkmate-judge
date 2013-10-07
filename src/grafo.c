@@ -162,11 +162,20 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 	tpVertice *pVertice;
+   LIS_tpCondRet lisCondRet;
 
 	if (pGrafo == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
+
+   LIS_IrInicioLista(pGrafo->pVertices);
+   lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, pNomeVertice);
+
+   if (lisCondRet == LIS_CondRetOK)
+   {
+      return GRA_CondRetJaExiste;
+   }
 
 	pVertice = (tpVertice*) malloc(sizeof(tpVertice));
 	if (pVertice == NULL)
