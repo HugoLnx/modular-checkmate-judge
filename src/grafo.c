@@ -111,6 +111,7 @@ static void DestruirVertice(void *pVazio);
 static void DestruirAresta(void *pVazio);
 static int CompararVerticeENome (void *pVazio1, void *pVazio2);
 static int CompararArestaENome (void *pVazio1, void *pVazio2);
+static int EstaVazio(tpGrafo *pGrafo);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -270,7 +271,7 @@ GRA_tpCondRet GRA_ObterValorCorrente(GRA_tppGrafo pGrafoParm, void **ppValor)
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
-	if (pGrafo->pCorrente == NULL)
+	if (EstaVazio(pGrafo))
 	{
 		*ppValor = NULL;
 		return GRA_CondRetGrafoVazio; 
@@ -292,7 +293,7 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
-	if (pGrafo->pCorrente == NULL)
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -315,7 +316,7 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
 
-	if (pGrafo->pCorrente == NULL)
+	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -345,7 +346,7 @@ GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm)
       return GRA_CondRetGrafoNaoFoiCriado;
    }
 
-   if (pGrafo->pCorrente == NULL)
+   if (EstaVazio(pGrafo))
    {
       return GRA_CondRetGrafoVazio;
    }
@@ -380,7 +381,7 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(pGrafo->pCorrente == NULL)
+	if(EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -424,7 +425,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(pGrafo->pCorrente == NULL)
+	if(EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -465,7 +466,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(pGrafo->pCorrente == NULL)
+	if(EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -507,7 +508,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(pGrafo->pCorrente == NULL)
+	if(EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -543,7 +544,7 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 
 	pGrafo = (tpGrafo*) pGrafoParm;
 
-	if(pGrafo->pCorrente == NULL)
+	if(EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
 	}
@@ -630,12 +631,25 @@ int CompararVerticeENome( void *pVazio1, void *pVazio2 )
 *    Função responsável por comparar arestas pelo nome. Usado para fazer a busca na lista de arestas.
 *
 ***********************************************************************/
-int CompararArestaENome( void *pVazio1, void *pVazio2 )
+int CompararArestaENome(void *pVazio1, void *pVazio2)
 {
 	tpAresta *pAresta1 = (tpAresta*) pVazio1;
 	char *nomeBuscado = (char*) pVazio2;
 
 	return strcmp(pAresta1->nome, nomeBuscado);
+}
+
+/***********************************************************************
+*
+*  Função: GRA Está vazio
+*
+*  Descrição:
+*    Função responsável por verificar se o grafo está vazio.
+*
+***********************************************************************/
+int EstaVazio(tpGrafo *pGrafo)
+{
+   return pGrafo->pCorrente == NULL;
 }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/
