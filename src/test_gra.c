@@ -35,7 +35,7 @@ static GRA_tppGrafo pGrafo = NULL;
 /*****Protótipos das funções encapuladas no módulo *****/
 
    static void DestruirValor(void *pValor);
-   static char*AlocarEspacoParaNome();
+   static char* AlocarEspacoParaNome();
 
 /***** Código das funções exportadas pelo módulo  *****/
 
@@ -275,7 +275,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
        else if (strcmp(ComandoTeste, IR_ORIGEM_CMD) == 0)
          {
-            char*nomeVertice = AlocarEspacoParaNome();
+            char *nomeVertice = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeVertice, &CondRetEsp);
 
@@ -295,7 +295,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
        else if (strcmp(ComandoTeste, DESTRUIR_ARESTA_CMD) == 0)
          {
-            char*nomeAresta = AlocarEspacoParaNome();
+            char *nomeAresta = AlocarEspacoParaNome();
 
             numLidos = LER_LerParametros("si", nomeAresta, &CondRetEsp);
 
@@ -352,7 +352,7 @@ static GRA_tppGrafo pGrafo = NULL;
 * Função: TGRA -Alocar espaço para nome
 *
 ***********************************************************************/
-   char*AlocarEspacoParaNome()
+   char* AlocarEspacoParaNome()
    {
       return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
    }
