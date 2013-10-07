@@ -149,7 +149,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 *
 *  Parâmetros
 *     pGrafoParm    - ponteiro para o grafo onde deve ser inserido o vértice
-*     pNomeVertice  - nome do vértice à ser criado.
+*     nomeVertice  - nome do vértice à ser criado.
 *     pValor        - ponteiro para valor do novo vértice.
 *
 *  Condições de retorno
@@ -169,7 +169,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo);
 *       corrente permanece o mesmo.
 *
 ***********************************************************************/
-GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor);
+GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, void *pValor);
 
 
 /***********************************************************************
@@ -182,8 +182,8 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 *
 *  Parâmetros
 *     pGrafoParm           - ponteiro para o grafo onde deve ser inserido a aresta
-*     pNomeAresta          - nome da aresta à ser criada.
-*     pNomeVerticeDestino  - nome do vértice cuja a aresta apontará.
+*     nomeAresta          - nome da aresta à ser criada.
+*     nomeVerticeDestino  - nome do vértice cuja a aresta apontará.
 *
 *  Condições de retorno
 *     GRA_CondRetOK
@@ -293,7 +293,7 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 *
 *  Parâmetros
 *     pGrafoParm   - ponteiro para o grafo
-*     pNomeVertice - ponteiro para o nome do vértice
+*     nomeVertice - ponteiro para o nome do vértice
 *
 *  Condições de retorno
 *     GRA_CondRetOK
@@ -309,7 +309,7 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm);
 *     - Vértice corrente aponta para vértice com o nome passado como argumento.
 *
 ***********************************************************************/
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVertice);
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice);
 
 /***********************************************************************
 *
@@ -320,7 +320,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVer
 *
 *  Parâmetros
 *     pGrafoParm  - ponteiro para o grafo
-*     pNomeAresta - ponteiro para o nome da aresta que irá seguir
+*     nomeAresta - ponteiro para o nome da aresta que irá seguir
 *
 *  Condições de retorno
 *     GRA_CondRetOK
@@ -336,7 +336,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVer
 *     - Vértice corrente aponta para vértice apontado pela aresta passada como argumento.
 *
 ***********************************************************************/
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
+GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta);
 
 
 /***********************************************************************
@@ -348,7 +348,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
 *
 *  Parâmetros
 *     pGrafoParm   - ponteiro para o grafo
-*     pNomeVertice - ponteiro para o nome do vertice
+*     nomeVertice - ponteiro para o nome do vertice
 *
 *  Condições de retorno
 *     GRA_CondRetOK
@@ -364,7 +364,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
 *     - Vértice corrente aponta para vértice origem contido na lista de origens.
 *
 ***********************************************************************/
-GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice);
+GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice);
 
 
 /***********************************************************************
@@ -403,7 +403,7 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm);
 *
 *  Parâmetros
 *     pGrafoParm   - ponteiro para o grafo
-*     pNomeAresta  - ponteiro para o nome da aresta a ser destruida
+*     nomeAresta  - ponteiro para o nome da aresta a ser destruida
 
 *  Condições de retorno
 *     GRA_CondRetOK
@@ -419,7 +419,7 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm);
 *     - Removido referencia do vértice corrente da lista de antecessores do vertice apontado pela aresta a ser destruida.
 
 ***********************************************************************/
-GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAresta);
+GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAresta);
 
 /***********************************************************************/
 #undef GRAFO_EXT
