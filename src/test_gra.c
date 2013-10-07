@@ -115,11 +115,11 @@ static GRA_tppGrafo pGrafo = NULL;
 
          else if (strcmp(ComandoTeste, INS_VERT_CMD) == 0)
          {
-            char *pNome = AlocarEspacoParaNome();
+            char *nome = AlocarEspacoParaNome();
             char *pDado = AlocarEspacoParaNome();
             CON_tppConteudo pConteudo;
 
-            numLidos = LER_LerParametros("ssi", pNome, pDado, &CondRetEsp);
+            numLidos = LER_LerParametros("ssi", nome, pDado, &CondRetEsp);
 
             if (numLidos != 3)
             {
@@ -128,7 +128,7 @@ static GRA_tppGrafo pGrafo = NULL;
    
             CON_CriarConteudo(&pConteudo, pDado);
 
-            CondRet = GRA_InserirVertice(pGrafo, pNome, pConteudo);
+            CondRet = GRA_InserirVertice(pGrafo, nome, pConteudo);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir vértice.");
 
@@ -138,19 +138,19 @@ static GRA_tppGrafo pGrafo = NULL;
 
          else if (strcmp(ComandoTeste, INS_ARESTA_CMD) == 0)
          {
-            char *pNomeAresta = AlocarEspacoParaNome();
-            char *pNomeVertice = AlocarEspacoParaNome();
+            char *nomeAresta = AlocarEspacoParaNome();
+            char *nomeVertice = AlocarEspacoParaNome();
 
-            numLidos = LER_LerParametros("ssi", pNomeAresta, pNomeVertice, &CondRetEsp);
+            numLidos = LER_LerParametros("ssi", nomeAresta, nomeVertice, &CondRetEsp);
 
             if (numLidos != 3)
             {
                return TST_CondRetParm;
             }
    
-            CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, pNomeAresta, pNomeVertice);
+            CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, nomeAresta, nomeVertice);
 
-            free(pNomeVertice);
+            free(nomeVertice);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir aresta.");
          }
