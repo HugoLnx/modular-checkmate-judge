@@ -107,7 +107,6 @@ typedef struct stGrafo {
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-static void NaoFazNada(void *pVazio);
 static void DestruirVertice(void *pVazio);
 static void DestruirAresta(void *pVazio);
 static int CompararVerticeENome (void *pVazio1, void *pVazio2);
@@ -126,7 +125,7 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	pGrafo->pCorrente = NULL;
 	pGrafo->destruirValor = destruirValor;
 
-	LIS_CriarLista(&pGrafo->pOrigens, NaoFazNada, CompararVerticeENome);
+	LIS_CriarLista(&pGrafo->pOrigens, NULL, CompararVerticeENome);
 	LIS_CriarLista(&pGrafo->pVertices, DestruirVertice, CompararVerticeENome);
 
 	*ppGrafo = (GRA_tppGrafo) pGrafo;
@@ -188,7 +187,7 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 	pVertice->pValor = pValor;
 	pVertice->destruirValor = pGrafo->destruirValor;
 
-	LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVerticeENome);
+	LIS_CriarLista(&pVertice->pAntecessores, NULL, CompararVerticeENome);
 	LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestaENome);
 
 	pGrafo->pCorrente = pVertice;
@@ -576,11 +575,6 @@ void DestruirAresta(void *pVazio)
 	free(pAresta->nome);
 	free(pAresta);
 }
-
-// A lista de origens não deve destruir os vertices, pois
-// estes já serão destruidos na pela lista de vertices mesmo
-// Provavelmente será melhor preparar o módulo lista para receber NULL
-void NaoFazNada(void *pVazio) {}
 
 /***********************************************************************
 *
