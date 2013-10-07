@@ -211,6 +211,13 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
+   
+   LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
+   lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
+   if (lisCondRet == LIS_CondRetOK)
+   {
+      return GRA_CondRetJaExiste;
+   }
 
 	pAresta = (tpAresta*) malloc(sizeof(tpAresta));
 	if (pAresta == NULL)
@@ -224,8 +231,12 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 	{
 		return GRA_CondRetFaltouMemoria;
 	}
-	else
-	{
+   else if (lisCondRet != LIS_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+   else
+   {
 		void * pVazio;
 		LIS_ObterValor(pGrafo->pVertices, &pVazio);
 		pAresta->pVertice = (tpVertice*) pVazio;

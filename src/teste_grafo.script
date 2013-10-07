@@ -55,6 +55,30 @@
 =insVertice      "B"    "vB"     OK
 =destruirGrafo                   OK
 
+== Teste inserir arestas com sucesso
+=criarGrafo                      OK
+=insVertice      "A"    "vA"     OK
+=insVertice      "B"    "vB"     OK
+=insAresta       "ba"   "A"      OK
+=insAresta       "ab"   "B"      OK
+=destruirGrafo                   OK
+
+== Teste inserir arestas com nome repetido
+=criarGrafo                      OK
+=insVertice      "A"    "x"      OK
+=insVertice      "B"    "x"      OK
+=insAresta       "a"    "A"      OK
+=insAresta       "a"    "B"      JaExiste
+=insVertice      "C"    "x"      OK
+=insAresta       "a"    "A"      OK
+=destruirGrafo                   OK
+
+== Teste inserir arestas para um vértice inexistente
+=criarGrafo                      OK
+=insVertice      "A"    "x"      OK
+=insAresta       "a"    "B"      NaoAchou
+=destruirGrafo                   OK
+
 == Testar seguir pela aresta
 =criarGrafo                      OK
 =insVertice      "A"    "vA"     OK
