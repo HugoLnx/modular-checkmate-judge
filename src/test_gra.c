@@ -150,6 +150,8 @@ static GRA_tppGrafo pGrafo = NULL;
    
             CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, pNomeAresta, pNomeVertice);
 
+            free(pNomeVertice);
+
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir aresta.");
          }
 
@@ -165,6 +167,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             if (numLidos != 2)
             {
+               free(pDadoEsperado);
                return TST_CondRetParm;
             }
 
@@ -180,10 +183,13 @@ static GRA_tppGrafo pGrafo = NULL;
             {
                CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
 
-               return TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
+               CondRet = TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
+               free(pDadoEsperado);
+               return CondRet;
             }
             else
             {
+               free(pDadoEsperado);
                if (pConteudoObtido != NULL)
                {
                   return TST_NotificarFalha("Não foi obtido null como conteudo ao ocorrer um erro."); 
@@ -247,6 +253,8 @@ static GRA_tppGrafo pGrafo = NULL;
             }
 
             CondRet = GRA_SeguirPelaAresta(pGrafo, nomeDaAresta);
+
+            free(nomeDaAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
