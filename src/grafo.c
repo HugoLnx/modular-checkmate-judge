@@ -107,7 +107,6 @@ typedef struct stGrafo {
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-static void NaoFazNada(void *pVazio);
 static void DestruirVertice(void *pVazio);
 static void DestruirAresta(void *pVazio);
 static int CompararVerticeENome (void *pVazio1, void *pVazio2);
@@ -126,7 +125,7 @@ GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	pGrafo->pCorrente = NULL;
 	pGrafo->destruirValor = destruirValor;
 
-	LIS_CriarLista(&pGrafo->pOrigens, NaoFazNada, CompararVerticeENome);
+	LIS_CriarLista(&pGrafo->pOrigens, NULL, CompararVerticeENome);
 	LIS_CriarLista(&pGrafo->pVertices, DestruirVertice, CompararVerticeENome);
 
 	*ppGrafo = (GRA_tppGrafo) pGrafo;
@@ -159,7 +158,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 /***************************************************************************
 *  Função: GRA Inserir vertice
 ******/
-GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, void *pValor)
+GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, void *pValor)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 	tpVertice *pVertice;
@@ -171,7 +170,7 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 	}
 
    LIS_IrInicioLista(pGrafo->pVertices);
-   lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, pNomeVertice);
+   lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, nomeVertice);
 
    if (lisCondRet == LIS_CondRetOK)
    {
@@ -184,11 +183,11 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *pNomeVertice, vo
 		return GRA_CondRetFaltouMemoria;
 	}
 
-	pVertice->nome = pNomeVertice;
+	pVertice->nome = nomeVertice;
 	pVertice->pValor = pValor;
 	pVertice->destruirValor = pGrafo->destruirValor;
 
-	LIS_CriarLista(&pVertice->pAntecessores, NaoFazNada, CompararVerticeENome);
+	LIS_CriarLista(&pVertice->pAntecessores, NULL, CompararVerticeENome);
 	LIS_CriarLista(&pVertice->pSucessores, DestruirAresta, CompararArestaENome);
 
 	pGrafo->pCorrente = pVertice;
@@ -381,7 +380,7 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 /***************************************************************************
 *  Função: GRA Destruir aresta adjacente
 ******/
-GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
+GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
@@ -402,7 +401,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 
 	// Busca Aresta à remover
 	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, pNomeAresta);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
 	if(lisCondRet != LIS_CondRetOK)
 	{
 		return GRA_CondRetNaoAchou;
@@ -422,7 +421,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeAr
 /***************************************************************************
 *  Função: GRA Ir para o vértice adjacente
 ******/
-GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
+GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
@@ -448,7 +447,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVer
 	{
 		LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
 
-		if(!strcmp(pNomeVertice, pAresta->pVertice->nome))
+		if(!strcmp(nomeVertice, pAresta->pVertice->nome))
 		{
 			pGrafo->pCorrente = pAresta->pVertice;
 			return GRA_CondRetOK;
@@ -465,7 +464,7 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *pNomeVer
 /***************************************************************************
 *  Função: GRA Seguir pela aresta
 ******/
-GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
+GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
@@ -485,7 +484,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 
 	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
 
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, pNomeAresta);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
 
 	if(lisCondRet != LIS_CondRetOK)
 	{
@@ -502,7 +501,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *pNomeAresta)
 /***************************************************************************
 *  Função: GRA Ir para a origem
 ******/
-GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
+GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
 	LIS_tpCondRet lisCondRet;
@@ -520,7 +519,7 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *pNomeVertice)
 	}
 
 	LIS_IrInicioLista(pGrafo->pOrigens);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, pNomeVertice);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nomeVertice);
 
 	if(lisCondRet != LIS_CondRetOK)
 	{
@@ -576,11 +575,6 @@ void DestruirAresta(void *pVazio)
 	free(pAresta->nome);
 	free(pAresta);
 }
-
-// A lista de origens não deve destruir os vertices, pois
-// estes já serão destruidos na pela lista de vertices mesmo
-// Provavelmente será melhor preparar o módulo lista para receber NULL
-void NaoFazNada(void *pVazio) {}
 
 /***********************************************************************
 *
