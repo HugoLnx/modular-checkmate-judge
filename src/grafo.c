@@ -112,6 +112,8 @@ static void DestruirAresta(void *pVazio);
 static int CompararVerticeENome (void *pVazio1, void *pVazio2);
 static int CompararArestaENome (void *pVazio1, void *pVazio2);
 static int EstaVazio(tpGrafo *pGrafo);
+static GRA_tpCondRet ProcurarVertice(tpGrafo *pGrafo, char *nome, tpVertice **pVertice);
+static GRA_tpCondRet ProcurarAresta(tpVertice *pVertice, char *nome, tpAresta **pAresta);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -198,23 +200,39 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 }
 
 /***************************************************************************
-*  Função: GRA Inserir aresta do corrente para outro vértice
+*  Função: GRA Inserir aresta
 ******/
-GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
-	char *nomeAresta, char *nomeVerticeDestino)
+GRA_tpCondRet GRA_InserirAresta(GRA_tppGrafo pGrafoParm,
+	char *nomeAresta, char *nomeVerticeOrigem, char *nomeVerticeDestino)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 	tpAresta *pAresta;
 	LIS_tpCondRet lisCondRet;
+   GRA_tpCondRet graCondRet;
+   tpVertice *pVerticeOrigem, *pVerticeDestino;
 
 	if (pGrafo == NULL)
 	{
 		return GRA_CondRetGrafoNaoFoiCriado;
 	}
-   
-   LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
-   lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
-   if (lisCondRet == LIS_CondRetOK)
+
+   // Procura vértice origem
+   graCondRet = ProcurarVertice(pGrafo, nomeVerticeOrigem, &pVerticeOrigem);
+   if (graCondRet != GRA_CondRetOK)
+   {
+      return graCondRet;
+   }
+
+   // Procura vértice destino
+   graCondRet = ProcurarVertice(pGrafo, nomeVerticeDestino, &pVerticeDestino);
+   if (graCondRet != GRA_CondRetOK)
+   {
+      return graCondRet;
+   }
+
+   // Verifica se já existe uma aresta com este nome
+   graCondRet = ProcurarAresta(pVerticeOrigem, nomeAresta, &pAresta);
+   if (graCondRet == GRA_CondRetOK)
    {
       return GRA_CondRetJaExiste;
    }
@@ -225,35 +243,22 @@ GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm,
 		return GRA_CondRetFaltouMemoria;
 	}
 
-	LIS_IrInicioLista(pGrafo->pVertices);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, nomeVerticeDestino);
+   // Atualiza os antecessores do vértice destino
+	lisCondRet = LIS_InserirElementoApos(pVerticeDestino->pAntecessores, pVerticeOrigem);
 	if (lisCondRet == LIS_CondRetFaltouMemoria)
 	{
 		return GRA_CondRetFaltouMemoria;
 	}
-   else if (lisCondRet != LIS_CondRetOK)
-   {
-      return GRA_CondRetNaoAchou;
-   }
-   else
-   {
-		void * pVazio;
-		LIS_ObterValor(pGrafo->pVertices, &pVazio);
-		pAresta->pVertice = (tpVertice*) pVazio;
-		lisCondRet = LIS_InserirElementoApos(pAresta->pVertice->pAntecessores, pGrafo->pCorrente);
-		if (lisCondRet == LIS_CondRetFaltouMemoria)
-		{
-			return GRA_CondRetFaltouMemoria;
-		}
-	}
 
-	lisCondRet = LIS_InserirElementoApos(pGrafo->pCorrente->pSucessores, pAresta);
+   // Atualiza os sucessores do vértice origem
+	lisCondRet = LIS_InserirElementoApos(pVerticeOrigem->pSucessores, pAresta);
 	if (lisCondRet == LIS_CondRetFaltouMemoria)
 	{
 		return GRA_CondRetFaltouMemoria;
 	}
 
 	pAresta->nome = nomeAresta;
+   pAresta->pVertice = pVerticeDestino;
 
 	return GRA_CondRetOK;
 }
@@ -650,6 +655,66 @@ int CompararArestaENome(void *pVazio1, void *pVazio2)
 int EstaVazio(tpGrafo *pGrafo)
 {
    return pGrafo->pCorrente == NULL;
+}
+
+GRA_tpCondRet ProcurarVertice(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
+{
+   LIS_tpCondRet lisCondRet;
+   *pVertice = NULL;
+
+	LIS_IrInicioLista(pGrafo->pVertices);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, nome);
+	if (lisCondRet != LIS_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+   else
+   {
+		void *pVazio;
+		LIS_ObterValor(pGrafo->pVertices, &pVazio);
+      *pVertice = (tpVertice*) pVazio;
+      return GRA_CondRetOK;
+	}
+}
+
+GRA_tpCondRet ProcurarOrigem(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
+{
+   LIS_tpCondRet lisCondRet;
+   *pVertice = NULL;
+
+	LIS_IrInicioLista(pGrafo->pOrigens);
+	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nome);
+	if (lisCondRet != LIS_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+   else
+   {
+		void *pVazio;
+		LIS_ObterValor(pGrafo->pOrigens, &pVazio);
+      *pVertice = (tpVertice*) pVazio;
+      return GRA_CondRetOK;
+	}
+}
+
+GRA_tpCondRet ProcurarAresta(tpVertice *pVertice, char *nome, tpAresta **pAresta)
+{
+   LIS_tpCondRet lisCondRet;
+   *pAresta = NULL;
+
+	LIS_IrInicioLista(pVertice->pSucessores);
+	lisCondRet = LIS_ProcurarValor(pVertice->pSucessores, nome);
+	if (lisCondRet != LIS_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+   else
+   {
+		void *pVazio;
+		LIS_ObterValor(pVertice->pSucessores, &pVazio);
+      *pAresta = (tpAresta*) pVazio;
+      return GRA_CondRetOK;
+	}
 }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/

@@ -195,7 +195,8 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 *     - Valem as assertivas estruturais do grafo direcionado.
 *
 ***********************************************************************/
-GRA_tpCondRet GRA_InserirArestaDoCorrentePara(GRA_tppGrafo pGrafoParm, char *nomeAresta, char *nomeVerticeDestino);
+GRA_tpCondRet GRA_InserirAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta,
+     char *nomeVerticeOrigem, char *nomeVerticeDestino);
 
 /***********************************************************************
 *

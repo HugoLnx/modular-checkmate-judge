@@ -140,18 +140,20 @@ static GRA_tppGrafo pGrafo = NULL;
          else if (strcmp(ComandoTeste, INS_ARESTA_CMD) == 0)
          {
             char *nomeAresta = AlocarEspacoParaNome();
-            char *nomeVertice = AlocarEspacoParaNome();
+            char *nomeVerticeOrig = AlocarEspacoParaNome();
+            char *nomeVerticeDest = AlocarEspacoParaNome();
 
-            numLidos = LER_LerParametros("ssi", nomeAresta, nomeVertice, &CondRetEsp);
+            numLidos = LER_LerParametros("sssi", nomeAresta, nomeVerticeOrig, nomeVerticeDest, &CondRetEsp);
 
-            if (numLidos != 3)
+            if (numLidos != 4)
             {
                return TST_CondRetParm;
             }
    
-            CondRet = GRA_InserirArestaDoCorrentePara(pGrafo, nomeAresta, nomeVertice);
+            CondRet = GRA_InserirAresta(pGrafo, nomeAresta, nomeVerticeOrig, nomeVerticeDest);
 
-            free(nomeVertice);
+            free(nomeVerticeOrig);
+            free(nomeVerticeDest);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir aresta.");
          }
