@@ -105,6 +105,12 @@
 =insAresta       "a"    "A"   "B"   NaoAchou
 =destruirGrafo                      OK
 
+== Teste inserir aresta de um vértice inexistente
+=criarGrafo                         OK
+=insVertice      "A"    "x"         OK
+=insAresta       "a"    "B"   "A"   NaoAchou
+=destruirGrafo                      OK
+
 == Testar alterar valor do corrente
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
