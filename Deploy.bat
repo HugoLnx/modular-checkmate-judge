@@ -45,8 +45,6 @@ REM *********************Adiciona ferramentas*********************
 
 copy ferramentas\compilebanner.exe INF1301-Trab2-HGRC\ferramentas
 copy ferramentas\exbestat.exe INF1301-Trab2-HGRC\ferramentas
-copy ferramentas\exe2txt.bat INF1301-Trab2-HGRC\ferramentas
-copy ferramentas\txt2exe.bat INF1301-Trab2-HGRC\ferramentas
 
 REM *********************Adicinada executaveis*********************
 
@@ -105,6 +103,10 @@ rename INF1301-Trab2-HGRC\relatorios\hugo.relatorio RELATORIO-HUGO.TXT
 
 copy Documentos\robert.relatorio INF1301-Trab2-HGRC\relatorios
 rename INF1301-Trab2-HGRC\relatorios\robert.relatorio RELATORIO-ROBERT.TXT
+
+REM *********************Adiciona Leia-me*********************
+
+copy LEIA-ME.txt INF1301-Trab2-HGRC\
 
 del INF1301-Trab2-HGRC.zip
 

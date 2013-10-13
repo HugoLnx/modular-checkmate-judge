@@ -1,0 +1,119 @@
+== Apresentação == 
+
+Este texto descreve brevemente o funcionamento e uso dos módulos LISTA genérica, CONTEUDO e GRAFO genérico, que utilizará o módulo LISTA e CONTEUDO. 
+
+== Objetivo ==
+
+O objetivo dos construtos gerados é testar o funcionamento e manipulação correta de grafos genéricos dirigidos usando lista genéricas.
+
+== Estrutura de diretórios ==
+
+->ferramentas
+--------->compilebanner.exe.txt
+--------->exbestat.exe.txt
+
+
+->relatorios
+--------->RELATORIO-HUGO.TXT
+--------->RELATORIO-ROBERT.TXT
+
+->TRAB2-1
+--------->batches
+----------------->LimpaTudo.bat
+----------------->TestaLista.bat
+--------->executavel
+----------------->TRAB2-1.EXE.TXT
+--------->lib
+----------------->ArcaboucoTeste.lib
+--------->scripts
+----------------->teste_lista.script
+--------->src
+----------------->definicao
+------------------------->lista.h
+----------------->implementacao
+------------------------->lista.c
+------------------------->test_lis.c
+
+->TRAB2-2
+--------->batches
+----------------->LimpaTudo.bat
+----------------->TestaConteudo.bat
+--------->executavel
+----------------->TRAB2-2.EXE.TXT
+--------->lib
+----------------->ArcaboucoTeste.lib
+--------->scripts
+----------------->teste_conteudo.script
+--------->src
+----------------->definicao
+------------------------->conteudo.h
+----------------->implementacao
+------------------------->conteudo.c
+------------------------->test_con.c
+
+->TRAB2-3
+--------->batches
+----------------->LimpaTudo.bat
+----------------->TestaConteudo.bat
+--------->executavel
+----------------->TRAB2-3.EXE.TXT
+--------->lib
+----------------->ArcaboucoTeste.lib
+--------->scripts
+----------------->teste_grafo.script
+--------->src
+----------------->definicao
+------------------------->grafo.h
+----------------->implementacao
+------------------------->grafo.c
+------------------------->test_gra.c
+
+->LimpaTudo.bat
+
+->TestaTudo.bat
+
+->LEIAME.TXT
+
+
+== Arquivos e diretórios detalhados ==
+
+= Diretórios
+
+Diretório ferramentas: Contém ferramentas de apoio a geração e acumulo de dado de estátisticas a partir dos resultados de testes dos módulos LISTA, CONTEUDO e GRAFO, usado pelo TestaTudo.bat.
+
+Diretório relatorios: Contém relatórios dos integrantes do grupo.
+
+Diretório TRAB2-1: Contém os artefatos gerados para uso do módulo LISTA.
+
+Diretório TRAB2-2: Contém os artefatos gerados para uso do módulo CONTEUDO.
+
+Diretório TRAB2-3: Contém os artefatos gerados para uso do módulo GRAFO
+
+Diretório batches: Contém arquivos .bat de uso do módulo.
+
+Diretório executável: Contém o executável do módulo.
+
+Diretório lib: Contém bibliotecas utilizadas pelo módulo.
+
+Diretório scripts: Contém scripts de testes do módulo.
+
+Diretório src: Contém o código fonte do módulo, separado em implementação e definição.
+
+= Arquivos
+
+Arquivo TestaTudo.bat: Executa os testes de todos os módulos e cria uma pasta chamada resultadoDosTestes contendo os arquivos de log e estatisticas (acumulado).
+
+Arquivo LimpaTudo.bat: Remove dados de log e estatisticas gerados pelo teste.
+
+Arquivo TestaLista.bat: Executa teste do módulo LISTA. Gera arquivo de log e estatisticas.
+
+Arquivo TestaConteudo.bat: Executa teste do módulo Conteudo. Gera arquivo de log e estatisticas.
+
+Arquivo TestaGrafo.bat: Executa teste do módulo Grafo. Gera arquivo de log e estatisticas.
+
+== Execução de testes ==
+
+Testar todos os módulos: rodar TestaTudo.bat, contido no diretório raiz.
+Testar módulo LISTA: rodar TestaLista.bat contido em TRAB2-1\batches
+Testar módulo CONTEUDO: rodar TestaConteudo.bat contido em TRAB2-2\batches
+Testar módulo GRAFO: rodar TestaGrafo.bat contido em TRAB2-3\batches
