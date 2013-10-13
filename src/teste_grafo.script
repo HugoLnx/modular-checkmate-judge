@@ -50,7 +50,6 @@
 =irOrigem        "A"                EstaVazio
 
 
-
 == Destruir funciona com grafo vazio
 =destruirGrafo                      OK
 
@@ -194,8 +193,6 @@
 =destruirGrafo                      OK
 
 
-
-
 == Testar deixar de ser origem
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
@@ -250,7 +247,6 @@
 =destruirAresta  "11"               NaoAchou
 =destruirGrafo                      OK
 
-
 == Testar destruir vertice corrente
 =criarGrafo                         OK
 =insVertice      "1"    "vA"        OK
@@ -260,11 +256,43 @@
 =destruirCorr                       OK
 =destruirGrafo                      OK 
 
-
 == Testar destruir vertice corrente sem ter origem
 =criarGrafo                         OK
 =insVertice      "1"    "vA"        OK
 =insVertice      "2"    "vB"        OK
 =insVertice      "3"    "vC"        OK
 =destruirCorr                       NaoAchou
+=destruirGrafo                      OK 
+
+== Testar destruir vertice corrente que não contem sucessores
+=criarGrafo                         OK
+=insVertice      "1"    "vA"        OK
+=tornarOrigem                       OK
+=insVertice      "2"    "vB"        OK
+=insVertice      "4"    "vD"        OK
+=insVertice      "5"    "vE"        OK
+=insVertice      "3"    "vC"        OK
+=insAresta       "12"   "1"   "2"   OK
+=insAresta       "21"   "2"   "1"   OK
+=insAresta       "13"   "1"   "3"   OK
+=insAresta       "23"   "2"   "3"   OK
+=destruirCorr                       OK
+=destruirGrafo                      OK 
+
+
+== Testar destruir vertice corrente com antecessores e sucessores
+=criarGrafo                         OK
+=insVertice      "1"    "vA"        OK
+=tornarOrigem                       OK
+=insVertice      "2"    "vB"        OK
+=insVertice      "4"    "vD"        OK
+=insVertice      "5"    "vE"        OK
+=insVertice      "3"    "vC"        OK
+=insAresta       "12"   "1"   "2"   OK
+=insAresta       "21"   "2"   "1"   OK
+=insAresta       "13"   "1"   "3"   OK
+=insAresta       "23"   "2"   "3"   OK
+=insAresta       "34"   "3"   "4"   OK
+=insAresta       "35"   "3"   "5"   OK
+=destruirCorr                       OK
 =destruirGrafo                      OK 

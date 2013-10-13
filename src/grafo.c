@@ -259,7 +259,7 @@ GRA_tpCondRet GRA_InserirAresta(GRA_tppGrafo pGrafoParm,
 	}
 
 	pAresta->nome = nomeAresta;
-   pAresta->pVertice = pVerticeDestino;
+    pAresta->pVertice = pVerticeDestino;
 
 	return GRA_CondRetOK;
 }
@@ -371,8 +371,9 @@ GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm)
 GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = NULL;
-	tpVertice  *pVertice = NULL;
-	int estaVazia = -1;
+	tpVertice  *pVerticeOrigem = NULL, *pVertice = NULL;
+	tpAresta *pAresta = NULL;
+	int estaVazia = -1, numElemLista = 0;
 
 	LIS_tpCondRet lisCondRet;
 
@@ -396,14 +397,49 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 	}
 
 	// remove corrente vai para origem
+	// Navega para o inicio da lista de origens
 	LIS_IrInicioLista(pGrafo->pOrigens);
-	LIS_ObterValor(pGrafo->pOrigens,(void**)&pVertice);
+	//Pega o valor do primeiro vértice de origem
+	LIS_ObterValor(pGrafo->pOrigens,(void**)&pVerticeOrigem);
 
+	//remove arestas do vertice corrente
+	LIS_EsvaziarLista(pGrafo->pCorrente->pSucessores);
+
+	// Para cada item da lista de anteressores, remover aresta que aponta para o corrente
+	LIS_NumELementos(pGrafo->pCorrente->pAntecessores,&numElemLista);
+	LIS_IrInicioLista(pGrafo->pCorrente->pAntecessores);
+
+	while(numElemLista > 0)
+	{
+		int nElem = 0;
+		LIS_ObterValor(pGrafo->pCorrente->pAntecessores,(void**)&pVertice);
+
+		LIS_NumELementos(pVertice->pSucessores, &nElem);
+		LIS_IrInicioLista(pVertice->pSucessores);
+
+		while(nElem > 0)
+		{
+			LIS_ObterValor(pVertice->pSucessores,(void**)&pAresta);
+
+			if(!strcmp(pAresta->pVertice->nome, pGrafo->pCorrente->nome))
+			{
+				LIS_ExcluirElemento(pVertice->pSucessores);
+				break;
+			}
+
+			LIS_AvancarElementoCorrente(pVertice->pSucessores,1);
+			nElem--;
+		}
+		LIS_AvancarElementoCorrente(pGrafo->pCorrente->pAntecessores,1);
+		numElemLista--;
+	}
+
+	//Exclui elemento corrente
 	LIS_IrInicioLista(pGrafo->pVertices);
 	LIS_ProcurarValor(pGrafo->pVertices,pGrafo->pCorrente->nome);
 	LIS_ExcluirElemento(pGrafo->pVertices);
 
-	pGrafo->pCorrente = pVertice;
+	pGrafo->pCorrente = pVerticeOrigem;
 	
 
 	return GRA_CondRetOK;
@@ -467,7 +503,6 @@ GRA_tpCondRet GRA_IrParaVerticeAdjacente(GRA_tppGrafo pGrafoParm, char *nomeVert
 	}
 
 	pGrafo = (tpGrafo*) pGrafoParm;
-
 	if (EstaVazio(pGrafo))
 	{
 		return GRA_CondRetGrafoVazio;
