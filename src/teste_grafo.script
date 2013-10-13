@@ -35,7 +35,7 @@
 =tornarOrigem                       OK
 =recuperar
 
-== testando criação do grafo
+== Testar criação do grafo
 =criarGrafo                         OK
 
 == Operações inválidas com grafo vazio
@@ -53,13 +53,13 @@
 == Destruir funciona com grafo vazio
 =destruirGrafo                      OK
 
-== Teste obter valor
+== Testar obter valor
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
 =obterValor      "vA"               OK
 =destruirGrafo                      OK
 
-== Teste inserir vértice com sucesso
+== Testar inserir vértice com sucesso
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
 =obterValor      "vA"               OK
@@ -69,7 +69,7 @@
 =obterValor      "vC"               OK
 =destruirGrafo                      OK
 
-== Teste inserir vértice com nome repetido
+== Testar inserir vértice com nome repetido
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
 =insVertice      "A"    "xx"        JaExiste
@@ -78,7 +78,7 @@
 =obterValor      "vB"               OK
 =destruirGrafo                      OK
 
-== Teste inserir arestas com sucesso
+== Testar inserir arestas com sucesso
 =criarGrafo                         OK
 =insVertice      "A"    "vA"        OK
 =insVertice      "B"    "vB"        OK
@@ -88,7 +88,7 @@
 =obterValor      "vB"               OK
 =destruirGrafo                      OK
 
-== Teste inserir arestas com nome repetido
+== Testar inserir arestas com nome repetido
 =criarGrafo                         OK
 =insVertice      "A"    "x"         OK
 =insVertice      "B"    "x"         OK
@@ -98,13 +98,13 @@
 =insAresta       "a"    "C"   "A"   OK
 =destruirGrafo                      OK
 
-== Teste inserir arestas para um vértice inexistente
+== Testar inserir arestas para um vértice inexistente
 =criarGrafo                         OK
 =insVertice      "A"    "x"         OK
 =insAresta       "a"    "A"   "B"   NaoAchou
 =destruirGrafo                      OK
 
-== Teste inserir aresta de um vértice inexistente
+== Testar inserir aresta de um vértice inexistente
 =criarGrafo                         OK
 =insVertice      "A"    "x"         OK
 =insAresta       "a"    "B"   "A"   NaoAchou
