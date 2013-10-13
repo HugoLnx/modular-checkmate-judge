@@ -16,3 +16,4 @@ Data                Horas Trabalhadas    Tipo de Tarefa                         
 06/out/2013	        1                    especificar os módulos                                     Especificar e documentar funções de navegação de destruição
 09/out/2013	        2.5                  revisar especificações                                     Revisar especificação dos módulos lista, grafo e conteudo
 13/out/2013	        2.5                  codificar módulo                                           Corrigir problema na destruição do vertice corrente. Não destruia aresta dos antecessores.
+13/out/2013	        1.5                  organizar codigo para entrega                              Criacao de arquivo .bat para criacao do .zip + organização do trabaho que será enviado ao professor.
