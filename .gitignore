@@ -4,10 +4,12 @@
 *.o
 *.exe
 Debug/
-modular-matrix/Debug/
+Release/
+INF1301-Trab2-HGRC/
 *.opensdf
 ipch/
 *.log
 *.stat
 *.zip
+*.rar
 *.suo
