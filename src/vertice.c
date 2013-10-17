@@ -1,9 +1,9 @@
 /***************************************************************************
 *
-*  Módulo de implementação: CON  Conteúdo do módulo
+*  Módulo de implementação: VER  Conteúdo do módulo
 *
-*  Arquivo gerado:              conteudo.h
-*  Letras identificadoras:      CON
+*  Arquivo gerado:              vertice.h
+*  Letras identificadoras:      VER
 *
 *	Autores:
 *     - Hugo Roque: hg
@@ -19,15 +19,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CONTEUDO_OWN
-#include "conteudo.h"
-#undef CONTEUDO_OWN
+#define VERTICE_OWN
+#include "vertice.h"
+#undef VERTICE_OWN
 
 /***********************************************************************
-*  Tipo de dados: CON Conteudo
+*  Tipo de dados: VER Conteudo
 ***********************************************************************/
 
-typedef struct CON_stConteudo {
+typedef struct VER_stConteudo {
 
 	char Valor[255];
 		/* Valor do conteúdo */
@@ -37,77 +37,77 @@ typedef struct CON_stConteudo {
 /*****  Código das funções exportadas pelo módulo  *****/
 
 /***************************************************************************
-*  Função: CON Criar conteúdo
+*  Função: VER Criar conteúdo
 *  ****/
-CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor)
+VER_tpCondRet VER_CriarConteudo(VER_tppConteudo *ppConteudo, char *pValor)
 {
 	tpConteudo *pConteudo;
 
 	pConteudo = (tpConteudo*)malloc(sizeof(tpConteudo));
 	if(pConteudo == NULL)
    {
-		return CON_CondRetFaltouMemoria;
+		return VER_CondRetFaltouMemoria;
    }
 
 	strcpy(pConteudo->Valor, pValor);
 
 	*ppConteudo = pConteudo;
 
-	return CON_CondRetOK;
+	return VER_CondRetOK;
 }
 
 /***************************************************************************
-*  Função: CON Destruir conteúdo
+*  Função: VER Destruir conteúdo
 *  ****/
-CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo)
+VER_tpCondRet VER_DestruirConteudo(VER_tppConteudo *ppConteudo)
 {
 	tpConteudo *pConteudo;
 	pConteudo = *ppConteudo;
 
 	if (*ppConteudo == NULL)
 	{
-		return CON_CondRetOK;
+		return VER_CondRetOK;
 	}
 
 	free(pConteudo);
 	pConteudo = NULL;
 	*ppConteudo = NULL;
 
-	return CON_CondRetOK;
+	return VER_CondRetOK;
 }
 
 /***************************************************************************
-*  Função: CON Obter valor do conteúdo
+*  Função: VER Obter valor do conteúdo
 *  ****/
-CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor)
+VER_tpCondRet VER_ObterValorDoConteudo(VER_tppConteudo pConteudoParm, char **ppValor)
 {
 	tpConteudo *pConteudo = pConteudoParm;
 
 	if (pConteudo == NULL)
 	{
 		*ppValor = NULL;
-		return CON_CondRetConteudoNaoExiste;
+		return VER_CondRetConteudoNaoExiste;
 	}
 
 	*ppValor = pConteudo->Valor;
 
-	return CON_CondRetOK;
+	return VER_CondRetOK;
 }
 
 /***************************************************************************
-*  Função: CON Alterar valor do conteúdo
+*  Função: VER Alterar valor do conteúdo
 *  ****/
-CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor)
+VER_tpCondRet VER_AlterarValorDoConteudo(VER_tppConteudo pConteudoParm, char *pValor)
 {
 	tpConteudo *pConteudo = pConteudoParm;
 
 	if (pConteudo == NULL)
 	{
-		return CON_CondRetConteudoNaoExiste;
+		return VER_CondRetConteudoNaoExiste;
 	}
 
 	strcpy(pConteudo->Valor, pValor);
-	return CON_CondRetOK;
+	return VER_CondRetOK;
 }
 
-/********** Fim do módulo de implementação: CON Conteudo **********/
+/********** Fim do módulo de implementação: VER Conteudo **********/

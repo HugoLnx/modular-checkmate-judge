@@ -13,7 +13,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CC7B701-70AE-4BF6-A021-6129E1F2A533}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>conteudo</RootNamespace>
+    <RootNamespace>vertice</RootNamespace>
+    <ProjectName>vertice</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,14 +75,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\conteudo.c" />
-    <ClCompile Include="..\src\test_con.c" />
+    <ClCompile Include="..\src\vertice.c" />
+    <ClCompile Include="..\src\test_ver.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\conteudo.h" />
+    <ClInclude Include="..\src\vertice.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\teste_conteudo.script" />
+    <None Include="..\src\teste_vertice.script" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\src\ArcaboucoTeste.lib" />

@@ -1,11 +1,11 @@
-#if ! defined( CONTEUDO_ )
-#define CONTEUDO_
+#if ! defined( VERTICE_ )
+#define VERTICE_
 /***************************************************************************
 *
-*  Módulo de definição: CON  Conteúdo do módulo
+*  Módulo de definição: VER  Conteúdo do módulo
 *
-*  Arquivo gerado:              conteudo.h
-*  Letras identificadoras:      CON
+*  Arquivo gerado:              vertice.h
+*  Letras identificadoras:      VER
 *
 *	Autores:
 *     - Hugo Roque: hg
@@ -21,10 +21,10 @@
 *
 ***************************************************************************/
 
-#if defined( CONTEUDO_OWN )
-#define CONTEUDO_EXT
+#if defined( VERTICE_OWN )
+#define VERTICE_EXT
 #else
-#define CONTEUDO_EXT extern
+#define VERTICE_EXT extern
 #endif
 
 
@@ -32,12 +32,12 @@
 
 /* Tipo referência para um conteudo */
 
-typedef struct CON_stConteudo * CON_tppConteudo;
+typedef struct VER_stConteudo * VER_tppConteudo;
 
 
 /***********************************************************************
 *
-*  Tipo de dados: CON Condições de retorno
+*  Tipo de dados: VER Condições de retorno
 *
 *
 *  Descrição do tipo
@@ -47,21 +47,21 @@ typedef struct CON_stConteudo * CON_tppConteudo;
 
 typedef enum {
 
-	CON_CondRetOK,
+	VER_CondRetOK,
 	    /* Concluiu corretamente */
 
-	CON_CondRetConteudoNaoExiste,
+	VER_CondRetConteudoNaoExiste,
 	    /* Conteúdo não foi criado */
 
-	CON_CondRetFaltouMemoria
+	VER_CondRetFaltouMemoria
 	    /* Faltou memória ao tentar alocar algo */
 
-} CON_tpCondRet;
+} VER_tpCondRet;
 
 
 /***********************************************************************
 *
-*  Função: CON Criar conteudo
+*  Função: VER Criar conteudo
 *
 *  Descrição
 *     Cria uma instância da estrutura.
@@ -71,8 +71,8 @@ typedef enum {
 *     pValor     - Valor que será atribuido à estrutura.
 *
 *  Condições de retorno
-*     - CON_CondRetOK
-*     - CON_CondRetFaltouMemoria
+*     - VER_CondRetOK
+*     - VER_CondRetFaltouMemoria
 * 
 *  Retorno por referência
 *     Ponteiro para o conteúdo que será criado.
@@ -84,11 +84,11 @@ typedef enum {
 *     - Será um conteúdo com valor igual ao passado por parâmetro.
 *
 ***********************************************************************/
-CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
+VER_tpCondRet VER_CriarConteudo(VER_tppConteudo *ppConteudo, char *pValor);
 
 /***********************************************************************
 *
-*  Função: CON Destruir conteúdo
+*  Função: VER Destruir conteúdo
 *
 *  Descrição
 *     Destroi uma instância da estrutura liberando seu espaço na memória.
@@ -98,24 +98,24 @@ CON_tpCondRet CON_CriarConteudo(CON_tppConteudo *ppConteudo, char *pValor);
 *     pValor     - Valor que será atribuido à estrutura.
 *
 *  Condições de retorno
-*     - CON_CondRetOK
+*     - VER_CondRetOK
 * 
 *  Retorno por referência
 *     Referência para NULL.
 *
 *  Assertivas de entrada
-*     - ppConteudo referencia para uma instância da estrutura CON_stConteudo.
+*     - ppConteudo referencia para uma instância da estrutura VER_stConteudo.
 *
 *  Assertivas de saida
 *     - A referência será sempre nula.
 *     - O conteúdo e seu valor foram liberados da memória
 *
 ***********************************************************************/
-CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
+VER_tpCondRet VER_DestruirConteudo(VER_tppConteudo *ppConteudo);
 
 /***********************************************************************
 *
-*  Função: CON Obter valor do conteúdo
+*  Função: VER Obter valor do conteúdo
 *
 *  Descrição
 *     Recupera o valor da instância de conteúdo
@@ -125,8 +125,8 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
 *     ppValor        - Referência usada para retorno do valor.
 *
 *  Condições de retorno
-*     - CON_CondRetOK
-*     - CON_CondRetConteudoNaoExiste
+*     - VER_CondRetOK
+*     - VER_CondRetConteudoNaoExiste
 * 
 *  Retorno por referência
 *     ppValor   - Valor do conteúdo.
@@ -138,11 +138,11 @@ CON_tpCondRet CON_DestruirConteudo(CON_tppConteudo *ppConteudo);
 *     - Será retornado o valor do conteúdo.
 *
 ***********************************************************************/
-CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppValor);
+VER_tpCondRet VER_ObterValorDoConteudo(VER_tppConteudo pConteudoParm, char **ppValor);
 
 /***********************************************************************
 *
-*  Função: CON Alterar valor do conteúdo
+*  Função: VER Alterar valor do conteúdo
 *
 *  Descrição
 *     Substitui o valor da instância de conteúdo por uma nova.
@@ -152,8 +152,8 @@ CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppV
 *     pValor         - Referência para o novo valor do conteúdo.
 *
 *  Condições de retorno
-*     - CON_CondRetOK
-*     - CON_CondRetConteudoNaoExiste
+*     - VER_CondRetOK
+*     - VER_CondRetConteudoNaoExiste
 * 
 *  Retorno por referência
 *     <não tem>
@@ -165,8 +165,8 @@ CON_tpCondRet CON_ObterValorDoConteudo(CON_tppConteudo pConteudoParm, char **ppV
 *     - Só o valor do conteúdo será alterado.
 *
 ***********************************************************************/
-CON_tpCondRet CON_AlterarValorDoConteudo(CON_tppConteudo pConteudoParm, char *pValor);
+VER_tpCondRet VER_AlterarValorDoConteudo(VER_tppConteudo pConteudoParm, char *pValor);
 
-/********** Fim do módulo de definição: CON Conteudo **********/
+/********** Fim do módulo de definição: VER Conteudo **********/
 
 #endif

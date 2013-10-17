@@ -27,7 +27,7 @@
     <ClCompile Include="..\src\lista.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\conteudo.c">
+    <ClCompile Include="..\src\vertice.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="..\src\lista.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\conteudo.h">
+    <ClInclude Include="..\src\vertice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

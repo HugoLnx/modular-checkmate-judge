@@ -6,15 +6,15 @@
 #include    "Generico.h"
 #include    "LerParm.h"
 
-#include    "conteudo.h"
+#include    "vertice.h"
 
-static const char * CRIAR_CONTEUDO_CMD       = "=criarConteudo"    ;
-static const char * DESTRUIR_CONTEUDO_CMD		= "=destruirConteudo" ;
+static const char * CRIAR_VERTICE_CMD       = "=criarConteudo"    ;
+static const char * DESTRUIR_VERTICE_CMD		= "=destruirConteudo" ;
 static const char * OBTER_VALOR_CMD				= "=obterValor"		 ;
 static const char * ALTER_VALOR_CMD				= "=alterarValor"     ;
 
 /* Tamanho do vetor de testes */
-#define DIM_VT_CONTEUDO   10
+#define DIM_VT_VERTICE   10
 
 /* Tamanho do buffer do valor do conteudo */
 #define DIM_BUFFER_VALOR  255	
@@ -22,11 +22,11 @@ static const char * ALTER_VALOR_CMD				= "=alterarValor"     ;
 /* Constante string para representar null */
 #define SIMBOLO_PARA_NULL "!N!"
 
-CON_tppConteudo vtConteudos[DIM_VT_CONTEUDO];
+VER_tppConteudo vtConteudos[DIM_VT_VERTICE];
 
 /***********************************************************************
 *
-*  Função: TCON Testar conteudo
+*  Função: TVER Testar conteudo
 *
 *     Comandos disponíveis:
 *
@@ -44,11 +44,11 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 		CondRetEsp    = -1;
 
 	TST_tpCondRet CondRet;
-	CON_tppConteudo ppConteudo = NULL;
+	VER_tppConteudo ppConteudo = NULL;
 
 	/* Testar CriarConteudo */
 
-	if (strcmp(ComandoTeste, CRIAR_CONTEUDO_CMD) == 0)
+	if (strcmp(ComandoTeste, CRIAR_VERTICE_CMD) == 0)
 	{
 		char dado[DIM_BUFFER_VALOR];  
 		numLidos = LER_LerParametros("isi", &inxConteudo, dado, &CondRetEsp);
@@ -58,9 +58,9 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		}
 
-		CondRet = (TST_tpCondRet) CON_CriarConteudo(&vtConteudos[inxConteudo], dado);
+		CondRet = (TST_tpCondRet) VER_CriarConteudo(&vtConteudos[inxConteudo], dado);
 
-		if(CondRet == CON_CondRetOK)
+		if(CondRet == VER_CondRetOK)
 		{
 			CondRet = TST_CompararPonteiroNulo(1, vtConteudos[inxConteudo], "Erro em ponteiro novo conteudo.");
 			return CondRet;
@@ -71,7 +71,7 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 	/* Testar DestruirConteudo */
 
-	if (strcmp(ComandoTeste, DESTRUIR_CONTEUDO_CMD) == 0)
+	if (strcmp(ComandoTeste, DESTRUIR_VERTICE_CMD) == 0)
 	{
 		numLidos = LER_LerParametros("ii", &inxConteudo, &CondRetEsp);
 
@@ -80,9 +80,9 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		} 
 
-		CondRet = (TST_tpCondRet) CON_DestruirConteudo(&vtConteudos[inxConteudo]);
+		CondRet = (TST_tpCondRet) VER_DestruirConteudo(&vtConteudos[inxConteudo]);
 
-		if(CondRet ==  CON_CondRetOK)
+		if(CondRet ==  VER_CondRetOK)
 		{
 			CondRet = TST_CompararPonteiroNulo(0, vtConteudos[inxConteudo], "Erro em ponteiro ao destruir conteudo.");
 			return CondRet;
@@ -111,9 +111,9 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			pDadoEsperado = NULL;
 		}
 
-		CondRet = (TST_tpCondRet) CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
+		CondRet = (TST_tpCondRet) VER_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 
-		if(CondRet ==  CON_CondRetOK)
+		if(CondRet ==  VER_CondRetOK)
 		{
 			CondRet = TST_CompararString(pDadoEsperado,pDadoObtido,"Dado esperado não é igual ao obtido");
 			return CondRet;	
@@ -143,11 +143,11 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 			return TST_CondRetParm;
 		} 
 
-		CondRet = (TST_tpCondRet) CON_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
+		CondRet = (TST_tpCondRet) VER_AlterarValorDoConteudo(vtConteudos[inxConteudo], pDadoParaAlterar);
 
-		if(CondRet == CON_CondRetOK)
+		if(CondRet == VER_CondRetOK)
 		{
-			CON_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
+			VER_ObterValorDoConteudo(vtConteudos[inxConteudo], &pDadoObtido);
 			CondRet = TST_CompararString(pDadoParaAlterar, pDadoObtido, "Dado não foi alterado");
 			return CondRet;	
 		}

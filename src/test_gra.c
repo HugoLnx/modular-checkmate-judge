@@ -8,7 +8,7 @@
 #include    "LerParm.h"
 
 #include    "grafo.h"
-#include    "conteudo.h"
+#include    "vertice.h"
 
 
 static const char *CRIAR_GRAFO_CMD      = "=criarGrafo"       ;
@@ -118,7 +118,7 @@ static GRA_tppGrafo pGrafo = NULL;
          {
             char *nome = AlocarEspacoParaNome();
             char *pDado = AlocarEspacoParaNome();
-            CON_tppConteudo pConteudo;
+            VER_tppConteudo pConteudo;
 
             numLidos = LER_LerParametros("ssi", nome, pDado, &CondRetEsp);
 
@@ -127,7 +127,7 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
    
-            CON_CriarConteudo(&pConteudo, pDado);
+            VER_CriarConteudo(&pConteudo, pDado);
 
             CondRet = GRA_InserirVertice(pGrafo, nome, pConteudo);
 
@@ -162,7 +162,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
          else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
          {
-            CON_tppConteudo pConteudoObtido;
+            VER_tppConteudo pConteudoObtido;
             char *pDadoEsperado = AlocarEspacoParaNome();
             char *pDadoObtido;
 
@@ -184,7 +184,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             if (CondRetEsp == TST_CondRetOK)
             {
-               CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
+               VER_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
 
                CondRet = TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
                free(pDadoEsperado);
@@ -207,7 +207,7 @@ static GRA_tppGrafo pGrafo = NULL;
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
-            CON_tppConteudo pNovoConteudo, pAntigoConteudo;
+            VER_tppConteudo pNovoConteudo, pAntigoConteudo;
 
             numLidos = LER_LerParametros("si", pNovoValor, &CondRetEsp);
 
@@ -217,8 +217,8 @@ static GRA_tppGrafo pGrafo = NULL;
             }
             
             GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoConteudo);
-            CON_DestruirConteudo(&pAntigoConteudo);
-            CON_CriarConteudo(&pNovoConteudo, pNovoValor);
+            VER_DestruirConteudo(&pAntigoConteudo);
+            VER_CriarConteudo(&pNovoConteudo, pNovoValor);
 
             CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoConteudo);
 
@@ -372,7 +372,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
    void DestruirValor(void *pValor)
    {
-      CON_DestruirConteudo((CON_tppConteudo*) &pValor);
+      VER_DestruirConteudo((VER_tppConteudo*) &pValor);
    }
 
 

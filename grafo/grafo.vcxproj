@@ -74,15 +74,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\conteudo.c" />
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\test_gra.c" />
+    <ClCompile Include="..\src\vertice.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\conteudo.h" />
     <ClInclude Include="..\src\grafo.h" />
     <ClInclude Include="..\src\lista.h" />
+    <ClInclude Include="..\src\vertice.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\teste_grafo.script" />
