@@ -169,8 +169,6 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 	tpVertice *pVertice;
-   LIS_tpCondRet lisCondRet;
-   GRA_tpCondRet graCondRet;
 
 	if (pGrafo == NULL)
 	{
@@ -315,7 +313,6 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-   LIS_tpCondRet lisCondRet;
 
 	if (pGrafo == NULL)
 	{
@@ -343,7 +340,6 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm)
 {
    tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-   LIS_tpCondRet lisCondRet;
 
    if (pGrafo == NULL)
    {
@@ -374,8 +370,6 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 	tpVertice  *pVerticeOrigem = NULL, *pVertice = NULL;
 	tpAresta *pAresta = NULL;
 	int estaVazia = -1, numElemLista = 0;
-
-	LIS_tpCondRet lisCondRet;
 
 	if (pGrafoParm == NULL)
 	{
@@ -454,7 +448,6 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
 	GRA_tpCondRet graCondRet;
-	LIS_tpCondRet lisCondRet;
 
 	if (pGrafoParm == NULL)
 	{
@@ -534,7 +527,6 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
-	LIS_tpCondRet lisCondRet;
    GRA_tpCondRet graCondRet;
 
 	if (pGrafoParm == NULL)
@@ -566,7 +558,6 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
-	LIS_tpCondRet lisCondRet;
    GRA_tpCondRet graCondRet;
 	tpVertice *pVertice;
 	if (pGrafoParm == NULL)
