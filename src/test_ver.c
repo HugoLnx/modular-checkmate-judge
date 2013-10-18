@@ -1,17 +1,19 @@
 #include    <string.h>
 #include    <stdio.h>
-#include    <malloc.h>
 
 #include    "TST_Espc.h"
 #include    "Generico.h"
 #include    "LerParm.h"
 
+#include    "mem_manager.h"
+
 #include    "vertice.h"
 
-static const char * CRIAR_VERTICE_CMD       = "=criarConteudo"    ;
+static const char * CRIAR_VERTICE_CMD       = "=criarConteudo"     ;
 static const char * DESTRUIR_VERTICE_CMD		= "=destruirConteudo" ;
 static const char * OBTER_VALOR_CMD				= "=obterValor"		 ;
 static const char * ALTER_VALOR_CMD				= "=alterarValor"     ;
+static const char *FIM_CMD                   = "=fim"              ;
 
 /* Tamanho do vetor de testes */
 #define DIM_VT_VERTICE   10
@@ -71,7 +73,7 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 	/* Testar DestruirConteudo */
 
-	if (strcmp(ComandoTeste, DESTRUIR_VERTICE_CMD) == 0)
+	else if (strcmp(ComandoTeste, DESTRUIR_VERTICE_CMD) == 0)
 	{
 		numLidos = LER_LerParametros("ii", &inxConteudo, &CondRetEsp);
 
@@ -94,10 +96,12 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 	/* Testar ObterValorDoConteudo */
 
-	if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
+	else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
 	{
-		char *pDadoEsperado = (char*) malloc(sizeof(char) * DIM_BUFFER_VALOR);
+		char *pDadoEsperado;
 		char *pDadoObtido;
+
+      MEM_Alloc(sizeof(char) * DIM_BUFFER_VALOR, (void **) &pDadoEsperado);
 
 		numLidos = LER_LerParametros("isi", &inxConteudo, pDadoEsperado, &CondRetEsp);
 
@@ -131,7 +135,7 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 	/* Testar AlterarValorDoConteudo */
 
-	if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
+	else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
 	{
 		char pDadoParaAlterar[DIM_BUFFER_VALOR];
 		char* pDadoObtido;
@@ -154,6 +158,16 @@ TST_tpCondRet TST_EfetuarComando(char *ComandoTeste)
 
 		return TST_CompararInt(CondRetEsp, CondRet, "Condição de retorno inesperada na alteração do valor.");
 	}
+
+   
+   /* Finalizar o teste */
+
+   else if (strcmp(ComandoTeste, FIM_CMD) == 0)
+   {
+      MEM_LiberarTodaMemoriaAlocada();
+
+      return TST_CondRetOK;
+   }
 
 	return TST_CondRetNaoConhec ;
 

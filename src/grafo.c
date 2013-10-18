@@ -34,12 +34,11 @@
 *
 ***************************************************************************/
 
-#include   <stdio.h>
-#include   <string.h>
-#include   <memory.h>
-#include   <malloc.h>
-#include   <assert.h>
-#include   "lista.h"
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
+#include "lista.h"
+#include "mem_manager.h"
 
 #define GRAFO_OWN
 #include "grafo.h"
@@ -127,7 +126,8 @@ static int ExisteAresta(tpVertice *pVertice, char *nome);
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	void (*destruirValor)(void *pValor))
 {
-	tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
+	tpGrafo *pGrafo;
+   MEM_Alloc(sizeof(tpGrafo), (void **) &pGrafo);
 
 	pGrafo->pCorrente = NULL;
 	pGrafo->destruirValor = destruirValor;
@@ -155,7 +155,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	LIS_DestruirLista(pGrafo->pVertices);
 	LIS_DestruirLista(pGrafo->pOrigens);
 
-	free(pGrafo);
+	MEM_Free(pGrafo);
 	pGrafo = NULL;
 	*ppGrafo = NULL;
 	
@@ -180,7 +180,7 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
       return GRA_CondRetJaExiste;
    }
 
-	pVertice = (tpVertice*) malloc(sizeof(tpVertice));
+	MEM_Alloc(sizeof(tpVertice), (void **) &pVertice);
 	if (pVertice == NULL)
 	{
 		return GRA_CondRetFaltouMemoria;
@@ -236,7 +236,7 @@ GRA_tpCondRet GRA_InserirAresta(GRA_tppGrafo pGrafoParm,
       return GRA_CondRetJaExiste;
    }
 
-	pAresta = (tpAresta*) malloc(sizeof(tpAresta));
+	MEM_Alloc(sizeof(tpAresta), (void **) &pAresta);
 	if (pAresta == NULL)
 	{
 		return GRA_CondRetFaltouMemoria;
@@ -603,9 +603,9 @@ void DestruirVertice(void *pVazio)
 
 	pVertice->destruirValor(pVertice->pValor);
 
-	free(pVertice->nome);
+	MEM_Free(pVertice->nome);
 
-	free(pVertice);
+	MEM_Free(pVertice);
 
 	
 }
@@ -622,8 +622,8 @@ void DestruirAresta(void *pVazio)
 {
 	tpAresta *pAresta = (tpAresta*) pVazio;
 
-	free(pAresta->nome);
-	free(pAresta);
+	MEM_Free(pAresta->nome);
+	MEM_Free(pAresta);
 }
 
 /***********************************************************************

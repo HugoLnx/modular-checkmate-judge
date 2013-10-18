@@ -76,12 +76,14 @@
   <ItemGroup>
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\lista.c" />
+    <ClCompile Include="..\src\mem_manager.c" />
     <ClCompile Include="..\src\test_gra.c" />
     <ClCompile Include="..\src\vertice.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\grafo.h" />
     <ClInclude Include="..\src\lista.h" />
+    <ClInclude Include="..\src\mem_manager.h" />
     <ClInclude Include="..\src\vertice.h" />
   </ItemGroup>
   <ItemGroup>

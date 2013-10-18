@@ -16,8 +16,9 @@
 *
 ***************************************************************************/
 
-#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include "mem_manager.h"
 
 #define VERTICE_OWN
 #include "vertice.h"
@@ -43,8 +44,8 @@ VER_tpCondRet VER_CriarConteudo(VER_tppConteudo *ppConteudo, char *pValor)
 {
 	tpConteudo *pConteudo;
 
-	pConteudo = (tpConteudo*)malloc(sizeof(tpConteudo));
-	if(pConteudo == NULL)
+	MEM_Alloc(sizeof(tpConteudo), (void **) &pConteudo);
+   if (pConteudo == NULL)
    {
 		return VER_CondRetFaltouMemoria;
    }
@@ -69,7 +70,7 @@ VER_tpCondRet VER_DestruirConteudo(VER_tppConteudo *ppConteudo)
 		return VER_CondRetOK;
 	}
 
-	free(pConteudo);
+	MEM_Free(pConteudo);
 	pConteudo = NULL;
 	*ppConteudo = NULL;
 

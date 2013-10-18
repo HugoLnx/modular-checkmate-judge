@@ -38,3 +38,5 @@
 =recuperar
 =obterValor          conteudo0      "conteudo 2"  OK
 =destruirConteudo    conteudo0                    OK
+
+=fim
