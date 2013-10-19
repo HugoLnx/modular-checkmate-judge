@@ -13,9 +13,10 @@ O objetivo dos construtos gerados é testar o funcionamento e manipulação correta
 --------->exbestat.exe.txt
 
 
-->relatorios
+->documentos
 --------->RELATORIO-HUGO.TXT
 --------->RELATORIO-ROBERT.TXT
+--------->Modelo_fisico.pdf
 
 ->TRAB2-1
 --------->batches
@@ -81,7 +82,7 @@ O objetivo dos construtos gerados é testar o funcionamento e manipulação correta
 
 Diretório ferramentas: Contém ferramentas de apoio a geração e acumulo de dado de estátisticas a partir dos resultados de testes dos módulos LISTA, VERTICE e GRAFO, usado pelo TestaTudo.bat.
 
-Diretório relatorios: Contém relatórios dos integrantes do grupo.
+Diretório documentos: Contém relatórios dos integrantes do grupo e modelo físico dos módulos.
 
 Diretório TRAB2-1: Contém os artefatos gerados para uso do módulo LISTA.
 
