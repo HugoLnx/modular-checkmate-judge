@@ -4,6 +4,7 @@ rmdir /s /q entrega
 REM *********************Cria estrutira de diretórios*********************
 
 mkdir INF1301-Trab2-HGRC
+mkdir INF1301-Trab2-HGRC\documentos
 mkdir INF1301-Trab2-HGRC\ferramentas
                   
 mkdir INF1301-Trab2-HGRC\TRAB2-1
@@ -39,7 +40,7 @@ mkdir INF1301-Trab2-HGRC\TRAB2-3\src
 mkdir INF1301-Trab2-HGRC\TRAB2-3\src\definicao
 mkdir INF1301-Trab2-HGRC\TRAB2-3\src\implementacao
 
-mkdir INF1301-Trab2-HGRC\relatorios
+
 
 REM *********************Adiciona ferramentas*********************
 
@@ -80,7 +81,7 @@ REM *********************Adiciona modulo de implementacao*********************
 copy src\lista.c INF1301-Trab2-HGRC\TRAB2-1\src\implementacao
 copy src\test_lis.c INF1301-Trab2-HGRC\TRAB2-1\src\implementacao
 copy src\vertice.c INF1301-Trab2-HGRC\TRAB2-2\src\implementacao
-copy src\test_con.c INF1301-Trab2-HGRC\TRAB2-2\src\implementacao
+copy src\test_ver.c INF1301-Trab2-HGRC\TRAB2-2\src\implementacao
 copy src\grafo.c INF1301-Trab2-HGRC\TRAB2-3\src\implementacao
 copy src\test_gra.c INF1301-Trab2-HGRC\TRAB2-3\src\implementacao
 
@@ -96,13 +97,15 @@ copy batches\LimpaTudo.bat INF1301-Trab2-HGRC\TRAB2-3\batches
 copy batches\TestaTudo.bat INF1301-Trab2-HGRC
 copy batches\LimpaTudo.bat INF1301-Trab2-HGRC
 
-REM *********************Adiciona relatorios*********************
+REM *********************Adiciona Documentos*********************
 
-copy Documentos\hugo.relatorio INF1301-Trab2-HGRC\relatorios
+copy Documentos\hugo.relatorio INF1301-Trab2-HGRC\documentos
 rename INF1301-Trab2-HGRC\relatorios\hugo.relatorio RELATORIO-HUGO.TXT
 
-copy Documentos\robert.relatorio INF1301-Trab2-HGRC\relatorios
+copy Documentos\robert.relatorio INF1301-Trab2-HGRC\documentos
 rename INF1301-Trab2-HGRC\relatorios\robert.relatorio RELATORIO-ROBERT.TXT
+
+copy Documentos\Modelo_fisico.pdf INF1301-Trab2-HGRC\documentos
 
 REM *********************Adiciona Leia-me*********************
 
