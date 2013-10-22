@@ -36,7 +36,7 @@
 
 #include "lista.h"
 
-typedef struct tgMatriz TAB_tpMatriz ;
+typedef struct stMatriz TAB_tpMatriz ;
 
 /***********************************************************************
 *

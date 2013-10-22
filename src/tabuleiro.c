@@ -2,7 +2,7 @@
 *  $MCI Módulo de implementação: Módulo matriz
 *
 *  Arquivo gerado:              TABULEIRO.C
-*  Letras identificadoras:      TAB
+*  Letras identificadoras:      MAT
 *
 *  Autores: hg - Hugo Roque
 *           nf - Nino Fabrizio
@@ -15,7 +15,7 @@
 
 #include <malloc.h>
 #include <stdio.h>
-#include "lista.h"
+#include "LISTA.H"
 
 #define TABULEIRO_OWN
 #include "TABULEIRO.H"
@@ -25,7 +25,7 @@
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB Descritor do nó da matriz
+*  $TC Tipo de dados: MAT Descritor do nó da matriz
 *
 *
 *  $ED Descrição do tipo
@@ -33,34 +33,34 @@
 *
 ***********************************************************************/
 
-   typedef struct tgNoMatriz {
-		 struct tgNoMatriz * pNorte ;
+   typedef struct stNoMatriz {
+		 struct stNoMatriz * pNorte ;
                /* Ponteiro para nó adjacente ao norte
                *
                *$EED Assertivas estruturais
                *   se é o nó X é a origem, então pNorte = NULL
 			   *   se pNorte do nó X != NULL então pSul de pNorte aponta para nó X */
 
-         struct tgNoMatriz * pSul ;
+         struct stNoMatriz * pSul ;
                /* Ponteiro para nó adjacente ao sul
                *
                *$EED Assertivas estruturais
 			   *   se pSul do nó X != NULL então pNorte de pSul aponta para nó X */
 
-		 struct tgNoMatriz * pEste ;
+		 struct stNoMatriz * pEste ;
                /* Ponteiro para nó adjacente à este
                *
                *$EED Assertivas estruturais
 			   *   se pEste do nó X != NULL então pOeste de pEste aponta para nó X */
 
-		 struct tgNoMatriz * pOeste ;
+		 struct stNoMatriz * pOeste ;
                /* Ponteiro para nó adjacente à oeste
                *
                *$EED Assertivas estruturais
                *   se é o nó X é a origem, então pOeste = NULL
 			   *   se pOeste do nó X != NULL então pEste de pOeste aponta para nó X */
 
-		 struct tgNoMatriz * pNordeste ;
+		 struct stNoMatriz * pNordeste ;
                /* Ponteiro para nó adjacente à nordeste
                *
                *$EED Assertivas estruturais
@@ -68,14 +68,14 @@
 			   *   se pNordeste do nó X != NULL então pSudoeste de pNordeste aponta para nó X */
 
 
-		 struct tgNoMatriz * pSudeste ;
+		 struct stNoMatriz * pSudeste ;
                /* Ponteiro para nó adjacente à sudeste
                *
                *$EED Assertivas estruturais
 			   *   se pSudeste do nó X != NULL então pNoroeste de pSudeste aponta para nó X */
 
 
-		 struct tgNoMatriz * pNoroeste ;
+		 struct stNoMatriz * pNoroeste ;
                /* Ponteiro para nó adjacente à noroeste
                *
                *$EED Assertivas estruturais
@@ -83,7 +83,7 @@
 			   *   se pNoroeste do nó X != NULL então pSudeste de pNoroeste aponta para nó X */
 
 
-		 struct tgNoMatriz * pSudoeste ;
+		 struct stNoMatriz * pSudoeste ;
                /* Ponteiro para nó adjacente à sudoeste
                *
                *$EED Assertivas estruturais
@@ -98,7 +98,7 @@
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB Descritor da cabeça de uma matriz
+*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
 *
 *
 *  $ED Descrição do tipo
@@ -108,7 +108,7 @@
 *
 ***********************************************************************/
 
-   typedef struct tgMatriz {
+   typedef struct stMatriz {
 
          tpNoMatriz * pNoOrigem ;
                /* Ponteiro para a origem da matriz */
@@ -120,7 +120,7 @@
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB Direções que o nó pode ter ponteiros para outro nó.
+*  $TC Tipo de dados: MAT Direções que o nó pode ter ponteiros para outro nó.
 *
 *
 ***********************************************************************/
@@ -167,7 +167,7 @@
 
 /***************************************************************************
 *
-*  Função: TAB Criar matriz
+*  Função: MAT Criar matriz
 *  ****/
    TAB_tpCondRet TAB_CriarMatriz( TAB_tpMatriz ** ppMatriz )
    {
@@ -192,13 +192,13 @@
 
       return TAB_CondRetOK ;
 
-   } /* Fim função: TAB Criar matriz */
+   } /* Fim função: MAT Criar matriz */
 
 
 
    /***************************************************************************
 *
-*  Função: TAB Inicializar matriz
+*  Função: MAT Inicializar matriz
 *  ****/
    TAB_tpCondRet TAB_InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
    {
@@ -237,14 +237,14 @@
 	   }
 
 	   return TAB_CondRetOK ;
-   }  /* Fim função: TAB Inicializar matriz */
+   }  /* Fim função: MAT Inicializar matriz */
 
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Destruir matriz
+*  Função: MAT Destruir matriz
 *  ****/
    TAB_tpCondRet TAB_DestruirMatriz( TAB_tpMatriz ** ppMatriz )
    {
@@ -267,13 +267,13 @@
 
 		return TAB_CondRetOK ;
 	  
-   } /* Fim função: TAB Destruir matriz */
+   } /* Fim função: MAT Destruir matriz */
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Obter valor corrente
+*  Função: MAT Obter valor corrente
 *  ****/
    TAB_tpCondRet TAB_ObterValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista * ValorParm )
    {
@@ -290,13 +290,13 @@
 
       return TAB_CondRetOK ;
 
-   } /* Fim função: TAB Obter valor corrente */
+   } /* Fim função: MAT Obter valor corrente */
 
    
 
 /***************************************************************************
 *
-*  Função: TAB Atribuir para valor corrente
+*  Função: MAT Atribuir para valor corrente
 *  ****/
    TAB_tpCondRet TAB_AtribuirValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista ValorParm )
    {
@@ -313,99 +313,99 @@
 
       return TAB_CondRetOK ;
 
-   } /* Fim função: TAB Atribuir valor corrente */
+   } /* Fim função: MAT Atribuir valor corrente */
 
    
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó ao norte.
+*  Função: MAT Ir para nó ao norte.
 *  ****/
    TAB_tpCondRet TAB_IrNoNorte( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , NORTE );
-   } /* Fim função: TAB Ir para nó ao norte*/
+   } /* Fim função: MAT Ir para nó ao norte*/
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó ao sul.
+*  Função: MAT Ir para nó ao sul.
 *  ****/
    TAB_tpCondRet TAB_IrNoSul( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUL );
-   } /* Fim função: TAB Ir para nó ao sul*/
+   } /* Fim função: MAT Ir para nó ao sul*/
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à este.
+*  Função: MAT Ir para nó à este.
 *  ****/
    TAB_tpCondRet TAB_IrNoEste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , ESTE );
-   } /* Fim função: TAB Ir para à nó este*/
+   } /* Fim função: MAT Ir para à nó este*/
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à oeste.
+*  Função: MAT Ir para nó à oeste.
 *  ****/
    TAB_tpCondRet TAB_IrNoOeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , OESTE );
-   } /* Fim função: TAB Ir para à nó oeste*/
+   } /* Fim função: MAT Ir para à nó oeste*/
    
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à nordeste.
+*  Função: MAT Ir para nó à nordeste.
 *  ****/
    TAB_tpCondRet TAB_IrNoNordeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , NORDESTE );
-   } /* Fim função: TAB Ir para nó à nordeste*/
+   } /* Fim função: MAT Ir para nó à nordeste*/
    
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à sudeste.
+*  Função: MAT Ir para nó à sudeste.
 *  ****/
    TAB_tpCondRet TAB_IrNoSudeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUDESTE );
-   } /* Fim função: TAB Ir para nó à sudeste*/
+   } /* Fim função: MAT Ir para nó à sudeste*/
    
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à sudoeste.
+*  Função: MAT Ir para nó à sudoeste.
 *  ****/
    TAB_tpCondRet TAB_IrNoSudoeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUDOESTE );
-   } /* Fim função: TAB Ir para nó à sudoeste */
+   } /* Fim função: MAT Ir para nó à sudoeste */
 
 
 
 
 /***************************************************************************
 *
-*  Função: TAB Ir para nó à noroeste.
+*  Função: MAT Ir para nó à noroeste.
 *  ****/
    TAB_tpCondRet TAB_IrNoNoroeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , NOROESTE );
-   } /* Fim função: TAB Ir para nó à noroeste*/
+   } /* Fim função: MAT Ir para nó à noroeste*/
 
 
 
@@ -414,7 +414,7 @@
 
 /***********************************************************************
 *
-*  $FC Função: TAB Criar nó da matriz
+*  $FC Função: MAT Criar nó da matriz
 *
 *  $FV Valor retornado
 *     Ponteiro para o nó criado.
@@ -446,12 +446,12 @@
       pNo->Valor  = NULL ;
       return pNo ;
 
-   } /* Fim função: TAB Criar nó da matriz */
+   } /* Fim função: MAT Criar nó da matriz */
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Criar nó origem da matriz
+*  $FC Função: MAT Criar nó origem da matriz
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK
@@ -491,13 +491,13 @@
 
       return TAB_CondRetNaoCriouOrigem ;
 
-   } /* Fim função: TAB Criar nó origem da matriz */
+   } /* Fim função: MAT Criar nó origem da matriz */
 
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Esvaziar matriz
+*  $FC Função: MAT Esvaziar matriz
 *  
 *  $ED Descrição da função
 *  Libera a memória de todos os nós que compõe a estrutura da matriz.
@@ -530,14 +530,14 @@
 	   pMatriz->pNoOrigem = NULL;
 	   pMatriz->pNoCorr = NULL;
 	   
-   } /* Fim função: TAB Destruir a estrutura da matriz */
+   } /* Fim função: MAT Destruir a estrutura da matriz */
 
 
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Get nó adjacente
+*  $FC Função: MAT Get nó adjacente
 *  
 *  $ED Descrição da função
 *     Recupera o ponteiro para um nó adjacente
@@ -566,13 +566,13 @@
 		case NOROESTE: return pNo->pNoroeste ;
 		}
 		return NULL;
-   }  /* Fim função: TAB Recupera o ponteiro para um nó adjacente*/
+   }  /* Fim função: MAT Recupera o ponteiro para um nó adjacente*/
 
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Constroi a primeira coluna da matriz.
+*  $FC Função: MAT Constroi a primeira coluna da matriz.
 *  
 *  $ED Descrição da função
 *  Essa função é chamada no momento de inicialização da matriz para
@@ -608,13 +608,13 @@
 	   }
 	   
 	   return TAB_CondRetOK ;
-   }  /* Fim função: TAB Construi a primeira coluna da matriz */
+   }  /* Fim função: MAT Construi a primeira coluna da matriz */
 
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Adiciona coluna.
+*  $FC Função: MAT Adiciona coluna.
 *  
 *  $ED Descrição da função
 *  Adiciona mais uma coluna à matriz, mantendo o número de linhas e
@@ -661,13 +661,13 @@
 	   }
 
 	   return TAB_CondRetOK ;
-   }  /* Fim função: TAB Adiciona Coluna */
+   }  /* Fim função: MAT Adiciona Coluna */
 
 
 
 /***********************************************************************
 *
-*  $FC Função: TAB Apontar de volta em todas as direções.
+*  $FC Função: MAT Apontar de volta em todas as direções.
 *  
 *  $ED Descrição da função
 *  A função faz com que os adjacentes de um nó referenciem à ele.
@@ -718,7 +718,7 @@
 		{
 			pNo->pNoroeste->pSudeste = pNo ;
 		}
-   }  /* Fim função: TAB Apontar de volta em todas as direções */
+   }  /* Fim função: MAT Apontar de volta em todas as direções */
 
 
       
@@ -726,7 +726,7 @@
 
 /***************************************************************************
 *
-*  $FC Função: TAB Ir para nó genérico.
+*  $FC Função: MAT Ir para nó genérico.
 *  
 *  $ED Descrição da função
 *  Muda o nó corrente da matriz para o nó na direção apontada
@@ -763,6 +763,6 @@
 	  pMatriz->pNoCorr = GetAdjacente( pMatriz->pNoCorr , direcao ) ;
 	  return TAB_CondRetOK ;
 
-   } /* Fim função: TAB Ir para nó genérico */
+   } /* Fim função: MAT Ir para nó genérico */
 
 /********** Fim do módulo de implementação: Módulo matriz **********/
