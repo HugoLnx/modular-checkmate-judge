@@ -1,0 +1,436 @@
+/***************************************************************************
+*  $MCI Módulo de implementação: Módulo de teste específico
+*
+*  Arquivo gerado:              TESTTAB.C
+*  Letras identificadoras:      TTAB
+*
+*  Autores: hg - Hugo Roque
+*           nf - Nino Fabrizio
+*
+*  $HA Histórico de evolução:
+*     Versão  Autor     Data     Observações
+*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*
+*  $ED Descrição do módulo
+*     Este mÇodulo contém as funções específicas para o teste do
+*     módulo matriz. Ilustra como redigir um interpretador de comandos
+*     de teste específicos utilizando o arcabouço de teste para C.
+*
+*  $EIU Interface com o usuário pessoa
+*     Comandos de teste específicos para testar o módulo matriz:
+*
+*     "=criar"           - chama a função TAB_CriarMatriz( )
+*     "=irnorte"         - chama a função TAB_IrNorte( )
+*     "=irsul"           - chama a função TAB_IrSul( )
+*     "=ireste"          - chama a função TAB_IrEste( )
+*     "=iroeste"         - chama a função TAB_IrOeste( )
+*     "=irnordeste"      - chama a função TAB_IrNordeste( )
+*     "=irsudeste"       - chama a função TAB_IrSudeste( )
+*     "=irsudoeste"      - chama a função TAB_IrSudoeste( )
+*     "=irnoroeste"      - chama a função TAB_IrNoroeste( )
+*     "=atribuir" <Char> - chama a função TAB_AtribuirValorCorr(  )
+*     "=destroi"         - chama a função TAB_DestruirMatriz( )
+*     "=obter" <Char>    - chama a função TAB_ObterValorCorr( ) e compara
+*                          o valor retornado com o valor <Char>
+*
+***************************************************************************/
+
+#include    <string.h>
+#include    <stdio.h>
+#include    <stdlib.h>
+
+#include    "TST_ESPC.H"
+#include    "lista.h"
+
+#include    "generico.h"
+#include    "lerparm.h"
+
+#include    "tabuleiro.h"
+
+/* Tabela dos nomes dos comandos de teste relacionados ao módulo */
+
+#define     CRIAR_TAB_CMD       "=criar"
+#define     INIT_TAB_CMD        "=init"
+#define     OBTER_VAL_CMD       "=obter"
+#define     ATRIBUIR_VAL_CMD    "=atribuir"
+#define     DESTROI_CMD         "=destruir"
+
+#define     IR_NORTE_CMD       "=irnorte"
+#define     IR_SUL_CMD         "=irsul"
+#define     IR_ESTE_CMD        "=ireste"
+#define     IR_OESTE_CMD       "=iroeste"
+#define     IR_NORDESTE_CMD    "=irnordeste"
+#define     IR_SUDESTE_CMD     "=irsudeste"
+#define     IR_SUDOESTE_CMD    "=irsudoeste"
+#define     IR_NOROESTE_CMD    "=irnoroeste"
+
+/* Tabela dos nomes dos comandos de teste específicos do teste */
+#define     VALIDAR_EST_TAB_CMD "=validarEstrutura"
+#define     SELECIONAR_CMD       "=selecionar"
+#define     VALORES_SIZE 9
+#define     TABULEIROES_SIZE 10
+
+
+/*****  Código das funções exportadas pelo módulo  *****/
+int IndiceDoValor( LIS_tppLista Valor );
+void PreencherArrayDeValores();
+
+static TAB_tpMatriz * Matrizes[TABULEIROES_SIZE] ;
+static LIS_tppLista VALORES[VALORES_SIZE] ;
+
+static int iMat = 0 ;
+
+/***********************************************************************
+*
+*  $FC Função: TTAB Efetuar operações de teste específicas para matriz
+*
+*  $ED Descrição da função
+*     Efetua os diversos comandos de teste específicos para o módulo
+*     matriz sendo testado.
+*
+*  $EP Parâmetros
+*     $P ComandoTeste - String contendo o comando
+*
+*  $FV Valor retornado
+*     Ver TST_tpCondRet definido em TST_ESPC.H
+*
+***********************************************************************/
+
+   TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
+   {
+
+      TAB_tpCondRet CondRetObtido   = TAB_CondRetOK ;
+      TAB_tpCondRet CondRetEsperada = TAB_CondRetFaltouMemoria ;
+                                      /* inicializa para qualquer coisa */
+
+      int IndiceValorEsperado = -1;
+	  int IndiceValorObtido = -1;
+	  int IndiceValorDado = -1;
+	  
+	  LIS_tppLista ValorObtido = NULL;
+
+	  int Linhas = 0 ;
+	  int Colunas = 0 ;
+
+      int  NumLidos = -1 ;
+
+      TST_tpCondRet Ret ;
+
+
+	  PreencherArrayDeValores();
+
+      /* Testar TAB Criar matriz */
+
+         if ( strcmp( ComandoTeste , CRIAR_TAB_CMD ) == 0 )
+         {
+
+            NumLidos = LER_LerParametros( "i" ,
+                               &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = TAB_CriarMatriz( Matrizes + iMat ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+                                    "Retorno errado ao criar matriz." ) ;
+
+         } /* fim ativa: Testar TAB Criar matriz */
+
+
+      /* Testar TAB Obter valor corrente */
+
+         else if ( strcmp( ComandoTeste , OBTER_VAL_CMD ) == 0 )
+         {
+
+            NumLidos = LER_LerParametros( "ii" ,
+                               &IndiceValorEsperado , &CondRetEsperada ) ;
+            if ( NumLidos != 2 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = TAB_ObterValorCorr( Matrizes[iMat] , &ValorObtido ) ;
+            
+			Ret = TST_CompararInt( CondRetEsperada , CondRetObtido ,
+                                   "Retorno errado ao obter valor corrente." ) ;
+
+            if ( Ret != TST_CondRetOK )
+            {
+               return Ret ;
+            } /* if */
+
+			
+			IndiceValorObtido = IndiceDoValor(ValorObtido) ;
+
+            return TST_CompararInt( IndiceValorEsperado , IndiceValorObtido ,
+                                     "Conteúdo do nó está errado." ) ;
+
+         } /* fim ativa: Testar TAB Obter valor corrente */
+
+
+		/* Testar TAB Atribuir valor corrente */
+
+         else if ( strcmp( ComandoTeste , ATRIBUIR_VAL_CMD ) == 0 )
+         {
+
+            NumLidos = LER_LerParametros( "ii" ,
+							&IndiceValorDado , &CondRetEsperada ) ;
+            if ( NumLidos != 2 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = TAB_AtribuirValorCorr( Matrizes[iMat] , VALORES[IndiceValorDado] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+                                   "Retorno errado ao obter valor corrente." ) ;
+
+         } /* fim ativa: Testar TAB Atribuir valor corrente */
+
+
+      /* Testar TAB Destruir matriz */
+
+         else if ( strcmp( ComandoTeste , DESTROI_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" ,
+                               &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = TAB_DestruirMatriz( Matrizes + iMat ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não é possível destruir uma matriz que não existe.") ;
+
+         } /* fim ativa: Testar TAB Destruir matriz */
+
+		 
+      /* Testar TAB Inicializar Matriz */
+
+         else if ( strcmp( ComandoTeste , INIT_TAB_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "iii" ,
+                               &Linhas, &Colunas, &CondRetEsperada ) ;
+            if ( NumLidos != 3 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = TAB_InicializarMatriz( Matrizes[iMat] , Linhas, Colunas ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Erro ao inicializar matriz.") ;
+
+         } /* fim ativa: Testar TAB Inicializar matriz */
+
+		 
+      /* Testar TAB Ir norte */
+
+		 else if ( strcmp( ComandoTeste , IR_NORTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoNorte( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Norte.") ;
+
+         } /* fim ativa: Testar TAB Ir norte */
+
+
+		/* Testar TAB Ir sul */
+
+		 else if ( strcmp( ComandoTeste , IR_SUL_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoSul( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Sul.") ;
+
+         } /* fim ativa: Testar TAB Ir sul */
+
+
+		/* Testar TAB Ir este */
+
+		 else if ( strcmp( ComandoTeste , IR_ESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoEste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Este.") ;
+
+         } /* fim ativa: Testar TAB Ir este */
+
+
+		/* Testar TAB Ir oeste */
+
+		 else if ( strcmp( ComandoTeste , IR_OESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoOeste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Oeste.") ;
+
+         } /* fim ativa: Testar TAB Ir oeste */
+
+		 
+		/* Testar TAB Ir nordeste */
+
+		 else if ( strcmp( ComandoTeste , IR_NORDESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoNordeste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Nordeste.") ;
+
+         } /* fim ativa: Testar TAB Ir nordeste */
+
+
+		/* Testar TAB Ir sudeste */
+
+		 else if ( strcmp( ComandoTeste , IR_SUDESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoSudeste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Sudeste.") ;
+
+         } /* fim ativa: Testar TAB Ir sudeste */
+
+
+		/* Testar TAB Ir sudoeste */
+
+		 else if ( strcmp( ComandoTeste , IR_SUDOESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoSudoeste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Sudoeste.") ;
+
+         } /* fim ativa: Testar TAB Ir sudoeste */
+
+
+		/* Testar TAB Ir noroeste */
+
+		 else if ( strcmp( ComandoTeste , IR_NOROESTE_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			CondRetObtido = TAB_IrNoNoroeste( Matrizes[iMat] ) ;
+
+            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+									"Não foi possível ir para Noroeste.") ;
+
+         } /* fim ativa: Testar TAB Ir noroeste */
+
+
+
+      /* Testar Selecionar indice na array de matrizes */
+
+         else if ( strcmp( ComandoTeste , SELECIONAR_CMD ) == 0 )
+         {
+			NumLidos = LER_LerParametros( "i" ,
+                               &iMat ) ;
+            if ( NumLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+			if ( iMat < 0 || iMat > TABULEIROES_SIZE - 1 )
+			{
+				TST_NotificarFalha("Só é possível fazer seleção nos indices de 0 à 9") ;
+				return TST_CondRetErro ;
+			} /* if */
+
+			return TST_CondRetOK ;
+
+         } /* fim ativa: Testar TAB Validar estrutura matriz */
+
+      return TST_CondRetNaoConhec ;
+
+   } /* Fim função: TTAB Efetuar operações de teste específicas para matriz */
+
+/********** Fim do módulo de implementação: Módulo de teste específico **********/
+
+int IndiceDoValor( LIS_tppLista Valor )
+{
+	int i;
+
+	if ( Valor == NULL )
+	{
+		return -1;
+	}
+
+	for ( i = 0 ; i < VALORES_SIZE ; i++ )
+	{
+		if ( VALORES[i] == Valor )
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void PreencherArrayDeValores()
+{
+	int i;
+
+	if ( VALORES[0] != NULL )
+	{
+		return;
+	}
+
+	for ( i = 0 ; i < VALORES_SIZE ; i++ )
+	{
+		LIS_CriarLista( &VALORES[i], NULL, NULL );
+	}
+}

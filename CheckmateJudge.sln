@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "grafo", "grafo\grafo.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mem_manager", "mem_manager\mem_manager.vcxproj", "{7347B204-676F-4A63-8E1C-3894E791AF80}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tabuleiro", "tabuleiro\tabuleiro.vcxproj", "{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -35,6 +37,10 @@ Global
 		{7347B204-676F-4A63-8E1C-3894E791AF80}.Debug|Win32.Build.0 = Debug|Win32
 		{7347B204-676F-4A63-8E1C-3894E791AF80}.Release|Win32.ActiveCfg = Release|Win32
 		{7347B204-676F-4A63-8E1C-3894E791AF80}.Release|Win32.Build.0 = Release|Win32
+		{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}.Debug|Win32.Build.0 = Debug|Win32
+		{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}.Release|Win32.ActiveCfg = Release|Win32
+		{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
