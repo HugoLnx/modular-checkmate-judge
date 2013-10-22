@@ -8,7 +8,6 @@
 #include    "LerParm.h"
 
 #include    "grafo.h"
-#include    "vertice.h"
 
 
 static const char *CRIAR_GRAFO_CMD      = "=criarGrafo"       ;
@@ -119,7 +118,6 @@ static GRA_tppGrafo pGrafo = NULL;
          {
             char *nome = AlocarEspacoParaNome();
             char *pDado = AlocarEspacoParaNome();
-            VER_tppConteudo pConteudo;
 
             numLidos = LER_LerParametros("ssi", nome, pDado, &CondRetEsp);
 
@@ -127,10 +125,8 @@ static GRA_tppGrafo pGrafo = NULL;
             {
                return TST_CondRetParm;
             }
-   
-            VER_CriarConteudo(&pConteudo, pDado);
 
-            CondRet = GRA_InserirVertice(pGrafo, nome, pConteudo);
+            CondRet = GRA_InserirVertice(pGrafo, nome, pDado);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir vértice.");
 
@@ -163,7 +159,6 @@ static GRA_tppGrafo pGrafo = NULL;
 
          else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
          {
-            VER_tppConteudo pConteudoObtido;
             char *pDadoEsperado = AlocarEspacoParaNome();
             char *pDadoObtido;
 
@@ -180,13 +175,11 @@ static GRA_tppGrafo pGrafo = NULL;
                pDadoEsperado = NULL;
             }
 
-            CondRet = GRA_ObterValorCorrente(pGrafo, (void**) &pConteudoObtido);
+            CondRet = GRA_ObterValorCorrente(pGrafo, (void**) &pDadoObtido);
 
 
             if (CondRetEsp == TST_CondRetOK)
             {
-               VER_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
-
                CondRet = TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
                MEM_Free(pDadoEsperado);
                return CondRet;
@@ -194,7 +187,7 @@ static GRA_tppGrafo pGrafo = NULL;
             else
             {
                MEM_Free(pDadoEsperado);
-               if (pConteudoObtido != NULL)
+               if (pDadoObtido != NULL)
                {
                   return TST_NotificarFalha("Não foi obtido null como conteudo ao ocorrer um erro."); 
                }
@@ -208,7 +201,7 @@ static GRA_tppGrafo pGrafo = NULL;
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
-            VER_tppConteudo pNovoConteudo, pAntigoConteudo;
+            char *pAntigoValor;
 
             numLidos = LER_LerParametros("si", pNovoValor, &CondRetEsp);
 
@@ -217,11 +210,10 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
             
-            GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoConteudo);
-            VER_DestruirConteudo(&pAntigoConteudo);
-            VER_CriarConteudo(&pNovoConteudo, pNovoValor);
+            GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoValor);
+            MEM_Free(pAntigoValor);
 
-            CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoConteudo);
+            CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoValor);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao alterar o valor.");
          }
@@ -382,7 +374,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
    void DestruirValor(void *pValor)
    {
-      VER_DestruirConteudo((VER_tppConteudo*) &pValor);
+      MEM_Free(pValor);
    }
 
 
