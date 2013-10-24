@@ -13,9 +13,10 @@
 *
 ***************************************************************************/
 
-#include <malloc.h>
 #include <stdio.h>
-#include "LISTA.H"
+#include "lista.h"
+#include "grafo.h"
+#include "mem_manager.h"
 
 #define TABULEIRO_OWN
 #include "tabuleiro.h"
@@ -133,13 +134,7 @@ typedef struct stCasa {
 ***********************************************************************/
 
    typedef struct stMatriz {
-
-         tpNoMatriz * pNoOrigem ;
-               /* Ponteiro para a origem da matriz */
-
-         tpNoMatriz * pNoCorr ;
-               /* Ponteiro para o nó corrente da matriz */
-
+         GRA_tppGrafo pGrafo;
    } TAB_tpMatriz ;
 
 /***********************************************************************
@@ -149,22 +144,21 @@ typedef struct stCasa {
 *
 ***********************************************************************/
    typedef enum {
-	     NORTE = 1 ,
+	    NORTE = 0,
 		 
-		 SUL = 2 ,
-		 
-		 ESTE = 3 ,
+		 ESTE = 1,
+       
+		 SUL = 2,
 
-		 OESTE = 4 ,
+		 OESTE = 3,
 
-		 NORDESTE = 5 ,
+		 NORDESTE = 4,
 
-		 SUDESTE = 6 ,
+		 SUDESTE = 5,
 
-		 SUDOESTE = 7 ,
+		 SUDOESTE = 6,
 
-		 NOROESTE = 8
-
+		 NOROESTE = 7
    } tpDirecao ;
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -189,6 +183,10 @@ typedef struct stCasa {
 
    TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz);
 
+   char* NomeDaCasa(int x, int y);
+
+   void DestruirValor(void *pValor);
+
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
@@ -202,28 +200,23 @@ typedef struct stCasa {
 *
 *  Função: MAT Destruir matriz
 *  ****/
-   TAB_tpCondRet TAB_DestruirMatriz( TAB_tpMatriz ** ppMatriz )
+   TAB_tpCondRet TAB_DestruirMatriz(TAB_tpMatriz **ppMatriz)
    {
-		TAB_tpMatriz * pMatriz ;
-
-		if ( ppMatriz == NULL || *ppMatriz == NULL )
+		TAB_tpMatriz *pMatriz;
+      
+		if (ppMatriz == NULL || *ppMatriz == NULL)
 		{
 			return TAB_CondRetMatrizNaoExiste ;
-		} /* if */
-
-		pMatriz = *ppMatriz ;
-		if ( pMatriz->pNoOrigem == NULL )
-		{
-			return TAB_CondRetNaoCriouOrigem;
-		} /* if */
+		}
+      
+		pMatriz = *ppMatriz;
          
-		EsvaziarMatriz( pMatriz ) ;
-		free( pMatriz ) ;
-		*ppMatriz = NULL ;
+		GRA_DestruirGrafo(&pMatriz->pGrafo);
+		MEM_Free(pMatriz);
+		*ppMatriz = NULL;
 
-		return TAB_CondRetOK ;
-	  
-   } /* Fim função: MAT Destruir matriz */
+		return TAB_CondRetOK;
+   }
 
 
 
@@ -231,45 +224,37 @@ typedef struct stCasa {
 *
 *  Função: MAT Obter valor corrente
 *  ****/
-   TAB_tpCondRet TAB_ObterValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista * ValorParm )
+   TAB_tpCondRet TAB_ObterValorCorr(TAB_tpMatriz *pMatriz, LIS_tppLista *ppValorParm)
    {
 
-      if ( pMatriz == NULL )
+      if (pMatriz == NULL)
       {
-         return TAB_CondRetMatrizNaoExiste ;
-      } /* if */
-      if ( pMatriz->pNoCorr == NULL )
-      {
-         return TAB_CondRetNaoTemCorrente ;
-      } /* if */
-      * ValorParm = pMatriz->pNoCorr->Valor ;
+         return TAB_CondRetMatrizNaoExiste;
+      }
+
+      GRA_ObterValorCorrente(pMatriz->pGrafo, (void **) ppValorParm);
 
       return TAB_CondRetOK ;
 
-   } /* Fim função: MAT Obter valor corrente */
+   }
 
-   
+
 
 /***************************************************************************
 *
 *  Função: MAT Atribuir para valor corrente
 *  ****/
-   TAB_tpCondRet TAB_AtribuirValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista ValorParm )
+   TAB_tpCondRet TAB_AtribuirValorCorr(TAB_tpMatriz *pMatriz, LIS_tppLista pValorParm)
    {
-
-      if ( pMatriz == NULL )
+      if (pMatriz == NULL)
       {
-         return TAB_CondRetMatrizNaoExiste ;
-      } /* if */
-      if ( pMatriz->pNoCorr == NULL )
-      {
-         return TAB_CondRetNaoTemCorrente ;
-      } /* if */
-      pMatriz->pNoCorr->Valor =ValorParm ;
+         return TAB_CondRetMatrizNaoExiste;
+      }
+      GRA_AlterarValorCorrente(pMatriz->pGrafo, pValorParm);
 
-      return TAB_CondRetOK ;
+      return TAB_CondRetOK;
 
-   } /* Fim função: MAT Atribuir valor corrente */
+   }
 
    
 
@@ -277,10 +262,10 @@ typedef struct stCasa {
 *
 *  Função: MAT Ir para nó ao norte.
 *  ****/
-   TAB_tpCondRet TAB_IrNoNorte( TAB_tpMatriz * pMatriz )
+   TAB_tpCondRet TAB_IrNoNorte(TAB_tpMatriz *pMatriz)
    {
 	   return IrPara( pMatriz , NORTE );
-   } /* Fim função: MAT Ir para nó ao norte*/
+   }
 
 
 
@@ -291,7 +276,7 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoSul( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUL );
-   } /* Fim função: MAT Ir para nó ao sul*/
+   }
 
 
 
@@ -302,7 +287,7 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoEste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , ESTE );
-   } /* Fim função: MAT Ir para à nó este*/
+   }
 
 
 
@@ -313,8 +298,8 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoOeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , OESTE );
-   } /* Fim função: MAT Ir para à nó oeste*/
-   
+   }
+
 
 
 
@@ -325,8 +310,8 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoNordeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , NORDESTE );
-   } /* Fim função: MAT Ir para nó à nordeste*/
-   
+   }
+
 
 
 
@@ -337,8 +322,8 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoSudeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUDESTE );
-   } /* Fim função: MAT Ir para nó à sudeste*/
-   
+   }
+
 
 
 
@@ -349,7 +334,7 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoSudoeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , SUDOESTE );
-   } /* Fim função: MAT Ir para nó à sudoeste */
+   }
 
 
 
@@ -361,323 +346,27 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_IrNoNoroeste( TAB_tpMatriz * pMatriz )
    {
 	   return IrPara( pMatriz , NOROESTE );
-   } /* Fim função: MAT Ir para nó à noroeste*/
+   }
 
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-
-/***********************************************************************
-*
-*  $FC Função: MAT Criar nó da matriz
-*
-*  $FV Valor retornado
-*     Ponteiro para o nó criado.
-*     Será NULL caso a memória tenha se esgotado.
-*     Os ponteiros do nó criado estarão nulos e o valor é igual ao do
-*     parâmetro.
-*
-***********************************************************************/
-
-   tpNoMatriz * CriarNo()
+   char* DirecaoComoString(tpDirecao direcao)
    {
-
-      tpNoMatriz * pNo ;
-
-      pNo = ( tpNoMatriz * ) malloc( sizeof( tpNoMatriz )) ;
-      if ( pNo == NULL )
+      switch(direcao)
       {
-         return NULL ;
-      } /* if */
-
-      pNo->pNorte = NULL ;
-	  pNo->pSul = NULL ;
-	  pNo->pEste = NULL ;
-	  pNo->pOeste = NULL ;
-	  pNo->pNordeste = NULL ;
-	  pNo->pSudeste = NULL ;
-	  pNo->pSudoeste = NULL ;
-	  pNo->pNoroeste = NULL ;
-      pNo->Valor  = NULL ;
-      return pNo ;
-
-   } /* Fim função: MAT Criar nó da matriz */
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Criar nó origem da matriz
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetFaltouMemoria
-*     TAB_CondRetNaoCriouOrigem
-*
-***********************************************************************/
-
-   TAB_tpCondRet CriarNoOrigem(TAB_tpMatriz * pMatriz )
-   {
-
-      TAB_tpCondRet CondRet ;
-      tpNoMatriz * pNo ;
-
-      if ( pMatriz == NULL )
-      {
-         CondRet = CriarMatriz( &pMatriz ) ;
-
-         if ( CondRet != TAB_CondRetOK )
-         {
-            return CondRet ;
-         } /* if */
-      } /* if */
-
-      if ( pMatriz->pNoOrigem == NULL )
-      {
-         pNo = CriarNo() ;
-         if ( pNo == NULL )
-         {
-            return TAB_CondRetFaltouMemoria ;
-         } /* if */
-         pMatriz->pNoOrigem = pNo ;
-         pMatriz->pNoCorr = pNo ;
-
-         return TAB_CondRetOK ;
-      } /* if */
-
-      return TAB_CondRetNaoCriouOrigem ;
-
-   } /* Fim função: MAT Criar nó origem da matriz */
-
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Esvaziar matriz
-*  
-*  $ED Descrição da função
-*  Libera a memória de todos os nós que compõe a estrutura da matriz.
-*  da matriz.
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para a matriz que será esvaziada.
-*
-***********************************************************************/
-   void EsvaziarMatriz( TAB_tpMatriz * pMatriz )
-   {
-	   tpNoMatriz * pNo = pMatriz->pNoOrigem;
-	   tpNoMatriz * pNoExtremidade = pNo ;
-	   tpNoMatriz * pProxNoExtremidade ;
-	   tpNoMatriz * pProxNo ;
-
-	   while ( pNoExtremidade != NULL )
-	   {
-		   pProxNoExtremidade = pNoExtremidade->pEste ;
-			while ( pNo != NULL )
-			{
-				pProxNo = pNo->pSul ;
-				free( pNo ) ;
-				pNo = pProxNo ;
-			}
-			pNoExtremidade = pProxNoExtremidade ;
-			pNo = pNoExtremidade ;
-	   }
-	   
-	   pMatriz->pNoOrigem = NULL;
-	   pMatriz->pNoCorr = NULL;
-	   
-   } /* Fim função: MAT Destruir a estrutura da matriz */
-
-
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Get nó adjacente
-*  
-*  $ED Descrição da função
-*     Recupera o ponteiro para um nó adjacente
-*     Exemplo de uso: GetAdjacente(noOrigem, ESTE)
-*  
-*  $EP Parâmetros
-*     pNo - ponteiro para nó que será usado como referência.
-*     dir - representa a direção à qual será buscado o nó.
-*
-*  $FV Valor retornado
-*    Ponteiro para nó adjacente na direção passada por
-*    parâmetro.
-*
-***********************************************************************/
-   tpNoMatriz * GetAdjacente( tpNoMatriz * pNo , tpDirecao dir )
-   {
-		switch( dir )
-		{
-		case NORTE:    return pNo->pNorte ;
-		case SUL:      return pNo->pSul ;
-		case ESTE:     return pNo->pEste ;
-		case OESTE:    return pNo->pOeste ;
-		case NORDESTE: return pNo->pNordeste ;
-		case SUDESTE:  return pNo->pSudeste ;
-		case SUDOESTE: return pNo->pSudoeste ;
-		case NOROESTE: return pNo->pNoroeste ;
-		}
-		return NULL;
-   }  /* Fim função: MAT Recupera o ponteiro para um nó adjacente*/
-
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Constroi a primeira coluna da matriz.
-*  
-*  $ED Descrição da função
-*  Essa função é chamada no momento de inicialização da matriz para
-*  criar a primeira coluna com o número de linhas correto e referenciando
-*  todos os nós adjacentes nas direções norte e sul
-*
-*  $EP Parâmetros
-*     pNoOrigem - ponteiro para o nó origem da matriz.
-*     QntLinhas - quantidade de linhas que a coluna terá.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
-   TAB_tpCondRet ConstruirPrimeiraColuna( tpNoMatriz * pNoOrigem , int QntLinhas )
-   {
-	   int i ;
-	   tpNoMatriz * pNoNovo ;
-	   tpNoMatriz * pNoAnterior ;
-	   
-	   pNoAnterior = pNoOrigem ;
-	   for( i = 0 ; i < QntLinhas - 1 ; i++ )
-	   {
-		   pNoNovo = CriarNo() ;
-		   if( pNoNovo == NULL )
-		   {
-			   return TAB_CondRetFaltouMemoria ;
-		   }
-		   pNoNovo->pNorte = pNoAnterior ;
-		   pNoAnterior->pSul = pNoNovo ;
-		   pNoAnterior = pNoNovo ;
-	   }
-	   
-	   return TAB_CondRetOK ;
-   }  /* Fim função: MAT Construi a primeira coluna da matriz */
-
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Adiciona coluna.
-*  
-*  $ED Descrição da função
-*  Adiciona mais uma coluna à matriz, mantendo o número de linhas e
-*  referenciando os nós adjacentes em todas as 8 direções.
-*
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que será manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
-   TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz )
-   {
-	   tpNoMatriz * pOrigem = pMatriz->pNoOrigem ;
-	   tpNoMatriz * pNoNovo ;
-	   tpNoMatriz * pNoExtremidade ;
-
-	   pNoExtremidade = pMatriz->pNoOrigem ;
-	   while( pNoExtremidade->pEste != NULL )
-	   {
-		   pNoExtremidade = pNoExtremidade->pEste ;
-	   }
-
-	   while( pNoExtremidade != NULL )
-	   {
-		   pNoNovo = CriarNo() ;
-		   if( pNoNovo == NULL )
-		   {
-			   return TAB_CondRetFaltouMemoria ;
-		   }
-
-
-		   pNoNovo->pOeste = pNoExtremidade ;
-		   pNoNovo->pNoroeste = pNoExtremidade->pNorte ;
-		   pNoNovo->pSudoeste = pNoExtremidade->pSul ;
-		   pNoNovo->pNorte = pNoExtremidade->pNordeste ;
-		   pNoNovo->pSul = pNoExtremidade->pSudeste ;
-
-		   ApontarDeVoltaEmTodasAsDirecoes( pNoNovo ) ;
-
-		   pNoExtremidade = pNoExtremidade->pSul ;
-	   }
-
-	   return TAB_CondRetOK ;
-   }  /* Fim função: MAT Adiciona Coluna */
-
-
-
-/***********************************************************************
-*
-*  $FC Função: MAT Apontar de volta em todas as direções.
-*  
-*  $ED Descrição da função
-*  A função faz com que os adjacentes de um nó referenciem à ele.
-*  
-*  $EP Parâmetros
-*     pNo - ponteiro para nó que é referenciado por cada direção.
-*
-***********************************************************************/
-   
-   void ApontarDeVoltaEmTodasAsDirecoes( tpNoMatriz * pNo )
-   {
-		if( pNo->pNorte != NULL )
-		{
-			pNo->pNorte->pSul= pNo ;
-		}
-
-		if( pNo->pSul != NULL )
-		{
-			pNo->pSul->pNorte= pNo ;
-		}
-		
-		if( pNo->pEste != NULL )
-		{
-			pNo->pEste->pOeste = pNo ;
-		}
-		
-		if( pNo->pOeste != NULL )
-		{
-			pNo->pOeste->pEste= pNo ;
-		}
-	   
-		if( pNo->pNordeste != NULL )
-		{
-			pNo->pNordeste->pSudoeste = pNo ;
-		}
-		
-		if( pNo->pSudeste != NULL )
-		{
-			pNo->pSudeste->pNoroeste = pNo ;
-		}
-		
-		if( pNo->pSudoeste != NULL )
-		{
-			pNo->pSudoeste->pNordeste = pNo ;
-		}
-		
-		if( pNo->pNoroeste != NULL )
-		{
-			pNo->pNoroeste->pSudeste = pNo ;
-		}
-   }  /* Fim função: MAT Apontar de volta em todas as direções */
-
-
-      
+         case NORTE:     return "N" ; break;
+         case ESTE:      return "E" ; break;
+         case SUL:       return "S" ; break;
+         case OESTE:     return "O" ; break;
+         case NORDESTE:  return "NE"; break;
+         case SUDESTE:   return "SE"; break;
+         case SUDOESTE:  return "SO"; break;
+         case NOROESTE:  return "NO"; break;
+         default: return NULL;
+      }
+   }
 
 
 /***************************************************************************
@@ -699,27 +388,36 @@ typedef struct stCasa {
 *
 *  ****/
 
-   TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , tpDirecao direcao )
+   TAB_tpCondRet IrPara(TAB_tpMatriz *pMatriz , tpDirecao direcao)
    {
+      GRA_tpCondRet condRet;
+      GRA_tppGrafo pGrafo;
 
-      if ( pMatriz == NULL )
-      {
-         return TAB_CondRetMatrizNaoExiste ;
-      } /* if */
-      if ( pMatriz->pNoCorr == NULL )
-      {
-         return TAB_CondRetNaoTemCorrente ;
-      } /* if */
+     if (pMatriz == NULL)
+     {
+        return TAB_CondRetMatrizNaoExiste ;
+     }
 
-      if ( GetAdjacente( pMatriz->pNoCorr , direcao ) == NULL )
-      {
-		  return TAB_CondRetNaoEhNo ;
-      } /* if */
+     pGrafo = pMatriz->pGrafo;
+     condRet = GRA_SeguirPelaAresta(pGrafo, DirecaoComoString(direcao));
+     
+     if (condRet != GRA_CondRetOK)
+     {
+        return TAB_CondRetNaoEhNo;
+     }
 
-	  pMatriz->pNoCorr = GetAdjacente( pMatriz->pNoCorr , direcao ) ;
 	  return TAB_CondRetOK ;
 
-   } /* Fim função: MAT Ir para nó genérico */
+   }
+
+
+
+
+   void DestruirValor(void *pValor)
+   {
+      LIS_DestruirLista((LIS_tppLista) pValor);
+   }
+
 
 
    
@@ -738,24 +436,22 @@ typedef struct stCasa {
 ***********************************************************************/
    TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz)
    {
-	  TAB_tpMatriz * pMatriz ;
+	  TAB_tpMatriz *pMatriz;
 
-      if ( ppMatriz != NULL && *ppMatriz != NULL )
+      if (ppMatriz != NULL && *ppMatriz != NULL)
       {
-         TAB_DestruirMatriz( ppMatriz ) ;
-      } /* if */
+         TAB_DestruirMatriz(ppMatriz);
+      }
 	  
-	  pMatriz = ( TAB_tpMatriz * ) malloc( sizeof( TAB_tpMatriz )) ;
-      if ( pMatriz == NULL )
+      MEM_Alloc(sizeof(TAB_tpMatriz), (void **) &pMatriz);
+      if (pMatriz == NULL)
       {
          return TAB_CondRetFaltouMemoria ;
-      } /* if */
+      }
 
+      GRA_CriarGrafo(&pMatriz->pGrafo, DestruirValor);
 
-      pMatriz->pNoOrigem = NULL ;
-      pMatriz->pNoCorr = NULL ;
-
-	  *ppMatriz = pMatriz ;
+	  *ppMatriz = pMatriz;
 
       return TAB_CondRetOK ;
 
@@ -783,41 +479,60 @@ typedef struct stCasa {
 ***********************************************************************/
    TAB_tpCondRet InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
    {
-	   int i ;
-	   TAB_tpCondRet Cond ;
-
+	   int x, y;
+	   TAB_tpCondRet Cond;
+      
 	   if( pMatriz == NULL )
 	   {
 		   return TAB_CondRetMatrizNaoExiste ;
 	   }
 
-	   if ( pMatriz->pNoOrigem != NULL )
-	   {
-		   EsvaziarMatriz( pMatriz ) ;
-	   }
+      GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(0, 0), NULL);
+      GRA_TornarCorrenteUmaOrigem(pMatriz->pGrafo);
 
-	   Cond = CriarNoOrigem( pMatriz ) ;
-	   if ( Cond != TAB_CondRetOK )
-	   {
-		   return Cond ;
-	   }
+      for (x = 0; x < LARGURA; x++)
+      {
+         for (y = 0; y < ALTURA; y++)
+         {
+            GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(x, y), NULL);
+         }
+      }
 
-	   Cond = ConstruirPrimeiraColuna( pMatriz->pNoOrigem , Linhas) ;
-	   if ( Cond != TAB_CondRetOK )
-	   {
-		   return Cond ;
-	   }
+      for (x = 0; x < LARGURA; x++)
+      {
+         for (y = 0; y < ALTURA; y++)
+         {
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORTE)   , NomeDaCasa(x, y), NomeDaCasa(x, y-1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(ESTE)    , NomeDaCasa(x, y), NomeDaCasa(x+1, y));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUL)     , NomeDaCasa(x, y), NomeDaCasa(x, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(OESTE)   , NomeDaCasa(x, y), NomeDaCasa(x-1, y));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORDESTE), NomeDaCasa(x, y), NomeDaCasa(x+1, y-1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDESTE) , NomeDaCasa(x, y), NomeDaCasa(x+1, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDOESTE), NomeDaCasa(x, y), NomeDaCasa(x-1, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NOROESTE), NomeDaCasa(x, y), NomeDaCasa(x-1, y-1));
+         }
+      }
 
-	   for ( i = 0 ; i < Colunas - 1 ; i++ )
-	   {
-		   Cond = AddColuna( pMatriz ) ;
-		   if ( Cond != TAB_CondRetOK )
-			{
-				return Cond ;
-			}
-	   }
+      GRA_IrParaAOrigem(pMatriz->pGrafo, NomeDaCasa(0,0));
 
 	   return TAB_CondRetOK ;
+   }
+
+   char* NomeDaCasa(int x, int y)
+   {
+      char *nome;
+
+      if (x >= LARGURA || x < 0 || y >= ALTURA || y < 0)
+      {
+         return NULL;
+      }
+
+      MEM_Alloc(sizeof(char)*3, (void **) &nome);
+      nome[0] = y + 'A';
+      nome[1] = x + '1';
+      nome[2] = 0;
+
+      return nome;
    }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

@@ -685,6 +685,11 @@ GRA_tpCondRet ProcurarVertice(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
    LIS_tpCondRet lisCondRet;
    *pVertice = NULL;
 
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
+
 	LIS_IrInicioLista(pGrafo->pVertices);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, nome);
 	if (lisCondRet != LIS_CondRetOK)
@@ -713,6 +718,11 @@ GRA_tpCondRet ProcurarOrigem(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
 {
    LIS_tpCondRet lisCondRet;
    *pVertice = NULL;
+
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	LIS_IrInicioLista(pGrafo->pOrigens);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nome);
@@ -743,6 +753,11 @@ GRA_tpCondRet ProcurarAresta(tpVertice *pVertice, char *nome, tpAresta **pAresta
 {
    LIS_tpCondRet lisCondRet;
    *pAresta = NULL;
+
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	LIS_IrInicioLista(pVertice->pSucessores);
 	lisCondRet = LIS_ProcurarValor(pVertice->pSucessores, nome);

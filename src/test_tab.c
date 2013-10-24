@@ -46,6 +46,7 @@
 #include    "lerparm.h"
 
 #include    "tabuleiro.h"
+#include    "mem_manager.h"
 
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
@@ -62,6 +63,9 @@
 #define     IR_SUDESTE_CMD     "=irsudeste"
 #define     IR_SUDOESTE_CMD    "=irsudoeste"
 #define     IR_NOROESTE_CMD    "=irnoroeste"
+
+
+#define     FIM_CMD         "=fim"
 
 /* Tabela dos nomes dos comandos de teste específicos do teste */
 #define     VALIDAR_EST_TAB_CMD "=validarEstrutura"
@@ -372,7 +376,16 @@ static int iMat = 0 ;
 
 			return TST_CondRetOK ;
 
-         } /* fim ativa: Testar TAB Validar estrutura matriz */
+         }
+
+
+      /* Testar Finalizar teste */
+
+         else if ( strcmp( ComandoTeste , FIM_CMD ) == 0 )
+         {
+            MEM_LiberarTodaMemoriaAlocada();
+            return TST_CondRetOK;
+         }
 
       return TST_CondRetNaoConhec ;
 
