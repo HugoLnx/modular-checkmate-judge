@@ -18,9 +18,33 @@
 #include "LISTA.H"
 
 #define TABULEIRO_OWN
-#include "TABULEIRO.H"
+#include "tabuleiro.h"
 #undef TABULEIRO_OWN
 
+typedef enum {
+   ANDA = 0,
+   VOA = 1
+} tpTipoMovimento;
+
+typedef struct stMovimento {
+   LIS_tppLista passos;
+   tpTipoMovimento tipo;
+} tpMovimento;
+
+typedef struct stPeca {
+   tpMovimento *pMovimento;
+   char *nome;
+} tpPeca;
+
+typedef struct stPegada {
+   tpPeca peca;
+   struct stPegada *pAnterior;
+} tpPegada;
+
+typedef struct stCasa {
+   tpPeca *pPeca;
+   LIS_tppLista pegadas;
+} tpCasa;
 
 
 /***********************************************************************
