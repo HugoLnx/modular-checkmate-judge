@@ -34,6 +34,9 @@
    #define TABULEIRO_EXT extern
 #endif
 
+#define LARGURA 3
+#define ALTURA  3
+
 #include "lista.h"
 
 typedef struct stMatriz TAB_tpMatriz ;

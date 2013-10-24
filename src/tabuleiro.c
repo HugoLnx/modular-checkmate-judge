@@ -195,7 +195,7 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz ** ppMatriz)
    {
      CriarMatriz(ppMatriz);
-     InicializarMatriz(*ppMatriz, 3, 3);
+     InicializarMatriz(*ppMatriz, ALTURA, LARGURA);
    }
 
 /***************************************************************************
