@@ -38,7 +38,6 @@
 =irnoroeste            NaoMatriz
 =obter      ValorErro  NaoMatriz
 =atribuir   ValorErro  NaoMatriz
-=init 2 2 NaoMatriz
 
 == Verificar comando recuperar
 =destruir OK
@@ -56,24 +55,6 @@
 
 == Criar matriz
 =criar      OK
-
-== Verificar erros relativos à inexistência da origem
-=destruir              NaoOrigem
-
-== Verificar erros relativos à inexistência do corrente
-=irnorte               NaoCorr
-=irsul                 NaoCorr
-=ireste                NaoCorr
-=iroeste               NaoCorr
-=irnordeste            NaoCorr
-=irsudeste             NaoCorr
-=irsudoeste            NaoCorr
-=irnoroeste            NaoCorr
-=obter     ValorErro   NaoCorr
-=atribuir  ValorErro   NaoCorr
-
-== Inicializar matriz
-=init 3 3 OK
 
 == Atribuir valores aos nós
 =atribuir Valor0_0 OK
@@ -275,20 +256,6 @@
 =obter Valor1_0 OK
 
 =irnorte    OK
-
-== Trabalhar com outra matriz simultaneamente
-=selecionar 1
-=criar OK
-=init 10 10 OK
-=destruir OK
-
-== É possivel criar e inicializar a mesma matriz duas vezes
-=criar OK
-=criar OK
-=init 10 10 OK
-=init 5  5 OK
-=destruir OK
-=selecionar 0
 
 == Destroi a matriz
 =destruir OK

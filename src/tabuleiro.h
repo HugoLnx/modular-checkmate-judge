@@ -68,40 +68,7 @@ typedef struct stMatriz TAB_tpMatriz ;
    } TAB_tpCondRet ;
 
 
-/***********************************************************************
-*
-*  $FC Função: TAB Criar matriz
-*
-*  $ED Descrição da função
-*     Cria uma nova matriz vazia.
-*     Caso já exista uma matriz, esta será destruída.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_CriarMatriz( TAB_tpMatriz ** ppMatriz ) ;
-
-
-
-/***********************************************************************
-*
-*  $FC Função: TAB Inicializar a matriz
-*
-*  $EP Parâmetros
-*     $P pMatriz - matriz que será inicializada.
-*                    Este parâmetro é passado por referência.
-*     $P Linhas - quantidade de linhas que a matriz terá.
-*     $P Colunas - quantidade de colunas que a matriz terá.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_InicializarMatriz( TAB_tpMatriz * pMatriz , int Linhas , int Colunas ) ;
+   TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz **ppMatriz);
 
 
 

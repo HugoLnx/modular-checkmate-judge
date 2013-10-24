@@ -50,7 +50,6 @@
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
 #define     CRIAR_TAB_CMD       "=criar"
-#define     INIT_TAB_CMD        "=init"
 #define     OBTER_VAL_CMD       "=obter"
 #define     ATRIBUIR_VAL_CMD    "=atribuir"
 #define     DESTROI_CMD         "=destruir"
@@ -131,7 +130,7 @@ static int iMat = 0 ;
                return TST_CondRetParm ;
             } /* if */
 
-            CondRetObtido = TAB_CriarMatriz( Matrizes + iMat ) ;
+            CondRetObtido = TAB_CriarTabuleiro( Matrizes + iMat ) ;
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
                                     "Retorno errado ao criar matriz." ) ;
@@ -207,25 +206,6 @@ static int iMat = 0 ;
 									"Não é possível destruir uma matriz que não existe.") ;
 
          } /* fim ativa: Testar TAB Destruir matriz */
-
-		 
-      /* Testar TAB Inicializar Matriz */
-
-         else if ( strcmp( ComandoTeste , INIT_TAB_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "iii" ,
-                               &Linhas, &Colunas, &CondRetEsperada ) ;
-            if ( NumLidos != 3 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-            CondRetObtido = TAB_InicializarMatriz( Matrizes[iMat] , Linhas, Colunas ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Erro ao inicializar matriz.") ;
-
-         } /* fim ativa: Testar TAB Inicializar matriz */
 
 		 
       /* Testar TAB Ir norte */

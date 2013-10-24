@@ -185,86 +185,18 @@ typedef struct stCasa {
    
    TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , tpDirecao direcao );
 
+   TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz, int Linhas, int Colunas);
+
+   TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz);
+
 /*****  Código das funções exportadas pelo módulo  *****/
 
 
-
-/***************************************************************************
-*
-*  Função: MAT Criar matriz
-*  ****/
-   TAB_tpCondRet TAB_CriarMatriz( TAB_tpMatriz ** ppMatriz )
+   TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz ** ppMatriz)
    {
-	  TAB_tpMatriz * pMatriz ;
-
-      if ( ppMatriz != NULL && *ppMatriz != NULL )
-      {
-         TAB_DestruirMatriz( ppMatriz ) ;
-      } /* if */
-	  
-	  pMatriz = ( TAB_tpMatriz * ) malloc( sizeof( TAB_tpMatriz )) ;
-      if ( pMatriz == NULL )
-      {
-         return TAB_CondRetFaltouMemoria ;
-      } /* if */
-
-
-      pMatriz->pNoOrigem = NULL ;
-      pMatriz->pNoCorr = NULL ;
-
-	  *ppMatriz = pMatriz ;
-
-      return TAB_CondRetOK ;
-
-   } /* Fim função: MAT Criar matriz */
-
-
-
-   /***************************************************************************
-*
-*  Função: MAT Inicializar matriz
-*  ****/
-   TAB_tpCondRet TAB_InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
-   {
-	   int i ;
-	   TAB_tpCondRet Cond ;
-
-	   if( pMatriz == NULL )
-	   {
-		   return TAB_CondRetMatrizNaoExiste ;
-	   }
-
-	   if ( pMatriz->pNoOrigem != NULL )
-	   {
-		   EsvaziarMatriz( pMatriz ) ;
-	   }
-
-	   Cond = CriarNoOrigem( pMatriz ) ;
-	   if ( Cond != TAB_CondRetOK )
-	   {
-		   return Cond ;
-	   }
-
-	   Cond = ConstruirPrimeiraColuna( pMatriz->pNoOrigem , Linhas) ;
-	   if ( Cond != TAB_CondRetOK )
-	   {
-		   return Cond ;
-	   }
-
-	   for ( i = 0 ; i < Colunas - 1 ; i++ )
-	   {
-		   Cond = AddColuna( pMatriz ) ;
-		   if ( Cond != TAB_CondRetOK )
-			{
-				return Cond ;
-			}
-	   }
-
-	   return TAB_CondRetOK ;
-   }  /* Fim função: MAT Inicializar matriz */
-
-
-
+     CriarMatriz(ppMatriz);
+     InicializarMatriz(*ppMatriz, 3, 3);
+   }
 
 /***************************************************************************
 *
@@ -492,7 +424,7 @@ typedef struct stCasa {
 
       if ( pMatriz == NULL )
       {
-         CondRet = TAB_CriarMatriz( &pMatriz ) ;
+         CondRet = CriarMatriz( &pMatriz ) ;
 
          if ( CondRet != TAB_CondRetOK )
          {
@@ -788,5 +720,104 @@ typedef struct stCasa {
 	  return TAB_CondRetOK ;
 
    } /* Fim função: MAT Ir para nó genérico */
+
+
+   
+/***********************************************************************
+*
+*  $FC Função: TAB Criar matriz
+*
+*  $ED Descrição da função
+*     Cria uma nova matriz vazia.
+*     Caso já exista uma matriz, esta será destruída.
+*
+*  $FV Valor retornado
+*     TAB_CondRetOK
+*     TAB_CondRetFaltouMemoria
+*
+***********************************************************************/
+   TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz)
+   {
+	  TAB_tpMatriz * pMatriz ;
+
+      if ( ppMatriz != NULL && *ppMatriz != NULL )
+      {
+         TAB_DestruirMatriz( ppMatriz ) ;
+      } /* if */
+	  
+	  pMatriz = ( TAB_tpMatriz * ) malloc( sizeof( TAB_tpMatriz )) ;
+      if ( pMatriz == NULL )
+      {
+         return TAB_CondRetFaltouMemoria ;
+      } /* if */
+
+
+      pMatriz->pNoOrigem = NULL ;
+      pMatriz->pNoCorr = NULL ;
+
+	  *ppMatriz = pMatriz ;
+
+      return TAB_CondRetOK ;
+
+   }
+
+
+   
+
+
+/***********************************************************************
+*
+*  $FC Função: TAB Inicializar a matriz
+*
+*  $EP Parâmetros
+*     $P pMatriz - matriz que será inicializada.
+*                    Este parâmetro é passado por referência.
+*     $P Linhas - quantidade de linhas que a matriz terá.
+*     $P Colunas - quantidade de colunas que a matriz terá.
+*
+*  $FV Valor retornado
+*     TAB_CondRetOK
+*     TAB_CondRetMatrizNaoExiste
+*     TAB_CondRetFaltouMemoria
+*
+***********************************************************************/
+   TAB_tpCondRet InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
+   {
+	   int i ;
+	   TAB_tpCondRet Cond ;
+
+	   if( pMatriz == NULL )
+	   {
+		   return TAB_CondRetMatrizNaoExiste ;
+	   }
+
+	   if ( pMatriz->pNoOrigem != NULL )
+	   {
+		   EsvaziarMatriz( pMatriz ) ;
+	   }
+
+	   Cond = CriarNoOrigem( pMatriz ) ;
+	   if ( Cond != TAB_CondRetOK )
+	   {
+		   return Cond ;
+	   }
+
+	   Cond = ConstruirPrimeiraColuna( pMatriz->pNoOrigem , Linhas) ;
+	   if ( Cond != TAB_CondRetOK )
+	   {
+		   return Cond ;
+	   }
+
+	   for ( i = 0 ; i < Colunas - 1 ; i++ )
+	   {
+		   Cond = AddColuna( pMatriz ) ;
+		   if ( Cond != TAB_CondRetOK )
+			{
+				return Cond ;
+			}
+	   }
+
+	   return TAB_CondRetOK ;
+   }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/
