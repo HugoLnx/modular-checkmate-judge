@@ -27,18 +27,29 @@ typedef enum {
    VOA = 1
 } tpTipoMovimento;
 
+
+typedef enum {
+   ALIADA = 0,
+   INIMIGA = 1
+} tpTimePeca;
+
 typedef struct stMovimento {
    LIS_tppLista passos;
    tpTipoMovimento tipo;
 } tpMovimento;
 
-typedef struct stPeca {
+typedef struct stModeloPeca {
    tpMovimento *pMovimento;
    char *nome;
-} tpPeca;
+} tpModeloPeca;
+
+typedef struct stPeca {
+   tpModeloPeca *pPeca;
+   tpTimePeca time;
+} tpPeca
 
 typedef struct stPegada {
-   tpPeca peca;
+   tpPeca *pPeca;
    struct stPegada *pAnterior;
 } tpPegada;
 
