@@ -1,0 +1,13 @@
+Tabuleiro
+	X CriarTabuleiro(tab)
+	X DestruirTabuleiro(tab)
+	CriarPeca(nome, passos, tipo)
+	InserirPeca(nome, nomeCasa, inimiga?)
+	CopiarTabuleiro
+	Navegar(casa ou direcoes)
+
+   
+StringInputParser
+	LIS_tppLista<TAB_tpTipoPasso> LerPassos(char *strInput)  (exemplos: "cima[2] dir[1] baixo[3] esq[*] c_pra_frente soco")
+	int LerBooleano(char *strInput) (exemplos: "sim" "nao" "s" "n")
+	TAB_tpTipoMovimento LerTipoMovimento(char *strInput)
