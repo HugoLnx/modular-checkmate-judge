@@ -21,6 +21,10 @@
       <UniqueIdentifier>{88184510-4399-47a5-8289-5f98c32317c1}</UniqueIdentifier>
       <Extensions>docstyle</Extensions>
     </Filter>
+    <Filter Include="Prototipacao">
+      <UniqueIdentifier>{ec27d097-e0e7-4bdb-8c26-6d34f4788d45}</UniqueIdentifier>
+      <Extensions>prototipacao</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="lista.assertivas">
@@ -55,6 +59,9 @@
     </None>
     <None Include="modulo_implementacao.docstyle">
       <Filter>Docstyle</Filter>
+    </None>
+    <None Include="modulos.prototipacao">
+      <Filter>Prototipacao</Filter>
     </None>
   </ItemGroup>
 </Project>
