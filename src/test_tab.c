@@ -139,58 +139,7 @@ static int iMat = 0 ;
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
                                     "Retorno errado ao criar matriz." ) ;
 
-         } /* fim ativa: Testar TAB Criar matriz */
-
-
-      /* Testar TAB Obter valor corrente */
-
-         else if ( strcmp( ComandoTeste , OBTER_VAL_CMD ) == 0 )
-         {
-
-            NumLidos = LER_LerParametros( "ii" ,
-                               &IndiceValorEsperado , &CondRetEsperada ) ;
-            if ( NumLidos != 2 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-            CondRetObtido = TAB_ObterValorCorr( Matrizes[iMat] , &ValorObtido ) ;
-            
-			Ret = TST_CompararInt( CondRetEsperada , CondRetObtido ,
-                                   "Retorno errado ao obter valor corrente." ) ;
-
-            if ( Ret != TST_CondRetOK )
-            {
-               return Ret ;
-            } /* if */
-
-			
-			IndiceValorObtido = IndiceDoValor(ValorObtido) ;
-
-            return TST_CompararInt( IndiceValorEsperado , IndiceValorObtido ,
-                                     "Conteúdo do nó está errado." ) ;
-
-         } /* fim ativa: Testar TAB Obter valor corrente */
-
-
-		/* Testar TAB Atribuir valor corrente */
-
-         else if ( strcmp( ComandoTeste , ATRIBUIR_VAL_CMD ) == 0 )
-         {
-
-            NumLidos = LER_LerParametros( "ii" ,
-							&IndiceValorDado , &CondRetEsperada ) ;
-            if ( NumLidos != 2 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-            CondRetObtido = TAB_AtribuirValorCorr( Matrizes[iMat] , VALORES[IndiceValorDado] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-                                   "Retorno errado ao obter valor corrente." ) ;
-
-         } /* fim ativa: Testar TAB Atribuir valor corrente */
+         }
 
 
       /* Testar TAB Destruir matriz */

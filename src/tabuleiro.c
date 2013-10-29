@@ -44,9 +44,9 @@ typedef struct stModeloPeca {
 } tpModeloPeca;
 
 typedef struct stPeca {
-   tpModeloPeca *pPeca;
+   tpModeloPeca *pModelo;
    tpTimePeca time;
-} tpPeca
+} tpPeca;
 
 typedef struct stPegada {
    tpPeca *pPeca;
@@ -196,7 +196,19 @@ typedef struct stCasa {
 
    char* NomeDaCasa(int x, int y);
 
-   void DestruirValor(void *pValor);
+   tpCasa* CriarCasa();
+   
+   void DestroiMovimento(void *pValor);
+   
+   void DestruirModeloPeca(void *pValor);
+   
+   void DestruirPeca(void *pValor);
+   
+   void DestruirCasa(void *pValor);
+   
+   void DestruirPegada(void *pValor);
+
+   int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -204,7 +216,7 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz ** ppMatriz)
    {
      CriarMatriz(ppMatriz);
-     InicializarMatriz(*ppMatriz, ALTURA, LARGURA);
+     return InicializarMatriz(*ppMatriz, ALTURA, LARGURA);
    }
 
 /***************************************************************************
@@ -229,45 +241,6 @@ typedef struct stCasa {
 		return TAB_CondRetOK;
    }
 
-
-
-/***************************************************************************
-*
-*  Função: MAT Obter valor corrente
-*  ****/
-   TAB_tpCondRet TAB_ObterValorCorr(TAB_tpMatriz *pMatriz, LIS_tppLista *ppValorParm)
-   {
-
-      if (pMatriz == NULL)
-      {
-         return TAB_CondRetMatrizNaoExiste;
-      }
-
-      GRA_ObterValorCorrente(pMatriz->pGrafo, (void **) ppValorParm);
-
-      return TAB_CondRetOK ;
-
-   }
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Atribuir para valor corrente
-*  ****/
-   TAB_tpCondRet TAB_AtribuirValorCorr(TAB_tpMatriz *pMatriz, LIS_tppLista pValorParm)
-   {
-      if (pMatriz == NULL)
-      {
-         return TAB_CondRetMatrizNaoExiste;
-      }
-      GRA_AlterarValorCorrente(pMatriz->pGrafo, pValorParm);
-
-      return TAB_CondRetOK;
-
-   }
-
-   
 
 /***************************************************************************
 *
@@ -423,14 +396,6 @@ typedef struct stCasa {
 
 
 
-
-   void DestruirValor(void *pValor)
-   {
-      LIS_DestruirLista((LIS_tppLista) pValor);
-   }
-
-
-
    
 /***********************************************************************
 *
@@ -460,7 +425,7 @@ typedef struct stCasa {
          return TAB_CondRetFaltouMemoria ;
       }
 
-      GRA_CriarGrafo(&pMatriz->pGrafo, DestruirValor);
+      GRA_CriarGrafo(&pMatriz->pGrafo, DestruirCasa);
 
 	  *ppMatriz = pMatriz;
 
@@ -492,20 +457,22 @@ typedef struct stCasa {
    {
 	   int x, y;
 	   TAB_tpCondRet Cond;
+      tpCasa *pCasa;
       
 	   if( pMatriz == NULL )
 	   {
 		   return TAB_CondRetMatrizNaoExiste ;
 	   }
 
-      GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(0, 0), NULL);
-      GRA_TornarCorrenteUmaOrigem(pMatriz->pGrafo);
-
       for (x = 0; x < LARGURA; x++)
       {
          for (y = 0; y < ALTURA; y++)
          {
-            GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(x, y), NULL);
+            if(x >= 7 && y >= 7) {
+               int lol = 90;
+            }
+            GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(x, y), CriarCasa());
+            GRA_TornarCorrenteUmaOrigem(pMatriz->pGrafo);
          }
       }
 
@@ -544,6 +511,85 @@ typedef struct stCasa {
       nome[2] = 0;
 
       return nome;
+   }
+
+   tpCasa* CriarCasa()
+   {
+      tpCasa *pCasa;
+      MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
+      LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
+      pCasa->pPeca = NULL;
+   
+      return pCasa;
+   }
+
+
+
+   void DestruirCasa(void *pValor)
+   {
+      tpCasa *pCasa = (tpCasa*) pValor;
+
+      LIS_DestruirLista(pCasa->pegadas);
+      DestruirPeca((void*) pCasa->pPeca);
+
+      MEM_Free(pCasa);
+   }
+   
+   
+
+   void DestruirPegada(void *pValor)
+   {
+      tpPegada *pPegada = (tpPegada*) pValor;
+   
+      DestruirPegada((void *) pPegada->pAnterior);
+      MEM_Free(pValor);
+   }
+
+
+
+   void DestruirPeca(void *pValor)
+   {
+      tpPeca *pPeca = (tpPeca*) pValor;
+      if (pValor == NULL)
+      {
+         return;
+      }
+
+      DestruirModeloPeca(pPeca->pModelo);
+      MEM_Free(pPeca);
+   }
+
+
+   void DestruirModeloPeca(void *pValor)
+   {
+      tpModeloPeca *pModelo = (tpModeloPeca*) pValor;
+
+      if (pModelo == NULL)
+      {
+         return;
+      }
+      MEM_Free(pModelo->nome);
+      DestroiMovimento(pModelo->pMovimento);
+      MEM_Free(pModelo);
+   }
+
+
+   void DestroiMovimento(void *pValor)
+   {
+      tpMovimento *pMovimento = (tpMovimento*) pValor;
+      LIS_DestruirLista(pMovimento->passos);
+      MEM_Free(pMovimento);
+   }
+
+
+   
+   int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
+   {
+      tpPegada *pPegada1 = (tpPegada*) pPonteiro1;
+      tpPegada *pPegada2 = (tpPegada*) pPonteiro2;
+   
+      // TODO: implementar corretamente
+      return 1;
    }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

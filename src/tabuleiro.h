@@ -34,8 +34,8 @@
    #define TABULEIRO_EXT extern
 #endif
 
-#define LARGURA 3
-#define ALTURA  3
+#define LARGURA 8
+#define ALTURA  8
 
 #include "lista.h"
 
@@ -253,41 +253,6 @@ typedef struct stMatriz TAB_tpMatriz ;
 *  
 ***********************************************************************/
    TAB_tpCondRet TAB_IrNoNoroeste( TAB_tpMatriz * pMatriz ) ;
-
-
-
-/***********************************************************************
-*
-*  $FC Função: TAB Obter valor corrente
-*
-*  $EP Parâmetros
-*     $P ValorParm - é o parâmetro que receberá o valor contido no nó.
-*                    Este parâmetro é passado por referência.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*
-***********************************************************************/
-
-   TAB_tpCondRet TAB_ObterValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista * ValorParm ) ;
-
-/***********************************************************************
-*
-*  $FC Função: TAB Atribuir valor corrente
-*
-*  $EP Parâmetros
-*     $P ValorParm - o valor que será atribuido ao nó corrente.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*
-***********************************************************************/
-   
-   TAB_tpCondRet TAB_AtribuirValorCorr( TAB_tpMatriz * pMatriz , LIS_tppLista ValorParm ) ;
 
 #undef TABULEIRO_EXT
 
