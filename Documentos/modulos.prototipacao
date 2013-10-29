@@ -4,7 +4,7 @@ Tabuleiro
 	CriarPeca(nome, passos, tipo)
 	InserirPeca(nome, nomeCasa, inimiga?)
 	CopiarTabuleiro
-	Navegar(casa ou direcoes)
+	X Navegar(casa ou direcoes)
 
    
 StringInputParser
