@@ -58,80 +58,6 @@ typedef struct stCasa {
    LIS_tppLista pegadas;
 } tpCasa;
 
-
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor do nó da matriz
-*
-*
-*  $ED Descrição do tipo
-*     Descreve a organização do nó
-*
-***********************************************************************/
-
-   typedef struct stNoMatriz {
-		 struct stNoMatriz * pNorte ;
-               /* Ponteiro para nó adjacente ao norte
-               *
-               *$EED Assertivas estruturais
-               *   se é o nó X é a origem, então pNorte = NULL
-			   *   se pNorte do nó X != NULL então pSul de pNorte aponta para nó X */
-
-         struct stNoMatriz * pSul ;
-               /* Ponteiro para nó adjacente ao sul
-               *
-               *$EED Assertivas estruturais
-			   *   se pSul do nó X != NULL então pNorte de pSul aponta para nó X */
-
-		 struct stNoMatriz * pEste ;
-               /* Ponteiro para nó adjacente à este
-               *
-               *$EED Assertivas estruturais
-			   *   se pEste do nó X != NULL então pOeste de pEste aponta para nó X */
-
-		 struct stNoMatriz * pOeste ;
-               /* Ponteiro para nó adjacente à oeste
-               *
-               *$EED Assertivas estruturais
-               *   se é o nó X é a origem, então pOeste = NULL
-			   *   se pOeste do nó X != NULL então pEste de pOeste aponta para nó X */
-
-		 struct stNoMatriz * pNordeste ;
-               /* Ponteiro para nó adjacente à nordeste
-               *
-               *$EED Assertivas estruturais
-               *   se é o nó X é a origem, então pNordeste = NULL
-			   *   se pNordeste do nó X != NULL então pSudoeste de pNordeste aponta para nó X */
-
-
-		 struct stNoMatriz * pSudeste ;
-               /* Ponteiro para nó adjacente à sudeste
-               *
-               *$EED Assertivas estruturais
-			   *   se pSudeste do nó X != NULL então pNoroeste de pSudeste aponta para nó X */
-
-
-		 struct stNoMatriz * pNoroeste ;
-               /* Ponteiro para nó adjacente à noroeste
-               *
-               *$EED Assertivas estruturais
-               *   se é o nó X é a origem, então pNoroeste = NULL
-			   *   se pNoroeste do nó X != NULL então pSudeste de pNoroeste aponta para nó X */
-
-
-		 struct stNoMatriz * pSudoeste ;
-               /* Ponteiro para nó adjacente à sudoeste
-               *
-               *$EED Assertivas estruturais
-               *   se é o nó X é a origem, então pSudoeste = NULL
-			   *   se pSudoeste do nó X != NULL então pNordeste de pSudoeste aponta para nó X */
-
-
-         LIS_tppLista Valor ;
-               /* Valor do nó */
-
-   } tpNoMatriz ;
-
 /***********************************************************************
 *
 *  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
@@ -174,19 +100,11 @@ typedef struct stCasa {
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   tpNoMatriz * CriarNo() ;
-
    TAB_tpCondRet CriarNoOrigem( TAB_tpMatriz * pMatriz ) ;
 
    void EsvaziarMatriz( TAB_tpMatriz * pMatriz ) ;
 
-   tpNoMatriz * GetAdjacente( tpNoMatriz * pNo , tpDirecao dir ) ;
-
-   TAB_tpCondRet ConstruirPrimeiraColuna( tpNoMatriz * pNoOrigem , int QntLinhas ) ;
-
    TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz ) ;
-
-   void ApontarDeVoltaEmTodasAsDirecoes( tpNoMatriz * pNo ) ;
    
    TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , tpDirecao direcao );
 
