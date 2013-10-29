@@ -63,6 +63,7 @@
 #define     IR_SUDESTE_CMD     "=irsudeste"
 #define     IR_SUDOESTE_CMD    "=irsudoeste"
 #define     IR_NOROESTE_CMD    "=irnoroeste"
+#define     IR_CASA_CMD    "=ircasa"
 
 
 #define     FIM_CMD         "=fim"
@@ -302,7 +303,31 @@ static int iMat = 0 ;
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
 									"Não foi possível ir para Noroeste.") ;
 
-         } /* fim ativa: Testar TAB Ir noroeste */
+         }
+
+
+
+
+		/* Testar TAB Ir casa */
+
+		 else if ( strcmp( ComandoTeste , IR_CASA_CMD ) == 0 )
+       {
+
+         char *nome;
+         MEM_Alloc(sizeof(char)*3, (void**) &nome);
+
+			NumLidos = LER_LerParametros( "si", nome, &CondRetEsperada ) ;
+            if ( NumLidos != 2 )
+            {
+               return TST_CondRetParm ;
+            }
+
+			CondRetObtido = TAB_IrCasa(Matrizes[iMat], nome) ;
+
+         return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+								"Não foi possível ir para a casa.") ;
+
+         }
 
 
 

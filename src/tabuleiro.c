@@ -252,6 +252,24 @@ typedef struct stCasa {
 
 
 
+   TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa)
+   {
+      GRA_tpCondRet condRet;
+
+      if (pTabuleiro == NULL)
+      {
+         return TAB_CondRetMatrizNaoExiste;
+      }
+      
+      condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, nomeCasa);
+      if (condRet != GRA_CondRetOK)
+      {
+         return TAB_CondRetNaoEhNo;
+      }
+
+      return TAB_CondRetOK;
+   }
+
 /*****  Código das funções encapsuladas no módulo  *****/
 
    char* DirecaoComoString(tpDirecao direcao)

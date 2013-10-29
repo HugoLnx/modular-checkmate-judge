@@ -95,6 +95,9 @@ typedef struct stMatriz TAB_tpMatriz ;
    TAB_tpCondRet TAB_DestruirMatriz( TAB_tpMatriz ** ppMatriz ) ;
 
 
+   TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa);
+
+
 /***************************************************************************
 *
 *  $FC Função: TAB Ir para nó ao norte.
