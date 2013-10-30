@@ -1,0 +1,28 @@
+// Script:    teste_grafo.script
+// Autor:     Robert Correa
+// Data:      03/out/2013
+// Propósito: Testar completamente o módulo grafo genérico
+//
+
+== Declarar as condicoes de retorno
+=declararparm   OK             int  0
+=declararparm   NaoReconhecido int  1
+
+== Declarar outros parâmetros
+=declararparm   NULL          string "!N!"
+=declararparm   Anda          int 0
+=declararparm   Voa           int 1
+=declararparm   Erro          int -1
+
+== Testes para entradas de tipo de movimento
+=lerTipoMovimento "VOA"       Voa       OK
+=lerTipoMovimento "ANDA"      Anda      OK
+=lerTipoMovimento "VoA"       Voa       OK
+=lerTipoMovimento "AnDa"      Anda      OK
+=lerTipoMovimento "voa"       Voa       OK
+=lerTipoMovimento "anda"      Anda      OK
+
+== Entradas invalides de tipo de movimento
+=lerTipoMovimento "wtf"       Erro      NaoReconhecido
+
+=fim
