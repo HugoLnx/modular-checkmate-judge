@@ -39,7 +39,18 @@
 
 #include "lista.h"
 
-typedef struct stMatriz TAB_tpMatriz ;
+typedef struct stMatriz TAB_tpMatriz;
+
+typedef enum {
+   ANDA = 0,
+   VOA = 1
+} TAB_tpTipoMovimento;
+
+
+typedef enum {
+   ALIADA = 0,
+   INIMIGA = 1
+} TAB_tpTimePeca;
 
 /***********************************************************************
 *

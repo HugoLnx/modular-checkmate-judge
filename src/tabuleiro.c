@@ -22,20 +22,9 @@
 #include "tabuleiro.h"
 #undef TABULEIRO_OWN
 
-typedef enum {
-   ANDA = 0,
-   VOA = 1
-} tpTipoMovimento;
-
-
-typedef enum {
-   ALIADA = 0,
-   INIMIGA = 1
-} tpTimePeca;
-
 typedef struct stMovimento {
    LIS_tppLista passos;
-   tpTipoMovimento tipo;
+   TAB_tpTipoMovimento tipo;
 } tpMovimento;
 
 typedef struct stModeloPeca {
@@ -45,7 +34,7 @@ typedef struct stModeloPeca {
 
 typedef struct stPeca {
    tpModeloPeca *pModelo;
-   tpTimePeca time;
+   TAB_tpTimePeca time;
 } tpPeca;
 
 typedef struct stPegada {
