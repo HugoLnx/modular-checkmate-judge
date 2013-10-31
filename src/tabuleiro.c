@@ -63,29 +63,6 @@ typedef struct stCasa {
          GRA_tppGrafo pGrafo;
    } TAB_tpMatriz ;
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Direções que o nó pode ter ponteiros para outro nó.
-*
-*
-***********************************************************************/
-   typedef enum {
-	    NORTE = 0,
-		 
-		 ESTE = 1,
-       
-		 SUL = 2,
-
-		 OESTE = 3,
-
-		 NORDESTE = 4,
-
-		 SUDESTE = 5,
-
-		 SUDOESTE = 6,
-
-		 NOROESTE = 7
-   } tpDirecao ;
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
@@ -95,7 +72,7 @@ typedef struct stCasa {
 
    TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz ) ;
    
-   TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , tpDirecao direcao );
+   TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , TAB_tpDirecao direcao );
 
    TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz, int Linhas, int Colunas);
 
@@ -261,7 +238,7 @@ typedef struct stCasa {
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-   char* DirecaoComoString(tpDirecao direcao)
+   char* DirecaoComoString(TAB_tpDirecao direcao)
    {
       switch(direcao)
       {
@@ -297,7 +274,7 @@ typedef struct stCasa {
 *
 *  ****/
 
-   TAB_tpCondRet IrPara(TAB_tpMatriz *pMatriz , tpDirecao direcao)
+   TAB_tpCondRet IrPara(TAB_tpMatriz *pMatriz , TAB_tpDirecao direcao)
    {
       GRA_tpCondRet condRet;
       GRA_tppGrafo pGrafo;
@@ -393,9 +370,6 @@ typedef struct stCasa {
       {
          for (y = 0; y < ALTURA; y++)
          {
-            if(x >= 7 && y >= 7) {
-               int lol = 90;
-            }
             GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(x, y), CriarCasa());
             GRA_TornarCorrenteUmaOrigem(pMatriz->pGrafo);
          }
@@ -465,7 +439,12 @@ typedef struct stCasa {
    void DestruirPegada(void *pValor)
    {
       tpPegada *pPegada = (tpPegada*) pValor;
-   
+      
+      if (pValor == NULL)
+      {
+         return;
+      }
+
       DestruirPegada((void *) pPegada->pAnterior);
       MEM_Free(pValor);
    }

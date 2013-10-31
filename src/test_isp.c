@@ -9,14 +9,31 @@
 
 #include    "input_string_parser.h"
 
+#define MAX_PASSOS     5
+#define MAX_PASSOS_STR 50
+#define MAX_TIPO_STR   5
 
-static const char *LER_PASSOS_CMD       = "=lerPassos"        ;
-static const char *LER_BOOL_CMD   = "=lerBooleano"      ;
+#define TRUE  1
+#define FALSE 0
+
+
+static const char *LER_PASSOS_CMD                 = "=lerPassos"        ;
+static const char *LER_BOOL_CMD                   = "=lerBooleano"      ;
 static const char *LER_TIPO_MOVIMENTO_CMD         = "=lerTipoMovimento" ;
-static const char *FIM_CMD              = "=fim"              ;
+static const char *FIM_CMD                        = "=fim"              ;
+
+static const TAB_tpPasso PASSOS[][MAX_PASSOS] = {
+   {{NORTE, 2}},
+   {{SUL, 2}, {ESTE, 5}},
+   {{OESTE, 2}, {NOROESTE, 1}, {ESTE, 0}}
+};
+
+static const int PASSOS_SIZE[] = {1, 2, 3};
 
 /*****Protótipos das funções encapuladas no módulo *****/
    static char* AlocarEspacoParaNome();
+   static LIS_tppLista CriarListaPassos(const TAB_tpPasso *passos, const int tamanho);
+   static void DestruirValor(void *pValor);
 
 /***** Código das funções exportadas pelo módulo  *****/
 
@@ -50,14 +67,14 @@ static const char *FIM_CMD              = "=fim"              ;
 
       TST_tpCondRet CondRet;
 
-      /*Testar CriarGrafo */
+      /*Testar Ler tipo de movimento*/
 
          if (strcmp (ComandoTeste, LER_TIPO_MOVIMENTO_CMD) == 0)
          {
             char *tipoStr;
             int tipoEsperado;
             TAB_tpTipoMovimento tipoObtido;
-            MEM_Alloc(sizeof(tipoStr)*5, (void **) &tipoStr);
+            MEM_Alloc(sizeof(tipoStr)*MAX_TIPO_STR, (void **) &tipoStr);
 
             numLidos = LER_LerParametros("sii", tipoStr, &tipoEsperado, &CondRetEsp);
 
@@ -75,6 +92,41 @@ static const char *FIM_CMD              = "=fim"              ;
 
             return CondRet;
          }
+
+         
+      /*Testar Ler passos*/
+
+         if (strcmp(ComandoTeste, LER_PASSOS_CMD) == 0)
+         {
+            char *passosStr;
+            int iPassosEsperado;
+            LIS_tppLista pPassosEsperado;
+            LIS_tppLista pPassosObtido;
+            MEM_Alloc(sizeof(passosStr)*MAX_PASSOS_STR, (void **) &passosStr);
+
+            numLidos = LER_LerParametros("sii", passosStr, &iPassosEsperado, &CondRetEsp);
+
+            if (numLidos != 3)
+            {
+               return TST_CondRetParm;
+            }
+
+            pPassosEsperado = CriarListaPassos(PASSOS[iPassosEsperado], PASSOS_SIZE[iPassosEsperado]);
+            
+            CondRet = ISP_LerPassos(passosStr, &pPassosObtido);
+            
+            if (CondRet ==  ISP_CondRetOK)
+            {
+               if (!ListaDePassosSaoIguais(pPassosEsperado, pPassosObtido))
+               {
+                  TST_NotificarFalha("A lista de passos obtida não é igual à esperada");
+                  return TST_CondRetErro;
+               }
+            }
+            
+            return CondRet;
+         }
+
 
 
         /* Finalizar o teste */
@@ -103,6 +155,55 @@ static const char *FIM_CMD              = "=fim"              ;
    void DestruirValor(void *pValor)
    {
       MEM_Free(pValor);
+   }
+
+   LIS_tppLista CriarListaPassos(const TAB_tpPasso *passos, const int tamanho)
+   {
+      int i;
+      LIS_tppLista pPassos;
+      LIS_CriarLista(&pPassos, DestruirValor, NULL);
+
+      for (i = 0; i < tamanho; i++)
+      {
+         TAB_tpPasso *pPasso;
+         MEM_Alloc(sizeof(TAB_tpPasso), (void **) &pPasso);
+         *pPasso = passos[i];
+         LIS_InserirElementoApos(pPassos, pPasso);
+      }
+
+      return pPassos;
+   }
+
+   int ListaDePassosSaoIguais(LIS_tppLista pPassos1, LIS_tppLista pPassos2)
+   {
+      TAB_tpPasso *pPasso1;
+      TAB_tpPasso *pPasso2;
+      LIS_tpCondRet ret1 = LIS_CondRetOK;
+      LIS_tpCondRet ret2 = LIS_CondRetOK;
+
+      LIS_IrInicioLista(pPassos1);
+      LIS_IrInicioLista(pPassos2);
+
+      while (ret1 == LIS_CondRetOK && ret2 == LIS_CondRetOK)
+      {
+         LIS_ObterValor(pPassos1, (void **) &pPasso1);
+         LIS_ObterValor(pPassos2, (void **) &pPasso2);
+
+         if (pPasso1->direcao != pPasso2->direcao || pPasso1->quantidade != pPasso2->quantidade)
+         {
+            return FALSE;
+         }
+         
+         ret1 = LIS_AvancarElementoCorrente(pPassos1, 1);
+         ret2 = LIS_AvancarElementoCorrente(pPassos2, 1);
+      }
+
+      if (ret1 != ret2)
+      {
+         return FALSE;
+      }
+
+      return TRUE;
    }
 
 /**********Fim do módulo de implementação: TGRA Teste Grafo direcionado **********/

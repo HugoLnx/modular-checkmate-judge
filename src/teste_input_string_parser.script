@@ -14,6 +14,10 @@
 =declararparm   Voa           int 1
 =declararparm   Erro          int -1
 
+=declararparm   NORTE2x                   int 0
+=declararparm   SUL2x_ESTE5x              int 1
+=declararparm   OESTE2x_NOROESTE1x_ESTEnx int 2
+
 == Testes para entradas de tipo de movimento
 =lerTipoMovimento "VOA"       Voa       OK
 =lerTipoMovimento "ANDA"      Anda      OK
@@ -24,5 +28,9 @@
 
 == Entradas invalides de tipo de movimento
 =lerTipoMovimento "wtf"       Erro      NaoReconhecido
+
+=lerPassos "[2]norte" NORTE2x            OK
+=lerPassos "[2]sul [5]este" SUL2x_ESTE5x OK
+=lerPassos "[2]oeste [1]noroeste [0]este" OESTE2x_NOROESTE1x_ESTEnx OK
 
 =fim

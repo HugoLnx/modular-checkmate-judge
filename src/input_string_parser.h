@@ -68,6 +68,8 @@ typedef enum {
 
 ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, TAB_tpTipoMovimento *pTipo);
 
+ISP_tpCondRet ISP_LerPassos(char *passosStr, LIS_tppLista *ppPassos);
+
 /***********************************************************************/
 #undef INPUT_STRING_PARSER_EXT
 

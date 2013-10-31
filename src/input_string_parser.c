@@ -48,11 +48,16 @@
 #define ANDA_STR "ANDA"
 #define VOA_STR  "VOA"
 
+#define SEPARADOR_PASSOS " "
+#define FORMATO_PASSO_STR "[%d]%s"
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-static void DestruirVertice(void *pVazio);
+static int CompararPassos(void *pValor1, void *pValor2);
+static void DestruirPasso(void *pValor);
+static TAB_tpPasso* LerPasso(char *passoInput);
+TAB_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -72,6 +77,101 @@ ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, TAB_tpTipoMovimento *pTipo)
    }
 
    return ISP_CondRetOK;
+}
+
+ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
+{
+   LIS_tppLista passos;
+   char *passoStr;
+   char *str;
+   MEM_Alloc(sizeof(char)*(strlen(passosStr)+1), (void **) &str);
+   strcpy(str, passosStr);
+
+   LIS_CriarLista(&passos, DestruirPasso, CompararPassos);
+
+   passoStr = strtok(str, SEPARADOR_PASSOS);
+
+   while (passoStr != NULL)
+   {
+      TAB_tpPasso *pPasso;
+      pPasso = LerPasso(passoStr);
+      LIS_InserirElementoApos(passos, pPasso);
+      passoStr = strtok(NULL, SEPARADOR_PASSOS);
+   }
+   
+   *ppPassos = passos;
+
+   return ISP_CondRetOK;
+}
+
+TAB_tpPasso* LerPasso(char *passoInput)
+{
+   TAB_tpPasso *pPasso;
+   int *pQnt;
+   char *strDirecao;
+
+   MEM_Alloc(sizeof(char)*10, (void **) &strDirecao);
+   MEM_Alloc(sizeof(int), (void **) &pQnt);
+   sscanf(passoInput, FORMATO_PASSO_STR, pQnt, strDirecao);
+
+   MEM_Alloc(sizeof(TAB_tpPasso), (void **) &pPasso);
+   pPasso->direcao = LerDirecao(strDirecao);
+   pPasso->quantidade = *pQnt;
+
+   return pPasso;
+}
+
+TAB_tpDirecao LerDirecao(char *direcaoInput)
+{
+   char *dirNormalizada = strlwr(direcaoInput);
+
+   if (strcmp(dirNormalizada, "norte") == 0)
+   {
+      return NORTE;
+   }
+   else if (strcmp(dirNormalizada, "sul") == 0)
+   {
+      return SUL;
+   }
+   else if (strcmp(dirNormalizada, "este") == 0)
+   {
+      return ESTE;
+   }
+   else if (strcmp(dirNormalizada, "oeste") == 0)
+   {
+      return OESTE;
+   }
+   else if (strcmp(dirNormalizada, "nordeste") == 0)
+   {
+      return NORDESTE;
+   }
+   else if (strcmp(dirNormalizada, "sudeste") == 0)
+   {
+      return SUDESTE;
+   }
+   else if (strcmp(dirNormalizada, "sudoeste") == 0)
+   {
+      return SUDOESTE;
+   }
+   else if (strcmp(dirNormalizada, "noroeste") == 0)
+   {
+      return NOROESTE;
+   }
+   else
+   {
+      return (TAB_tpDirecao) -1;
+   }
+}
+
+
+void DestruirPasso(void *pValor)
+{
+   MEM_Free(pValor);
+}
+
+int CompararPassos(void *pValor1, void *pValor2)
+{
+   return *(int*)pValor1 == *(int*)pValor2;
 }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/

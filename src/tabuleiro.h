@@ -52,6 +52,30 @@ typedef enum {
    INIMIGA = 1
 } TAB_tpTimePeca;
 
+typedef enum {
+   NORTE = 0,
+
+   ESTE = 1,
+       
+   SUL = 2,
+
+   OESTE = 3,
+
+   NORDESTE = 4,
+
+   SUDESTE = 5,
+
+   SUDOESTE = 6,
+
+   NOROESTE = 7
+} TAB_tpDirecao;
+
+typedef struct TAB_stPasso
+{
+   TAB_tpDirecao direcao;
+   int quantidade;
+} TAB_tpPasso;
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: TAB Condicoes de retorno
@@ -107,6 +131,7 @@ typedef enum {
 
 
    TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa);
+
 
 
 /***************************************************************************
