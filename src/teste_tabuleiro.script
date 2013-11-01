@@ -17,6 +17,9 @@
 == Declarar os conteúdos dos nós
 =declararparm  ValorErro    int -1
 
+=declararparm  VOA          int 0
+=declararparm  ANDA         int 1
+
 == Verificar erros nas operações inválidas quando a está matriz inexistente
 =destruir              NaoMatriz
 =irnorte               NaoMatriz
@@ -46,6 +49,11 @@
 == Criar tabuleiro
 =criar      OK
  
+== Testar criacao de peça
+=criarPeca  "cavalo"     "[2]norte [1]este"                   VOA  OK
+=criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
+=criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
+
 // Navegando por todo o tabuleiro pelo nome da casa
 == Verificar ir para as casa pelo nome
 =ircasa "A1"    OK

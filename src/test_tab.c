@@ -47,6 +47,7 @@
 
 #include    "tabuleiro.h"
 #include    "mem_manager.h"
+#include    "input_string_parser.h"
 
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
@@ -63,18 +64,20 @@
 #define     IR_SUDESTE_CMD     "=irsudeste"
 #define     IR_SUDOESTE_CMD    "=irsudoeste"
 #define     IR_NOROESTE_CMD    "=irnoroeste"
-#define     IR_CASA_CMD    "=ircasa"
-
+#define     IR_CASA_CMD        "=ircasa"
+#define     CRIAR_PECA_CMD     "=criarPeca"
 
 #define     FIM_CMD         "=fim"
 
 /* Tabela dos nomes dos comandos de teste específicos do teste */
 #define     VALIDAR_EST_TAB_CMD "=validarEstrutura"
 #define     SELECIONAR_CMD       "=selecionar"
-#define     VALORES_SIZE 9
+
+
+#define     VALORES_SIZE     9
 #define     TABULEIROES_SIZE 10
-
-
+#define     MAX_PASSOS_STR   50
+#define     MAX_NOME_PECA    10
 /*****  Código das funções exportadas pelo módulo  *****/
 int IndiceDoValor( LIS_tppLista Valor );
 void PreencherArrayDeValores();
@@ -306,8 +309,6 @@ static int iMat = 0 ;
          }
 
 
-
-
 		/* Testar TAB Ir casa */
 
 		 else if ( strcmp( ComandoTeste , IR_CASA_CMD ) == 0 )
@@ -329,6 +330,36 @@ static int iMat = 0 ;
 
          }
 
+
+       
+
+		/* Testar TAB Criar peca*/
+
+		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
+       {
+
+         char *nome, *passosStr;
+         int iTipoMovimento;
+         TAB_tpTipoMovimento tipo;
+         LIS_tppLista pPassos;
+         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
+         MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
+
+			NumLidos = LER_LerParametros("ssii", nome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
+         if (NumLidos != 4)
+         {
+            return TST_CondRetParm ;
+         }
+
+         ISP_LerPassos(passosStr, &pPassos);
+
+         tipo = (TAB_tpTipoMovimento) iTipoMovimento;
+			CondRetObtido = TAB_CriarPeca(Matrizes[iMat], nome, pPassos, tipo);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível criar a casa.");
+
+       }
 
 
       /* Testar Selecionar indice na array de matrizes */

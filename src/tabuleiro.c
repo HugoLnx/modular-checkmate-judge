@@ -18,6 +18,8 @@
 #include "grafo.h"
 #include "mem_manager.h"
 
+#include <string.h>
+
 #define TABULEIRO_OWN
 #include "tabuleiro.h"
 #undef TABULEIRO_OWN
@@ -61,38 +63,41 @@ typedef struct stCasa {
 
    typedef struct stMatriz {
          GRA_tppGrafo pGrafo;
-   } TAB_tpMatriz ;
+         LIS_tppLista pModelosPecas;
+   } TAB_tpMatriz;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   TAB_tpCondRet CriarNoOrigem( TAB_tpMatriz * pMatriz ) ;
+   static TAB_tpCondRet CriarNoOrigem( TAB_tpMatriz * pMatriz ) ;
 
-   void EsvaziarMatriz( TAB_tpMatriz * pMatriz ) ;
+   static void EsvaziarMatriz( TAB_tpMatriz * pMatriz ) ;
 
-   TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz ) ;
+   static TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz ) ;
    
-   TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , TAB_tpDirecao direcao );
+   static TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , TAB_tpDirecao direcao );
 
-   TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz, int Linhas, int Colunas);
+   static TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz, int Linhas, int Colunas);
 
-   TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz);
+   static TAB_tpCondRet CriarMatriz(TAB_tpMatriz **ppMatriz);
 
-   char* NomeDaCasa(int x, int y);
+   static char* NomeDaCasa(int x, int y);
 
-   tpCasa* CriarCasa();
+   static tpCasa* CriarCasa();
    
-   void DestroiMovimento(void *pValor);
+   static void DestroiMovimento(void *pValor);
    
-   void DestruirModeloPeca(void *pValor);
+   static void DestruirModeloPeca(void *pValor);
    
-   void DestruirPeca(void *pValor);
+   static void DestruirPeca(void *pValor);
    
-   void DestruirCasa(void *pValor);
+   static void DestruirCasa(void *pValor);
    
-   void DestruirPegada(void *pValor);
+   static void DestruirPegada(void *pValor);
 
-   int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
+   static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
+
+   static int CompararNomeModeloPeca(void *pValor);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -255,6 +260,26 @@ typedef struct stCasa {
    }
 
 
+   TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
+      LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento)
+   {
+      tpModeloPeca *pModelo;
+      tpMovimento *pMovimento;
+      MEM_Alloc(sizeof(tpModeloPeca), (void **) &pModelo);
+      MEM_Alloc(sizeof(tpMovimento), (void **) &pMovimento);
+
+      pModelo->nome = nome;
+      pMovimento->passos = pPassos;
+      pMovimento->tipo = tipoMovimento;
+      pModelo->pMovimento = pMovimento;
+
+      LIS_IrFinalLista(pTabuleiro->pModelosPecas);
+      LIS_InserirElementoApos(pTabuleiro->pModelosPecas, pModelo);
+
+      return TAB_CondRetOK;
+   }
+
+
 /***************************************************************************
 *
 *  $FC Função: MAT Ir para nó genérico.
@@ -328,6 +353,7 @@ typedef struct stCasa {
       }
 
       GRA_CriarGrafo(&pMatriz->pGrafo, DestruirCasa);
+      LIS_CriarLista(&pMatriz->pModelosPecas, DestruirModeloPeca, CompararNomeModeloPeca);
 
 	  *ppMatriz = pMatriz;
 
@@ -494,6 +520,14 @@ typedef struct stCasa {
    
       // TODO: implementar corretamente
       return 1;
+   }
+
+   int CompararNomeModeloPeca(void *pValor1, void *pValor2)
+   {
+      tpModeloPeca *pModelo1 = (tpModeloPeca*) pValor1;
+      tpModeloPeca *pModelo2 = (tpModeloPeca*) pValor2;
+
+      return strcmp(pModelo1->nome, pModelo2->nome);
    }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

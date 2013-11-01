@@ -132,6 +132,8 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa);
 
+   TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
+      LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento);
 
 
 /***************************************************************************
