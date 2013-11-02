@@ -1,6 +1,6 @@
 #include    <string.h>
 #include    <stdio.h>
-#include    <malloc.h>
+#include    "mem_manager.h"
 
 #include    "TST_Espc.h"
 
@@ -8,7 +8,6 @@
 #include    "LerParm.h"
 
 #include    "grafo.h"
-#include    "conteudo.h"
 
 
 static const char *CRIAR_GRAFO_CMD      = "=criarGrafo"       ;
@@ -25,6 +24,7 @@ static const char *DESTRUIR_VERT_CMD    = "=destruirCorr"     ;
 static const char *DESTRUIR_ARESTA_CMD  = "=destruirAresta"   ;
 static const char *TORNAR_ORIGEM_CMD    = "=tornarOrigem"     ;
 static const char *DEIXAR_ORIGEM_CMD    = "=deixarOrigem"     ;
+static const char *FIM_CMD              = "=fim"              ;
 
 #define MAX_CHARS_NOME 3
 #define SIMBOLO_PARA_NULL "!N!"
@@ -118,7 +118,6 @@ static GRA_tppGrafo pGrafo = NULL;
          {
             char *nome = AlocarEspacoParaNome();
             char *pDado = AlocarEspacoParaNome();
-            CON_tppConteudo pConteudo;
 
             numLidos = LER_LerParametros("ssi", nome, pDado, &CondRetEsp);
 
@@ -126,10 +125,8 @@ static GRA_tppGrafo pGrafo = NULL;
             {
                return TST_CondRetParm;
             }
-   
-            CON_CriarConteudo(&pConteudo, pDado);
 
-            CondRet = GRA_InserirVertice(pGrafo, nome, pConteudo);
+            CondRet = GRA_InserirVertice(pGrafo, nome, pDado);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir vértice.");
 
@@ -152,8 +149,8 @@ static GRA_tppGrafo pGrafo = NULL;
    
             CondRet = GRA_InserirAresta(pGrafo, nomeAresta, nomeVerticeOrig, nomeVerticeDest);
 
-            free(nomeVerticeOrig);
-            free(nomeVerticeDest);
+            MEM_Free(nomeVerticeOrig);
+            MEM_Free(nomeVerticeDest);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Condicao de retorno errada ao inserir aresta.");
          }
@@ -162,7 +159,6 @@ static GRA_tppGrafo pGrafo = NULL;
 
          else if (strcmp(ComandoTeste, OBTER_VALOR_CMD) == 0)
          {
-            CON_tppConteudo pConteudoObtido;
             char *pDadoEsperado = AlocarEspacoParaNome();
             char *pDadoObtido;
 
@@ -170,7 +166,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             if (numLidos != 2)
             {
-               free(pDadoEsperado);
+               MEM_Free(pDadoEsperado);
                return TST_CondRetParm;
             }
 
@@ -179,21 +175,19 @@ static GRA_tppGrafo pGrafo = NULL;
                pDadoEsperado = NULL;
             }
 
-            CondRet = GRA_ObterValorCorrente(pGrafo, (void**) &pConteudoObtido);
+            CondRet = GRA_ObterValorCorrente(pGrafo, (void**) &pDadoObtido);
 
 
             if (CondRetEsp == TST_CondRetOK)
             {
-               CON_ObterValorDoConteudo(pConteudoObtido, &pDadoObtido);
-
                CondRet = TST_CompararString(pDadoEsperado, pDadoObtido, "Valor do elemento errado.");
-               free(pDadoEsperado);
+               MEM_Free(pDadoEsperado);
                return CondRet;
             }
             else
             {
-               free(pDadoEsperado);
-               if (pConteudoObtido != NULL)
+               MEM_Free(pDadoEsperado);
+               if (pDadoObtido != NULL)
                {
                   return TST_NotificarFalha("Não foi obtido null como conteudo ao ocorrer um erro."); 
                }
@@ -207,7 +201,7 @@ static GRA_tppGrafo pGrafo = NULL;
          else if (strcmp(ComandoTeste, ALTER_VALOR_CMD) == 0)
          {
             char *pNovoValor = AlocarEspacoParaNome();
-            CON_tppConteudo pNovoConteudo, pAntigoConteudo;
+            char *pAntigoValor;
 
             numLidos = LER_LerParametros("si", pNovoValor, &CondRetEsp);
 
@@ -216,11 +210,10 @@ static GRA_tppGrafo pGrafo = NULL;
                return TST_CondRetParm;
             }
             
-            GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoConteudo);
-            CON_DestruirConteudo(&pAntigoConteudo);
-            CON_CriarConteudo(&pNovoConteudo, pNovoValor);
+            GRA_ObterValorCorrente(pGrafo, (void**) &pAntigoValor);
+            MEM_Free(pAntigoValor);
 
-            CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoConteudo);
+            CondRet = GRA_AlterarValorCorrente(pGrafo, pNovoValor);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao alterar o valor.");
          }
@@ -275,7 +268,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             CondRet = GRA_SeguirPelaAresta(pGrafo, nomeDaAresta);
 
-            free(nomeDaAresta);
+            MEM_Free(nomeDaAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
@@ -295,7 +288,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             CondRet = GRA_IrParaVerticeAdjacente(pGrafo, nomeVertice);
 
-            free(nomeVertice);
+            MEM_Free(nomeVertice);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para vértice adjacente.");
          }
@@ -315,7 +308,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             CondRet = GRA_IrParaAOrigem(pGrafo, nomeVertice);
 
-            free(nomeVertice);
+            MEM_Free(nomeVertice);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao ir para origem.");
          }
@@ -335,7 +328,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
             CondRet = GRA_DestruirArestaAdjacente(pGrafo, nomeAresta);
 
-            free(nomeAresta);
+            MEM_Free(nomeAresta);
 
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir aresta adjacente.");
          }
@@ -356,6 +349,15 @@ static GRA_tppGrafo pGrafo = NULL;
             return TST_CompararInt(CondRetEsp, CondRet, "Ocorreu um erro ao destruir vertice corrente.");
          }
 
+        /* Finalizar o teste */
+
+       else if (strcmp(ComandoTeste, FIM_CMD) == 0)
+         {
+            MEM_LiberarTodaMemoriaAlocada();
+
+            return TST_CondRetOK;
+         }
+
       return TST_CondRetNaoConhec;
 
    }
@@ -372,7 +374,7 @@ static GRA_tppGrafo pGrafo = NULL;
 
    void DestruirValor(void *pValor)
    {
-      CON_DestruirConteudo((CON_tppConteudo*) &pValor);
+      MEM_Free(pValor);
    }
 
 
@@ -383,7 +385,9 @@ static GRA_tppGrafo pGrafo = NULL;
 ***********************************************************************/
    char* AlocarEspacoParaNome()
    {
-      return (char*) malloc(sizeof(char)*(MAX_CHARS_NOME+1));
+      char *nome;
+      MEM_Alloc(sizeof(char)*(MAX_CHARS_NOME+1), (void **) &nome);
+      return nome;
    }
 
 /**********Fim do módulo de implementação: TGRA Teste Grafo direcionado **********/

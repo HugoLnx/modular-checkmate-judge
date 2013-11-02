@@ -169,15 +169,15 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 
 /***********************************************************************
 *
-*  Função: GRA Inserir aresta do corrente para outro vértice
+*  Função: GRA Inserir aresta
 *
 *  Descrição
-*     Insere nova aresta cuja origem é o vértice corrente e o destino será o vértice
-*     com o nome apontado.
+*     Insere nova aresta ligando dois vértices à escolha.
 *
 *  Parâmetros
 *     pGrafoParm           - ponteiro para o grafo onde deve ser inserido a aresta
 *     nomeAresta          - nome da aresta à ser criada.
+*     nomeVerticeOrigem   - nome do vértice cuja a aresta partirá.
 *     nomeVerticeDestino  - nome do vértice cuja a aresta apontará.
 *
 *  Condições de retorno

@@ -34,12 +34,11 @@
 *
 ***************************************************************************/
 
-#include   <stdio.h>
-#include   <string.h>
-#include   <memory.h>
-#include   <malloc.h>
-#include   <assert.h>
-#include   "lista.h"
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
+#include "lista.h"
+#include "mem_manager.h"
 
 #define GRAFO_OWN
 #include "grafo.h"
@@ -127,7 +126,8 @@ static int ExisteAresta(tpVertice *pVertice, char *nome);
 GRA_tpCondRet GRA_CriarGrafo(GRA_tppGrafo *ppGrafo,
 	void (*destruirValor)(void *pValor))
 {
-	tpGrafo *pGrafo = (tpGrafo *) malloc(sizeof(tpGrafo));
+	tpGrafo *pGrafo;
+   MEM_Alloc(sizeof(tpGrafo), (void **) &pGrafo);
 
 	pGrafo->pCorrente = NULL;
 	pGrafo->destruirValor = destruirValor;
@@ -155,7 +155,7 @@ GRA_tpCondRet GRA_DestruirGrafo(GRA_tppGrafo *ppGrafo)
 	LIS_DestruirLista(pGrafo->pVertices);
 	LIS_DestruirLista(pGrafo->pOrigens);
 
-	free(pGrafo);
+	MEM_Free(pGrafo);
 	pGrafo = NULL;
 	*ppGrafo = NULL;
 	
@@ -169,8 +169,6 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
 	tpVertice *pVertice;
-   LIS_tpCondRet lisCondRet;
-   GRA_tpCondRet graCondRet;
 
 	if (pGrafo == NULL)
 	{
@@ -182,7 +180,7 @@ GRA_tpCondRet GRA_InserirVertice(GRA_tppGrafo pGrafoParm, char *nomeVertice, voi
       return GRA_CondRetJaExiste;
    }
 
-	pVertice = (tpVertice*) malloc(sizeof(tpVertice));
+	MEM_Alloc(sizeof(tpVertice), (void **) &pVertice);
 	if (pVertice == NULL)
 	{
 		return GRA_CondRetFaltouMemoria;
@@ -238,7 +236,7 @@ GRA_tpCondRet GRA_InserirAresta(GRA_tppGrafo pGrafoParm,
       return GRA_CondRetJaExiste;
    }
 
-	pAresta = (tpAresta*) malloc(sizeof(tpAresta));
+	MEM_Alloc(sizeof(tpAresta), (void **) &pAresta);
 	if (pAresta == NULL)
 	{
 		return GRA_CondRetFaltouMemoria;
@@ -315,7 +313,6 @@ GRA_tpCondRet GRA_AlterarValorCorrente(GRA_tppGrafo pGrafoParm, void *pValor)
 GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 {
 	tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-   LIS_tpCondRet lisCondRet;
 
 	if (pGrafo == NULL)
 	{
@@ -343,7 +340,6 @@ GRA_tpCondRet GRA_TornarCorrenteUmaOrigem(GRA_tppGrafo pGrafoParm)
 GRA_tpCondRet GRA_DeixarDeSerOrigem(GRA_tppGrafo pGrafoParm)
 {
    tpGrafo *pGrafo = (tpGrafo*) pGrafoParm;
-   LIS_tpCondRet lisCondRet;
 
    if (pGrafo == NULL)
    {
@@ -374,8 +370,6 @@ GRA_tpCondRet GRA_DestruirVerticeCorrente(GRA_tppGrafo pGrafoParm)
 	tpVertice  *pVerticeOrigem = NULL, *pVertice = NULL;
 	tpAresta *pAresta = NULL;
 	int estaVazia = -1, numElemLista = 0;
-
-	LIS_tpCondRet lisCondRet;
 
 	if (pGrafoParm == NULL)
 	{
@@ -453,8 +447,7 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
-	
-	LIS_tpCondRet lisCondRet;
+	GRA_tpCondRet graCondRet;
 
 	if (pGrafoParm == NULL)
 	{
@@ -469,13 +462,11 @@ GRA_tpCondRet GRA_DestruirArestaAdjacente(GRA_tppGrafo pGrafoParm, char *nomeAre
 	}
 
 	// Busca Aresta à remover
-	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
-	if (lisCondRet != LIS_CondRetOK)
-	{
-		return GRA_CondRetNaoAchou;
-	}
-	LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
+   graCondRet = ProcurarAresta(pGrafo->pCorrente, nomeAresta, &pAresta);
+   if (graCondRet != GRA_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	// Remove referência do vértice corrente
 	LIS_IrInicioLista(pAresta->pVertice->pAntecessores);
@@ -536,7 +527,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 {
 	tpGrafo *pGrafo = NULL;
 	tpAresta *pAresta = NULL;
-	LIS_tpCondRet lisCondRet;
+   GRA_tpCondRet graCondRet;
 
 	if (pGrafoParm == NULL)
 	{
@@ -550,16 +541,11 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 		return GRA_CondRetGrafoVazio;
 	}
 
-	LIS_IrInicioLista(pGrafo->pCorrente->pSucessores);
-
-	lisCondRet = LIS_ProcurarValor(pGrafo->pCorrente->pSucessores, nomeAresta);
-
-	if (lisCondRet != LIS_CondRetOK)
-	{
-		return GRA_CondRetNaoAchou;
-	}
-
-	LIS_ObterValor(pGrafo->pCorrente->pSucessores, (void**)&pAresta);
+   graCondRet = ProcurarAresta(pGrafo->pCorrente, nomeAresta, &pAresta);
+   if (graCondRet != GRA_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	pGrafo->pCorrente = pAresta->pVertice;
 
@@ -572,7 +558,7 @@ GRA_tpCondRet GRA_SeguirPelaAresta(GRA_tppGrafo pGrafoParm, char *nomeAresta)
 GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 {
 	tpGrafo *pGrafo = NULL;
-	LIS_tpCondRet lisCondRet;
+   GRA_tpCondRet graCondRet;
 	tpVertice *pVertice;
 	if (pGrafoParm == NULL)
 	{
@@ -586,15 +572,11 @@ GRA_tpCondRet GRA_IrParaAOrigem(GRA_tppGrafo pGrafoParm, char *nomeVertice)
 		return GRA_CondRetGrafoVazio;
 	}
 
-	LIS_IrInicioLista(pGrafo->pOrigens);
-	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nomeVertice);
-
-	if (lisCondRet != LIS_CondRetOK)
-	{
-		return GRA_CondRetNaoAchou;
-	}
-
-	LIS_ObterValor(pGrafo->pOrigens, (void**)&pVertice);
+   graCondRet = ProcurarOrigem(pGrafo, nomeVertice, &pVertice);
+   if (graCondRet != GRA_CondRetOK)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	pGrafo->pCorrente = pVertice;
 
@@ -621,9 +603,9 @@ void DestruirVertice(void *pVazio)
 
 	pVertice->destruirValor(pVertice->pValor);
 
-	free(pVertice->nome);
+	MEM_Free(pVertice->nome);
 
-	free(pVertice);
+	MEM_Free(pVertice);
 
 	
 }
@@ -640,8 +622,8 @@ void DestruirAresta(void *pVazio)
 {
 	tpAresta *pAresta = (tpAresta*) pVazio;
 
-	free(pAresta->nome);
-	free(pAresta);
+	MEM_Free(pAresta->nome);
+	MEM_Free(pAresta);
 }
 
 /***********************************************************************
@@ -689,10 +671,24 @@ int EstaVazio(tpGrafo *pGrafo)
    return pGrafo->pCorrente == NULL;
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Procurar Vértice
+*
+*  Descrição:
+*    Função responsável por realizar uma pesquisa na lista de vértices.
+*
+***********************************************************************/
 GRA_tpCondRet ProcurarVertice(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
 {
    LIS_tpCondRet lisCondRet;
    *pVertice = NULL;
+
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	LIS_IrInicioLista(pGrafo->pVertices);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pVertices, nome);
@@ -709,10 +705,24 @@ GRA_tpCondRet ProcurarVertice(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
 	}
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Procurar Origem
+*
+*  Descrição:
+*    Função responsável por realizar uma pesquisa na lista de origens.
+*
+***********************************************************************/
 GRA_tpCondRet ProcurarOrigem(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
 {
    LIS_tpCondRet lisCondRet;
    *pVertice = NULL;
+
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	LIS_IrInicioLista(pGrafo->pOrigens);
 	lisCondRet = LIS_ProcurarValor(pGrafo->pOrigens, nome);
@@ -729,10 +739,25 @@ GRA_tpCondRet ProcurarOrigem(tpGrafo *pGrafo, char *nome, tpVertice **pVertice)
 	}
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Procurar Aresta
+*
+*  Descrição:
+*    Função responsável por realizar uma pesquisa na lista de arestas partindo
+*    de um dado vértice.
+*
+***********************************************************************/
 GRA_tpCondRet ProcurarAresta(tpVertice *pVertice, char *nome, tpAresta **pAresta)
 {
    LIS_tpCondRet lisCondRet;
    *pAresta = NULL;
+
+   if (nome == NULL)
+   {
+      return GRA_CondRetNaoAchou;
+   }
 
 	LIS_IrInicioLista(pVertice->pSucessores);
 	lisCondRet = LIS_ProcurarValor(pVertice->pSucessores, nome);
@@ -749,6 +774,16 @@ GRA_tpCondRet ProcurarAresta(tpVertice *pVertice, char *nome, tpAresta **pAresta
 	}
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Existe Aresta
+*
+*  Descrição:
+*    Função responsável por verificar se existe uma aresta com o nome
+*    procurado partindo de um dado vértice.
+*
+***********************************************************************/
 int ExisteAresta(tpVertice *pVertice, char *nome)
 {
    tpAresta*pAresta;
@@ -759,6 +794,16 @@ int ExisteAresta(tpVertice *pVertice, char *nome)
    return condRet == GRA_CondRetOK;
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Existe Vértice
+*
+*  Descrição:
+*    Função responsável por verificar se existe um vértice com o nome
+*    procurado.
+*
+***********************************************************************/
 int ExisteVertice(tpGrafo *pGrafo, char *nome)
 {
    tpVertice *pVertice;
@@ -769,6 +814,16 @@ int ExisteVertice(tpGrafo *pGrafo, char *nome)
    return condRet == GRA_CondRetOK;
 }
 
+
+/***********************************************************************
+*
+*  Função: GRA Existe Vértice
+*
+*  Descrição:
+*    Função responsável por verificar se existe uma origem com o nome
+*    procurado.
+*
+***********************************************************************/
 int ExisteOrigem(tpGrafo *pGrafo, char *nome)
 {
    tpVertice *pVertice;

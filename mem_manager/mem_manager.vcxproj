@@ -10,10 +10,19 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\lista.c" />
+    <ClCompile Include="..\src\main.c" />
+    <ClCompile Include="..\src\mem_manager.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\lista.h" />
+    <ClInclude Include="..\src\mem_manager.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2CC7B701-70AE-4BF6-A021-6129E1F2A533}</ProjectGuid>
+    <ProjectGuid>{7347B204-676F-4A63-8E1C-3894E791AF80}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>conteudo</RootNamespace>
+    <RootNamespace>mem_manager</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -73,19 +82,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\conteudo.c" />
-    <ClCompile Include="..\src\test_con.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\conteudo.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\src\teste_conteudo.script" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

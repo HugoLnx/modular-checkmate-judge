@@ -14,13 +14,10 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Script Files">
-      <UniqueIdentifier>{e5a3a581-a222-471a-a126-bf136f9c380e}</UniqueIdentifier>
+      <UniqueIdentifier>{d445e8df-298b-4beb-9564-99a51926b503}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\test_gra.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\grafo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,6 +25,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\mem_manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tabuleiro.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\test_tab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\input_string_parser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,9 +47,15 @@
     <ClInclude Include="..\src\mem_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\tabuleiro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\input_string_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\teste_grafo.script">
+    <None Include="..\src\teste_tabuleiro.script">
       <Filter>Script Files</Filter>
     </None>
   </ItemGroup>

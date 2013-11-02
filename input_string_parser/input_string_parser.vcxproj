@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8CB69F4A-D4B0-4FDF-951F-37615241C0F8}</ProjectGuid>
+    <ProjectGuid>{E4003F3F-E97F-4DEB-822F-D28C48F83516}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>lista</RootNamespace>
+    <RootNamespace>input_string_parser</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -54,7 +54,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,19 +74,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\src\grafo.c" />
+    <ClCompile Include="..\src\input_string_parser.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\mem_manager.c" />
-    <ClCompile Include="..\src\test_lis.c" />
+    <ClCompile Include="..\src\tabuleiro.c" />
+    <ClCompile Include="..\src\test_isp.c" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="..\src\ArcaboucoTeste.lib">
+      <FileType>Document</FileType>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\input_string_parser.h" />
     <ClInclude Include="..\src\lista.h" />
     <ClInclude Include="..\src\mem_manager.h" />
+    <ClInclude Include="..\src\tabuleiro.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\teste_lista.script" />
+    <None Include="..\src\teste_input_string_parser.script" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

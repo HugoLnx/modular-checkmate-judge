@@ -1,6 +1,6 @@
 == Apresentação == 
 
-Este texto descreve brevemente o funcionamento e uso dos módulos LISTA genérica, CONTEUDO e GRAFO genérico, que utilizará o módulo LISTA e CONTEUDO. 
+Este texto descreve brevemente o funcionamento e uso dos módulos LISTA genérica, VERTICE e GRAFO genérico, que utilizará o módulo LISTA e VERTICE. 
 
 == Objetivo ==
 
@@ -13,9 +13,10 @@ O objetivo dos construtos gerados é testar o funcionamento e manipulação correta
 --------->exbestat.exe.txt
 
 
-->relatorios
+->documentos
 --------->RELATORIO-HUGO.TXT
 --------->RELATORIO-ROBERT.TXT
+--------->Modelo_fisico.pdf
 
 ->TRAB2-1
 --------->batches
@@ -37,24 +38,24 @@ O objetivo dos construtos gerados é testar o funcionamento e manipulação correta
 ->TRAB2-2
 --------->batches
 ----------------->LimpaTudo.bat
------------------>TestaConteudo.bat
+----------------->TestaVertice.bat
 --------->executavel
 ----------------->TRAB2-2.EXE.TXT
 --------->lib
 ----------------->ArcaboucoTeste.lib
 --------->scripts
------------------>teste_conteudo.script
+----------------->teste_vertice.script
 --------->src
 ----------------->definicao
-------------------------->conteudo.h
+------------------------->vertice.h
 ----------------->implementacao
-------------------------->conteudo.c
+------------------------->vertice.c
 ------------------------->test_con.c
 
 ->TRAB2-3
 --------->batches
 ----------------->LimpaTudo.bat
------------------>TestaConteudo.bat
+----------------->TestaVertice.bat
 --------->executavel
 ----------------->TRAB2-3.EXE.TXT
 --------->lib
@@ -79,13 +80,13 @@ O objetivo dos construtos gerados é testar o funcionamento e manipulação correta
 
 = Diretórios
 
-Diretório ferramentas: Contém ferramentas de apoio a geração e acumulo de dado de estátisticas a partir dos resultados de testes dos módulos LISTA, CONTEUDO e GRAFO, usado pelo TestaTudo.bat.
+Diretório ferramentas: Contém ferramentas de apoio a geração e acumulo de dado de estátisticas a partir dos resultados de testes dos módulos LISTA, VERTICE e GRAFO, usado pelo TestaTudo.bat.
 
-Diretório relatorios: Contém relatórios dos integrantes do grupo.
+Diretório documentos: Contém relatórios dos integrantes do grupo e modelo físico dos módulos.
 
 Diretório TRAB2-1: Contém os artefatos gerados para uso do módulo LISTA.
 
-Diretório TRAB2-2: Contém os artefatos gerados para uso do módulo CONTEUDO.
+Diretório TRAB2-2: Contém os artefatos gerados para uso do módulo VERTICE.
 
 Diretório TRAB2-3: Contém os artefatos gerados para uso do módulo GRAFO
 
@@ -107,7 +108,7 @@ Arquivo LimpaTudo.bat: Remove dados de log e estatisticas gerados pelo teste.
 
 Arquivo TestaLista.bat: Executa teste do módulo LISTA. Gera arquivo de log e estatisticas.
 
-Arquivo TestaConteudo.bat: Executa teste do módulo Conteudo. Gera arquivo de log e estatisticas.
+Arquivo TestaVertice.bat: Executa teste do módulo VERTICE. Gera arquivo de log e estatisticas.
 
 Arquivo TestaGrafo.bat: Executa teste do módulo Grafo. Gera arquivo de log e estatisticas.
 
@@ -115,5 +116,5 @@ Arquivo TestaGrafo.bat: Executa teste do módulo Grafo. Gera arquivo de log e est
 
 Testar todos os módulos: rodar TestaTudo.bat, contido no diretório raiz.
 Testar módulo LISTA: rodar TestaLista.bat contido em TRAB2-1\batches
-Testar módulo CONTEUDO: rodar TestaConteudo.bat contido em TRAB2-2\batches
+Testar módulo VERTICE: rodar TestaVertice.bat contido em TRAB2-2\batches
 Testar módulo GRAFO: rodar TestaGrafo.bat contido em TRAB2-3\batches

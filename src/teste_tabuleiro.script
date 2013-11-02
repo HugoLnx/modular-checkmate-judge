@@ -1,0 +1,1799 @@
+// Script:    TesteMatriz.script
+// Autor:     Hugo Roque / Nino Fabrizio
+// Data:      15/set/2013
+// Propósito: Testar se a matriz está sendo criada corretamente
+// e se os possíveis erros estão sendo lançados nos momentos
+// adequados.
+//
+
+== Declarar as condicoes de retorno
+=declararparm  OK           int 0
+=declararparm  NaoOrigem    int 1 
+=declararparm  NaoFolha     int 2
+=declararparm  NaoMatriz    int 3
+=declararparm  NaoCorr      int 4
+=declararparm  Memoria      int 5
+
+== Declarar os conteúdos dos nós
+=declararparm  ValorErro    int -1
+
+=declararparm  VOA          int 0
+=declararparm  ANDA         int 1
+
+== Verificar erros nas operações inválidas quando a está matriz inexistente
+=destruir              NaoMatriz
+=irnorte               NaoMatriz
+=irsul                 NaoMatriz
+=ireste                NaoMatriz
+=iroeste               NaoMatriz
+=irnordeste            NaoMatriz
+=irsudeste             NaoMatriz
+=irsudoeste            NaoMatriz
+=irnoroeste            NaoMatriz
+=ircasa       "X0"     NaoMatriz
+
+== Verificar comando recuperar
+=destruir OK
+=recuperar
+
+== Verificar erro ao selecionar posicoes inexistentes na array de matrizes
+=selecionar -1
+=recuperar
+
+=selecionar 10
+=recuperar
+
+== Selecionar posição 0 na array de matrizes
+=selecionar 0
+
+== Criar tabuleiro
+=criar      OK
+ 
+== Testar criacao de peça
+=criarPeca  "cavalo"     "[2]norte [1]este"                   VOA  OK
+=criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
+=criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
+
+// Navegando por todo o tabuleiro pelo nome da casa
+== Verificar ir para as casa pelo nome
+=ircasa "A1"    OK
+=ircasa "A2"    OK
+=ircasa "A3"    OK
+=ircasa "A4"    OK
+=ircasa "A5"    OK
+=ircasa "A6"    OK
+=ircasa "A7"    OK
+=ircasa "A8"    OK
+=ircasa "B1"    OK
+=ircasa "B2"    OK
+=ircasa "B3"    OK
+=ircasa "B4"    OK
+=ircasa "B5"    OK
+=ircasa "B6"    OK
+=ircasa "B7"    OK
+=ircasa "B8"    OK
+=ircasa "C1"    OK
+=ircasa "C2"    OK
+=ircasa "C3"    OK
+=ircasa "C4"    OK
+=ircasa "C5"    OK
+=ircasa "C6"    OK
+=ircasa "C7"    OK
+=ircasa "C8"    OK
+=ircasa "D1"    OK
+=ircasa "D2"    OK
+=ircasa "D3"    OK
+=ircasa "D4"    OK
+=ircasa "D5"    OK
+=ircasa "D6"    OK
+=ircasa "D7"    OK
+=ircasa "D8"    OK
+=ircasa "E1"    OK
+=ircasa "E2"    OK
+=ircasa "E3"    OK
+=ircasa "E4"    OK
+=ircasa "E5"    OK
+=ircasa "E6"    OK
+=ircasa "E7"    OK
+=ircasa "E8"    OK
+=ircasa "F1"    OK
+=ircasa "F2"    OK
+=ircasa "F3"    OK
+=ircasa "F4"    OK
+=ircasa "F5"    OK
+=ircasa "F6"    OK
+=ircasa "F7"    OK
+=ircasa "F8"    OK
+=ircasa "G1"    OK
+=ircasa "G2"    OK
+=ircasa "G3"    OK
+=ircasa "G4"    OK
+=ircasa "G5"    OK
+=ircasa "G6"    OK
+=ircasa "G7"    OK
+=ircasa "G8"    OK
+=ircasa "H1"    OK
+=ircasa "H2"    OK
+=ircasa "H3"    OK
+=ircasa "H4"    OK
+=ircasa "H5"    OK
+=ircasa "H6"    OK
+=ircasa "H7"    OK
+=ircasa "H8"    OK
+=ircasa "A1"    OK
+
+== Verificar quando ir casa recebe um nome invalido
+=ircasa "X0"    NaoFolha
+
+
+// Navegando por todo o tabuleiro exercitando todos os ponteiros
+// Verificando ponteiros da 1a linha
+== Verificar ponteiros da posição "A1"
+=irnorte        NaoFolha
+=iroeste        NaoFolha
+=irnordeste     NaoFolha
+=irsudoeste     NaoFolha
+=irnoroeste     NaoFolha
+
+=irsul          OK
+=irnorte        OK
+
+=irsudeste      OK
+=irnoroeste     OK
+
+=ireste         OK
+
+
+== Verificar ponteiros da posição "B1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+== Verificar ponteiros da posição "C1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+
+== Verificar ponteiros da posição "D1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+== Verificar ponteiros da posição "E1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+== Verificar ponteiros da posição "F1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+
+
+== Verificar ponteiros da posição "G1"
+=irnorte    NaoFolha
+=irnordeste NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=ireste     OK
+
+
+== Verificar ponteiros da posição "H1"
+=irnorte    NaoFolha
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+=irnoroeste NaoFolha
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irsul      OK
+
+
+// Verificando ponteiros da 2a linha
+== Verificar ponteiros da posição "H2"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+== Verificar ponteiros da posição "G2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "F2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "E2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "D2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "C2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "B2"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "A2"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsul      OK
+
+
+// Verificando ponteiros da 3a linha
+== Verificar ponteiros da posição "A3"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=ireste      OK
+
+
+
+== Verificar ponteiros da posição "B3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "C3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "D3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "E3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "F3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "G3"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+== Verificar ponteiros da posição "H3"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=irsul    OK
+
+
+// Verificando ponteiros da 4a linha
+== Verificar ponteiros da posição "H4"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+== Verificar ponteiros da posição "G4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "F4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "E4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "D4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "C4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "B4"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "A4"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsul      OK
+
+
+// Verificando ponteiros da 5a linha
+== Verificar ponteiros da posição "A5"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=ireste      OK
+
+
+
+== Verificar ponteiros da posição "B5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "C5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "D5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "E5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "F5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "G5"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "H5"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=irsul    OK
+
+
+// Verificando ponteiros da 6a linha
+== Verificar ponteiros da posição "H6"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+== Verificar ponteiros da posição "G6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "F6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "E6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "D6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "C6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "B6"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "A6"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsul      OK
+
+
+// Verificando ponteiros da 7a linha
+== Verificar ponteiros da posição "A7"
+=iroeste    NaoFolha
+=irsudoeste NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=ireste      OK
+
+
+
+== Verificar ponteiros da posição "B7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "C7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "D7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "E7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "F7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+== Verificar ponteiros da posição "G7"
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irsudeste  OK
+=irnoroeste OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=ireste    OK
+
+
+
+== Verificar ponteiros da posição "H7"
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=irsul      OK
+=irnorte    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irsudoeste OK
+=irnordeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=irsul    OK
+
+// Verificar ponteiros da 8a linha
+== Verificar ponteiros da posição "H8"
+=irsul      NaoFolha
+=ireste     NaoFolha
+=irnordeste NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+== Verificar ponteiros da posição "G8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "F8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+== Verificar ponteiros da posição "E8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+
+== Verificar ponteiros da posição "D8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+
+== Verificar ponteiros da posição "C8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+
+== Verificar ponteiros da posição "B8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=iroeste    OK
+=ireste     OK
+
+=irnordeste OK
+=irsudoeste OK
+
+=irnoroeste OK
+=irsudeste  OK
+
+=iroeste    OK
+
+
+
+
+== Verificar ponteiros da posição "A8"
+=irsul      NaoFolha
+=irsudeste  NaoFolha
+=irsudoeste NaoFolha
+=iroeste    NaoFolha
+=irnoroeste NaoFolha
+
+=irnorte    OK
+=irsul      OK
+
+=ireste     OK
+=iroeste    OK
+
+=irnordeste OK
+=irsudoeste OK
+
+// voltar origem
+=irnorte    OK
+=irnorte    OK
+=irnorte    OK
+=irnorte    OK
+=irnorte    OK
+=irnorte    OK
+=irnorte    OK
+
+
+== Destroi a matriz
+=destruir OK
+
+== Verificar erro ao destruir matriz duas vezes seguidas
+=destruir NaoMatriz
+
+
+== finaliza script
+=fim
