@@ -66,6 +66,7 @@
 #define     IR_NOROESTE_CMD    "=irnoroeste"
 #define     IR_CASA_CMD        "=ircasa"
 #define     CRIAR_PECA_CMD     "=criarPeca"
+#define     INSERIR_PECA_CMD   "=inserirPeca"
 
 #define     FIM_CMD         "=fim"
 
@@ -333,6 +334,8 @@ static int iMat = 0 ;
 
        
 
+
+
 		/* Testar TAB Criar peca*/
 
 		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
@@ -358,6 +361,32 @@ static int iMat = 0 ;
 
          return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível criar a casa.");
+
+       }
+
+
+       
+		/* Testar TAB Inserir peca*/
+
+		 else if (strcmp( ComandoTeste, INSERIR_PECA_CMD) == 0 )
+       {
+         char *nome;
+         int iTime;
+         TAB_tpTimePeca time;
+         LIS_tppLista pPassos;
+         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
+
+			NumLidos = LER_LerParametros("sii", nome, &iTime, &CondRetEsperada) ;
+         if (NumLidos != 3)
+         {
+            return TST_CondRetParm ;
+         }
+
+         time = (TAB_tpTimePeca) iTime;
+         CondRetObtido = TAB_InserirPeca(Matrizes[iMat], nome, time);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir a peça.");
 
        }
 

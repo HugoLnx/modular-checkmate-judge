@@ -289,7 +289,7 @@ typedef struct stCasa {
       
       LIS_IrInicioLista(pTabuleiro->pModelosPecas);
       LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
-      LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pPeca);
+      LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pModelo);
       
       pPeca->pModelo = pModelo;
       pPeca->time = time;
@@ -513,7 +513,6 @@ typedef struct stCasa {
          return;
       }
 
-      DestruirModeloPeca(pPeca->pModelo);
       MEM_Free(pPeca);
    }
 
@@ -553,9 +552,9 @@ typedef struct stCasa {
    int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
       tpModeloPeca *pModelo1 = (tpModeloPeca*) pValor1;
-      tpModeloPeca *pModelo2 = (tpModeloPeca*) pValor2;
+      char *nomeProcurado = (char*) pValor2;
 
-      return strcmp(pModelo1->nome, pModelo2->nome);
+      return strcmp(pModelo1->nome, nomeProcurado);
    }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/
