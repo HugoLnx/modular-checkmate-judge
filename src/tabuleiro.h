@@ -138,15 +138,17 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time);
 
+
 /***************************************************************************
 *
-*  $FC Função: TAB Ir para nó ao norte.
+*  $FC Função: MAT Ir para nó genérico.
 *  
 *  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção norte
+*  Muda o nó corrente da matriz para o nó na direção apontada
 *  
 *  $EP Parâmetros
 *     pMatriz - ponteiro para matriz que manipulada.
+*     direcao - representa a direção que o nó corrente navegará.
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK
@@ -154,148 +156,10 @@ typedef struct TAB_stPasso
 *     TAB_CondRetNaoTemCorrente
 *     TAB_CondRetNaoEhNo
 *
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoNorte( TAB_tpMatriz * pMatriz ) ;
+*  ****/
+   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pTabuleiro, TAB_tpDirecao);
 
 
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó ao sul.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção sul
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoSul( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à este.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção este.
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoEste( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à oeste.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção oeste
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoOeste( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à nordeste.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção nordeste
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoNordeste( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à sudeste.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção sudeste
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoSudeste( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à sudoeste.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção sudoeste
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoSudoeste( TAB_tpMatriz * pMatriz ) ;
-
-
-/***************************************************************************
-*
-*  $FC Função: TAB Ir para nó à noroeste.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção noroeste
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*  
-***********************************************************************/
-   TAB_tpCondRet TAB_IrNoNoroeste( TAB_tpMatriz * pMatriz ) ;
 
 #undef TABULEIRO_EXT
 
