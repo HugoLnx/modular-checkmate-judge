@@ -34,8 +34,9 @@
    #define TABULEIRO_EXT extern
 #endif
 
-#define LARGURA 8
-#define ALTURA  8
+#define LARGURA        8
+#define ALTURA         8
+#define TOTAL_DIRECOES 8
 
 #include "lista.h"
 
@@ -53,19 +54,19 @@ typedef enum {
 } TAB_tpTimePeca;
 
 typedef enum {
-   NORTE = 0,
+   NORTE    = 0,
 
-   ESTE = 1,
-       
-   SUL = 2,
+   NORDESTE = 1,
 
-   OESTE = 3,
+   ESTE     = 2,
 
-   NORDESTE = 4,
+   SUDESTE  = 3,  
 
-   SUDESTE = 5,
+   SUL      = 4,
+   
+   SUDOESTE = 5,
 
-   SUDOESTE = 6,
+   OESTE    = 6,
 
    NOROESTE = 7
 } TAB_tpDirecao;
