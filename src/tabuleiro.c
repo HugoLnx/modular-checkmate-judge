@@ -45,6 +45,7 @@ typedef struct stPegada {
 } tpPegada;
 
 typedef struct stCasa {
+   char *nome;
    tpPeca *pPeca;
    LIS_tppLista pegadas;
 } tpCasa;
@@ -424,7 +425,8 @@ typedef struct stCasa {
       {
          for (y = 0; y < ALTURA; y++)
          {
-            GRA_InserirVertice(pMatriz->pGrafo, NomeDaCasa(x, y), CriarCasa());
+            char *nome = NomeDaCasa(x, y);
+            GRA_InserirVertice(pMatriz->pGrafo, nome, CriarCasa(nome));
             GRA_TornarCorrenteUmaOrigem(pMatriz->pGrafo);
          }
       }
@@ -466,12 +468,13 @@ typedef struct stCasa {
       return nome;
    }
 
-   tpCasa* CriarCasa()
+   tpCasa* CriarCasa(char *nome)
    {
       tpCasa *pCasa;
       MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
       LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
       pCasa->pPeca = NULL;
+      pCasa->nome = nome;
    
       return pCasa;
    }
