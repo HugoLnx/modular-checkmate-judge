@@ -135,6 +135,7 @@ typedef struct TAB_stPasso
    TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
       LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento);
 
+   TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time);
 
 /***************************************************************************
 *
