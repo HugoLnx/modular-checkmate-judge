@@ -279,6 +279,38 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
+      TAB_tpTimePeca time, tpPeca **ppPeca)
+   {
+      tpPeca *pPeca;
+      tpModeloPeca *pModelo;
+
+      MEM_Alloc(sizeof(tpPeca), (void **) &pPeca);
+      
+      LIS_IrInicioLista(pTabuleiro->pModelosPecas);
+      LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
+      LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pPeca);
+      
+      pPeca->pModelo = pModelo;
+      pPeca->time = time;
+
+      *ppPeca = pPeca;
+   }
+
+   TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time)
+   {
+      tpCasa *pCasa;
+      char *nomeCasa;
+      
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
+
+      CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
+
+      // TODO: Está faltando criar as pegadas
+
+      return TAB_CondRetOK;
+   }
+
 
 /***************************************************************************
 *
@@ -357,12 +389,8 @@ typedef struct stCasa {
 
 	  *ppMatriz = pMatriz;
 
-      return TAB_CondRetOK ;
-
+      return TAB_CondRetOK;
    }
-
-
-   
 
 
 /***********************************************************************
