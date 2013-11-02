@@ -99,6 +99,14 @@ typedef struct stCasa {
    static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
    static int CompararNomeModeloPeca(void *pValor);
+   
+   static TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro,
+      tpPeca *pPeca, tpPegada *pPegAnt);
+
+   static TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
+      TAB_tpPasso *pPasso, tpPeca *pPeca);
+
+   static TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos, tpPeca *pPeca);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -298,14 +306,100 @@ typedef struct stCasa {
       *ppPeca = pPeca;
    }
 
+
+   TAB_tpCondRet CriarPegadasDaPecaNaCasa(TAB_tpMatriz *pTabuleiro, tpCasa *pCasa)
+   {
+      TAB_tpCondRet condRet;
+      LIS_tppLista pPassos;
+      int estaVazia;
+      
+      pPassos = pCasa->pPeca->pModelo->pMovimento->passos;
+
+      LIS_EstaVazia(pPassos, &estaVazia);
+
+      if (estaVazia)
+      {
+         return TAB_CondRetOK;
+      }
+
+      condRet = SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca);
+      if (pCasa->pPeca->pModelo->pMovimento->tipo == VOA && condRet == TAB_CondRetOK)
+      {
+         InserirPegadaDaPecaNaCasaAtual(pTabuleiro, pCasa->pPeca, NULL);
+      }
+   }
+
+   TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos, tpPeca *pPeca)
+   {
+      LIS_tpCondRet lisCondRet = LIS_CondRetOK;
+    
+      LIS_IrInicioLista(pPassos);
+      while (lisCondRet == LIS_CondRetOK)
+      {
+         TAB_tpCondRet tabCondRet;
+         TAB_tpPasso *pPasso;
+         LIS_ObterValor(pPassos, (void **) &pPasso);
+         
+         tabCondRet = SeguirPassoDaPeca(pTabuleiro, pPasso, pPeca);
+         
+         if (tabCondRet != TAB_CondRetOK)
+         {
+            return tabCondRet;
+         }
+
+         lisCondRet = LIS_AvancarElementoCorrente(pPassos, 1);
+      }
+   }
+
+
+   TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
+      TAB_tpPasso *pPasso, tpPeca *pPeca)
+   {
+      tpPegada *pPegAnt = NULL;
+      int i;
+
+      for (i = 0; i < pPasso->quantidade; i++)
+      {
+         TAB_tpCondRet condRet;
+         condRet = IrPara(pTabuleiro, pPasso->direcao);
+         if (condRet != TAB_CondRetOK)
+         {
+            // chegou no final do tabuleiro
+            return TAB_CondRetNaoEhNo;
+         }
+
+         if (pPeca->pModelo->pMovimento->tipo == ANDA)
+         {
+            InserirPegadaDaPecaNaCasaAtual(pTabuleiro, pPeca, pPegAnt);
+         }
+      }
+   }
+
+   
+   TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca, tpPegada *pPegAnt)
+   {
+      tpCasa *pCasaAtual;
+      tpPegada *pPegada;
+      
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasaAtual);
+      
+      MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
+      pPegada->pAnterior = pPegAnt;
+      pPegada->pPeca = pPeca;
+
+      LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
+      pPegAnt = pPegada;
+   }
+
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time)
    {
       tpCasa *pCasa;
-      char *nomeCasa;
       
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
 
       CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
+
+      CriarPegadasDaPecaNaCasa(pTabuleiro, pCasa);
 
       // TODO: Está faltando criar as pegadas
 
