@@ -48,7 +48,7 @@
 #define ANDA_STR "ANDA"
 #define VOA_STR  "VOA"
 
-#define SEPARADOR_PASSOS " "
+#define SEPARADOR_PASSOS " _"
 #define FORMATO_PASSO_STR "[%d]%s"
 
 
