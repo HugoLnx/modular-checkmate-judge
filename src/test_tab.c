@@ -49,7 +49,8 @@
 #define     ATRIBUIR_VAL_CMD    "=atribuir"
 #define     DESTROI_CMD         "=destruir"
 
-#define     IR_PARA_CMD       "=irPara"
+#define     COPIAR_TAB_CMD     "=copiarTabuleiro"
+#define     IR_PARA_CMD        "=irPara"
 #define     IR_CASA_CMD        "=ircasa"
 #define     CRIAR_PECA_CMD     "=criarPeca"
 #define     INSERIR_PECA_CMD   "=inserirPeca"
@@ -193,10 +194,6 @@ static int iMat = 0 ;
          }
 
 
-       
-
-
-
 		/* Testar TAB Criar peca*/
 
 		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
@@ -247,6 +244,26 @@ static int iMat = 0 ;
          CondRetObtido = TAB_InserirPeca(Matrizes[iMat], nome, time);
 
          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir a peça.");
+
+       }
+
+       
+       
+		/* Testar TAB Copiar tabuleiro */
+
+		 else if (strcmp( ComandoTeste, COPIAR_TAB_CMD) == 0 )
+       {
+          int iCopia;
+			 NumLidos = LER_LerParametros("ii", &iCopia, &CondRetEsperada) ;
+          if (NumLidos != 2)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = TAB_CopiarTabuleiro(Matrizes[iMat], &Matrizes[iCopia]);
+          
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível inserir a peça.");
 
        }

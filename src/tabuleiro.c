@@ -145,6 +145,70 @@ typedef struct stCasa {
 		return TAB_CondRetOK;
    }
 
+   void DestruirPasso(void *pValor)
+   {
+      MEM_Free(pValor);
+   }
+
+   LIS_tppLista CopiarPassos(LIS_tppLista pPassos)
+   {
+      LIS_tpCondRet condRet = LIS_CondRetOK;
+      LIS_tppLista pCopiaPassos;
+
+      LIS_CriarLista(&pCopiaPassos, DestruirPasso, NULL);
+
+      while (condRet == LIS_CondRetOK)
+      {
+         TAB_tpPasso *pPasso, *pCopiaPasso;
+         LIS_ObterValor(pPassos, (void **) &pPasso);
+         MEM_Alloc(sizeof(TAB_tpPasso), (void **) &pCopiaPasso);
+         pCopiaPasso->direcao = pPasso->direcao;
+         pCopiaPasso->quantidade = pPasso->quantidade;
+
+         LIS_InserirElementoApos(pCopiaPassos, pCopiaPasso);
+
+         condRet = LIS_AvancarElementoCorrente(pPassos, 1);
+      }
+
+      return pCopiaPassos;
+   }
+
+   TAB_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, TAB_tpMatriz *pTabuleiro)
+   {
+      LIS_tpCondRet condRet = LIS_CondRetOK;
+
+      LIS_IrInicioLista(pModelosPecas);
+      LIS_IrInicioLista(pTabuleiro->pModelosPecas);
+
+      while (condRet == LIS_CondRetOK)
+      {
+         tpModeloPeca *pModelo;
+         LIS_tppLista pPassos;
+         char *nome;
+         TAB_tpTipoMovimento tipo;
+         
+         LIS_ObterValor(pTabuleiro->pModelosPecas, (void **) &pModelo);
+
+         strcpy(nome, pModelo->nome);
+         pPassos = CopiarPassos(pModelo->pMovimento->passos);
+         tipo = pModelo->pMovimento->tipo;
+
+         TAB_CriarPeca(pTabuleiro, nome, pPassos, tipo);
+
+         condRet = LIS_AvancarElementoCorrente(pTabuleiro->pModelosPecas, 1);
+      }
+
+      return TAB_CondRetOK;
+   }
+
+   TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tpMatriz *pTabuleiro, TAB_tpMatriz **ppCopia)
+   {
+      TAB_tpMatriz *pCopia;
+      TAB_CriarTabuleiro(&pCopia);
+
+      InserirModelosPecas(pTabuleiro->pModelosPecas, pCopia);
+   }
+
    TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
       LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento)
    {
