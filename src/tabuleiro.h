@@ -100,8 +100,9 @@ typedef struct TAB_stPasso
          TAB_CondRetNaoTemCorrente = 4 ,
                /* Matriz está vazia */
 
-         TAB_CondRetFaltouMemoria = 5
+         TAB_CondRetFaltouMemoria = 5 ,
                /* Faltou memória ao alocar dados */
+         TAB_CondRetPecaNaoEncontrada = 6
 
    } TAB_tpCondRet ;
 
@@ -134,6 +135,9 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
       LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento);
+
+   TAB_tpCondRet TAB_AlterarPeca(TAB_tpMatriz *pTabuleiro, char *nomeAtual, char* nomeNovo,
+      LIS_tppLista pNovosPassos, TAB_tpTipoMovimento novoTipoMovimento);
 
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time);
 

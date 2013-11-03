@@ -7,12 +7,13 @@
 //
 
 == Declarar as condicoes de retorno
-=declararparm  OK           int 0
-=declararparm  NaoOrigem    int 1 
-=declararparm  NaoFolha     int 2
-=declararparm  NaoMatriz    int 3
-=declararparm  NaoCorr      int 4
-=declararparm  Memoria      int 5
+=declararparm  OK                     int 0
+=declararparm  NaoOrigem              int 1 
+=declararparm  NaoFolha               int 2
+=declararparm  NaoMatriz              int 3
+=declararparm  NaoCorr                int 4
+=declararparm  Memoria                int 5
+=declararparm  PecaNaoEncontrada      int 6
 
 == Declarar os conteúdos dos nós
 =declararparm  ValorErro    int -1
@@ -56,6 +57,11 @@
 =criarPeca  "cavalo"     "[2]norte [1]este"                   VOA  OK
 =criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
 =criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
+
+== Testar alteracao de peça
+=alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
+=alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
+
 
 == Inserir cavalo aliado no A1
 =ircasa "A1"                   OK

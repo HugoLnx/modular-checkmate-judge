@@ -19,19 +19,20 @@
 *  $EIU Interface com o usuário pessoa
 *     Comandos de teste específicos para testar o módulo matriz:
 *
-*     "=criar"           - chama a função TAB_CriarMatriz( )
-*     "=irnorte"         - chama a função TAB_IrNorte( )
-*     "=irsul"           - chama a função TAB_IrSul( )
-*     "=ireste"          - chama a função TAB_IrEste( )
-*     "=iroeste"         - chama a função TAB_IrOeste( )
-*     "=irnordeste"      - chama a função TAB_IrNordeste( )
-*     "=irsudeste"       - chama a função TAB_IrSudeste( )
-*     "=irsudoeste"      - chama a função TAB_IrSudoeste( )
-*     "=irnoroeste"      - chama a função TAB_IrNoroeste( )
-*     "=atribuir" <Char> - chama a função TAB_AtribuirValorCorr(  )
-*     "=destroi"         - chama a função TAB_DestruirMatriz( )
-*     "=obter" <Char>    - chama a função TAB_ObterValorCorr( ) e compara
-*                          o valor retornado com o valor <Char>
+*     "=criar"                                   - chama a função TAB_CriarMatriz( )
+*     "=irnorte"                                 - chama a função TAB_IrNorte( )
+*     "=irsul"                                   - chama a função TAB_IrSul( )
+*     "=ireste"                                  - chama a função TAB_IrEste( )
+*     "=iroeste"                                 - chama a função TAB_IrOeste( )
+*     "=irnordeste"                              - chama a função TAB_IrNordeste( )
+*     "=irsudeste"                               - chama a função TAB_IrSudeste( )
+*     "=irsudoeste"                              - chama a função TAB_IrSudoeste( )
+*     "=irnoroeste"                              - chama a função TAB_IrNoroeste( )
+*     "=atribuir" <Char>                         - chama a função TAB_AtribuirValorCorr(  )
+*     "=destroi"                                 - chama a função TAB_DestruirMatriz( )
+*     "=obter" <Char>                            - chama a função TAB_ObterValorCorr( ) e compara
+*                                                  o valor retornado com o valor <Char>
+*     "=alterarPeca  nomeAtual   novoNome   novosPassos   novoTipoMovimento   condRet
 *
 ***************************************************************************/
 
@@ -66,6 +67,7 @@
 #define     IR_NOROESTE_CMD    "=irnoroeste"
 #define     IR_CASA_CMD        "=ircasa"
 #define     CRIAR_PECA_CMD     "=criarPeca"
+#define     ALTERAR_PECA_CMD   "=alterarPeca"
 #define     INSERIR_PECA_CMD   "=inserirPeca"
 
 #define     FIM_CMD         "=fim"
@@ -361,6 +363,35 @@ static int iMat = 0 ;
 
          return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível criar a casa.");
+
+       }
+
+       /* Testar TAB Alterar peca*/
+
+       else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
+       {
+
+          char *nomeAtual, *passosStr, *novoNome;
+          int iTipoMovimento;
+          TAB_tpTipoMovimento tipo;
+          LIS_tppLista pPassos;
+          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nomeAtual);
+          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &novoNome);
+          MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
+
+          NumLidos = LER_LerParametros("sssii", nomeAtual, novoNome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
+          if (NumLidos != 5)
+          {
+             return TST_CondRetParm ;
+          }
+
+          ISP_LerPassos(passosStr, &pPassos);
+
+          tipo = (TAB_tpTipoMovimento) iTipoMovimento;
+          CondRetObtido = TAB_AlterarPeca(Matrizes[iMat], nomeAtual, novoNome, pPassos, tipo);
+
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+             "Não foi possível criar a casa.");
 
        }
 
