@@ -18,10 +18,10 @@
     <ClCompile Include="..\src\mem_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main.c">
+    <ClCompile Include="..\src\lista.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lista.c">
+    <ClCompile Include="isp_main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

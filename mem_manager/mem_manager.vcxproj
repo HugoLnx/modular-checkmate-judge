@@ -12,8 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\lista.c" />
-    <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mem_manager.c" />
+    <ClCompile Include="isp_main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lista.h" />
