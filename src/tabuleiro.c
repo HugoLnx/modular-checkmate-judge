@@ -272,6 +272,11 @@ typedef struct stCasa {
       
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
 
+      if(pCasa->pPeca == NULL)
+      {
+         return TAB_CondRetPecaNaoEncontrada;
+      }
+
       IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa->pPeca, RemoverPegadaDaPecaNaCasaAtual);
 
       TAB_IrCasa(pTabuleiro, pCasa->nome);
