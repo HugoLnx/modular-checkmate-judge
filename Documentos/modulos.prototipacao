@@ -1,8 +1,8 @@
 Tabuleiro
 	X CriarTabuleiro(tab)
 	X DestruirTabuleiro(tab)
-	CriarPeca(nome, passos, tipo)
-	InserirPeca(nome, nomeCasa, inimiga?)
+	X CriarPeca(nome, passos, tipo)
+	X InserirPeca(nome, nomeCasa, inimiga?)
 	CopiarTabuleiro
 	X Navegar(casa ou direcoes)
 

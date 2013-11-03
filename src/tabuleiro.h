@@ -142,6 +142,9 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time);
 
+   TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tpMatriz *pTabuleiro, TAB_tpMatriz **ppCopia);
+
+   TAB_tpCondRet TAB_RemoverPeca(TAB_tpMatriz *pTabuleiro);
 
 /***************************************************************************
 *

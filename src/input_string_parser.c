@@ -171,7 +171,8 @@ void DestruirPasso(void *pValor)
 
 int CompararPassos(void *pValor1, void *pValor2)
 {
-   return *(int*)pValor1 == *(int*)pValor2;
+   // TODO: função para comparar passos
+   return 0;
 }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/
