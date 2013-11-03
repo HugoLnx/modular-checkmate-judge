@@ -18,8 +18,11 @@
 == Declarar os conteúdos dos nós
 =declararparm  ValorErro    int -1
 
-=declararparm  VOA          int 0
-=declararparm  ANDA         int 1
+=declararparm  TRUE         int 1
+=declararparm  FALSE        int 0
+
+=declararparm  VOA          int 1
+=declararparm  ANDA         int 0
 
 =declararparm  ALIADA       int 0
 =declararparm  INIMIGA      int 1
@@ -76,20 +79,102 @@
 =ircasa "A1"                   OK
 =inserirPeca "torre" ALIADA    OK
 
-== Inserir zorro inimigo no A2
-=ircasa "A2"                   OK
+== Inserir zorro inimigo no D4
+=ircasa "D4"                   OK
 =inserirPeca "zorro" INIMIGA   OK
+
+== Verificar pegadas do zorro
+// pegadas com orientacao norte
+=ircasa "E4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F6"         OK
+=pegadaInimiga? TRUE OK
+
+// pegadas com orientacao este
+=ircasa "D5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B6"         OK
+=pegadaInimiga? TRUE OK
+
+
+// pegadas com orientacao sul
+=ircasa "C4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B2"         OK
+=pegadaInimiga? TRUE OK
+
+
+// pegadas com orientacao oeste
+=ircasa "D3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F2"         OK
+=pegadaInimiga? TRUE OK
 
 == Testar inserir rei
 =ircasa "C5" OK
 =inserirRei  OK
+
+=ircasa "H8" OK
+=pegadaInimiga? FALSE OK
 
 == Teste copiar tabuleiro
 =copiarTabuleiro 1 OK
 
 =selecionar 1
 == Teste remover peca
-=ircasa "A2" OK
+=ircasa "D4" OK
 =removerPeca OK
 
 == Testar ir casa rei

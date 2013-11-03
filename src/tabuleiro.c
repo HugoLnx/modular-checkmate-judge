@@ -114,7 +114,7 @@ typedef struct stCasa {
       TAB_tpTimePeca time, tpPeca **ppPeca);
 
    static TAB_tpCondRet IterarPelasCasasDeAlcanceDaPeca(TAB_tpMatriz *pTabuleiro,
-      tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
+      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
    
    static TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
       tpPeca *pPeca, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
@@ -140,6 +140,33 @@ typedef struct stCasa {
    static LIS_tppLista CopiarPassos(LIS_tppLista pPassos);
 
 /*****  Código das funções exportadas pelo módulo  *****/
+
+   TAB_tpCondRet TAB_AlgumaPegadaInimiga(TAB_tpMatriz *pTabuleiro, int *pResposta)
+   {
+      tpCasa *pCasa;
+      int estaVazia;
+      LIS_tpCondRet condRet = LIS_CondRetOK;
+
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+
+      LIS_EstaVazia(pCasa->pegadas, &estaVazia);
+      LIS_IrInicioLista(pCasa->pegadas);
+      while (condRet == LIS_CondRetOK && !estaVazia)
+      {
+         tpPegada *pPegada;
+         LIS_ObterValor(pCasa->pegadas, (void **) &pPegada);
+         if (pPegada->pPeca->time == INIMIGA)
+         {
+            *pResposta = 1;
+            return TAB_CondRetOK;
+         }
+         condRet =  LIS_AvancarElementoCorrente(pCasa->pegadas, 1);
+      }
+
+      *pResposta = 0;
+      return TAB_CondRetOK;
+   }
+
 
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz ** ppMatriz)
    {
@@ -278,7 +305,7 @@ typedef struct stCasa {
          return tabCondRet;
       }
 
-      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa->pPeca, InserirPegadaDaPecaNaCasaAtual);
+      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, InserirPegadaDaPecaNaCasaAtual);
 
       TAB_IrCasa(pTabuleiro, pCasa->nome);
 
@@ -291,7 +318,7 @@ typedef struct stCasa {
       
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
 
-      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa->pPeca, RemoverPegadaDaPecaNaCasaAtual);
+      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, RemoverPegadaDaPecaNaCasaAtual);
 
       TAB_IrCasa(pTabuleiro, pCasa->nome);
 
@@ -434,10 +461,10 @@ typedef struct stCasa {
 *     TAB_CondRetFaltouMemoria
 *
 ***********************************************************************/
-   TAB_tpCondRet InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
+   TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz)
    {
 	   int x, y;
-      
+
 	   if( pMatriz == NULL )
 	   {
 		   return TAB_CondRetMatrizNaoExiste ;
@@ -457,14 +484,15 @@ typedef struct stCasa {
       {
          for (y = 0; y < ALTURA; y++)
          {
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORTE)   , NomeDaCasa(x, y), NomeDaCasa(x, y-1));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(ESTE)    , NomeDaCasa(x, y), NomeDaCasa(x+1, y));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUL)     , NomeDaCasa(x, y), NomeDaCasa(x, y+1));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(OESTE)   , NomeDaCasa(x, y), NomeDaCasa(x-1, y));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORDESTE), NomeDaCasa(x, y), NomeDaCasa(x+1, y-1));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDESTE) , NomeDaCasa(x, y), NomeDaCasa(x+1, y+1));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDOESTE), NomeDaCasa(x, y), NomeDaCasa(x-1, y+1));
-            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NOROESTE), NomeDaCasa(x, y), NomeDaCasa(x-1, y-1));
+            char *nome = NomeDaCasa(x, y);
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORTE)   , nome, NomeDaCasa(x, y-1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(ESTE)    , nome, NomeDaCasa(x+1, y));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUL)     , nome, NomeDaCasa(x, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(OESTE)   , nome, NomeDaCasa(x-1, y));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORDESTE), nome, NomeDaCasa(x+1, y-1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDESTE) , nome, NomeDaCasa(x+1, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUDOESTE), nome, NomeDaCasa(x-1, y+1));
+            GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NOROESTE), nome, NomeDaCasa(x-1, y-1));
          }
       }
 
@@ -483,8 +511,8 @@ typedef struct stCasa {
       }
 
       MEM_Alloc(sizeof(char)*3, (void **) &nome);
-      nome[0] = y + 'A';
-      nome[1] = x + '1';
+      nome[0] = x + 'A';
+      nome[1] = y + '1';
       nome[2] = 0;
 
       return nome;
@@ -694,13 +722,13 @@ typedef struct stCasa {
 
 
    TAB_tpCondRet IterarPelasCasasDeAlcanceDaPeca(TAB_tpMatriz *pTabuleiro,
-      tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
+      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar)
    {
       TAB_tpCondRet condRet;
       LIS_tppLista pPassos;
       int estaVazia;
       
-      pPassos = pPeca->pModelo->pMovimento->passos;
+      pPassos =pCasa->pPeca->pModelo->pMovimento->passos;
 
       LIS_EstaVazia(pPassos, &estaVazia);
 
@@ -709,10 +737,13 @@ typedef struct stCasa {
          return TAB_CondRetOK;
       }
 
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, NORTE, operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, ESTE , operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, SUL  , operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, OESTE, operar);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, NORTE, operar);
+      TAB_IrCasa(pTabuleiro, pCasa->nome);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, ESTE , operar);
+      TAB_IrCasa(pTabuleiro, pCasa->nome);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, SUL  , operar);
+      TAB_IrCasa(pTabuleiro, pCasa->nome);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, OESTE, operar);
 
       return TAB_CondRetOK;
    }
@@ -807,7 +838,7 @@ typedef struct stCasa {
       pPegada->pPeca = pPeca;
 
       LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
-      pPegAnt = pPegada;
+      pPegada->pAnterior = pPegAnt;
 
       return TAB_CondRetOK;
    }

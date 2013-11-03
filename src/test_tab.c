@@ -62,6 +62,7 @@
 #define     INSERIR_REI_CMD    "=inserirRei"
 #define     REMOVER_REI_CMD    "=removerRei"
 #define     IR_REI_CMD         "=ircasarei"
+#define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
 
 #define     FIM_CMD         "=fim"
 
@@ -374,6 +375,35 @@ static int iMat = 0 ;
           
           return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível inserir o rei.");
+
+       }
+
+
+		/* Testar TAB Alguma pegada inimiga*/
+
+		 else if (strcmp( ComandoTeste, PEGADA_INIMIGA_CMD) == 0 )
+       {
+          int respostaEsperada, respostaObtida;
+          TST_tpCondRet condRet;
+			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
+          
+          if (NumLidos != 2)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = TAB_AlgumaPegadaInimiga(Matrizes[iMat], &respostaObtida);
+          
+          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
+                     "Não foi possível verificar se existe alguma pegada inimiga.");
+
+          if (condRet != TST_CondRetOK)
+          {
+             return condRet;
+          }
+
+          return TST_CompararInt(respostaEsperada, respostaObtida,
+                     "Foi obtida uma resposta diferente da esperada");
 
        }
 
