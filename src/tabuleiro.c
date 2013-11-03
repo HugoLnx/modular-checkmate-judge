@@ -69,8 +69,8 @@ typedef struct stCasa {
 
 
    
-   typedef TAB_tpCondRet (*tpCallbackIterarCasasAlcancePeca)(TAB_tpMatriz *pTabuleiro,
-                     tpCasa *pCasa, tpPegada *pPegAnt);
+   typedef TAB_tpCondRet (*tpCallbackIterarCasasAlcancePeca)(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
+      tpPegada *pPegAnt);
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -101,18 +101,15 @@ typedef struct stCasa {
 
    static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
-   static int CompararNomeModeloPeca(void *pValor);
+   static int CompararNomeModeloPeca(void *pValor1, void *pValor2);
 
    static int CompararPassos(void *pValor1, void *pValor2);
    
    static TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
       TAB_tpTimePeca time, tpPeca **ppPeca);
 
-   static TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro,
-      tpCasa *pCasa, tpPegada *pPegAnt);
-
    static TAB_tpCondRet IterarPelasCasasDeAlcanceDaPeca(TAB_tpMatriz *pTabuleiro,
-      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
+      tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
    
    static TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
       tpPeca *pPeca, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
@@ -120,6 +117,12 @@ typedef struct stCasa {
    static TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
       TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar);
+
+   static TAB_tpCondRet RemoverPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
+      tpPegada *pPegAnt);
+   
+   static TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
+      tpPegada *pPegAnt);
 
    static TAB_tpDirecao DirecaoOrientadaPara(TAB_tpDirecao direcao, TAB_tpDirecao orientacao);
 
@@ -194,6 +197,8 @@ typedef struct stCasa {
          }
       }
 
+      *ppCopia = pCopia;
+
       return TAB_CondRetOK;
    }
 
@@ -249,7 +254,25 @@ typedef struct stCasa {
 
       CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
 
-      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, InserirPegadaDaPecaNaCasaAtual);
+      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa->pPeca, InserirPegadaDaPecaNaCasaAtual);
+
+      TAB_IrCasa(pTabuleiro, pCasa->nome);
+
+      return TAB_CondRetOK;
+   }
+
+   TAB_tpCondRet TAB_RemoverPeca(TAB_tpMatriz *pTabuleiro)
+   {
+      tpCasa *pCasa;
+      
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
+
+      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa->pPeca, RemoverPegadaDaPecaNaCasaAtual);
+
+      TAB_IrCasa(pTabuleiro, pCasa->nome);
+
+      DestruirPeca(pCasa->pPeca);
+      pCasa->pPeca = NULL;
 
       return TAB_CondRetOK;
    }
@@ -373,8 +396,6 @@ typedef struct stCasa {
    TAB_tpCondRet InicializarMatriz(TAB_tpMatriz * pMatriz , int Linhas , int Colunas )
    {
 	   int x, y;
-	   TAB_tpCondRet Cond;
-      tpCasa *pCasa;
       
 	   if( pMatriz == NULL )
 	   {
@@ -509,11 +530,10 @@ typedef struct stCasa {
    
    int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
    {
-      tpPegada *pPegada1 = (tpPegada*) pPonteiro1;
-      tpPegada *pPegada2 = (tpPegada*) pPonteiro2;
+      tpPegada *pPegada = (tpPegada*) pPonteiro1;
+      tpPeca *pPeca = (tpPeca*) pPonteiro2;
    
-      // TODO: implementar corretamente
-      return 1;
+      return strcmp(pPegada->pPeca->pModelo->nome, pPeca->pModelo->nome);
    }
 
    int CompararNomeModeloPeca(void *pValor1, void *pValor2)
@@ -609,16 +629,18 @@ typedef struct stCasa {
       pPeca->time = time;
 
       *ppPeca = pPeca;
+
+      return TAB_CondRetOK;
    }
 
    TAB_tpCondRet IterarPelasCasasDeAlcanceDaPeca(TAB_tpMatriz *pTabuleiro,
-      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar)
+      tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
    {
       TAB_tpCondRet condRet;
       LIS_tppLista pPassos;
       int estaVazia;
       
-      pPassos = pCasa->pPeca->pModelo->pMovimento->passos;
+      pPassos = pPeca->pModelo->pMovimento->passos;
 
       LIS_EstaVazia(pPassos, &estaVazia);
 
@@ -627,20 +649,19 @@ typedef struct stCasa {
          return TAB_CondRetOK;
       }
 
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa, NORTE, operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa, ESTE , operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa, SUL  , operar);
-      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa, OESTE, operar);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, NORTE, operar);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, ESTE , operar);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, SUL  , operar);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pPeca, OESTE, operar);
 
       return TAB_CondRetOK;
    }
 
    TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
-      tpCasa *pCasa, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
+      tpPeca *pPeca, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
    {
       TAB_tpCondRet tabCondRet;
       LIS_tpCondRet lisCondRet = LIS_CondRetOK;
-      tpPeca *pPeca = pCasa->pPeca;
     
       LIS_IrInicioLista(pPassos);
       while (lisCondRet == LIS_CondRetOK)
@@ -648,7 +669,7 @@ typedef struct stCasa {
          TAB_tpPasso *pPasso;
          LIS_ObterValor(pPassos, (void **) &pPasso);
          
-         tabCondRet = SeguirPassoDaPeca(pTabuleiro, pPasso, pCasa, orientacao, operar);
+         tabCondRet = SeguirPassoDaPeca(pTabuleiro, pPasso, pPeca, orientacao, operar);
          
          if (tabCondRet != TAB_CondRetOK)
          {
@@ -660,7 +681,7 @@ typedef struct stCasa {
 
       if (pPeca->pModelo->pMovimento->tipo == VOA && tabCondRet == TAB_CondRetOK)
       {
-         operar(pTabuleiro, pCasa, NULL);
+         operar(pTabuleiro, pPeca, NULL);
       }
 
       return TAB_CondRetOK;
@@ -669,10 +690,9 @@ typedef struct stCasa {
 
 
    TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
-      TAB_tpPasso *pPasso, tpCasa *pCasa, TAB_tpDirecao orientacao,
+      TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar)
    {
-      tpPeca *pPeca = pCasa->pPeca;
       TAB_tpDirecao direcao;
       tpPegada *pPegAnt = NULL;
       int i;
@@ -690,16 +710,33 @@ typedef struct stCasa {
 
          if (pPeca->pModelo->pMovimento->tipo == ANDA)
          {
-            operar(pTabuleiro, pCasa, pPegAnt);
+            operar(pTabuleiro, pPeca, pPegAnt);
          }
       }
+
+      return TAB_CondRetOK;
+   }
+
+
+   TAB_tpCondRet RemoverPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
+      tpPegada *pPegAnt)
+   {
+      tpCasa *pCasaAtual;
+      tpPegada *pPegada;
+
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasaAtual);
+      
+      LIS_IrInicioLista(pCasaAtual->pegadas);
+      LIS_ProcurarValor(pCasaAtual->pegadas, pPeca);
+      LIS_ExcluirElemento(pCasaAtual->pegadas);
+
+      return TAB_CondRetOK;
    }
 
    
-   TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpCasa *pCasa,
+   TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
       tpPegada *pPegAnt)
    {
-      tpPeca *pPeca = pCasa->pPeca;
       tpCasa *pCasaAtual;
       tpPegada *pPegada;
       
@@ -711,6 +748,8 @@ typedef struct stCasa {
 
       LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
       pPegAnt = pPegada;
+
+      return TAB_CondRetOK;
    }
 
 

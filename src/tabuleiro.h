@@ -144,6 +144,8 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tpMatriz *pTabuleiro, TAB_tpMatriz **ppCopia);
 
+   TAB_tpCondRet TAB_RemoverPeca(TAB_tpMatriz *pTabuleiro);
+
 /***************************************************************************
 *
 *  $FC Função: MAT Ir para nó genérico.

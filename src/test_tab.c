@@ -58,6 +58,7 @@
 #define     CRIAR_PECA_CMD     "=criarPeca"
 #define     ALTERAR_PECA_CMD   "=alterarPeca"
 #define     INSERIR_PECA_CMD   "=inserirPeca"
+#define     REMOVER_PECA_CMD   "=removerPeca"
 
 #define     FIM_CMD         "=fim"
 
@@ -280,7 +281,24 @@ static int iMat = 0 ;
 								"Não foi possível inserir a peça.");
 
        }
+       
+       
+		/* Testar TAB Remover peca*/
 
+		 else if (strcmp( ComandoTeste, REMOVER_PECA_CMD) == 0 )
+       {
+			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+         if (NumLidos != 1)
+         {
+            return TST_CondRetParm ;
+         }
+
+         CondRetObtido = TAB_RemoverPeca(Matrizes[iMat]);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir a peça.");
+
+       }
        
        
 		/* Testar TAB Copiar tabuleiro */
@@ -297,7 +315,7 @@ static int iMat = 0 ;
           CondRetObtido = TAB_CopiarTabuleiro(Matrizes[iMat], &Matrizes[iCopia]);
           
           return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível inserir a peça.");
+								"Não foi possível copiar o tabuleiro.");
 
        }
 
