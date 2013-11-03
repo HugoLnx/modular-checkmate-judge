@@ -80,8 +80,7 @@
 =ircasa "A2"                   OK
 =inserirPeca "cavalo" INIMIGA  OK
 
-//=copiarTabuleiro 1 OK
-
+=copiarTabuleiro 1 OK
 
 // Navegando por todo o tabuleiro pelo nome da casa
 == Verificar ir para as casa pelo nome
