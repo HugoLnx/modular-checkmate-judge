@@ -113,6 +113,8 @@ typedef struct TAB_stPasso
    TAB_tpCondRet TAB_AlgumaPegadaInimiga(TAB_tpMatriz *pTabuleiro);
 
    TAB_tpCondRet TAB_InserirRei(TAB_tpMatriz *pTabuleiro);
+   
+   TAB_tpCondRet TAB_RemoverRei(TAB_tpMatriz *pTabuleiro);
 
    TAB_tpCondRet TAB_IrCasaRei(TAB_tpMatriz *pTabuleiro);
 

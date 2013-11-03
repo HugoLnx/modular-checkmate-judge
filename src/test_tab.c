@@ -60,6 +60,7 @@
 #define     INSERIR_PECA_CMD   "=inserirPeca"
 #define     REMOVER_PECA_CMD   "=removerPeca"
 #define     INSERIR_REI_CMD    "=inserirRei"
+#define     REMOVER_REI_CMD    "=removerRei"
 #define     IR_REI_CMD         "=ircasarei"
 
 #define     FIM_CMD         "=fim"
@@ -316,7 +317,25 @@ static int iMat = 0 ;
          CondRetObtido = TAB_RemoverPeca(Matrizes[iMat]);
 
          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível inserir a peça.");
+								"Não foi possível remover a peça.");
+
+       }
+       
+       
+		/* Testar TAB Remover rei*/
+
+		 else if (strcmp( ComandoTeste, REMOVER_REI_CMD) == 0 )
+       {
+			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+         if (NumLidos != 1)
+         {
+            return TST_CondRetParm ;
+         }
+
+         CondRetObtido = TAB_RemoverRei(Matrizes[iMat]);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível remover o rei.");
 
        }
        

@@ -68,7 +68,6 @@ typedef struct stCasa {
          GRA_tppGrafo pGrafo;
          LIS_tppLista pModelosPecas;
          tpCasa *pCasaRei;
-         tpModeloPeca *pModeloRei;
    } TAB_tpMatriz;
 
 
@@ -179,6 +178,12 @@ typedef struct stCasa {
 
       InserirModelosPecas(pTabuleiro->pModelosPecas, pCopia);
 
+      if (pTabuleiro->pCasaRei)
+      {
+         TAB_IrCasa(pCopia, pTabuleiro->pCasaRei->nome);
+         TAB_InserirRei(pCopia);
+      }
+
       for (x = 0; x < LARGURA; x++)
       {
          for (y = 0; y < ALTURA; y++)
@@ -189,7 +194,7 @@ typedef struct stCasa {
             TAB_IrCasa(pTabuleiro, nome);
             GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
 
-            if (pCasa->pPeca)
+            if (pCasa->pPeca && pCasa->pPeca->pModelo)
             {
                char *nomeModelo;
                TAB_tpTimePeca time;
@@ -296,6 +301,14 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet TAB_RemoverRei(TAB_tpMatriz *pTabuleiro)
+   {
+      MEM_Free(pTabuleiro->pCasaRei->pPeca);
+      pTabuleiro->pCasaRei = NULL;
+
+      return TAB_CondRetOK;
+   }
+
 
    TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa)
    {
@@ -396,6 +409,8 @@ typedef struct stCasa {
 
       GRA_CriarGrafo(&pMatriz->pGrafo, DestruirCasa);
       LIS_CriarLista(&pMatriz->pModelosPecas, DestruirModeloPeca, CompararNomeModeloPeca);
+
+      pMatriz->pCasaRei = NULL;
 
 	  *ppMatriz = pMatriz;
 
