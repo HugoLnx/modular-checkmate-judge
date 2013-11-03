@@ -59,6 +59,7 @@
 #define     ALTERAR_PECA_CMD   "=alterarPeca"
 #define     INSERIR_PECA_CMD   "=inserirPeca"
 #define     REMOVER_PECA_CMD   "=removerPeca"
+#define     INSERIR_REI_CMD    "=inserirRei"
 
 #define     FIM_CMD         "=fim"
 
@@ -316,6 +317,25 @@ static int iMat = 0 ;
           
           return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível copiar o tabuleiro.");
+
+       }
+       
+
+		/* Testar TAB Inserir rei */
+
+		 else if (strcmp( ComandoTeste, INSERIR_REI_CMD) == 0 )
+       {
+			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+          
+          if (NumLidos != 1)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = TAB_InserirRei(Matrizes[iMat]);
+          
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir o rei.");
 
        }
 

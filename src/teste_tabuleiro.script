@@ -89,6 +89,11 @@
 =removerPeca OK
 =selecionar 0
 
+== Testar inserir rei
+=ircasa "C5" OK
+=inserirRei  OK
+
+
 // Navegando por todo o tabuleiro pelo nome da casa
 == Verificar ir para as casa pelo nome
 =ircasa "A1"    OK

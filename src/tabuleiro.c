@@ -24,6 +24,8 @@
 #include "tabuleiro.h"
 #undef TABULEIRO_OWN
 
+#define NOME_REI "rei"
+
 typedef struct stMovimento {
    LIS_tppLista passos;
    TAB_tpTipoMovimento tipo;
@@ -65,6 +67,8 @@ typedef struct stCasa {
    typedef struct stMatriz {
          GRA_tppGrafo pGrafo;
          LIS_tppLista pModelosPecas;
+         tpCasa *pCasaRei;
+         tpModeloPeca *pModeloRei;
    } TAB_tpMatriz;
 
 
@@ -104,6 +108,8 @@ typedef struct stCasa {
    static int CompararNomeModeloPeca(void *pValor1, void *pValor2);
 
    static int CompararPassos(void *pValor1, void *pValor2);
+
+   static TAB_tpCondRet CriarInstanciaDeRei(TAB_tpMatriz *pTabuleiro, tpPeca **pPeca);
    
    static TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
       TAB_tpTimePeca time, tpPeca **ppPeca);
@@ -135,7 +141,6 @@ typedef struct stCasa {
    static LIS_tppLista CopiarPassos(LIS_tppLista pPassos);
 
 /*****  Código das funções exportadas pelo módulo  *****/
-
 
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz ** ppMatriz)
    {
@@ -242,6 +247,15 @@ typedef struct stCasa {
       pModelo->nome = nomeNovo;
       pModelo->pMovimento->passos= pNovosPassos;
       pModelo->pMovimento->tipo = novoTipoMovimento;
+
+      return TAB_CondRetOK;
+   }
+   
+   TAB_tpCondRet TAB_InserirRei(TAB_tpMatriz *pTabuleiro)
+   {
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pTabuleiro->pCasaRei);
+
+      CriarInstanciaDeRei(pTabuleiro, &pTabuleiro->pCasaRei->pPeca);
 
       return TAB_CondRetOK;
    }
@@ -641,6 +655,21 @@ typedef struct stCasa {
 
       return TAB_CondRetOK;
    }
+
+   
+   TAB_tpCondRet CriarInstanciaDeRei(TAB_tpMatriz *pTabuleiro, tpPeca **pPeca)
+   {
+      tpPeca *pRei;
+      MEM_Alloc(sizeof(tpPeca), (void **) &pRei);
+
+      pRei->pModelo = NULL;
+      pRei->time = ALIADA;
+
+      *pPeca = pRei;
+
+      return TAB_CondRetOK;
+   }
+
 
    TAB_tpCondRet IterarPelasCasasDeAlcanceDaPeca(TAB_tpMatriz *pTabuleiro,
       tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)

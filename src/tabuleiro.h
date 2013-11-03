@@ -110,7 +110,9 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz **ppMatriz);
 
+   TAB_tpCondRet TAB_AlgumaPegadaInimiga(TAB_tpMatriz *pTabuleiro);
 
+   TAB_tpCondRet TAB_InserirRei(TAB_tpMatriz *pTabuleiro);
 
 /***********************************************************************
 *
