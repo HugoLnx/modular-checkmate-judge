@@ -24,16 +24,25 @@
 =declararparm  ALIADA       int 0
 =declararparm  INIMIGA      int 1
 
+=declararparm  NORTE        int 0
+=declararparm  NORDESTE     int 1
+=declararparm  ESTE         int 2
+=declararparm  SUDESTE      int 3
+=declararparm  SUL          int 4
+=declararparm  SUDOESTE     int 5
+=declararparm  OESTE        int 6
+=declararparm  NOROESTE     int 7
+
 == Verificar erros nas operações inválidas quando a está matriz inexistente
 =destruir              NaoMatriz
-=irnorte               NaoMatriz
-=irsul                 NaoMatriz
-=ireste                NaoMatriz
-=iroeste               NaoMatriz
-=irnordeste            NaoMatriz
-=irsudeste             NaoMatriz
-=irsudoeste            NaoMatriz
-=irnoroeste            NaoMatriz
+=irPara NORTE               NaoMatriz
+=irPara SUL                 NaoMatriz
+=irPara ESTE                NaoMatriz
+=irPara OESTE               NaoMatriz
+=irPara NORDESTE            NaoMatriz
+=irPara SUDESTE             NaoMatriz
+=irPara SUDOESTE            NaoMatriz
+=irPara NOROESTE            NaoMatriz
 =ircasa       "X0"     NaoMatriz
 
 == Verificar comando recuperar
@@ -147,1663 +156,1663 @@
 // Navegando por todo o tabuleiro exercitando todos os ponteiros
 // Verificando ponteiros da 1a linha
 == Verificar ponteiros da posição "A1"
-=irnorte        NaoFolha
-=iroeste        NaoFolha
-=irnordeste     NaoFolha
-=irsudoeste     NaoFolha
-=irnoroeste     NaoFolha
+=irPara NORTE        NaoFolha
+=irPara OESTE        NaoFolha
+=irPara NORDESTE     NaoFolha
+=irPara SUDOESTE     NaoFolha
+=irPara NOROESTE     NaoFolha
 
-=irsul          OK
-=irnorte        OK
+=irPara SUL          OK
+=irPara NORTE        OK
 
-=irsudeste      OK
-=irnoroeste     OK
+=irPara SUDESTE      OK
+=irPara NOROESTE     OK
 
-=ireste         OK
+=irPara ESTE         OK
 
 
 == Verificar ponteiros da posição "B1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 == Verificar ponteiros da posição "C1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 
 == Verificar ponteiros da posição "D1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 == Verificar ponteiros da posição "E1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 == Verificar ponteiros da posição "F1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 
 
 == Verificar ponteiros da posição "G1"
-=irnorte    NaoFolha
-=irnordeste NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=ireste     OK
+=irPara ESTE     OK
 
 
 == Verificar ponteiros da posição "H1"
-=irnorte    NaoFolha
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
-=irnoroeste NaoFolha
+=irPara NORTE    NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irsul      OK
+=irPara SUL      OK
 
 
 // Verificando ponteiros da 2a linha
 == Verificar ponteiros da posição "H2"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 == Verificar ponteiros da posição "G2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "F2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "E2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "D2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "C2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "B2"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "A2"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsul      OK
+=irPara SUL      OK
 
 
 // Verificando ponteiros da 3a linha
 == Verificar ponteiros da posição "A3"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=ireste      OK
+=irPara ESTE      OK
 
 
 
 == Verificar ponteiros da posição "B3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "C3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "D3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "E3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "F3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "G3"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 == Verificar ponteiros da posição "H3"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=irsul    OK
+=irPara SUL    OK
 
 
 // Verificando ponteiros da 4a linha
 == Verificar ponteiros da posição "H4"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 == Verificar ponteiros da posição "G4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "F4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "E4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "D4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "C4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "B4"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "A4"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsul      OK
+=irPara SUL      OK
 
 
 // Verificando ponteiros da 5a linha
 == Verificar ponteiros da posição "A5"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=ireste      OK
+=irPara ESTE      OK
 
 
 
 == Verificar ponteiros da posição "B5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "C5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "D5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "E5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "F5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "G5"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "H5"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=irsul    OK
+=irPara SUL    OK
 
 
 // Verificando ponteiros da 6a linha
 == Verificar ponteiros da posição "H6"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 == Verificar ponteiros da posição "G6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "F6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "E6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "D6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "C6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "B6"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "A6"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsul      OK
+=irPara SUL      OK
 
 
 // Verificando ponteiros da 7a linha
 == Verificar ponteiros da posição "A7"
-=iroeste    NaoFolha
-=irsudoeste NaoFolha
-=irnoroeste NaoFolha
+=irPara OESTE    NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=ireste      OK
+=irPara ESTE      OK
 
 
 
 == Verificar ponteiros da posição "B7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "C7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "D7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "E7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "F7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 == Verificar ponteiros da posição "G7"
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irsudeste  OK
-=irnoroeste OK
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=ireste    OK
+=irPara ESTE    OK
 
 
 
 == Verificar ponteiros da posição "H7"
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=irsul      OK
-=irnorte    OK
+=irPara SUL      OK
+=irPara NORTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irsudoeste OK
-=irnordeste OK
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=irsul    OK
+=irPara SUL    OK
 
 // Verificar ponteiros da 8a linha
 == Verificar ponteiros da posição "H8"
-=irsul      NaoFolha
-=ireste     NaoFolha
-=irnordeste NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara ESTE     NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 == Verificar ponteiros da posição "G8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "F8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 == Verificar ponteiros da posição "E8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 
 == Verificar ponteiros da posição "D8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 
 == Verificar ponteiros da posição "C8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 
 == Verificar ponteiros da posição "B8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=iroeste    OK
-=ireste     OK
+=irPara OESTE    OK
+=irPara ESTE     OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
-=irnoroeste OK
-=irsudeste  OK
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
 
-=iroeste    OK
+=irPara OESTE    OK
 
 
 
 
 == Verificar ponteiros da posição "A8"
-=irsul      NaoFolha
-=irsudeste  NaoFolha
-=irsudoeste NaoFolha
-=iroeste    NaoFolha
-=irnoroeste NaoFolha
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
+=irPara OESTE    NaoFolha
+=irPara NOROESTE NaoFolha
 
-=irnorte    OK
-=irsul      OK
+=irPara NORTE    OK
+=irPara SUL      OK
 
-=ireste     OK
-=iroeste    OK
+=irPara ESTE     OK
+=irPara OESTE    OK
 
-=irnordeste OK
-=irsudoeste OK
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
 
 // voltar origem
-=irnorte    OK
-=irnorte    OK
-=irnorte    OK
-=irnorte    OK
-=irnorte    OK
-=irnorte    OK
-=irnorte    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
+=irPara NORTE    OK
 
 
 == Destroi a matriz

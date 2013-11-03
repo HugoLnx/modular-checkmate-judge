@@ -75,8 +75,6 @@ typedef struct stCasa {
    static void EsvaziarMatriz( TAB_tpMatriz * pMatriz ) ;
 
    static TAB_tpCondRet AddColuna( TAB_tpMatriz * pMatriz ) ;
-   
-   static TAB_tpCondRet IrPara( TAB_tpMatriz * pMatriz , TAB_tpDirecao direcao );
 
    static TAB_tpCondRet InicializarMatriz(TAB_tpMatriz *pMatriz, int Linhas, int Colunas);
 
@@ -99,6 +97,22 @@ typedef struct stCasa {
    static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
    static int CompararNomeModeloPeca(void *pValor);
+   
+   static TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
+      TAB_tpTimePeca time, tpPeca **ppPeca);
+
+   static TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro,
+      tpPeca *pPeca, tpPegada *pPegAnt);
+   
+   static TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
+      tpPeca *pPeca, TAB_tpDirecao orientacao);
+
+   static TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
+      TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao);
+
+   static TAB_tpDirecao DirecaoOrientadaPara(TAB_tpDirecao direcao, TAB_tpDirecao orientacao);
+
+   static char* DirecaoComoString(TAB_tpDirecao direcao);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -130,136 +144,6 @@ typedef struct stCasa {
 
 		return TAB_CondRetOK;
    }
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó ao norte.
-*  ****/
-   TAB_tpCondRet TAB_IrNoNorte(TAB_tpMatriz *pMatriz)
-   {
-	   return IrPara( pMatriz , NORTE );
-   }
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó ao sul.
-*  ****/
-   TAB_tpCondRet TAB_IrNoSul( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , SUL );
-   }
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à este.
-*  ****/
-   TAB_tpCondRet TAB_IrNoEste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , ESTE );
-   }
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à oeste.
-*  ****/
-   TAB_tpCondRet TAB_IrNoOeste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , OESTE );
-   }
-
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à nordeste.
-*  ****/
-   TAB_tpCondRet TAB_IrNoNordeste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , NORDESTE );
-   }
-
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à sudeste.
-*  ****/
-   TAB_tpCondRet TAB_IrNoSudeste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , SUDESTE );
-   }
-
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à sudoeste.
-*  ****/
-   TAB_tpCondRet TAB_IrNoSudoeste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , SUDOESTE );
-   }
-
-
-
-
-/***************************************************************************
-*
-*  Função: MAT Ir para nó à noroeste.
-*  ****/
-   TAB_tpCondRet TAB_IrNoNoroeste( TAB_tpMatriz * pMatriz )
-   {
-	   return IrPara( pMatriz , NOROESTE );
-   }
-
-
-
-   TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa)
-   {
-      GRA_tpCondRet condRet;
-
-      if (pTabuleiro == NULL)
-      {
-         return TAB_CondRetMatrizNaoExiste;
-      }
-      
-      condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, nomeCasa);
-      if (condRet != GRA_CondRetOK)
-      {
-         return TAB_CondRetNaoEhNo;
-      }
-
-      return TAB_CondRetOK;
-   }
-
-/*****  Código das funções encapsuladas no módulo  *****/
-
-   char* DirecaoComoString(TAB_tpDirecao direcao)
-   {
-      switch(direcao)
-      {
-         case NORTE:     return "N" ; break;
-         case ESTE:      return "E" ; break;
-         case SUL:       return "S" ; break;
-         case OESTE:     return "O" ; break;
-         case NORDESTE:  return "NE"; break;
-         case SUDESTE:   return "SE"; break;
-         case SUDOESTE:  return "SO"; break;
-         case NOROESTE:  return "NO"; break;
-         default: return NULL;
-      }
-   }
-
 
    TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
       LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento)
@@ -305,59 +189,41 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
-   TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
-      TAB_tpTimePeca time, tpPeca **ppPeca)
-   {
-      tpPeca *pPeca;
-      tpModeloPeca *pModelo;
-
-      MEM_Alloc(sizeof(tpPeca), (void **) &pPeca);
-      
-      LIS_IrInicioLista(pTabuleiro->pModelosPecas);
-      LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
-      LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pModelo);
-      
-      pPeca->pModelo = pModelo;
-      pPeca->time = time;
-
-      *ppPeca = pPeca;
-   }
-
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time)
    {
       tpCasa *pCasa;
-      char *nomeCasa;
       
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
 
       CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
 
-      // TODO: Está faltando criar as pegadas
+      CriarPegadasDaPecaNaCasa(pTabuleiro, pCasa);
 
       return TAB_CondRetOK;
    }
 
 
-/***************************************************************************
-*
-*  $FC Função: MAT Ir para nó genérico.
-*  
-*  $ED Descrição da função
-*  Muda o nó corrente da matriz para o nó na direção apontada
-*  
-*  $EP Parâmetros
-*     pMatriz - ponteiro para matriz que manipulada.
-*     direcao - representa a direção que o nó corrente navegará.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
-*     TAB_CondRetNaoTemCorrente
-*     TAB_CondRetNaoEhNo
-*
-*  ****/
+   TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa)
+   {
+      GRA_tpCondRet condRet;
 
-   TAB_tpCondRet IrPara(TAB_tpMatriz *pMatriz , TAB_tpDirecao direcao)
+      if (pTabuleiro == NULL)
+      {
+         return TAB_CondRetMatrizNaoExiste;
+      }
+      
+      condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, nomeCasa);
+      if (condRet != GRA_CondRetOK)
+      {
+         return TAB_CondRetNaoEhNo;
+      }
+
+      return TAB_CondRetOK;
+   }
+
+
+
+   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pMatriz , TAB_tpDirecao direcao)
    {
       GRA_tpCondRet condRet;
       GRA_tppGrafo pGrafo;
@@ -379,6 +245,23 @@ typedef struct stCasa {
 
    }
 
+/*****  Código das funções encapsuladas no módulo  *****/
+
+   char* DirecaoComoString(TAB_tpDirecao direcao)
+   {
+      switch(direcao)
+      {
+         case NORTE:     return "N" ; break;
+         case ESTE:      return "E" ; break;
+         case SUL:       return "S" ; break;
+         case OESTE:     return "O" ; break;
+         case NORDESTE:  return "NE"; break;
+         case SUDESTE:   return "SE"; break;
+         case SUDOESTE:  return "SO"; break;
+         case NOROESTE:  return "NO"; break;
+         default: return NULL;
+      }
+   }
 
 
    
@@ -584,5 +467,128 @@ typedef struct stCasa {
 
       return strcmp(pModelo1->nome, nomeProcurado);
    }
+
+   TAB_tpDirecao DirecaoOrientadaPara(TAB_tpDirecao direcao, TAB_tpDirecao orientacao)
+   {
+      return (TAB_tpDirecao) (((int) direcao + (int) orientacao) % TOTAL_DIRECOES);
+   }
+
+   
+   TAB_tpCondRet CriarInstanciaDePeca(TAB_tpMatriz *pTabuleiro, char *nome,
+      TAB_tpTimePeca time, tpPeca **ppPeca)
+   {
+      tpPeca *pPeca;
+      tpModeloPeca *pModelo;
+
+      MEM_Alloc(sizeof(tpPeca), (void **) &pPeca);
+      
+      LIS_IrInicioLista(pTabuleiro->pModelosPecas);
+      LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
+      LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pModelo);
+      
+      pPeca->pModelo = pModelo;
+      pPeca->time = time;
+
+      *ppPeca = pPeca;
+   }
+
+   TAB_tpCondRet CriarPegadasDaPecaNaCasa(TAB_tpMatriz *pTabuleiro, tpCasa *pCasa)
+   {
+      TAB_tpCondRet condRet;
+      LIS_tppLista pPassos;
+      int estaVazia;
+      
+      pPassos = pCasa->pPeca->pModelo->pMovimento->passos;
+
+      LIS_EstaVazia(pPassos, &estaVazia);
+
+      if (estaVazia)
+      {
+         return TAB_CondRetOK;
+      }
+
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, NORTE);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, ESTE);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, SUL);
+      SeguirPassosDaPeca(pTabuleiro, pPassos, pCasa->pPeca, OESTE);
+
+      return TAB_CondRetOK;
+   }
+
+   TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
+      tpPeca *pPeca, TAB_tpDirecao orientacao)
+   {
+      TAB_tpCondRet tabCondRet;
+      LIS_tpCondRet lisCondRet = LIS_CondRetOK;
+    
+      LIS_IrInicioLista(pPassos);
+      while (lisCondRet == LIS_CondRetOK)
+      {
+         TAB_tpPasso *pPasso;
+         LIS_ObterValor(pPassos, (void **) &pPasso);
+         
+         tabCondRet = SeguirPassoDaPeca(pTabuleiro, pPasso, pPeca, orientacao);
+         
+         if (tabCondRet != TAB_CondRetOK)
+         {
+            break;
+         }
+
+         lisCondRet = LIS_AvancarElementoCorrente(pPassos, 1);
+      }
+
+      if (pPeca->pModelo->pMovimento->tipo == VOA && tabCondRet == TAB_CondRetOK)
+      {
+         InserirPegadaDaPecaNaCasaAtual(pTabuleiro, pPeca, NULL);
+      }
+
+      return TAB_CondRetOK;
+
+   }
+
+
+   TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
+      TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao)
+   {
+      TAB_tpDirecao direcao;
+      tpPegada *pPegAnt = NULL;
+      int i;
+
+      direcao = DirecaoOrientadaPara(pPasso->direcao, orientacao);
+      for (i = 0; i < pPasso->quantidade; i++)
+      {
+         TAB_tpCondRet condRet;
+         condRet = TAB_IrPara(pTabuleiro, direcao);
+         if (condRet != TAB_CondRetOK)
+         {
+            // chegou no final do tabuleiro
+            return TAB_CondRetNaoEhNo;
+         }
+
+         if (pPeca->pModelo->pMovimento->tipo == ANDA)
+         {
+            InserirPegadaDaPecaNaCasaAtual(pTabuleiro, pPeca, pPegAnt);
+         }
+      }
+   }
+
+   
+   TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
+      tpPegada *pPegAnt)
+   {
+      tpCasa *pCasaAtual;
+      tpPegada *pPegada;
+      
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasaAtual);
+      
+      MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
+      pPegada->pAnterior = pPegAnt;
+      pPegada->pPeca = pPeca;
+
+      LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
+      pPegAnt = pPegada;
+   }
+
+
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

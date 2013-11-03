@@ -19,20 +19,15 @@
 *  $EIU Interface com o usuário pessoa
 *     Comandos de teste específicos para testar o módulo matriz:
 *
-*     "=criar"                                   - chama a função TAB_CriarMatriz( )
-*     "=irnorte"                                 - chama a função TAB_IrNorte( )
-*     "=irsul"                                   - chama a função TAB_IrSul( )
-*     "=ireste"                                  - chama a função TAB_IrEste( )
-*     "=iroeste"                                 - chama a função TAB_IrOeste( )
-*     "=irnordeste"                              - chama a função TAB_IrNordeste( )
-*     "=irsudeste"                               - chama a função TAB_IrSudeste( )
-*     "=irsudoeste"                              - chama a função TAB_IrSudoeste( )
-*     "=irnoroeste"                              - chama a função TAB_IrNoroeste( )
-*     "=atribuir" <Char>                         - chama a função TAB_AtribuirValorCorr(  )
-*     "=destroi"                                 - chama a função TAB_DestruirMatriz( )
-*     "=obter" <Char>                            - chama a função TAB_ObterValorCorr( ) e compara
-*                                                  o valor retornado com o valor <Char>
-*     "=alterarPeca  nomeAtual   novoNome   novosPassos   novoTipoMovimento   condRet
+*
+*     "=criar"           - chama a função TAB_CriarMatriz( )
+*     "=irPara"         - chama a função TAB_IrPara( )
+*     "=atribuir" <Char> - chama a função TAB_AtribuirValorCorr(  )
+*     "=destroi"         - chama a função TAB_DestruirMatriz( )
+*     "=obter" <Char>    - chama a função TAB_ObterValorCorr( ) e compara
+*                          o valor retornado com o valor <Char>
+*=alterarPeca  nomeAtual   novoNome   novosPassos   novoTipoMovimento   condRet
+*
 *
 ***************************************************************************/
 
@@ -57,14 +52,7 @@
 #define     ATRIBUIR_VAL_CMD    "=atribuir"
 #define     DESTROI_CMD         "=destruir"
 
-#define     IR_NORTE_CMD       "=irnorte"
-#define     IR_SUL_CMD         "=irsul"
-#define     IR_ESTE_CMD        "=ireste"
-#define     IR_OESTE_CMD       "=iroeste"
-#define     IR_NORDESTE_CMD    "=irnordeste"
-#define     IR_SUDESTE_CMD     "=irsudeste"
-#define     IR_SUDOESTE_CMD    "=irsudoeste"
-#define     IR_NOROESTE_CMD    "=irnoroeste"
+#define     IR_PARA_CMD       "=irPara"
 #define     IR_CASA_CMD        "=ircasa"
 #define     CRIAR_PECA_CMD     "=criarPeca"
 #define     ALTERAR_PECA_CMD   "=alterarPeca"
@@ -168,146 +156,21 @@ static int iMat = 0 ;
          } /* fim ativa: Testar TAB Destruir matriz */
 
 		 
-      /* Testar TAB Ir norte */
+      /* Testar TAB Ir para */
 
-		 else if ( strcmp( ComandoTeste , IR_NORTE_CMD ) == 0 )
+		 else if ( strcmp( ComandoTeste , IR_PARA_CMD ) == 0 )
          {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
+            int iDirecao;
+			   NumLidos = LER_LerParametros("ii" , &iDirecao, &CondRetEsperada);
+            if (NumLidos != 2)
             {
                return TST_CondRetParm ;
-            } /* if */
+            }
 
-			CondRetObtido = TAB_IrNoNorte( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Norte.") ;
-
-         } /* fim ativa: Testar TAB Ir norte */
-
-
-		/* Testar TAB Ir sul */
-
-		 else if ( strcmp( ComandoTeste , IR_SUL_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoSul( Matrizes[iMat] ) ;
+			   CondRetObtido = TAB_IrPara(Matrizes[iMat], (TAB_tpDirecao) iDirecao);
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Sul.") ;
-
-         } /* fim ativa: Testar TAB Ir sul */
-
-
-		/* Testar TAB Ir este */
-
-		 else if ( strcmp( ComandoTeste , IR_ESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoEste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Este.") ;
-
-         } /* fim ativa: Testar TAB Ir este */
-
-
-		/* Testar TAB Ir oeste */
-
-		 else if ( strcmp( ComandoTeste , IR_OESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoOeste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Oeste.") ;
-
-         } /* fim ativa: Testar TAB Ir oeste */
-
-		 
-		/* Testar TAB Ir nordeste */
-
-		 else if ( strcmp( ComandoTeste , IR_NORDESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoNordeste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Nordeste.") ;
-
-         } /* fim ativa: Testar TAB Ir nordeste */
-
-
-		/* Testar TAB Ir sudeste */
-
-		 else if ( strcmp( ComandoTeste , IR_SUDESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoSudeste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Sudeste.") ;
-
-         } /* fim ativa: Testar TAB Ir sudeste */
-
-
-		/* Testar TAB Ir sudoeste */
-
-		 else if ( strcmp( ComandoTeste , IR_SUDOESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoSudoeste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Sudoeste.") ;
-
-         } /* fim ativa: Testar TAB Ir sudoeste */
-
-
-		/* Testar TAB Ir noroeste */
-
-		 else if ( strcmp( ComandoTeste , IR_NOROESTE_CMD ) == 0 )
-         {
-			NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
-            if ( NumLidos != 1 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-			CondRetObtido = TAB_IrNoNoroeste( Matrizes[iMat] ) ;
-
-            return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não foi possível ir para Noroeste.") ;
+									"Não foi possível ir para essa direcao.") ;
 
          }
 
