@@ -114,6 +114,8 @@ typedef struct TAB_stPasso
 
    TAB_tpCondRet TAB_InserirRei(TAB_tpMatriz *pTabuleiro);
 
+   TAB_tpCondRet TAB_IrCasaRei(TAB_tpMatriz *pTabuleiro);
+
 /***********************************************************************
 *
 *  $FC Função: TAB Destruir matriz

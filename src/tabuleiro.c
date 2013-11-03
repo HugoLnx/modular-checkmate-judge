@@ -315,6 +315,13 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet TAB_IrCasaRei(TAB_tpMatriz *pTabuleiro)
+   {
+      GRA_IrParaAOrigem(pTabuleiro->pGrafo, pTabuleiro->pCasaRei->nome);
+
+      return TAB_CondRetOK;
+   }
+
 
 
    TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pMatriz , TAB_tpDirecao direcao)

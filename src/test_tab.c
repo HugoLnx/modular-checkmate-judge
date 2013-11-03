@@ -60,6 +60,7 @@
 #define     INSERIR_PECA_CMD   "=inserirPeca"
 #define     REMOVER_PECA_CMD   "=removerPeca"
 #define     INSERIR_REI_CMD    "=inserirRei"
+#define     IR_REI_CMD         "=ircasarei"
 
 #define     FIM_CMD         "=fim"
 
@@ -198,6 +199,24 @@ static int iMat = 0 ;
 								"Não foi possível ir para a casa.") ;
 
          }
+
+
+		/* Testar TAB Ir casa rei */
+
+		 else if (strcmp(ComandoTeste, IR_REI_CMD) == 0)
+       {
+           NumLidos = LER_LerParametros("i", &CondRetEsperada);
+           if (NumLidos != 1)
+           {
+              return TST_CondRetParm ;
+           }
+           
+           CondRetObtido = TAB_IrCasaRei(Matrizes[iMat]) ;
+           
+           return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+               "Não foi possível ir para a casa do rei.") ;
+
+       }
 
 
 		/* Testar TAB Criar peca*/
