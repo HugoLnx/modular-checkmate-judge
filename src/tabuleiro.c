@@ -228,6 +228,31 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet TAB_AlterarPeca(TAB_tpMatriz *pTabuleiro, char *nomeAtual, char* nomeNovo,
+      LIS_tppLista pNovosPassos, TAB_tpTipoMovimento novoTipoMovimento)
+   {
+      tpModeloPeca *pModelo;
+      LIS_tpCondRet lisCondRet;
+
+      LIS_IrInicioLista(pTabuleiro->pModelosPecas);
+      
+      lisCondRet = LIS_ProcurarValor(pTabuleiro->pModelosPecas,nomeAtual);
+
+      if(lisCondRet != LIS_CondRetOK)
+      {
+         return TAB_CondRetPecaNaoEncontrada;
+      }
+
+      LIS_ObterValor(pTabuleiro->pModelosPecas, &pModelo);
+
+      MEM_Free(pModelo->nome);
+      pModelo->nome = nomeNovo;
+      pModelo->pMovimento->passos= pNovosPassos;
+      pModelo->pMovimento->tipo = novoTipoMovimento;
+
+      return TAB_CondRetOK;
+   }
+
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time)
    {
       tpCasa *pCasa;
