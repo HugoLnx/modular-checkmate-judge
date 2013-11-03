@@ -5,6 +5,7 @@
 #include"input_string_parser.h"
 #include"tabuleiro.h"
 
+static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time);
 
 int main()
 {
@@ -24,7 +25,7 @@ int main()
       printf("7  - Checar xeque mate\n");
       printf("8  - Salvar jogo\n");
       printf("9  - Carregar jogo\n");
-      printf("10  - Resetar jogo\n");
+      printf("10 - Resetar jogo\n");
       printf("11 - Sair\n");
 
 
@@ -96,6 +97,18 @@ int main()
             system("cls");
 
          }break;
+
+      case  3:
+         {
+              MenuInserirPeca(ppTabuleiro,0);
+
+         }break;
+
+      case 4:
+         {
+              MenuInserirPeca(ppTabuleiro,1);
+
+         }break;
       case 11:
          {
             TAB_DestruirMatriz(&ppTabuleiro);
@@ -113,3 +126,48 @@ int main()
 
    return 0;
 }
+
+static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time)
+{
+   //TODO [RCS] checar porque não consigo usar TAB_tpTimePeca
+
+   char *nome, *nomeCasa;
+   TAB_tpCondRet tabCondRet;
+
+   MEM_Alloc(sizeof(char)*20,(void**)&nome);
+   MEM_Alloc(sizeof(char)*2,(void**)&nomeCasa);
+
+   printf("Nome da peca: ");
+   scanf("%s", nome);
+
+   printf("Nome da casa que deseja inserir a peca: ");
+   scanf("%s", nomeCasa);
+
+   nomeCasa[0] = toupper(nomeCasa[0]);
+
+   tabCondRet = TAB_IrCasa(ppTabuleiro,nomeCasa);
+
+   if(tabCondRet == TAB_CondRetNaoEhNo)
+   {
+      printf("\nErro ao inserir - Casa nao existe!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   tabCondRet = TAB_InserirPeca(ppTabuleiro,nome,time);
+
+   if(tabCondRet == TAB_CondRetPecaNaoEncontrada)
+   {
+      printf("\nErro ao inserir - Peca nao encontrada!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   printf("\nPeca inserida com sucesso!\n");
+   system("pause");
+   system("cls");
+
+}
+

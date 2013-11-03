@@ -72,13 +72,13 @@
 =alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
 
 
-== Inserir cavalo aliado no A1
+== Inserir torre aliado no A1
 =ircasa "A1"                   OK
-=inserirPeca "cavalo" ALIADA   OK
+=inserirPeca "torre" ALIADA    OK
 
-== Inserir cavalo inimigo no A2
+== Inserir zorro inimigo no A2
 =ircasa "A2"                   OK
-=inserirPeca "cavalo" INIMIGA  OK
+=inserirPeca "zorro" INIMIGA   OK
 
 
 // Navegando por todo o tabuleiro pelo nome da casa

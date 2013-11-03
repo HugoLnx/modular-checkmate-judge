@@ -192,10 +192,15 @@ typedef struct stCasa {
    TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time)
    {
       tpCasa *pCasa;
-      
+      TAB_tpCondRet tabCondRet;
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **)&pCasa);
 
-      CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
+      tabCondRet = CriarInstanciaDePeca(pTabuleiro, nome, time, &pCasa->pPeca);
+
+      if(tabCondRet != TAB_CondRetOK)
+      {
+         return tabCondRet;
+      }
 
       CriarPegadasDaPecaNaCasa(pTabuleiro, pCasa);
 
@@ -479,17 +484,23 @@ typedef struct stCasa {
    {
       tpPeca *pPeca;
       tpModeloPeca *pModelo;
-
+      LIS_tpCondRet lisCondRet;
       MEM_Alloc(sizeof(tpPeca), (void **) &pPeca);
       
       LIS_IrInicioLista(pTabuleiro->pModelosPecas);
-      LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
+      lisCondRet = LIS_ProcurarValor(pTabuleiro->pModelosPecas, nome);
+      if(lisCondRet != LIS_CondRetOK)
+      {
+         return TAB_CondRetPecaNaoEncontrada;
+      }
       LIS_ObterValor(pTabuleiro->pModelosPecas, (void**) &pModelo);
       
       pPeca->pModelo = pModelo;
       pPeca->time = time;
 
       *ppPeca = pPeca;
+
+      return TAB_CondRetOK;
    }
 
    TAB_tpCondRet CriarPegadasDaPecaNaCasa(TAB_tpMatriz *pTabuleiro, tpCasa *pCasa)
