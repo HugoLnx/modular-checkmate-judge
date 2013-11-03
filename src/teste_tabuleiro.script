@@ -80,13 +80,24 @@
 =ircasa "A2"                   OK
 =inserirPeca "zorro" INIMIGA   OK
 
+== Testar inserir rei
+=ircasa "C5" OK
+=inserirRei  OK
+
 == Teste copiar tabuleiro
 =copiarTabuleiro 1 OK
 
-== Teste remover peca
 =selecionar 1
+== Teste remover peca
 =ircasa "A2" OK
 =removerPeca OK
+
+== Testar ir casa rei
+=ircasarei   OK
+
+== Testar remover rei
+=ircasa "H1" OK
+=removerRei  OK
 =selecionar 0
 
 // Navegando por todo o tabuleiro pelo nome da casa
