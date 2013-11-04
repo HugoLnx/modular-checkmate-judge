@@ -444,6 +444,11 @@ typedef struct stCasa {
          if (TAB_IrPara(pTabuleiro, direcao) == TAB_CondRetOK)
          {
             GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+            if (pCasa->pPeca && pCasa->pPeca->time == ALIADA)
+            {
+               continue;
+            }
+
             TAB_AlgumaPegadaInimiga(pTabuleiro, &temPegadaInimiga);
             if (!temPegadaInimiga) {
                *pResposta = 0;

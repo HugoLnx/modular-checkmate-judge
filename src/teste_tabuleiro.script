@@ -262,6 +262,24 @@
 =destruir                         OK
 
 
+
+== Testar EhCheckmate? rei não se salva pois aliados impedem passagem
+=selecionar 5
+=copiarTabuleiro 2                OK
+=selecionar 2
+=ircasa "A1"                      OK
+=inserirRei                       OK
+=ircasa "A5"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "B1"                      OK
+=inserirPeca "peao"   ALIADA      OK
+=ircasa "B2"                      OK
+=inserirPeca "peao"   ALIADA      OK
+=criarPegadas                     OK
+=ehCheckmate? TRUE                OK
+=destruir                         OK
+
+
 == Testar EhCheckmate? rei pode fugir pois a peça voa
 =selecionar 5
 =copiarTabuleiro 2                     OK
