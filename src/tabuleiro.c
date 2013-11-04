@@ -70,8 +70,6 @@ typedef struct stCasa {
          tpCasa *pCasaRei;
    } TAB_tpMatriz;
 
-
-   
    typedef TAB_tpCondRet (*tpCallbackIterarCasasAlcancePeca)
       (TAB_tpMatriz *pTabuleiro, tpPeca *pPeca, tpPegada *pPegAnt);
 
@@ -121,6 +119,13 @@ typedef struct stCasa {
 
    static TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
       TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
+      tpCallbackIterarCasasAlcancePeca operar);
+
+   static TAB_tpCondRet SeguirDirecaoAteNaoPoderMais(TAB_tpMatriz *pTabuleiro,
+      TAB_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
+   
+   static TAB_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(TAB_tpMatriz *pTabuleiro,
+      TAB_tpDirecao direcao, int quantidade, tpPeca *pPeca,
       tpCallbackIterarCasasAlcancePeca operar);
 
    static TAB_tpCondRet RemoverPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
@@ -239,6 +244,35 @@ typedef struct stCasa {
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet TAB_CriarPegadas(TAB_tpMatriz *pTabuleiro)
+   {
+      tpCasa *pCasaOriginal;
+      int x, y;
+
+      GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasaOriginal);
+
+      for (x = 0; x < LARGURA; x++)
+      {
+         for (y = 0; y < ALTURA; y++)
+         {
+            tpCasa *pCasa;
+            char *nome = NomeDaCasa(x, y);
+            TAB_IrCasa(pTabuleiro, nome);
+
+            GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+
+            if (pCasa->pPeca && pCasa->pPeca->pModelo)
+            {
+               IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, InserirPegadaDaPecaNaCasaAtual);
+            }
+         }
+      }
+
+      TAB_IrCasa(pTabuleiro, pCasaOriginal->nome);
+
+      return TAB_CondRetOK;
+   }
+
    TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
       LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento)
    {
@@ -306,10 +340,6 @@ typedef struct stCasa {
          return tabCondRet;
       }
 
-      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, InserirPegadaDaPecaNaCasaAtual);
-
-      TAB_IrCasa(pTabuleiro, pCasa->nome);
-
       return TAB_CondRetOK;
    }
 
@@ -323,10 +353,6 @@ typedef struct stCasa {
       {
          return TAB_CondRetPecaNaoEncontrada;
       }
-
-      IterarPelasCasasDeAlcanceDaPeca(pTabuleiro, pCasa, RemoverPegadaDaPecaNaCasaAtual);
-
-      TAB_IrCasa(pTabuleiro, pCasa->nome);
 
       DestruirPeca(pCasa->pPeca);
       pCasa->pPeca = NULL;
@@ -823,17 +849,38 @@ typedef struct stCasa {
 
    }
 
-
    TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
       TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar)
    {
+      TAB_tpCondRet condRet;
       TAB_tpDirecao direcao;
-      tpPegada *pPegAnt = NULL;
-      int i;
 
       direcao = DirecaoOrientadaPara(pPasso->direcao, orientacao);
-      for (i = 0; i < pPasso->quantidade; i++)
+
+      if (pPasso->quantidade == 0)
+      {
+         condRet = SeguirDirecaoAteNaoPoderMais(pTabuleiro, direcao, pPeca, operar);
+      }
+      else
+      {
+         condRet = SeguirDirecaoEmUmaQuantidadeFixaDeVezes(pTabuleiro, direcao,
+            pPasso->quantidade, pPeca, operar);
+      }
+
+      return condRet;
+   }
+
+
+
+   TAB_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(TAB_tpMatriz *pTabuleiro,
+      TAB_tpDirecao direcao, int quantidade, tpPeca *pPeca,
+      tpCallbackIterarCasasAlcancePeca operar)
+   {
+      tpPeca *pPecaBarreirando = NULL;
+      tpPegada *pPegAnt = NULL;
+      int i;
+      for (i = 0; i < quantidade && !pPecaBarreirando; i++)
       {
          TAB_tpCondRet condRet;
          condRet = TAB_IrPara(pTabuleiro, direcao);
@@ -845,8 +892,38 @@ typedef struct stCasa {
 
          if (pPeca->pModelo->pMovimento->tipo == ANDA)
          {
+            tpCasa *pCasa;
+            GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+            pPecaBarreirando = pCasa->pPeca;
+
             operar(pTabuleiro, pPeca, pPegAnt);
          }
+
+      }
+      return TAB_CondRetOK;
+   }
+
+   
+   TAB_tpCondRet SeguirDirecaoAteNaoPoderMais(TAB_tpMatriz *pTabuleiro,
+      TAB_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
+   {
+      tpPegada *pPegAnt = NULL;
+      tpPeca *pPecaBarreirando = NULL;
+      int i;
+      TAB_tpCondRet condRet;
+      condRet = TAB_IrPara(pTabuleiro, direcao);
+      while(condRet == TAB_CondRetOK && !pPecaBarreirando)
+      {
+         if (pPeca->pModelo->pMovimento->tipo == ANDA)
+         {
+            tpCasa *pCasa;
+            GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+            pPecaBarreirando = pCasa->pPeca;
+
+            operar(pTabuleiro, pPeca, pPegAnt);
+         }
+
+         condRet = TAB_IrPara(pTabuleiro, direcao);
       }
 
       return TAB_CondRetOK;

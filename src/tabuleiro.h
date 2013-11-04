@@ -120,6 +120,8 @@ typedef struct TAB_stPasso
    
    TAB_tpCondRet TAB_EhCheckmate(TAB_tpMatriz *pTabuleiro, int *pResposta);
 
+   TAB_tpCondRet TAB_CriarPegadas(TAB_tpMatriz *pTabuleiro);
+
 /***********************************************************************
 *
 *  $FC Função: TAB Destruir matriz

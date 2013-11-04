@@ -83,6 +83,9 @@
 =ircasa "D4"                   OK
 =inserirPeca "zorro" INIMIGA   OK
 
+== Criar pegadas do tabuleiro
+=criarPegadas OK
+
 == Verificar pegadas do zorro
 // pegadas com orientacao norte
 =ircasa "E4"         OK
@@ -190,8 +193,9 @@
 =criar OK
 =criarPeca   "cavalo"                 "[2]norte [1]este"                   VOA  OK
 =criarPeca   "zorro"                  "[2]este [2]sudoeste [2]este"        ANDA OK
-=criarPeca   "touro"                  "[2]norte"                           ANDA OK
-=alterarPeca "cavalo" "torreAlada"  "[2]norte"                           VOA  OK
+=criarPeca   "touro"                  "[0]norte"                           ANDA OK
+=criarPeca   "peao"                   "[1]norte"                           ANDA OK
+=alterarPeca "cavalo" "torreAlada"    "[2]norte"                           VOA  OK
 
 
 == Testar EhCheckmate? rei sozinho
@@ -200,6 +204,7 @@
 =selecionar 2
 =ircasa "A1"                      OK
 =inserirRei                       OK
+=criarPegadas                     OK
 =ehCheckmate? FALSE               OK
 =destruir                         OK
 
@@ -208,13 +213,14 @@
 == Testar EhCheckmate? check, mas não checkmate
 =selecionar 5
 =copiarTabuleiro 2                OK
-=selecionar 2		          
+=selecionar 2
 =ircasa "A1"                      OK
 =inserirRei                       OK
 =ircasa "A3"                      OK
 =inserirPeca "touro"  INIMIGA     OK
 =ircasa "C1"                      OK
 =inserirPeca "touro"  INIMIGA     OK
+=criarPegadas                     OK
 =ehCheckmate? FALSE               OK
 =destruir                         OK
 
@@ -232,24 +238,45 @@
 =inserirPeca "touro"  INIMIGA     OK
 =ircasa "C2"                      OK
 =inserirPeca "touro"  INIMIGA     OK
+=criarPegadas                     OK
 =ehCheckmate? TRUE                OK
 =destruir                         OK
 
 
-== Testar EhCheckmate? rei pode fugir pois a peça voa
+== Testar EhCheckmate? rei se salva pois peça anda e tem outra peça na frente
 =selecionar 5
 =copiarTabuleiro 2                OK
 =selecionar 2
 =ircasa "A1"                      OK
 =inserirRei                       OK
-=ircasa "A3"                      OK
-=inserirPeca "torreAlada"  INIMIGA     OK
-=ircasa "C1"                      OK
-=inserirPeca "torreAlada"  INIMIGA     OK
+=ircasa "A5"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "E1"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "E2"                      OK
+=inserirPeca "touro"  INIMIGA     OK
 =ircasa "C2"                      OK
-=inserirPeca "torreAlada"  INIMIGA     OK
+=inserirPeca "peao"   ALIADA      OK
+=criarPegadas                     OK
 =ehCheckmate? FALSE               OK
 =destruir                         OK
+
+
+== Testar EhCheckmate? rei pode fugir pois a peça voa
+=selecionar 5
+=copiarTabuleiro 2                     OK
+=selecionar 2
+=criarPegadas                          OK
+=ircasa "A1"                           OK
+=inserirRei                            OK
+=ircasa "A3"                           OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ircasa "C1"                           OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ircasa "C2"                           OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ehCheckmate? FALSE                    OK
+=destruir                              OK
 
 
 == Destruir tabuleiro com as peças para os testes de checkmate

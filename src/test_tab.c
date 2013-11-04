@@ -63,7 +63,8 @@
 #define     REMOVER_REI_CMD    "=removerRei"
 #define     IR_REI_CMD         "=ircasarei"
 #define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
-#define     EH_CHECKMATE_CMD "=ehCheckmate?"
+#define     EH_CHECKMATE_CMD   "=ehCheckmate?"
+#define     CRIAR_PEG_CMD      "=criarPegadas"
 
 #define     FIM_CMD         "=fim"
 
@@ -134,7 +135,7 @@ static int iMat = 0 ;
             if ( NumLidos != 1 )
             {
                return TST_CondRetParm ;
-            } /* if */
+            }
 
             CondRetObtido = TAB_CriarTabuleiro( Matrizes + iMat ) ;
 
@@ -153,7 +154,7 @@ static int iMat = 0 ;
             if ( NumLidos != 1 )
             {
                return TST_CondRetParm ;
-            } /* if */
+            }
 
             CondRetObtido = TAB_DestruirMatriz( Matrizes + iMat ) ;
 
@@ -360,6 +361,25 @@ static int iMat = 0 ;
 
        }
        
+       
+       
+		/* Testar TAB Criar pegadas */
+
+		 else if (strcmp( ComandoTeste, CRIAR_PEG_CMD) == 0 )
+       {
+			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+          if (NumLidos != 1)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = TAB_CriarPegadas(Matrizes[iMat]);
+          
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível criar as pegadas.");
+
+       }
+
 
 		/* Testar TAB Inserir rei */
 
