@@ -72,8 +72,8 @@ typedef struct stCasa {
 
 
    
-   typedef TAB_tpCondRet (*tpCallbackIterarCasasAlcancePeca)(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
-      tpPegada *pPegAnt);
+   typedef TAB_tpCondRet (*tpCallbackIterarCasasAlcancePeca)
+      (TAB_tpMatriz *pTabuleiro, tpPeca *pPeca, tpPegada *pPegAnt);
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -273,9 +273,10 @@ typedef struct stCasa {
          return TAB_CondRetPecaNaoEncontrada;
       }
 
-      LIS_ObterValor(pTabuleiro->pModelosPecas, &pModelo);
+      LIS_ObterValor(pTabuleiro->pModelosPecas, (void **) &pModelo);
 
       MEM_Free(pModelo->nome);
+
       pModelo->nome = nomeNovo;
       pModelo->pMovimento->passos= pNovosPassos;
       pModelo->pMovimento->tipo = novoTipoMovimento;
@@ -388,7 +389,45 @@ typedef struct stCasa {
      }
 
 	  return TAB_CondRetOK ;
+   }
 
+   
+   TAB_tpCondRet TAB_EhCheckmate(TAB_tpMatriz *pTabuleiro, int *pResposta)
+   {
+      TAB_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
+         NORTE, NORDESTE, ESTE, SUDESTE,
+         SUL, SUDOESTE, OESTE, NOROESTE
+      };
+      tpCasa *pCasa;
+      int i;
+      int temPegadaInimiga;
+      TAB_IrCasaRei(pTabuleiro);
+
+      TAB_AlgumaPegadaInimiga(pTabuleiro, &temPegadaInimiga);
+      if (!temPegadaInimiga)
+      {
+         *pResposta = 0;
+         return TAB_CondRetOK;
+      }
+
+      for (i = 0; i < TOTAL_DIRECOES; i++)
+      {
+         TAB_tpDirecao direcao = DIRECOES[i];
+         
+         TAB_IrCasaRei(pTabuleiro);
+         if (TAB_IrPara(pTabuleiro, direcao) == TAB_CondRetOK)
+         {
+            GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pCasa);
+            TAB_AlgumaPegadaInimiga(pTabuleiro, &temPegadaInimiga);
+            if (!temPegadaInimiga) {
+               *pResposta = 0;
+               return TAB_CondRetOK;
+            }
+         }
+      }
+
+      *pResposta = 1;
+      return TAB_CondRetOK;
    }
 
 /*****  Código das funções encapsuladas no módulo  *****/

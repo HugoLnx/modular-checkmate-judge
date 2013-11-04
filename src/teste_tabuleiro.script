@@ -37,7 +37,7 @@
 =declararparm  NOROESTE     int 7
 
 == Verificar erros nas operações inválidas quando a está matriz inexistente
-=destruir              NaoMatriz
+=destruir                   NaoMatriz
 =irPara NORTE               NaoMatriz
 =irPara SUL                 NaoMatriz
 =irPara ESTE                NaoMatriz
@@ -46,7 +46,7 @@
 =irPara SUDESTE             NaoMatriz
 =irPara SUDOESTE            NaoMatriz
 =irPara NOROESTE            NaoMatriz
-=ircasa       "X0"     NaoMatriz
+=ircasa       "X0"          NaoMatriz
 
 == Verificar comando recuperar
 =destruir OK
@@ -69,11 +69,11 @@
 =criarPeca  "cavalo"     "[2]norte [1]este"                   VOA  OK
 =criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
 =criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
+=criarPeca  "touro"      "[2]norte"                           ANDA OK
 
 == Testar alteracao de peça
 =alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
 =alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
-
 
 == Inserir torre aliado no A1
 =ircasa "A1"                   OK
@@ -183,6 +183,78 @@
 == Testar remover rei
 =ircasa "H1" OK
 =removerRei  OK
+=selecionar 0
+
+== Criar tabuleiro com as peças para testes checkmate
+=selecionar 5
+=criar OK
+=criarPeca   "cavalo"                 "[2]norte [1]este"                   VOA  OK
+=criarPeca   "zorro"                  "[2]este [2]sudoeste [2]este"        ANDA OK
+=criarPeca   "touro"                  "[2]norte"                           ANDA OK
+=alterarPeca "cavalo" "torreAlada"  "[2]norte"                           VOA  OK
+
+
+== Testar EhCheckmate? rei sozinho
+=selecionar 5
+=copiarTabuleiro 2                OK
+=selecionar 2
+=ircasa "A1"                      OK
+=inserirRei                       OK
+=ehCheckmate? FALSE               OK
+=destruir                         OK
+
+
+
+== Testar EhCheckmate? check, mas não checkmate
+=selecionar 5
+=copiarTabuleiro 2                OK
+=selecionar 2		          
+=ircasa "A1"                      OK
+=inserirRei                       OK
+=ircasa "A3"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "C1"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ehCheckmate? FALSE               OK
+=destruir                         OK
+
+
+
+== Testar EhCheckmate? rei totalmente encurralado
+=selecionar 5
+=copiarTabuleiro 2                OK
+=selecionar 2
+=ircasa "A1"                      OK
+=inserirRei                       OK
+=ircasa "A3"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "C1"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ircasa "C2"                      OK
+=inserirPeca "touro"  INIMIGA     OK
+=ehCheckmate? TRUE                OK
+=destruir                         OK
+
+
+== Testar EhCheckmate? rei pode fugir pois a peça voa
+=selecionar 5
+=copiarTabuleiro 2                OK
+=selecionar 2
+=ircasa "A1"                      OK
+=inserirRei                       OK
+=ircasa "A3"                      OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ircasa "C1"                      OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ircasa "C2"                      OK
+=inserirPeca "torreAlada"  INIMIGA     OK
+=ehCheckmate? FALSE               OK
+=destruir                         OK
+
+
+== Destruir tabuleiro com as peças para os testes de checkmate
+=selecionar 5
+=destruir OK
 =selecionar 0
 
 // Navegando por todo o tabuleiro pelo nome da casa

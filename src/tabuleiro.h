@@ -117,6 +117,8 @@ typedef struct TAB_stPasso
    TAB_tpCondRet TAB_RemoverRei(TAB_tpMatriz *pTabuleiro);
 
    TAB_tpCondRet TAB_IrCasaRei(TAB_tpMatriz *pTabuleiro);
+   
+   TAB_tpCondRet TAB_EhCheckmate(TAB_tpMatriz *pTabuleiro, int *pResposta);
 
 /***********************************************************************
 *

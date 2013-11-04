@@ -1,2 +1,5 @@
-Corrigir o CompararPegadas
 Função para comparar passos
+Ao gerar as pegadas, se não der para completar o percurso, não cria as pegadas incompletas. (agora está fazendo isso)
+Fazer [*]norte funcionar (ainda não está funcionando)
+Fazer não criar pegadas caso tenha uma peça na frente.
+Verificar se remover peca está removendo o modelo junto

@@ -63,6 +63,7 @@
 #define     REMOVER_REI_CMD    "=removerRei"
 #define     IR_REI_CMD         "=ircasarei"
 #define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
+#define     EH_CHECKMATE_CMD "=ehCheckmate?"
 
 #define     FIM_CMD         "=fim"
 
@@ -74,7 +75,7 @@
 #define     VALORES_SIZE     9
 #define     TABULEIROES_SIZE 10
 #define     MAX_PASSOS_STR   50
-#define     MAX_NOME_PECA    10
+#define     MAX_NOME_PECA    30
 /*****  Código das funções exportadas pelo módulo  *****/
 int IndiceDoValor( LIS_tppLista Valor );
 void PreencherArrayDeValores();
@@ -406,6 +407,36 @@ static int iMat = 0 ;
                      "Foi obtida uma resposta diferente da esperada");
 
        }
+       
+
+		/* Testar TAB Eh checkmate*/
+
+		 else if (strcmp( ComandoTeste, EH_CHECKMATE_CMD) == 0 )
+       {
+          int respostaEsperada, respostaObtida;
+          TST_tpCondRet condRet;
+			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
+          
+          if (NumLidos != 2)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = TAB_EhCheckmate(Matrizes[iMat], &respostaObtida);
+          
+          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
+                     "Não foi possível verificar se eh checkmate.");
+
+          if (condRet != TST_CondRetOK)
+          {
+             return condRet;
+          }
+
+          return TST_CompararInt(respostaEsperada, respostaObtida,
+                     "Foi obtida uma resposta diferente da esperada para a verificação de checkmate");
+
+       }
+
 
 
       /* Testar Selecionar indice na array de matrizes */
