@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\direcao.c" />
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\input_string_parser.c" />
     <ClCompile Include="..\src\lista.c" />
@@ -87,6 +88,7 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\direcao.h" />
     <ClInclude Include="..\src\input_string_parser.h" />
     <ClInclude Include="..\src\lista.h" />
     <ClInclude Include="..\src\mem_manager.h" />

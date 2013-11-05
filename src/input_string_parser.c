@@ -40,6 +40,7 @@
 #include "lista.h"
 #include "mem_manager.h"
 #include "tabuleiro.h"
+#include "direcao.h"
 
 #define INPUT_STRING_PARSER_OWN
 #include "input_string_parser.h"
@@ -57,7 +58,7 @@
 static int CompararPassos(void *pValor1, void *pValor2);
 static void DestruirPasso(void *pValor);
 static TAB_tpPasso* LerPasso(char *passoInput);
-TAB_tpDirecao LerDirecao(char *direcaoInput);
+DIR_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -121,7 +122,7 @@ TAB_tpPasso* LerPasso(char *passoInput)
    return pPasso;
 }
 
-TAB_tpDirecao LerDirecao(char *direcaoInput)
+DIR_tpDirecao LerDirecao(char *direcaoInput)
 {
    char *dirNormalizada = strlwr(direcaoInput);
 
@@ -159,7 +160,7 @@ TAB_tpDirecao LerDirecao(char *direcaoInput)
    }
    else
    {
-      return (TAB_tpDirecao) -1;
+      return (DIR_tpDirecao) -1;
    }
 }
 

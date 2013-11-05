@@ -17,6 +17,7 @@
 #include "lista.h"
 #include "grafo.h"
 #include "mem_manager.h"
+#include "direcao.h"
 
 #include <string.h>
 
@@ -115,17 +116,17 @@ typedef struct stCasa {
       tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
    
    static TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
-      tpPeca *pPeca, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
+      tpPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
 
    static TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
-      TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
+      TAB_tpPasso *pPasso, tpPeca *pPeca, DIR_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar);
 
    static TAB_tpCondRet SeguirDirecaoAteNaoPoderMais(TAB_tpMatriz *pTabuleiro,
-      TAB_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
+      DIR_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
    
    static TAB_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(TAB_tpMatriz *pTabuleiro,
-      TAB_tpDirecao direcao, int quantidade, tpPeca *pPeca,
+      DIR_tpDirecao direcao, int quantidade, tpPeca *pPeca,
       tpCallbackIterarCasasAlcancePeca operar);
 
    static TAB_tpCondRet RemoverPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
@@ -133,16 +134,14 @@ typedef struct stCasa {
    
    static TAB_tpCondRet InserirPegadaDaPecaNaCasaAtual(TAB_tpMatriz *pTabuleiro, tpPeca *pPeca,
       tpPegada *pPegAnt);
-
-   static TAB_tpDirecao DirecaoOrientadaPara(TAB_tpDirecao direcao, TAB_tpDirecao orientacao);
-
-   static char* DirecaoComoString(TAB_tpDirecao direcao);
    
    static void DestruirPasso(void *pValor);
 
    static TAB_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, TAB_tpMatriz *pTabuleiro);
    
    static LIS_tppLista CopiarPassos(LIS_tppLista pPassos);
+
+   static char* DirecaoComoString(DIR_tpDirecao direcao);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -396,10 +395,11 @@ typedef struct stCasa {
 
 
 
-   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pMatriz , TAB_tpDirecao direcao)
+   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pMatriz , DIR_tpDirecao direcao)
    {
       GRA_tpCondRet condRet;
       GRA_tppGrafo pGrafo;
+      char *dirStr;
 
      if (pMatriz == NULL)
      {
@@ -407,7 +407,8 @@ typedef struct stCasa {
      }
 
      pGrafo = pMatriz->pGrafo;
-     condRet = GRA_SeguirPelaAresta(pGrafo, DirecaoComoString(direcao));
+     DIR_DirecaoComoString(direcao, &dirStr);
+     condRet = GRA_SeguirPelaAresta(pGrafo, dirStr);
      
      if (condRet != GRA_CondRetOK)
      {
@@ -420,7 +421,7 @@ typedef struct stCasa {
    
    TAB_tpCondRet TAB_EhCheckmate(TAB_tpMatriz *pTabuleiro, int *pResposta)
    {
-      TAB_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
+      DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
          NORTE, NORDESTE, ESTE, SUDESTE,
          SUL, SUDOESTE, OESTE, NOROESTE
       };
@@ -438,7 +439,7 @@ typedef struct stCasa {
 
       for (i = 0; i < TOTAL_DIRECOES; i++)
       {
-         TAB_tpDirecao direcao = DIRECOES[i];
+         DIR_tpDirecao direcao = DIRECOES[i];
          
          TAB_IrCasaRei(pTabuleiro);
          if (TAB_IrPara(pTabuleiro, direcao) == TAB_CondRetOK)
@@ -463,20 +464,11 @@ typedef struct stCasa {
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-   char* DirecaoComoString(TAB_tpDirecao direcao)
+   char* DirecaoComoString(DIR_tpDirecao direcao)
    {
-      switch(direcao)
-      {
-         case NORTE:     return "N" ; break;
-         case ESTE:      return "E" ; break;
-         case SUL:       return "S" ; break;
-         case OESTE:     return "O" ; break;
-         case NORDESTE:  return "NE"; break;
-         case SUDESTE:   return "SE"; break;
-         case SUDOESTE:  return "SO"; break;
-         case NOROESTE:  return "NO"; break;
-         default: return NULL;
-      }
+      char *dirStr;
+      DIR_DirecaoComoString(direcao, &dirStr);
+      return dirStr;
    }
 
 
@@ -559,7 +551,9 @@ typedef struct stCasa {
       {
          for (y = 0; y < ALTURA; y++)
          {
-            char *nome = NomeDaCasa(x, y);
+            char *nome;
+            char *dirStr;
+            nome = NomeDaCasa(x, y);
             GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(NORTE)   , nome, NomeDaCasa(x, y-1));
             GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(ESTE)    , nome, NomeDaCasa(x+1, y));
             GRA_InserirAresta(pMatriz->pGrafo, DirecaoComoString(SUL)     , nome, NomeDaCasa(x, y+1));
@@ -695,11 +689,6 @@ typedef struct stCasa {
       return 0;
    }
 
-   TAB_tpDirecao DirecaoOrientadaPara(TAB_tpDirecao direcao, TAB_tpDirecao orientacao)
-   {
-      return (TAB_tpDirecao) (((int) direcao + (int) orientacao) % TOTAL_DIRECOES);
-   }
-
    LIS_tppLista CopiarPassos(LIS_tppLista pPassos)
    {
       LIS_tpCondRet condRet = LIS_CondRetOK;
@@ -824,7 +813,7 @@ typedef struct stCasa {
    }
 
    TAB_tpCondRet SeguirPassosDaPeca(TAB_tpMatriz *pTabuleiro, LIS_tppLista pPassos,
-      tpPeca *pPeca, TAB_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
+      tpPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
    {
       TAB_tpCondRet tabCondRet;
       LIS_tpCondRet lisCondRet = LIS_CondRetOK;
@@ -855,13 +844,13 @@ typedef struct stCasa {
    }
 
    TAB_tpCondRet SeguirPassoDaPeca(TAB_tpMatriz *pTabuleiro,
-      TAB_tpPasso *pPasso, tpPeca *pPeca, TAB_tpDirecao orientacao,
+      TAB_tpPasso *pPasso, tpPeca *pPeca, DIR_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar)
    {
       TAB_tpCondRet condRet;
-      TAB_tpDirecao direcao;
+      DIR_tpDirecao direcao;
 
-      direcao = DirecaoOrientadaPara(pPasso->direcao, orientacao);
+      DIR_DirecaoOrientadaPara(pPasso->direcao, orientacao, &direcao);
 
       if (pPasso->quantidade == 0)
       {
@@ -879,7 +868,7 @@ typedef struct stCasa {
 
 
    TAB_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(TAB_tpMatriz *pTabuleiro,
-      TAB_tpDirecao direcao, int quantidade, tpPeca *pPeca,
+      DIR_tpDirecao direcao, int quantidade, tpPeca *pPeca,
       tpCallbackIterarCasasAlcancePeca operar)
    {
       tpPeca *pPecaBarreirando = NULL;
@@ -910,7 +899,7 @@ typedef struct stCasa {
 
    
    TAB_tpCondRet SeguirDirecaoAteNaoPoderMais(TAB_tpMatriz *pTabuleiro,
-      TAB_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
+      DIR_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
    {
       tpPegada *pPegAnt = NULL;
       tpPeca *pPecaBarreirando = NULL;

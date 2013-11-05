@@ -175,7 +175,7 @@ static int iMat = 0 ;
                return TST_CondRetParm ;
             }
 
-			   CondRetObtido = TAB_IrPara(Matrizes[iMat], (TAB_tpDirecao) iDirecao);
+			   CondRetObtido = TAB_IrPara(Matrizes[iMat], (DIR_tpDirecao) iDirecao);
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
 									"Não foi possível ir para essa direcao.") ;

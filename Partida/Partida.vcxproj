@@ -10,35 +10,10 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\direcao.c" />
-    <ClCompile Include="..\src\grafo.c" />
-    <ClCompile Include="..\src\input_string_parser.c" />
-    <ClCompile Include="..\src\lista.c" />
-    <ClCompile Include="..\src\mem_manager.c" />
-    <ClCompile Include="..\src\tabuleiro.c" />
-    <ClCompile Include="..\src\test_tab.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\direcao.h" />
-    <ClInclude Include="..\src\grafo.h" />
-    <ClInclude Include="..\src\input_string_parser.h" />
-    <ClInclude Include="..\src\lista.h" />
-    <ClInclude Include="..\src\mem_manager.h" />
-    <ClInclude Include="..\src\tabuleiro.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\src\teste_tabuleiro.script" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib">
-      <FileType>Document</FileType>
-    </Library>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{03FD8A32-E6CD-48A7-847F-CCDE90D4D747}</ProjectGuid>
+    <ProjectGuid>{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>tabuleiro</RootNamespace>
+    <RootNamespace>Partida</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -98,6 +73,27 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\grafo.h" />
+    <ClInclude Include="..\src\input_string_parser.h" />
+    <ClInclude Include="..\src\lista.h" />
+    <ClInclude Include="..\src\mem_manager.h" />
+    <ClInclude Include="..\src\partida.h" />
+    <ClInclude Include="..\src\tabuleiro.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\teste_partida.script" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\grafo.c" />
+    <ClCompile Include="..\src\input_string_parser.c" />
+    <ClCompile Include="..\src\lista.c" />
+    <ClCompile Include="..\src\mem_manager.c" />
+    <ClCompile Include="..\src\partida.c" />
+    <ClCompile Include="..\src\tabuleiro.c" />
+    <ClCompile Include="..\src\test_par.c" />
+    <ClCompile Include="..\src\test_tab.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

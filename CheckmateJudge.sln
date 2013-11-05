@@ -24,6 +24,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "input_string_parser", "inpu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "principal", "principal\principal.vcxproj", "{FD9CA400-D5C3-4D52-AD72-16FFC8BA970D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "partida", "Partida\Partida.vcxproj", "{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "direcao", "direcao\direcao.vcxproj", "{D1694107-AF12-4DE4-8DC0-D76341371516}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +62,14 @@ Global
 		{FD9CA400-D5C3-4D52-AD72-16FFC8BA970D}.Debug|Win32.Build.0 = Debug|Win32
 		{FD9CA400-D5C3-4D52-AD72-16FFC8BA970D}.Release|Win32.ActiveCfg = Release|Win32
 		{FD9CA400-D5C3-4D52-AD72-16FFC8BA970D}.Release|Win32.Build.0 = Release|Win32
+		{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}.Debug|Win32.Build.0 = Debug|Win32
+		{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}.Release|Win32.ActiveCfg = Release|Win32
+		{A7E3BDB2-5AB6-499E-9EB2-F59E362C5E05}.Release|Win32.Build.0 = Release|Win32
+		{D1694107-AF12-4DE4-8DC0-D76341371516}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1694107-AF12-4DE4-8DC0-D76341371516}.Debug|Win32.Build.0 = Debug|Win32
+		{D1694107-AF12-4DE4-8DC0-D76341371516}.Release|Win32.ActiveCfg = Release|Win32
+		{D1694107-AF12-4DE4-8DC0-D76341371516}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

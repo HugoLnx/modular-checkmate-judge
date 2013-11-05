@@ -36,9 +36,9 @@
 
 #define LARGURA        8
 #define ALTURA         8
-#define TOTAL_DIRECOES 8
 
 #include "lista.h"
+#include "direcao.h"
 
 typedef struct stMatriz TAB_tpMatriz;
 
@@ -53,27 +53,9 @@ typedef enum {
    INIMIGA = 1
 } TAB_tpTimePeca;
 
-typedef enum {
-   NORTE    = 0,
-
-   NORDESTE = 1,
-
-   ESTE     = 2,
-
-   SUDESTE  = 3,  
-
-   SUL      = 4,
-   
-   SUDOESTE = 5,
-
-   OESTE    = 6,
-
-   NOROESTE = 7
-} TAB_tpDirecao;
-
 typedef struct TAB_stPasso
 {
-   TAB_tpDirecao direcao;
+   DIR_tpDirecao direcao;
    int quantidade;
 } TAB_tpPasso;
 
@@ -174,7 +156,7 @@ typedef struct TAB_stPasso
 *     TAB_CondRetNaoEhNo
 *
 *  ****/
-   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pTabuleiro, TAB_tpDirecao);
+   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pTabuleiro, DIR_tpDirecao);
 
 
 
