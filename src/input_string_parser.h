@@ -37,7 +37,7 @@
    #define INPUT_STRING_PARSER_EXT extern
 #endif
 
-#include "tabuleiro.h"
+#include "partida.h"
 #include "lista.h"
 
 /***** Declarações exportadas pelo módulo *****/
@@ -66,7 +66,7 @@ typedef enum {
  
 } ISP_tpCondRet ;
 
-ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, TAB_tpTipoMovimento *pTipo);
+ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PAR_tpTipoMovimento *pTipo);
 
 ISP_tpCondRet ISP_LerPassos(char *passosStr, LIS_tppLista *ppPassos);
 

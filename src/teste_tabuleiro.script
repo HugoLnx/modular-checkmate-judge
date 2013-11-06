@@ -7,13 +7,10 @@
 //
 
 == Declarar as condicoes de retorno
-=declararparm  OK                     int 0
-=declararparm  NaoOrigem              int 1 
+=declararparm  OK                     int 0 
 =declararparm  NaoFolha               int 2
-=declararparm  NaoMatriz              int 3
-=declararparm  NaoCorr                int 4
+=declararparm  NaoTabuleiro           int 3
 =declararparm  Memoria                int 5
-=declararparm  PecaNaoEncontrada      int 6
 
 == Declarar os conteúdos dos nós
 =declararparm  ValorErro    int -1
@@ -37,16 +34,16 @@
 =declararparm  NOROESTE     int 7
 
 == Verificar erros nas operações inválidas quando a está matriz inexistente
-=destruir                   NaoMatriz
-=irPara NORTE               NaoMatriz
-=irPara SUL                 NaoMatriz
-=irPara ESTE                NaoMatriz
-=irPara OESTE               NaoMatriz
-=irPara NORDESTE            NaoMatriz
-=irPara SUDESTE             NaoMatriz
-=irPara SUDOESTE            NaoMatriz
-=irPara NOROESTE            NaoMatriz
-=ircasa       "X0"          NaoMatriz
+=destruir                   NaoTabuleiro
+=irPara NORTE               NaoTabuleiro
+=irPara SUL                 NaoTabuleiro
+=irPara ESTE                NaoTabuleiro
+=irPara OESTE               NaoTabuleiro
+=irPara NORDESTE            NaoTabuleiro
+=irPara SUDESTE             NaoTabuleiro
+=irPara SUDOESTE            NaoTabuleiro
+=irPara NOROESTE            NaoTabuleiro
+=ircasa 0 0                 NaoTabuleiro
 
 == Verificar comando recuperar
 =destruir OK
@@ -65,318 +62,82 @@
 == Criar tabuleiro
 =criar      OK
  
-== Testar criacao de peça
-=criarPeca  "cavalo"     "[2]norte [1]este"                   VOA  OK
-=criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
-=criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
-=criarPeca  "touro"      "[2]norte"                           ANDA OK
-
-== Testar alteracao de peça
-=alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
-=alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
-
-== Inserir torre aliado no A1
-=ircasa "A1"                   OK
-=inserirPeca "torre" ALIADA    OK
-
-== Inserir zorro inimigo no D4
-=ircasa "D4"                   OK
-=inserirPeca "zorro" INIMIGA   OK
-
-== Criar pegadas do tabuleiro
-=criarPegadas OK
-
-== Verificar pegadas do zorro
-// pegadas com orientacao norte
-=ircasa "E4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "F4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "E5"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "D6"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "E6"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "F6"         OK
-=pegadaInimiga? TRUE OK
-
-// pegadas com orientacao este
-=ircasa "D5"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "D6"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "C5"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "B4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "B5"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "B6"         OK
-=pegadaInimiga? TRUE OK
-
-
-// pegadas com orientacao sul
-=ircasa "C4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "B4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "C3"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "D2"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "C2"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "B2"         OK
-=pegadaInimiga? TRUE OK
-
-
-// pegadas com orientacao oeste
-=ircasa "D3"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "D2"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "E3"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "F4"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "F3"         OK
-=pegadaInimiga? TRUE OK
-
-=ircasa "F2"         OK
-=pegadaInimiga? TRUE OK
-
-== Testar inserir rei
-=ircasa "C5" OK
-=inserirRei  OK
-
-=ircasa "H8" OK
-=pegadaInimiga? FALSE OK
-
-== Teste copiar tabuleiro
-=copiarTabuleiro 1 OK
-
-=selecionar 1
-== Teste remover peca
-=ircasa "D4" OK
-=removerPeca OK
-
-== Testar ir casa rei
-=ircasarei   OK
-
-== Testar remover rei
-=ircasa "H1" OK
-=removerRei  OK
-=selecionar 0
-
-== Criar tabuleiro com as peças para testes checkmate
-=selecionar 5
-=criar OK
-=criarPeca   "cavalo"                 "[2]norte [1]este"                   VOA  OK
-=criarPeca   "zorro"                  "[2]este [2]sudoeste [2]este"        ANDA OK
-=criarPeca   "touro"                  "[0]norte"                           ANDA OK
-=criarPeca   "peao"                   "[1]norte"                           ANDA OK
-=alterarPeca "cavalo" "torreAlada"    "[2]norte"                           VOA  OK
-
-
-== Testar EhCheckmate? rei sozinho
-=selecionar 5
-=copiarTabuleiro 2                OK
-=selecionar 2
-=ircasa "A1"                      OK
-=inserirRei                       OK
-=criarPegadas                     OK
-=ehCheckmate? FALSE               OK
-=destruir                         OK
-
-
-
-== Testar EhCheckmate? check, mas não checkmate
-=selecionar 5
-=copiarTabuleiro 2                OK
-=selecionar 2
-=ircasa "A1"                      OK
-=inserirRei                       OK
-=ircasa "A3"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "C1"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=criarPegadas                     OK
-=ehCheckmate? FALSE               OK
-=destruir                         OK
-
-
-
-== Testar EhCheckmate? rei totalmente encurralado
-=selecionar 5
-=copiarTabuleiro 2                OK
-=selecionar 2
-=ircasa "A1"                      OK
-=inserirRei                       OK
-=ircasa "A3"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "C1"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "C2"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=criarPegadas                     OK
-=ehCheckmate? TRUE                OK
-=destruir                         OK
-
-
-== Testar EhCheckmate? rei se salva pois peça anda e tem outra peça na frente
-=selecionar 5
-=copiarTabuleiro 2                OK
-=selecionar 2
-=ircasa "A1"                      OK
-=inserirRei                       OK
-=ircasa "A5"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "E1"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "E2"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "C2"                      OK
-=inserirPeca "peao"   ALIADA      OK
-=criarPegadas                     OK
-=ehCheckmate? FALSE               OK
-=destruir                         OK
-
-
-
-== Testar EhCheckmate? rei não se salva pois aliados impedem passagem
-=selecionar 5
-=copiarTabuleiro 2                OK
-=selecionar 2
-=ircasa "A1"                      OK
-=inserirRei                       OK
-=ircasa "A5"                      OK
-=inserirPeca "touro"  INIMIGA     OK
-=ircasa "B1"                      OK
-=inserirPeca "peao"   ALIADA      OK
-=ircasa "B2"                      OK
-=inserirPeca "peao"   ALIADA      OK
-=criarPegadas                     OK
-=ehCheckmate? TRUE                OK
-=destruir                         OK
-
-
-== Testar EhCheckmate? rei pode fugir pois a peça voa
-=selecionar 5
-=copiarTabuleiro 2                     OK
-=selecionar 2
-=criarPegadas                          OK
-=ircasa "A1"                           OK
-=inserirRei                            OK
-=ircasa "A3"                           OK
-=inserirPeca "torreAlada"  INIMIGA     OK
-=ircasa "C1"                           OK
-=inserirPeca "torreAlada"  INIMIGA     OK
-=ircasa "C2"                           OK
-=inserirPeca "torreAlada"  INIMIGA     OK
-=ehCheckmate? FALSE                    OK
-=destruir                              OK
-
-
-== Destruir tabuleiro com as peças para os testes de checkmate
-=selecionar 5
-=destruir OK
-=selecionar 0
-
 // Navegando por todo o tabuleiro pelo nome da casa
 == Verificar ir para as casa pelo nome
-=ircasa "A1"    OK
-=ircasa "A2"    OK
-=ircasa "A3"    OK
-=ircasa "A4"    OK
-=ircasa "A5"    OK
-=ircasa "A6"    OK
-=ircasa "A7"    OK
-=ircasa "A8"    OK
-=ircasa "B1"    OK
-=ircasa "B2"    OK
-=ircasa "B3"    OK
-=ircasa "B4"    OK
-=ircasa "B5"    OK
-=ircasa "B6"    OK
-=ircasa "B7"    OK
-=ircasa "B8"    OK
-=ircasa "C1"    OK
-=ircasa "C2"    OK
-=ircasa "C3"    OK
-=ircasa "C4"    OK
-=ircasa "C5"    OK
-=ircasa "C6"    OK
-=ircasa "C7"    OK
-=ircasa "C8"    OK
-=ircasa "D1"    OK
-=ircasa "D2"    OK
-=ircasa "D3"    OK
-=ircasa "D4"    OK
-=ircasa "D5"    OK
-=ircasa "D6"    OK
-=ircasa "D7"    OK
-=ircasa "D8"    OK
-=ircasa "E1"    OK
-=ircasa "E2"    OK
-=ircasa "E3"    OK
-=ircasa "E4"    OK
-=ircasa "E5"    OK
-=ircasa "E6"    OK
-=ircasa "E7"    OK
-=ircasa "E8"    OK
-=ircasa "F1"    OK
-=ircasa "F2"    OK
-=ircasa "F3"    OK
-=ircasa "F4"    OK
-=ircasa "F5"    OK
-=ircasa "F6"    OK
-=ircasa "F7"    OK
-=ircasa "F8"    OK
-=ircasa "G1"    OK
-=ircasa "G2"    OK
-=ircasa "G3"    OK
-=ircasa "G4"    OK
-=ircasa "G5"    OK
-=ircasa "G6"    OK
-=ircasa "G7"    OK
-=ircasa "G8"    OK
-=ircasa "H1"    OK
-=ircasa "H2"    OK
-=ircasa "H3"    OK
-=ircasa "H4"    OK
-=ircasa "H5"    OK
-=ircasa "H6"    OK
-=ircasa "H7"    OK
-=ircasa "H8"    OK
-=ircasa "A1"    OK
+=ircasa  0  0    OK
+=ircasa  0  1    OK
+=ircasa  0  2    OK
+=ircasa  0  3    OK
+=ircasa  0  4    OK
+=ircasa  0  5    OK
+=ircasa  0  6    OK
+=ircasa  0  7    OK
+=ircasa  1  0    OK
+=ircasa  1  1    OK
+=ircasa  1  2    OK
+=ircasa  1  3    OK
+=ircasa  1  4    OK
+=ircasa  1  5    OK
+=ircasa  1  6    OK
+=ircasa  1  7    OK
+=ircasa  2  0    OK
+=ircasa  2  1    OK
+=ircasa  2  2    OK
+=ircasa  2  3    OK
+=ircasa  2  4    OK
+=ircasa  2  5    OK
+=ircasa  2  6    OK
+=ircasa  2  7    OK
+=ircasa  3  0    OK
+=ircasa  3  1    OK
+=ircasa  3  2    OK
+=ircasa  3  3    OK
+=ircasa  3  4    OK
+=ircasa  3  5    OK
+=ircasa  3  6    OK
+=ircasa  3  7    OK
+=ircasa  4  0    OK
+=ircasa  4  1    OK
+=ircasa  4  2    OK
+=ircasa  4  3    OK
+=ircasa  4  4    OK
+=ircasa  4  5    OK
+=ircasa  4  6    OK
+=ircasa  4  7    OK
+=ircasa  5  0    OK
+=ircasa  5  1    OK
+=ircasa  5  2    OK
+=ircasa  5  3    OK
+=ircasa  5  4    OK
+=ircasa  5  5    OK
+=ircasa  5  6    OK
+=ircasa  5  7    OK
+=ircasa  6  0    OK
+=ircasa  6  1    OK
+=ircasa  6  2    OK
+=ircasa  6  3    OK
+=ircasa  6  4    OK
+=ircasa  6  5    OK
+=ircasa  6  6    OK
+=ircasa  6  7    OK
+=ircasa  7  0    OK
+=ircasa  7  1    OK
+=ircasa  7  2    OK
+=ircasa  7  3    OK
+=ircasa  7  4    OK
+=ircasa  7  5    OK
+=ircasa  7  6    OK
+=ircasa  7  7    OK
+=ircasa  0  0    OK
 
 == Verificar quando ir casa recebe um nome invalido
-=ircasa "X0"    NaoFolha
+=ircasa  0  8    NaoFolha
+=ircasa  8  0    NaoFolha
 
 
 // Navegando por todo o tabuleiro exercitando todos os ponteiros
 // Verificando ponteiros da 1a linha
-== Verificar ponteiros da posição "A1"
+== Verificar ponteiros da posição (0, 0)
 =irPara NORTE        NaoFolha
 =irPara OESTE        NaoFolha
 =irPara NORDESTE     NaoFolha
@@ -392,7 +153,7 @@
 =irPara ESTE         OK
 
 
-== Verificar ponteiros da posição "B1"
+== Verificar ponteiros da posição (1, 0)
 =irPara NORTE    NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -412,68 +173,7 @@
 =irPara ESTE     OK
 
 
-== Verificar ponteiros da posição "C1"
-=irPara NORTE    NaoFolha
-=irPara NORDESTE NaoFolha
-=irPara NOROESTE NaoFolha
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara ESTE     OK
-
-
-
-== Verificar ponteiros da posição "D1"
-=irPara NORTE    NaoFolha
-=irPara NORDESTE NaoFolha
-=irPara NOROESTE NaoFolha
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara ESTE     OK
-
-
-== Verificar ponteiros da posição "E1"
-=irPara NORTE    NaoFolha
-=irPara NORDESTE NaoFolha
-=irPara NOROESTE NaoFolha
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara ESTE     OK
-
-
-== Verificar ponteiros da posição "F1"
+== Verificar ponteiros da posição (2, 0)
 =irPara NORTE    NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -494,8 +194,7 @@
 
 
 
-
-== Verificar ponteiros da posição "G1"
+== Verificar ponteiros da posição (3, 0)
 =irPara NORTE    NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -515,7 +214,69 @@
 =irPara ESTE     OK
 
 
-== Verificar ponteiros da posição "H1"
+== Verificar ponteiros da posição (4, 0)
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara ESTE     OK
+
+
+== Verificar ponteiros da posição (5, 0)
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara ESTE     OK
+
+
+
+
+== Verificar ponteiros da posição (6, 0)
+=irPara NORTE    NaoFolha
+=irPara NORDESTE NaoFolha
+=irPara NOROESTE NaoFolha
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara ESTE     OK
+
+
+== Verificar ponteiros da posição (7, 0)
 =irPara NORTE    NaoFolha
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
@@ -535,7 +296,7 @@
 
 
 // Verificando ponteiros da 2a linha
-== Verificar ponteiros da posição "H2"
+== Verificar ponteiros da posição (7, 1)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -557,7 +318,7 @@
 
 =irPara OESTE    OK
 
-== Verificar ponteiros da posição "G2"
+== Verificar ponteiros da posição (6, 1)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -586,7 +347,7 @@
 
 
 
-== Verificar ponteiros da posição "F2"
+== Verificar ponteiros da posição (5, 1)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -614,36 +375,7 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "E2"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara OESTE    OK
-
-
-
-== Verificar ponteiros da posição "D2"
+== Verificar ponteiros da posição (4, 1)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -672,7 +404,7 @@
 
 
 
-== Verificar ponteiros da posição "C2"
+== Verificar ponteiros da posição (3, 1)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -700,7 +432,8 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "B2"
+
+== Verificar ponteiros da posição (2, 1)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -728,7 +461,35 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "A2"
+== Verificar ponteiros da posição (1, 1)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara OESTE    OK
+
+
+== Verificar ponteiros da posição (0, 2"
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -752,7 +513,7 @@
 
 
 // Verificando ponteiros da 3a linha
-== Verificar ponteiros da posição "A3"
+== Verificar ponteiros da posição (0, 2)
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -776,7 +537,7 @@
 
 
 
-== Verificar ponteiros da posição "B3"
+== Verificar ponteiros da posição (1, 2)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -805,7 +566,7 @@
 
 
 
-== Verificar ponteiros da posição "C3"
+== Verificar ponteiros da posição (2, 2)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -833,36 +594,7 @@
 =irPara ESTE    OK
 
 
-== Verificar ponteiros da posição "D3"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara ESTE    OK
-
-
-
-== Verificar ponteiros da posição "E3"
+== Verificar ponteiros da posição (3, 2)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -891,7 +623,7 @@
 
 
 
-== Verificar ponteiros da posição "F3"
+== Verificar ponteiros da posição (4, 2)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -919,7 +651,8 @@
 =irPara ESTE    OK
 
 
-== Verificar ponteiros da posição "G3"
+
+== Verificar ponteiros da posição (5, 2)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -946,7 +679,35 @@
 
 =irPara ESTE    OK
 
-== Verificar ponteiros da posição "H3"
+
+== Verificar ponteiros da posição (6, 2)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara ESTE    OK
+
+== Verificar ponteiros da posição (7, 2)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -970,7 +731,7 @@
 
 
 // Verificando ponteiros da 4a linha
-== Verificar ponteiros da posição "H4"
+== Verificar ponteiros da posição (7, 3)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -992,7 +753,7 @@
 
 =irPara OESTE    OK
 
-== Verificar ponteiros da posição "G4"
+== Verificar ponteiros da posição (6, 3)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1021,7 +782,7 @@
 
 
 
-== Verificar ponteiros da posição "F4"
+== Verificar ponteiros da posição (5, 3)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1049,36 +810,7 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "E4"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara OESTE    OK
-
-
-
-== Verificar ponteiros da posição "D4"
+== Verificar ponteiros da posição (4, 3)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1107,7 +839,7 @@
 
 
 
-== Verificar ponteiros da posição "C4"
+== Verificar ponteiros da posição (3, 3)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1135,7 +867,8 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "B4"
+
+== Verificar ponteiros da posição (2, 3)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1163,7 +896,35 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "A4"
+== Verificar ponteiros da posição (1, 3)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara OESTE    OK
+
+
+== Verificar ponteiros da posição (0, 4"
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -1187,7 +948,7 @@
 
 
 // Verificando ponteiros da 5a linha
-== Verificar ponteiros da posição "A5"
+== Verificar ponteiros da posição (0, 4)
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -1211,7 +972,7 @@
 
 
 
-== Verificar ponteiros da posição "B5"
+== Verificar ponteiros da posição (1, 4)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1240,7 +1001,7 @@
 
 
 
-== Verificar ponteiros da posição "C5"
+== Verificar ponteiros da posição (2, 4)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1268,36 +1029,7 @@
 =irPara ESTE    OK
 
 
-== Verificar ponteiros da posição "D5"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara ESTE    OK
-
-
-
-== Verificar ponteiros da posição "E5"
+== Verificar ponteiros da posição (3, 4)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1326,35 +1058,7 @@
 
 
 
-== Verificar ponteiros da posição "F5"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara ESTE    OK
-
-
-== Verificar ponteiros da posição "G5"
+== Verificar ponteiros da posição (4, 4)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1383,7 +1087,64 @@
 
 
 
-== Verificar ponteiros da posição "H5"
+== Verificar ponteiros da posição (5, 4)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara ESTE    OK
+
+
+== Verificar ponteiros da posição (6, 4)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara ESTE    OK
+
+
+
+== Verificar ponteiros da posição (7, 4)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -1407,7 +1168,7 @@
 
 
 // Verificando ponteiros da 6a linha
-== Verificar ponteiros da posição "H6"
+== Verificar ponteiros da posição (7, 5)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -1429,7 +1190,7 @@
 
 =irPara OESTE    OK
 
-== Verificar ponteiros da posição "G6"
+== Verificar ponteiros da posição (6, 5)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1458,7 +1219,7 @@
 
 
 
-== Verificar ponteiros da posição "F6"
+== Verificar ponteiros da posição (5, 5)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1486,36 +1247,7 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "E6"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara OESTE    OK
-
-
-
-== Verificar ponteiros da posição "D6"
+== Verificar ponteiros da posição (4, 5)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1544,7 +1276,7 @@
 
 
 
-== Verificar ponteiros da posição "C6"
+== Verificar ponteiros da posição (3, 5)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1572,7 +1304,8 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "B6"
+
+== Verificar ponteiros da posição (2, 5)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1600,7 +1333,35 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "A6"
+== Verificar ponteiros da posição (1, 5)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara OESTE    OK
+
+
+== Verificar ponteiros da posição (0, 5)
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -1624,7 +1385,7 @@
 
 
 // Verificando ponteiros da 7a linha
-== Verificar ponteiros da posição "A7"
+== Verificar ponteiros da posição (0, 6)
 =irPara OESTE    NaoFolha
 =irPara SUDOESTE NaoFolha
 =irPara NOROESTE NaoFolha
@@ -1648,7 +1409,7 @@
 
 
 
-== Verificar ponteiros da posição "B7"
+== Verificar ponteiros da posição (1, 6)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1677,7 +1438,7 @@
 
 
 
-== Verificar ponteiros da posição "C7"
+== Verificar ponteiros da posição (2, 6)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1705,36 +1466,7 @@
 =irPara ESTE    OK
 
 
-== Verificar ponteiros da posição "D7"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara ESTE    OK
-
-
-
-== Verificar ponteiros da posição "E7"
+== Verificar ponteiros da posição (3, 6)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1763,35 +1495,7 @@
 
 
 
-== Verificar ponteiros da posição "F7"
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara SUL      OK
-=irPara NORTE    OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara SUDESTE  OK
-=irPara NOROESTE OK
-
-=irPara SUDOESTE OK
-=irPara NORDESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara ESTE    OK
-
-
-== Verificar ponteiros da posição "G7"
+== Verificar ponteiros da posição (4, 6)
 =irPara NORTE    OK
 =irPara SUL      OK
 
@@ -1820,7 +1524,64 @@
 
 
 
-== Verificar ponteiros da posição "H7"
+== Verificar ponteiros da posição (5, 6)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara ESTE    OK
+
+
+== Verificar ponteiros da posição (6, 6)
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara SUL      OK
+=irPara NORTE    OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara SUDESTE  OK
+=irPara NOROESTE OK
+
+=irPara SUDOESTE OK
+=irPara NORDESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara ESTE    OK
+
+
+
+== Verificar ponteiros da posição (7, 6)
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
 =irPara SUDESTE  NaoFolha
@@ -1843,7 +1604,7 @@
 =irPara SUL    OK
 
 // Verificar ponteiros da 8a linha
-== Verificar ponteiros da posição "H8"
+== Verificar ponteiros da posição (7, 7)
 =irPara SUL      NaoFolha
 =irPara ESTE     NaoFolha
 =irPara NORDESTE NaoFolha
@@ -1862,7 +1623,7 @@
 =irPara OESTE    OK
 
 
-== Verificar ponteiros da posição "G8"
+== Verificar ponteiros da posição (6, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -1886,7 +1647,7 @@
 
 
 
-== Verificar ponteiros da posição "F8"
+== Verificar ponteiros da posição (5, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -1910,32 +1671,7 @@
 
 
 
-== Verificar ponteiros da posição "E8"
-=irPara SUL      NaoFolha
-=irPara SUDESTE  NaoFolha
-=irPara SUDOESTE NaoFolha
-
-=irPara NORTE    OK
-=irPara SUL      OK
-
-=irPara ESTE     OK
-=irPara OESTE    OK
-
-=irPara OESTE    OK
-=irPara ESTE     OK
-
-=irPara NORDESTE OK
-=irPara SUDOESTE OK
-
-=irPara NOROESTE OK
-=irPara SUDESTE  OK
-
-=irPara OESTE    OK
-
-
-
-
-== Verificar ponteiros da posição "D8"
+== Verificar ponteiros da posição (4, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -1960,7 +1696,7 @@
 
 
 
-== Verificar ponteiros da posição "C8"
+== Verificar ponteiros da posição (3, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -1985,7 +1721,7 @@
 
 
 
-== Verificar ponteiros da posição "B8"
+== Verificar ponteiros da posição (2, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -2010,7 +1746,32 @@
 
 
 
-== Verificar ponteiros da posição "A8"
+== Verificar ponteiros da posição (1, 7)
+=irPara SUL      NaoFolha
+=irPara SUDESTE  NaoFolha
+=irPara SUDOESTE NaoFolha
+
+=irPara NORTE    OK
+=irPara SUL      OK
+
+=irPara ESTE     OK
+=irPara OESTE    OK
+
+=irPara OESTE    OK
+=irPara ESTE     OK
+
+=irPara NORDESTE OK
+=irPara SUDOESTE OK
+
+=irPara NOROESTE OK
+=irPara SUDESTE  OK
+
+=irPara OESTE    OK
+
+
+
+
+== Verificar ponteiros da posição (0, 7)
 =irPara SUL      NaoFolha
 =irPara SUDESTE  NaoFolha
 =irPara SUDOESTE NaoFolha
@@ -2038,11 +1799,9 @@
 
 == Destroi a matriz
 =destruir OK
-=selecionar 1
-=destruir OK
 
 == Verificar erro ao destruir matriz duas vezes seguidas
-=destruir NaoMatriz
+=destruir NaoTabuleiro
 
 
 == finaliza script

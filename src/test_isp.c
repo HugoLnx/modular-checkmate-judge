@@ -22,7 +22,7 @@ static const char *LER_BOOL_CMD                   = "=lerBooleano"      ;
 static const char *LER_TIPO_MOVIMENTO_CMD         = "=lerTipoMovimento" ;
 static const char *FIM_CMD                        = "=fim"              ;
 
-static const TAB_tpPasso PASSOS[][MAX_PASSOS] = {
+static const PAR_tpPasso PASSOS[][MAX_PASSOS] = {
    {{NORTE, 2}},
    {{SUL, 2}, {ESTE, 5}},
    {{OESTE, 2}, {NOROESTE, 1}, {ESTE, 0}}
@@ -32,7 +32,7 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
 /*****Protótipos das funções encapuladas no módulo *****/
    static char* AlocarEspacoParaNome();
-   static LIS_tppLista CriarListaPassos(const TAB_tpPasso *passos, const int tamanho);
+   static LIS_tppLista CriarListaPassos(const PAR_tpPasso *passos, const int tamanho);
    static void DestruirValor(void *pValor);
 
 /***** Código das funções exportadas pelo módulo  *****/
@@ -73,7 +73,7 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
          {
             char *tipoStr;
             int tipoEsperado;
-            TAB_tpTipoMovimento tipoObtido;
+            PAR_tpTipoMovimento tipoObtido;
             MEM_Alloc(sizeof(tipoStr)*MAX_TIPO_STR, (void **) &tipoStr);
 
             numLidos = LER_LerParametros("sii", tipoStr, &tipoEsperado, &CondRetEsp);
@@ -157,7 +157,7 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
       MEM_Free(pValor);
    }
 
-   LIS_tppLista CriarListaPassos(const TAB_tpPasso *passos, const int tamanho)
+   LIS_tppLista CriarListaPassos(const PAR_tpPasso *passos, const int tamanho)
    {
       int i;
       LIS_tppLista pPassos;
@@ -165,8 +165,8 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
       for (i = 0; i < tamanho; i++)
       {
-         TAB_tpPasso *pPasso;
-         MEM_Alloc(sizeof(TAB_tpPasso), (void **) &pPasso);
+         PAR_tpPasso *pPasso;
+         MEM_Alloc(sizeof(PAR_tpPasso), (void **) &pPasso);
          *pPasso = passos[i];
          LIS_InserirElementoApos(pPassos, pPasso);
       }
@@ -176,8 +176,8 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
    int ListaDePassosSaoIguais(LIS_tppLista pPassos1, LIS_tppLista pPassos2)
    {
-      TAB_tpPasso *pPasso1;
-      TAB_tpPasso *pPasso2;
+      PAR_tpPasso *pPasso1;
+      PAR_tpPasso *pPasso2;
       LIS_tpCondRet ret1 = LIS_CondRetOK;
       LIS_tpCondRet ret2 = LIS_CondRetOK;
 

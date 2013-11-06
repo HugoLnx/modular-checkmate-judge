@@ -36,14 +36,12 @@
 #include    <stdlib.h>
 
 #include    "TST_ESPC.H"
-#include    "lista.h"
 
 #include    "generico.h"
 #include    "lerparm.h"
 
 #include    "tabuleiro.h"
 #include    "mem_manager.h"
-#include    "input_string_parser.h"
 
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
@@ -55,36 +53,21 @@
 #define     COPIAR_TAB_CMD     "=copiarTabuleiro"
 #define     IR_PARA_CMD        "=irPara"
 #define     IR_CASA_CMD        "=ircasa"
-#define     CRIAR_PECA_CMD     "=criarPeca"
-#define     ALTERAR_PECA_CMD   "=alterarPeca"
-#define     INSERIR_PECA_CMD   "=inserirPeca"
-#define     REMOVER_PECA_CMD   "=removerPeca"
-#define     INSERIR_REI_CMD    "=inserirRei"
-#define     REMOVER_REI_CMD    "=removerRei"
-#define     IR_REI_CMD         "=ircasarei"
-#define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
-#define     EH_CHECKMATE_CMD   "=ehCheckmate?"
-#define     CRIAR_PEG_CMD      "=criarPegadas"
 
 #define     FIM_CMD         "=fim"
 
 /* Tabela dos nomes dos comandos de teste específicos do teste */
-#define     VALIDAR_EST_TAB_CMD "=validarEstrutura"
 #define     SELECIONAR_CMD       "=selecionar"
 
+#define     TABULEIROS_SIZE 10
 
-#define     VALORES_SIZE     9
-#define     TABULEIROES_SIZE 10
-#define     MAX_PASSOS_STR   50
-#define     MAX_NOME_PECA    30
+static void DestruirValor(void *pValor);
+
+static TAB_tppTabuleiro Tabuleiros[TABULEIROS_SIZE];
+
+static int iTab = 0 ;
+
 /*****  Código das funções exportadas pelo módulo  *****/
-int IndiceDoValor( LIS_tppLista Valor );
-void PreencherArrayDeValores();
-
-static TAB_tpMatriz * Matrizes[TABULEIROES_SIZE] ;
-static LIS_tppLista VALORES[VALORES_SIZE] ;
-
-static int iMat = 0 ;
 
 /***********************************************************************
 *
@@ -109,21 +92,13 @@ static int iMat = 0 ;
       TAB_tpCondRet CondRetEsperada = TAB_CondRetFaltouMemoria ;
                                       /* inicializa para qualquer coisa */
 
-      int IndiceValorEsperado = -1;
+     int IndiceValorEsperado = -1;
 	  int IndiceValorObtido = -1;
 	  int IndiceValorDado = -1;
-	  
-	  LIS_tppLista ValorObtido = NULL;
-
-	  int Linhas = 0 ;
-	  int Colunas = 0 ;
 
       int  NumLidos = -1 ;
 
       TST_tpCondRet Ret ;
-
-
-	  PreencherArrayDeValores();
 
       /* Testar TAB Criar matriz */
 
@@ -137,10 +112,10 @@ static int iMat = 0 ;
                return TST_CondRetParm ;
             }
 
-            CondRetObtido = TAB_CriarTabuleiro( Matrizes + iMat ) ;
+            CondRetObtido = TAB_CriarTabuleiro(Tabuleiros + iTab, DestruirValor, DestruirValor);
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-                                    "Retorno errado ao criar matriz." ) ;
+                                    "Retorno errado ao criar tabuleiro." ) ;
 
          }
 
@@ -156,10 +131,10 @@ static int iMat = 0 ;
                return TST_CondRetParm ;
             }
 
-            CondRetObtido = TAB_DestruirMatriz( Matrizes + iMat ) ;
+            CondRetObtido = TAB_DestruirTabuleiro(Tabuleiros + iTab) ;
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-									"Não é possível destruir uma matriz que não existe.") ;
+									"Não é possível destruir um tabuleiro que não existe.") ;
 
          } /* fim ativa: Testar TAB Destruir matriz */
 
@@ -175,7 +150,7 @@ static int iMat = 0 ;
                return TST_CondRetParm ;
             }
 
-			   CondRetObtido = TAB_IrPara(Matrizes[iMat], (DIR_tpDirecao) iDirecao);
+			   CondRetObtido = TAB_IrPara(Tabuleiros[iTab], (DIR_tpDirecao) iDirecao);
 
             return TST_CompararInt( CondRetEsperada , CondRetObtido ,
 									"Não foi possível ir para essa direcao.") ;
@@ -188,160 +163,20 @@ static int iMat = 0 ;
 		 else if ( strcmp( ComandoTeste , IR_CASA_CMD ) == 0 )
        {
 
-         char *nome;
-         MEM_Alloc(sizeof(char)*3, (void**) &nome);
-
-			NumLidos = LER_LerParametros( "si", nome, &CondRetEsperada ) ;
-            if ( NumLidos != 2 )
+         int x, y;
+			NumLidos = LER_LerParametros( "iii", &x, &y, &CondRetEsperada ) ;
+            if ( NumLidos != 3 )
             {
                return TST_CondRetParm ;
             }
 
-			CondRetObtido = TAB_IrCasa(Matrizes[iMat], nome) ;
+			CondRetObtido = TAB_IrCasa(Tabuleiros[iTab], x, y) ;
 
          return TST_CompararInt( CondRetEsperada , CondRetObtido ,
 								"Não foi possível ir para a casa.") ;
 
          }
 
-
-		/* Testar TAB Ir casa rei */
-
-		 else if (strcmp(ComandoTeste, IR_REI_CMD) == 0)
-       {
-           NumLidos = LER_LerParametros("i", &CondRetEsperada);
-           if (NumLidos != 1)
-           {
-              return TST_CondRetParm ;
-           }
-           
-           CondRetObtido = TAB_IrCasaRei(Matrizes[iMat]) ;
-           
-           return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-               "Não foi possível ir para a casa do rei.") ;
-
-       }
-
-
-		/* Testar TAB Criar peca*/
-
-		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
-       {
-
-         char *nome, *passosStr;
-         int iTipoMovimento;
-         TAB_tpTipoMovimento tipo;
-         LIS_tppLista pPassos;
-         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
-         MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
-
-			NumLidos = LER_LerParametros("ssii", nome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
-         if (NumLidos != 4)
-         {
-            return TST_CondRetParm ;
-         }
-
-         ISP_LerPassos(passosStr, &pPassos);
-
-         tipo = (TAB_tpTipoMovimento) iTipoMovimento;
-			CondRetObtido = TAB_CriarPeca(Matrizes[iMat], nome, pPassos, tipo);
-
-         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível criar a casa.");
-
-       }
-
-       /* Testar TAB Alterar peca*/
-
-       else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
-       {
-
-          char *nomeAtual, *passosStr, *novoNome;
-          int iTipoMovimento;
-          TAB_tpTipoMovimento tipo;
-          LIS_tppLista pPassos;
-          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nomeAtual);
-          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &novoNome);
-          MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
-
-          NumLidos = LER_LerParametros("sssii", nomeAtual, novoNome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
-          if (NumLidos != 5)
-          {
-             return TST_CondRetParm ;
-          }
-
-          ISP_LerPassos(passosStr, &pPassos);
-
-          tipo = (TAB_tpTipoMovimento) iTipoMovimento;
-          CondRetObtido = TAB_AlterarPeca(Matrizes[iMat], nomeAtual, novoNome, pPassos, tipo);
-
-          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-             "Não foi possível criar a casa.");
-
-       }
-
-
-       
-		/* Testar TAB Inserir peca*/
-
-		 else if (strcmp( ComandoTeste, INSERIR_PECA_CMD) == 0 )
-       {
-         char *nome;
-         int iTime;
-         TAB_tpTimePeca time;
-         LIS_tppLista pPassos;
-         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
-
-			NumLidos = LER_LerParametros("sii", nome, &iTime, &CondRetEsperada) ;
-         if (NumLidos != 3)
-         {
-            return TST_CondRetParm ;
-         }
-
-         time = (TAB_tpTimePeca) iTime;
-         CondRetObtido = TAB_InserirPeca(Matrizes[iMat], nome, time);
-
-         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível inserir a peça.");
-
-       }
-       
-       
-		/* Testar TAB Remover peca*/
-
-		 else if (strcmp( ComandoTeste, REMOVER_PECA_CMD) == 0 )
-       {
-			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-         if (NumLidos != 1)
-         {
-            return TST_CondRetParm ;
-         }
-
-         CondRetObtido = TAB_RemoverPeca(Matrizes[iMat]);
-
-         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível remover a peça.");
-
-       }
-       
-       
-		/* Testar TAB Remover rei*/
-
-		 else if (strcmp( ComandoTeste, REMOVER_REI_CMD) == 0 )
-       {
-			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-         if (NumLidos != 1)
-         {
-            return TST_CondRetParm ;
-         }
-
-         CondRetObtido = TAB_RemoverRei(Matrizes[iMat]);
-
-         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível remover o rei.");
-
-       }
-       
        
 		/* Testar TAB Copiar tabuleiro */
 
@@ -354,7 +189,7 @@ static int iMat = 0 ;
              return TST_CondRetParm ;
           }
           
-          CondRetObtido = TAB_CopiarTabuleiro(Matrizes[iMat], &Matrizes[iCopia]);
+          CondRetObtido = TAB_CopiarTabuleiro(Tabuleiros[iTab], &Tabuleiros[iCopia]);
           
           return TST_CompararInt(CondRetEsperada, CondRetObtido,
 								"Não foi possível copiar o tabuleiro.");
@@ -362,119 +197,24 @@ static int iMat = 0 ;
        }
        
        
-       
-		/* Testar TAB Criar pegadas */
-
-		 else if (strcmp( ComandoTeste, CRIAR_PEG_CMD) == 0 )
-       {
-			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-          if (NumLidos != 1)
-          {
-             return TST_CondRetParm ;
-          }
-          
-          CondRetObtido = TAB_CriarPegadas(Matrizes[iMat]);
-          
-          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível criar as pegadas.");
-
-       }
 
 
-		/* Testar TAB Inserir rei */
-
-		 else if (strcmp( ComandoTeste, INSERIR_REI_CMD) == 0 )
-       {
-			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-          
-          if (NumLidos != 1)
-          {
-             return TST_CondRetParm ;
-          }
-          
-          CondRetObtido = TAB_InserirRei(Matrizes[iMat]);
-          
-          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-								"Não foi possível inserir o rei.");
-
-       }
-
-
-		/* Testar TAB Alguma pegada inimiga*/
-
-		 else if (strcmp( ComandoTeste, PEGADA_INIMIGA_CMD) == 0 )
-       {
-          int respostaEsperada, respostaObtida;
-          TST_tpCondRet condRet;
-			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
-          
-          if (NumLidos != 2)
-          {
-             return TST_CondRetParm ;
-          }
-          
-          CondRetObtido = TAB_AlgumaPegadaInimiga(Matrizes[iMat], &respostaObtida);
-          
-          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
-                     "Não foi possível verificar se existe alguma pegada inimiga.");
-
-          if (condRet != TST_CondRetOK)
-          {
-             return condRet;
-          }
-
-          return TST_CompararInt(respostaEsperada, respostaObtida,
-                     "Foi obtida uma resposta diferente da esperada");
-
-       }
-       
-
-		/* Testar TAB Eh checkmate*/
-
-		 else if (strcmp( ComandoTeste, EH_CHECKMATE_CMD) == 0 )
-       {
-          int respostaEsperada, respostaObtida;
-          TST_tpCondRet condRet;
-			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
-          
-          if (NumLidos != 2)
-          {
-             return TST_CondRetParm ;
-          }
-          
-          CondRetObtido = TAB_EhCheckmate(Matrizes[iMat], &respostaObtida);
-          
-          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
-                     "Não foi possível verificar se eh checkmate.");
-
-          if (condRet != TST_CondRetOK)
-          {
-             return condRet;
-          }
-
-          return TST_CompararInt(respostaEsperada, respostaObtida,
-                     "Foi obtida uma resposta diferente da esperada para a verificação de checkmate");
-
-       }
-
-
-
-      /* Testar Selecionar indice na array de matrizes */
+      /* Testar Selecionar indice na array de tabuleiros */
 
          else if ( strcmp( ComandoTeste , SELECIONAR_CMD ) == 0 )
          {
 			NumLidos = LER_LerParametros( "i" ,
-                               &iMat ) ;
+                               &iTab ) ;
             if ( NumLidos != 1 )
             {
                return TST_CondRetParm ;
             } /* if */
 
-			if ( iMat < 0 || iMat > TABULEIROES_SIZE - 1 )
+			if ( iTab < 0 || iTab > TABULEIROS_SIZE - 1 )
 			{
 				TST_NotificarFalha("Só é possível fazer seleção nos indices de 0 à 9") ;
 				return TST_CondRetErro ;
-			} /* if */
+			}
 
 			return TST_CondRetOK ;
 
@@ -495,37 +235,7 @@ static int iMat = 0 ;
 
 /********** Fim do módulo de implementação: Módulo de teste específico **********/
 
-int IndiceDoValor( LIS_tppLista Valor )
+void DestruirValor(void *pValor)
 {
-	int i;
-
-	if ( Valor == NULL )
-	{
-		return -1;
-	}
-
-	for ( i = 0 ; i < VALORES_SIZE ; i++ )
-	{
-		if ( VALORES[i] == Valor )
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
-
-void PreencherArrayDeValores()
-{
-	int i;
-
-	if ( VALORES[0] != NULL )
-	{
-		return;
-	}
-
-	for ( i = 0 ; i < VALORES_SIZE ; i++ )
-	{
-		LIS_CriarLista( &VALORES[i], NULL, NULL );
-	}
+   MEM_Free(pValor);
 }

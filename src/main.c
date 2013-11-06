@@ -3,19 +3,19 @@
 #include<stdlib.h>
 #include"mem_manager.h"
 #include"input_string_parser.h"
-#include"tabuleiro.h"
+#include"partida.h"
 
-static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time);
-static void MenuCadastrarPeca(TAB_tpMatriz** ppTabuleiro);
-static void MenuAlterarPeca(TAB_tpMatriz** ppTabuleiro);
-static void MenuRemoverPeca(TAB_tpMatriz** ppTabuleiro);
+static void MenuInserirPeca(PAR_tppPartida* ppPartida, const int time);
+static void MenuCadastrarPeca(PAR_tppPartida* ppPartida);
+static void MenuAlterarPeca(PAR_tppPartida* ppPartida);
+static void MenuRemoverPeca(PAR_tppPartida* ppPartida);
 
 int main()
 {
    int opcao = -1;
-   TAB_tpMatriz **ppTabuleiro = NULL;
+   PAR_tppPartida *ppPartida = NULL;
 
-   TAB_CriarTabuleiro(&ppTabuleiro);
+   PAR_CriarPartida(ppPartida);
 
    while(opcao != 12)
    {
@@ -42,35 +42,35 @@ int main()
       {
       case 1:
          {
-            MenuCadastrarPeca(ppTabuleiro);
+            MenuCadastrarPeca(ppPartida);
 
          }break;
 
       case 2:
          {
-            MenuAlterarPeca(ppTabuleiro);
+            MenuAlterarPeca(ppPartida);
 
          }break;
 
       case  3:
          {
-            MenuInserirPeca(ppTabuleiro,0);
+            MenuInserirPeca(ppPartida,0);
 
          }break;
 
       case 4:
          {
-            MenuInserirPeca(ppTabuleiro,1);
+            MenuInserirPeca(ppPartida,1);
 
          }break;
       case 6:
          {
-            MenuRemoverPeca(ppTabuleiro);
+            MenuRemoverPeca(ppPartida);
          }
       case 11:
          {
-            TAB_DestruirMatriz(&ppTabuleiro);
-            TAB_CriarTabuleiro(&ppTabuleiro);
+            PAR_DestruirPartida(ppPartida);
+            PAR_CriarPartida(ppPartida);
 
          }break;
 
@@ -85,12 +85,12 @@ int main()
    return 0;
 }
 
-static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time)
+static void MenuInserirPeca(PAR_tppPartida* ppPartida, const int time)
 {
-   //TODO [RCS] checar porque não consigo usar TAB_tpTimePeca
+   //TODO [RCS] checar porque não consigo usar PAR_tpTimePeca
 
    char *nome, *nomeCasa;
-   TAB_tpCondRet tabCondRet;
+   PAR_tpCondRet condRet;
 
    MEM_Alloc(sizeof(char)*20,(void**)&nome);
    MEM_Alloc(sizeof(char)*2,(void**)&nomeCasa);
@@ -103,9 +103,9 @@ static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time)
 
    nomeCasa[0] = toupper(nomeCasa[0]);
 
-   tabCondRet = TAB_IrCasa(ppTabuleiro,nomeCasa);
+   condRet = PAR_IrCasa(*ppPartida, nomeCasa);
 
-   if(tabCondRet == TAB_CondRetNaoEhNo)
+   if(condRet == PAR_CondRetNaoEhNo)
    {
       printf("\nErro ao inserir - Casa nao existe!\n");
       system("pause");
@@ -113,9 +113,10 @@ static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time)
       return;
    }
 
-   tabCondRet = TAB_InserirPeca(ppTabuleiro,nome,time);
+   // TODO: usar modulo de peça
+   //condRet = PAR_InserirPeca(*ppPartida,nome,time);
 
-   if(tabCondRet == TAB_CondRetPecaNaoEncontrada)
+   if(condRet == PAR_CondRetPecaNaoEncontrada)
    {
       printf("\nErro ao inserir - Peca nao encontrada!\n");
       system("pause");
@@ -129,13 +130,13 @@ static void MenuInserirPeca(TAB_tpMatriz** ppTabuleiro, const int time)
 
 }
 
-static void MenuCadastrarPeca(TAB_tpMatriz** ppTabuleiro)
+static void MenuCadastrarPeca(PAR_tppPartida* ppPartida)
 {
    char* nome;
    char* passos;
    int tipoMov;
 
-   TAB_tpTipoMovimento tipoMovimento;
+   PAR_tpTipoMovimento tipoMovimento;
    LIS_tppLista pPassos;
 
    MEM_Alloc(sizeof(char)*10,(void**)&nome);
@@ -149,20 +150,21 @@ static void MenuCadastrarPeca(TAB_tpMatriz** ppTabuleiro)
    scanf("%d", &tipoMov);
 
    ISP_LerPassos(passos,&pPassos);
-   tipoMovimento = (TAB_tpTipoMovimento)tipoMov;
+   tipoMovimento = (PAR_tpTipoMovimento)tipoMov;
 
-   TAB_CriarPeca(ppTabuleiro, nome, pPassos, tipoMovimento);
+   // TODO: usar modulo de peça
+   //PAR_CriarPeca(ppPartida, nome, pPassos, tipoMovimento);
 
    printf("\nPeca cadastrada com sucesso!\n");
    system("pause");
    system("cls");
 }
 
-static void MenuAlterarPeca(TAB_tpMatriz** ppTabuleiro)
+static void MenuAlterarPeca(PAR_tppPartida* ppPartida)
 {
    char *nomeAtual, *novoNome, *novosPassos;
    int novoTipo;
-   TAB_tpTipoMovimento novoTipoMovimento;
+   PAR_tpTipoMovimento novoTipoMovimento;
    LIS_tppLista pPassos;
 
    MEM_Alloc(sizeof(char)*10,(void**)&nomeAtual);
@@ -179,9 +181,10 @@ static void MenuAlterarPeca(TAB_tpMatriz** ppTabuleiro)
    scanf("%i", &novoTipo);
 
    ISP_LerPassos(novosPassos,&pPassos);
-   novoTipoMovimento = (TAB_tpTipoMovimento)novoTipo;
+   novoTipoMovimento = (PAR_tpTipoMovimento)novoTipo;
 
-   TAB_AlterarPeca(ppTabuleiro,nomeAtual,novoNome,pPassos,novoTipoMovimento);
+   // TODO: Usar modulo de criar peca
+   //PAR_AlterarPeca(ppPartida,nomeAtual,novoNome,pPassos,novoTipoMovimento);
 
    printf("\nPeca alterada com sucesso!\n");
    system("pause");
@@ -189,17 +192,17 @@ static void MenuAlterarPeca(TAB_tpMatriz** ppTabuleiro)
 
 }
 
-static void MenuRemoverPeca(TAB_tpMatriz** ppTabuleiro)
+static void MenuRemoverPeca(PAR_tppPartida* ppPartida)
 {
    char *nomeDaCasa;
-   TAB_tpCondRet tabCondRet;
+   PAR_tpCondRet condRet;
    MEM_Alloc(sizeof(char)*2,(void**)&nomeDaCasa);
    printf("Nome da casa onde esta a peca a ser removida: ");
    scanf("%s",nomeDaCasa);
 
-   tabCondRet = TAB_IrCasa(ppTabuleiro,nomeDaCasa);
+   condRet = PAR_IrCasa(*ppPartida,nomeDaCasa);
 
-   if(tabCondRet == TAB_CondRetNaoEhNo)
+   if(condRet == PAR_CondRetNaoEhNo)
    {
       printf("\nErro ao remover - Casa nao existe!\n");
       system("pause");
@@ -207,8 +210,9 @@ static void MenuRemoverPeca(TAB_tpMatriz** ppTabuleiro)
       return;
    }
 
-   tabCondRet = TAB_RemoverPeca(ppTabuleiro);
-   if(tabCondRet == TAB_CondRetPecaNaoEncontrada)
+   // TODO: Usar modulo peça
+   //condRet = PAR_RemoverPeca(ppPartida);
+   if(condRet == PAR_CondRetPecaNaoEncontrada)
    {
       printf("\nErro ao remover - casa esta vazia!\n");
       system("pause");

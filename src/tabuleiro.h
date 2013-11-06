@@ -40,24 +40,7 @@
 #include "lista.h"
 #include "direcao.h"
 
-typedef struct stMatriz TAB_tpMatriz;
-
-typedef enum {
-   ANDA = 0,
-   VOA = 1
-} TAB_tpTipoMovimento;
-
-
-typedef enum {
-   ALIADA = 0,
-   INIMIGA = 1
-} TAB_tpTimePeca;
-
-typedef struct TAB_stPasso
-{
-   DIR_tpDirecao direcao;
-   int quantidade;
-} TAB_tpPasso;
+typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 
 /***********************************************************************
 *
@@ -68,41 +51,27 @@ typedef struct TAB_stPasso
 
    typedef enum {
 
-         TAB_CondRetOK = 0 ,
+         TAB_CondRetOK = 0,
                /* Executou correto */
 
-         TAB_CondRetNaoCriouOrigem = 1 ,
-               /* Não criou nó origem */
-
-         TAB_CondRetNaoEhNo = 2 ,
+         TAB_CondRetNaoEhNo = 2,
                /* Não é nó na direção desejada */
 
-         TAB_CondRetMatrizNaoExiste = 3 ,
-               /* Matriz não existe */
+         TAB_CondRetTabuleiroNaoExiste = 3,
+               /* Tabuleiro não existe */
 
-         TAB_CondRetNaoTemCorrente = 4 ,
-               /* Matriz está vazia */
-
-         TAB_CondRetFaltouMemoria = 5 ,
+         TAB_CondRetFaltouMemoria = 5,
                /* Faltou memória ao alocar dados */
+
          TAB_CondRetPecaNaoEncontrada = 6
 
-   } TAB_tpCondRet ;
+   } TAB_tpCondRet;
 
+   TAB_tpCondRet TAB_CriarTabuleiro(TAB_tppTabuleiro *ppTabuleiro, void (*destruirValor)(void *pValor));
 
-   TAB_tpCondRet TAB_CriarTabuleiro(TAB_tpMatriz **ppMatriz);
+   TAB_tpCondRet TAB_ObterValor(TAB_tppTabuleiro pTabuleiro, void **ppValor);
 
-   TAB_tpCondRet TAB_AlgumaPegadaInimiga(TAB_tpMatriz *pTabuleiro, int *pResposta);
-
-   TAB_tpCondRet TAB_InserirRei(TAB_tpMatriz *pTabuleiro);
-   
-   TAB_tpCondRet TAB_RemoverRei(TAB_tpMatriz *pTabuleiro);
-
-   TAB_tpCondRet TAB_IrCasaRei(TAB_tpMatriz *pTabuleiro);
-   
-   TAB_tpCondRet TAB_EhCheckmate(TAB_tpMatriz *pTabuleiro, int *pResposta);
-
-   TAB_tpCondRet TAB_CriarPegadas(TAB_tpMatriz *pTabuleiro);
+   TAB_tpCondRet TAB_AlterarValor(TAB_tppTabuleiro pTabuleiro, void *pValor);
 
 /***********************************************************************
 *
@@ -118,25 +87,14 @@ typedef struct TAB_stPasso
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
+*     TAB_CondRetTabuleiroNaoExiste
 *
 ***********************************************************************/
-   TAB_tpCondRet TAB_DestruirMatriz( TAB_tpMatriz ** ppMatriz ) ;
+   TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tppTabuleiro *ppTabuleiro);
 
+   TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, int x, int y);
 
-   TAB_tpCondRet TAB_IrCasa(TAB_tpMatriz *pTabuleiro, char *nomeCasa);
-
-   TAB_tpCondRet TAB_CriarPeca(TAB_tpMatriz *pTabuleiro, char *nome,
-      LIS_tppLista pPassos, TAB_tpTipoMovimento tipoMovimento);
-
-   TAB_tpCondRet TAB_AlterarPeca(TAB_tpMatriz *pTabuleiro, char *nomeAtual, char* nomeNovo,
-      LIS_tppLista pNovosPassos, TAB_tpTipoMovimento novoTipoMovimento);
-
-   TAB_tpCondRet TAB_InserirPeca(TAB_tpMatriz *pTabuleiro, char *nome, TAB_tpTimePeca time);
-
-   TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tpMatriz *pTabuleiro, TAB_tpMatriz **ppCopia);
-
-   TAB_tpCondRet TAB_RemoverPeca(TAB_tpMatriz *pTabuleiro);
+   TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tppTabuleiro pTabuleiro, TAB_tppTabuleiro *ppCopia);
 
 /***************************************************************************
 *
@@ -151,13 +109,12 @@ typedef struct TAB_stPasso
 *
 *  $FV Valor retornado
 *     TAB_CondRetOK
-*     TAB_CondRetMatrizNaoExiste
+*     TAB_CondRetTabuleiroNaoExiste
 *     TAB_CondRetNaoTemCorrente
 *     TAB_CondRetNaoEhNo
 *
 *  ****/
-   TAB_tpCondRet TAB_IrPara(TAB_tpMatriz *pTabuleiro, DIR_tpDirecao);
-
+   TAB_tpCondRet TAB_IrPara(TAB_tppTabuleiro pTabuleiro, DIR_tpDirecao);
 
 
 #undef TABULEIRO_EXT

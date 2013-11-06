@@ -37,6 +37,9 @@
     <ClInclude Include="..\src\partida.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\direcao.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\grafo.c">
@@ -51,9 +54,6 @@
     <ClCompile Include="..\src\tabuleiro.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\test_tab.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\mem_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,10 +63,16 @@
     <ClCompile Include="..\src\test_par.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\direcao.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\teste_partida.script">
       <Filter>Script Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\src\ArcaboucoTeste.lib" />
   </ItemGroup>
 </Project>

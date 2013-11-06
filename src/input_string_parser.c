@@ -39,7 +39,7 @@
 #include <assert.h>
 #include "lista.h"
 #include "mem_manager.h"
-#include "tabuleiro.h"
+#include "partida.h"
 #include "direcao.h"
 
 #define INPUT_STRING_PARSER_OWN
@@ -57,12 +57,12 @@
 
 static int CompararPassos(void *pValor1, void *pValor2);
 static void DestruirPasso(void *pValor);
-static TAB_tpPasso* LerPasso(char *passoInput);
+static PAR_tpPasso* LerPasso(char *passoInput);
 DIR_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, TAB_tpTipoMovimento *pTipo)
+ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PAR_tpTipoMovimento *pTipo)
 {
    if (strcmp(strupr(tipoStr), VOA_STR) == 0)
    {
@@ -94,7 +94,7 @@ ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
 
    while (passoStr != NULL)
    {
-      TAB_tpPasso *pPasso;
+      PAR_tpPasso *pPasso;
       pPasso = LerPasso(passoStr);
       LIS_InserirElementoApos(passos, pPasso);
       passoStr = strtok(NULL, SEPARADOR_PASSOS);
@@ -105,9 +105,9 @@ ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
    return ISP_CondRetOK;
 }
 
-TAB_tpPasso* LerPasso(char *passoInput)
+PAR_tpPasso* LerPasso(char *passoInput)
 {
-   TAB_tpPasso *pPasso;
+   PAR_tpPasso *pPasso;
    int *pQnt;
    char *strDirecao;
 
@@ -115,7 +115,7 @@ TAB_tpPasso* LerPasso(char *passoInput)
    MEM_Alloc(sizeof(int), (void **) &pQnt);
    sscanf(passoInput, FORMATO_PASSO_STR, pQnt, strDirecao);
 
-   MEM_Alloc(sizeof(TAB_tpPasso), (void **) &pPasso);
+   MEM_Alloc(sizeof(PAR_tpPasso), (void **) &pPasso);
    pPasso->direcao = LerDirecao(strDirecao);
    pPasso->quantidade = *pQnt;
 

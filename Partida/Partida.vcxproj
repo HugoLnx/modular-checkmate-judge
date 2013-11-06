@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\direcao.h" />
     <ClInclude Include="..\src\grafo.h" />
     <ClInclude Include="..\src\input_string_parser.h" />
     <ClInclude Include="..\src\lista.h" />
@@ -85,6 +86,7 @@
     <None Include="..\src\teste_partida.script" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\direcao.c" />
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\input_string_parser.c" />
     <ClCompile Include="..\src\lista.c" />
@@ -92,7 +94,11 @@
     <ClCompile Include="..\src\partida.c" />
     <ClCompile Include="..\src\tabuleiro.c" />
     <ClCompile Include="..\src\test_par.c" />
-    <ClCompile Include="..\src\test_tab.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\src\ArcaboucoTeste.lib">
+      <FileType>Document</FileType>
+    </Library>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
