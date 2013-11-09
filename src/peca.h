@@ -66,10 +66,11 @@ typedef enum {
    PEC_CondRetFaltouMemoria,
    /* Faltou memória ao alocar dados */
 
-   PEC_CondRetNaoAlterou
+   PEC_CondRetNaoAlterou,
    /* Não foi possivel alterar a peca */
 
-
+   PEC_CondRetPecaNaoExiste
+   /* Peça não existe */
 
 } PEC_tpCondRet ;
 
@@ -77,6 +78,7 @@ typedef enum {
 PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_tpTipoMovimento tipoMovimento);
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
 PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPassos, PEC_tpTipoMovimento novoTipoMovimento);
+PEC_tpCondRet PEC_AdicionarTime(PEC_tppPeca ppPeca, PEC_tpTimePeca time);
 #undef PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

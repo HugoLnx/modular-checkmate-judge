@@ -8,6 +8,7 @@
 
 =declararparm   OK             int  0
 =declararparm   NaoAlterou     int  2
+=declararparm   NaoExiste      int  3
 
 //*********************************
 == Declarar tipos de movimento
@@ -15,22 +16,35 @@
 =declararparm   ANDA             int  0
 =declararparm   VOA              int   1
 
+== Declarar times
+
+=declararparm   ALIADO           int   0
+=declararparm   INIMIGO          int   1
+
+
 == Testar cria e destruir peca
-=criar  "cavalo"     "[2]norte [1]este"                   VOA  OK
-=destruir                                                      OK
-=criar  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
-=destruir                                                      OK
-=criar  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
-=destruir                                                      OK
-=criar  "touro"      "[2]norte"                           ANDA OK
-=destruir                                                      OK
+=criar  "cavalo"     "[2]norte [1]este"                   VOA          OK
+=destruir                                                              OK
+=criar  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA         OK
+=destruir                                                              OK
+=criar  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA         OK
+=destruir                                                              OK
+=criar  "touro"      "[2]norte"                           ANDA         OK
+=destruir                                                              OK
 
 == Testar alterar peca
-=criar    "touro"      "[2]norte"                           ANDA OK
-=alterar  "cavalo"     "[3]sul"                             VOA  OK
-=destruir                                                        OK
-=alterar  "cavalo"     "[3]sul"                             VOA  NaoAlterou
+=criar    "touro"      "[2]norte"                         ANDA         OK
+//TODO Condicao NaoAlterou depende do returno de ISP
+//=alterar  "cavalo"     "caminho errado"                 VOA          NaoAlterou
+=alterar  "cavalo"     "[3]sul"                           VOA          OK
+=destruir                                                              OK
+=alterar  "cavalo"     "[3]sul"                           VOA          NaoExiste
 
+== Testar Adicionar time a peca
+=criar    "touro"      "[2]norte"                         ANDA         OK
+=adicionarTime    ALIADO                                               OK
+=destruir                                                              OK
+=adicionarTime    INIMIGO                                              NaoExiste
 
 
 

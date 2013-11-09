@@ -79,7 +79,7 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
    return PEC_CondRetOK;
 
 }
-
+// TODO [RCS] - PEC_CondRetNaoAlterou, espera que ISP_LerPassos retorne algo diferente de OK para quando não não receber argumentos válidos
 PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPassos, PEC_tpTipoMovimento novoTipoMovimento)
 {
    LIS_tppLista pPassos;
@@ -88,7 +88,7 @@ PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPa
 
    PEC_stPeca *pPeca = (PEC_stPeca*) ppPeca;
    if(pPeca == NULL)
-      return PEC_CondRetNaoAlterou;
+      return PEC_CondRetPecaNaoExiste;
 
    MEM_Free(pPeca->pModelo->nome);
    pPeca->pModelo->nome = novoNome;
@@ -107,6 +107,18 @@ PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPa
    pPeca->pModelo->pMovimento->tipo = novoTipoMovimento;
    
    return PEC_CondRetOK;
+}
+
+PEC_tpCondRet PEC_AdicionarTime(PEC_tppPeca ppPeca, PEC_tpTimePeca time)
+{
+   PEC_stPeca *pPeca = (PEC_stPeca*) ppPeca;
+   if(pPeca == NULL)
+      return PEC_CondRetPecaNaoExiste;
+
+   pPeca->time = time;
+
+   return PEC_CondRetOK;
+
 }
 
 #define PECA_OWN

@@ -45,34 +45,12 @@
 
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
-#define     CRIAR_PEC_CMD       "=criar"
-// #define     OBTER_VAL_CMD       "=obter"
-// #define     ATRIBUIR_VAL_CMD    "=atribuir"
-#define     DESTROI_PEC_CMD         "=destruir"
-// 
-// #define     IR_PARA_CMD        "=irPara"
-// #define     IR_CASA_CMD        "=ircasa"
-// #define     CRIAR_PECA_CMD     "=criarPeca"
- #define     ALTERAR_PECA_CMD   "=alterar"
-// #define     INSERIR_PECA_CMD   "=inserirPeca"
-// #define     REMOVER_PECA_CMD   "=removerPeca"
-// #define     INSERIR_REI_CMD    "=inserirRei"
-// #define     REMOVER_REI_CMD    "=removerRei"
-// #define     IR_REI_CMD         "=ircasarei"
-// #define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
-// #define     EH_CHECKMATE_CMD   "=ehCheckmate?"
-// #define     CRIAR_PEG_CMD      "=criarPegadas"
-// 
-// #define     FIM_CMD         "=fim"
-// 
-// /* Tabela dos nomes dos comandos de teste específicos do teste */
-// #define     VALIDAR_EST_PAR_CMD "=validarEstrutura"
-// #define     SELECIONAR_CMD       "=selecionar"
+#define     CRIAR_PEC_CMD                "=criar"
+#define     ADICIONAR_TIME_PEC_CMD       "=adicionarTime"
+#define     DESTROI_PEC_CMD              "=destruir"
+#define     ALTERAR_PECA_CMD             "=alterar"
 
-
-// #define     PARTIDAS_SIZE 10
-// #define     MAX_PASSOS_STR   50
-// #define     MAX_NOME_PECA    30
+ 
 /*****  Código das funções exportadas pelo módulo  *****/
 
 //static PAR_tppPartida Partidas[PARTIDAS_SIZE];
@@ -153,6 +131,24 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
       return TST_CompararInt( CondRetEsperada , CondRetObtido ,
          "Nao foi possivel alterar peca.") ;
+   }
+
+   // Testar Adicionar time a peça
+
+   else if ( strcmp( ComandoTeste , ADICIONAR_TIME_PEC_CMD ) == 0 )
+   {
+      PEC_tpTimePeca time;
+
+      NumLidos = LER_LerParametros( "ii" , &time, &CondRetEsperada ) ;
+      if ( NumLidos != 2 )
+      {
+         return TST_CondRetParm ;
+      }
+
+      CondRetObtido = PEC_AdicionarTime(ppPeca, time);
+
+      return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+         "Nao foi possivel Adicionar time a peca.") ;
    } 
 
    return TST_CondRetNaoConhec ;

@@ -80,6 +80,8 @@ ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PEC_tpTipoMovimento *pTipo)
    return ISP_CondRetOK;
 }
 
+
+//TODO [RCS] - condição de retorno para quando não conseguir criar os passos válidos.
 ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
 {
    LIS_tppLista passos;
