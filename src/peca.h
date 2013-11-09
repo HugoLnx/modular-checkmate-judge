@@ -48,9 +48,12 @@ typedef enum {
    INIMIGA = 1
 } PEC_tpTimePeca;
 
+
+
+
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB Condicoes de retorno
+*  $TC Tipo de dados: PEC Condicoes de retorno
 *
 *
 ***********************************************************************/
@@ -79,6 +82,8 @@ typedef enum {
 } PEC_tpCondRet ;
 
 
+PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_tpTipoMovimento tipoMovimento);
+void PEC_ObterNomeModeloPEca(PEC_tppPeca ppPeca, char *nomePeca);
 #undef PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

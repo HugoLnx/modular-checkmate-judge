@@ -40,77 +40,83 @@
 #include    "generico.h"
 #include    "lerparm.h"
 
+#include "peca.h"
+#include "mem_manager.h"
+
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
 
-#define     CRIAR_PAR_CMD       "=criar"
-#define     OBTER_VAL_CMD       "=obter"
-#define     ATRIBUIR_VAL_CMD    "=atribuir"
-#define     DESTROI_CMD         "=destruir"
+#define     CRIAR_PEC_CMD       "=criar"
+// #define     OBTER_VAL_CMD       "=obter"
+// #define     ATRIBUIR_VAL_CMD    "=atribuir"
+// #define     DESTROI_CMD         "=destruir"
+// 
+// #define     IR_PARA_CMD        "=irPara"
+// #define     IR_CASA_CMD        "=ircasa"
+// #define     CRIAR_PECA_CMD     "=criarPeca"
+// #define     ALTERAR_PECA_CMD   "=alterarPeca"
+// #define     INSERIR_PECA_CMD   "=inserirPeca"
+// #define     REMOVER_PECA_CMD   "=removerPeca"
+// #define     INSERIR_REI_CMD    "=inserirRei"
+// #define     REMOVER_REI_CMD    "=removerRei"
+// #define     IR_REI_CMD         "=ircasarei"
+// #define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
+// #define     EH_CHECKMATE_CMD   "=ehCheckmate?"
+// #define     CRIAR_PEG_CMD      "=criarPegadas"
+// 
+// #define     FIM_CMD         "=fim"
+// 
+// /* Tabela dos nomes dos comandos de teste específicos do teste */
+// #define     VALIDAR_EST_PAR_CMD "=validarEstrutura"
+// #define     SELECIONAR_CMD       "=selecionar"
 
-#define     IR_PARA_CMD        "=irPara"
-#define     IR_CASA_CMD        "=ircasa"
-#define     CRIAR_PECA_CMD     "=criarPeca"
-#define     ALTERAR_PECA_CMD   "=alterarPeca"
-#define     INSERIR_PECA_CMD   "=inserirPeca"
-#define     REMOVER_PECA_CMD   "=removerPeca"
-#define     INSERIR_REI_CMD    "=inserirRei"
-#define     REMOVER_REI_CMD    "=removerRei"
-#define     IR_REI_CMD         "=ircasarei"
-#define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
-#define     EH_CHECKMATE_CMD   "=ehCheckmate?"
-#define     CRIAR_PEG_CMD      "=criarPegadas"
 
-#define     FIM_CMD         "=fim"
-
-/* Tabela dos nomes dos comandos de teste específicos do teste */
-#define     VALIDAR_EST_PAR_CMD "=validarEstrutura"
-#define     SELECIONAR_CMD       "=selecionar"
-
-
-#define     PARTIDAS_SIZE 10
-#define     MAX_PASSOS_STR   50
-#define     MAX_NOME_PECA    30
+// #define     PARTIDAS_SIZE 10
+// #define     MAX_PASSOS_STR   50
+// #define     MAX_NOME_PECA    30
 /*****  Código das funções exportadas pelo módulo  *****/
 
 //static PAR_tppPartida Partidas[PARTIDAS_SIZE];
 
-static int iPar = 0 ;
+static PEC_tppPeca ppPeca = NULL;
 
-/***********************************************************************
-*
-*  $FC Função: TPAR Efetuar operações de teste específicas para matriz
-*
-*  $ED Descrição da função
-*     Efetua os diversos comandos de teste específicos para o módulo
-*     matriz sendo testado.
-*
-*  $EP Parâmetros
-*     $P ComandoTeste - String contendo o comando
-*
-*  $FV Valor retornado
-*     Ver TST_tpCondRet definido em TST_ESPC.H
-*
-***********************************************************************/
+//static int iPar = 0 ;
+
 
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
 
-//    PAR_tpCondRet CondRetObtido   = PAR_CondRetOK ;
-//    PAR_tpCondRet CondRetEsperada = PAR_CondRetFaltouMemoria ;
-   /* inicializa para qualquer coisa */
-
+   PEC_tpCondRet CondRetObtido;
+   PEC_tpCondRet CondRetEsperada;
+   
    int IndiceValorEsperado = -1;
    int IndiceValorObtido = -1;
    int IndiceValorDado = -1;
 
+   int NumLidos = -1;
 
+   // Testar criação de peça
 
-   int Linhas = 0 ;
-   int Colunas = 0 ;
+   if ( strcmp( ComandoTeste , CRIAR_PEC_CMD ) == 0 )
+   {
+      char *pNomePeca, *pPassos, *nome;
+      PEC_tpTipoMovimento tipoMovimento;
 
-   int  NumLidos = -1 ;
+      MEM_Alloc(sizeof(char)*20,(void**)&pNomePeca);
+      MEM_Alloc(sizeof(char)*20,(void**)&nome);
+      MEM_Alloc(sizeof(char)*50,(void**)&pPassos);
 
-   TST_tpCondRet Ret ;
+      NumLidos = LER_LerParametros( "ssii" , pNomePeca, pPassos, &tipoMovimento, &CondRetEsperada ) ;
+      if ( NumLidos != 4 )
+      {
+         return TST_CondRetParm ;
+      }
+
+      CondRetObtido = PEC_CriarPeca(&ppPeca,pNomePeca,pPassos,tipoMovimento);
+
+      return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+         "Nao foi possivel criar peca.") ;
+
+   } 
 
    return TST_CondRetNaoConhec ;
 

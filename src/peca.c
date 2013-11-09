@@ -17,6 +17,8 @@
 #include <string.h>
 #include "lista.h"
 #include "peca.h"
+#include "mem_manager.h"
+#include "input_string_parser.h"
 
 
 typedef struct stMovimento {
@@ -34,6 +36,45 @@ typedef struct stPeca {
    PEC_tpTimePeca time;
 } PEC_stPeca;
 
+PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_tpTipoMovimento tipoMovimento)
+{
+   PEC_stPeca *pPeca;
+   PEC_tpModeloPeca *pModeloPeca;
+   PEC_tpMovimento *pTipoMovimento;
+   LIS_tppLista pPassos;
+   MEM_Alloc(sizeof(PEC_stPeca),(void**)&pPeca);
+   MEM_Alloc(sizeof(PEC_tpModeloPeca),(void**)&pModeloPeca);
+   MEM_Alloc(sizeof(PEC_tpMovimento),(void**)&pTipoMovimento);
+
+   ISP_LerPassos(passos,&pPassos);
+
+   pTipoMovimento->passos = pPassos;
+   pTipoMovimento->tipo = tipoMovimento;
+
+   pModeloPeca->nome = nome;
+   pModeloPeca->pMovimento = pTipoMovimento;
+
+   pPeca->pModelo = pModeloPeca;
+
+   *ppPeca = (PEC_tppPeca)pPeca;
+
+   return PEC_CondRetOK;
+}
+
+
+
+//TODO [RCS] falta testar
+PEC_tpCondRet DestruirPeca(PEC_tppPeca *ppPeca)
+{
+   PEC_stPeca* pPeca = (PEC_stPeca*)*ppPeca;
+   if(pPeca == NULL)
+      return PEC_CondRetOK;
+
+   MEM_Free(pPeca);
+
+   return PEC_CondRetOK;
+
+}
 
 #define PECA_OWN
 #include "peca.h"
