@@ -37,7 +37,6 @@
    #define INPUT_STRING_PARSER_EXT extern
 #endif
 
-#include "partida.h"
 #include "lista.h"
 #include "peca.h"
 

@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E4003F3F-E97F-4DEB-822F-D28C48F83516}</ProjectGuid>
+    <ProjectGuid>{895A02BC-EA31-4183-AB3E-771F5D557982}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>input_string_parser</RootNamespace>
+    <RootNamespace>passo</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,30 +74,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\direcao.c" />
-    <ClCompile Include="..\src\grafo.c" />
-    <ClCompile Include="..\src\input_string_parser.c" />
-    <ClCompile Include="..\src\lista.c" />
-    <ClCompile Include="..\src\mem_manager.c" />
     <ClCompile Include="..\src\passo.c" />
-    <ClCompile Include="..\src\tabuleiro.c" />
-    <ClCompile Include="..\src\test_isp.c" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib">
-      <FileType>Document</FileType>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\direcao.h" />
-    <ClInclude Include="..\src\input_string_parser.h" />
-    <ClInclude Include="..\src\lista.h" />
-    <ClInclude Include="..\src\mem_manager.h" />
     <ClInclude Include="..\src\passo.h" />
-    <ClInclude Include="..\src\tabuleiro.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\src\teste_input_string_parser.script" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

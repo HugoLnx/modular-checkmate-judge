@@ -1,6 +1,5 @@
 #include    <string.h>
 #include    <stdio.h>
-#include    "mem_manager.h"
 
 #include    "TST_Espc.h"
 
@@ -8,6 +7,8 @@
 #include    "LerParm.h"
 
 #include    "input_string_parser.h"
+#include    "passo.h"
+#include    "mem_manager.h"
 
 #define MAX_PASSOS     5
 #define MAX_PASSOS_STR 50
@@ -22,17 +23,9 @@ static const char *LER_BOOL_CMD                   = "=lerBooleano"      ;
 static const char *LER_TIPO_MOVIMENTO_CMD         = "=lerTipoMovimento" ;
 static const char *FIM_CMD                        = "=fim"              ;
 
-static const PAR_tpPasso PASSOS[][MAX_PASSOS] = {
-   {{NORTE, 2}},
-   {{SUL, 2}, {ESTE, 5}},
-   {{OESTE, 2}, {NOROESTE, 1}, {ESTE, 0}}
-};
-
-static const int PASSOS_SIZE[] = {1, 2, 3};
-
 /*****Protótipos das funções encapuladas no módulo *****/
    static char* AlocarEspacoParaNome();
-   static LIS_tppLista CriarListaPassos(const PAR_tpPasso *passos, const int tamanho);
+   static LIS_tppLista CriarListaPassos(const PAS_tppPasso passos, const int tamanho);
    static void DestruirValor(void *pValor);
 
 /***** Código das funções exportadas pelo módulo  *****/
@@ -66,6 +59,21 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
           CondRetEsp = -1;
 
       TST_tpCondRet CondRet;
+      
+      PAS_tppPasso PASSOS[3][MAX_PASSOS];
+      int PASSOS_SIZE[3];
+
+      PAS_CriarPasso(&PASSOS[0][0], NORTE, 2);
+      PASSOS_SIZE[0] = 1;
+
+      PAS_CriarPasso(&PASSOS[1][0], SUL, 2);
+      PAS_CriarPasso(&PASSOS[1][1], ESTE, 5);
+      PASSOS_SIZE[1] = 2;
+      
+      PAS_CriarPasso(&PASSOS[2][0], OESTE, 2);
+      PAS_CriarPasso(&PASSOS[2][1], NOROESTE, 1);
+      PAS_CriarPasso(&PASSOS[2][2], ESTE, 0);
+      PASSOS_SIZE[2] = 3;
 
       /*Testar Ler tipo de movimento*/
 
@@ -157,7 +165,7 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
       MEM_Free(pValor);
    }
 
-   LIS_tppLista CriarListaPassos(const PAR_tpPasso *passos, const int tamanho)
+   LIS_tppLista CriarListaPassos(PAS_tppPasso *passos, const int tamanho)
    {
       int i;
       LIS_tppLista pPassos;
@@ -165,9 +173,8 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
       for (i = 0; i < tamanho; i++)
       {
-         PAR_tpPasso *pPasso;
-         MEM_Alloc(sizeof(PAR_tpPasso), (void **) &pPasso);
-         *pPasso = passos[i];
+         PAS_tppPasso pPasso;
+         pPasso = *(passos + i);
          LIS_InserirElementoApos(pPassos, pPasso);
       }
 
@@ -176,8 +183,8 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
    int ListaDePassosSaoIguais(LIS_tppLista pPassos1, LIS_tppLista pPassos2)
    {
-      PAR_tpPasso *pPasso1;
-      PAR_tpPasso *pPasso2;
+      PAS_tppPasso pPasso1;
+      PAS_tppPasso pPasso2;
       LIS_tpCondRet ret1 = LIS_CondRetOK;
       LIS_tpCondRet ret2 = LIS_CondRetOK;
 
@@ -186,10 +193,12 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
 
       while (ret1 == LIS_CondRetOK && ret2 == LIS_CondRetOK)
       {
+         int saoIguais;
          LIS_ObterValor(pPassos1, (void **) &pPasso1);
          LIS_ObterValor(pPassos2, (void **) &pPasso2);
 
-         if (pPasso1->direcao != pPasso2->direcao || pPasso1->quantidade != pPasso2->quantidade)
+         PAS_CompararPassos(pPasso1, pPasso2, &saoIguais);
+         if (!saoIguais)
          {
             return FALSE;
          }

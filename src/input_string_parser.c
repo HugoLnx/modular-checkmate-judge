@@ -37,9 +37,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
-#include "lista.h"
+
 #include "mem_manager.h"
-#include "partida.h"
+#include "passo.h"
 #include "direcao.h"
 
 #define INPUT_STRING_PARSER_OWN
@@ -55,9 +55,9 @@
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-static int CompararPassos(void *pValor1, void *pValor2);
-static void DestruirPasso(void *pValor);
-static PAR_tpPasso* LerPasso(char *passoInput);
+static int CompararPassosGenerico(void *pValor1, void *pValor2);
+static void DestruirPassoGenerico(void *pValor);
+static PAS_tppPasso LerPasso(char *passoInput);
 DIR_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -90,13 +90,13 @@ ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
    MEM_Alloc(sizeof(char)*(strlen(passosStr)+1), (void **) &str);
    strcpy(str, passosStr);
 
-   LIS_CriarLista(&passos, DestruirPasso, CompararPassos);
+   LIS_CriarLista(&passos, DestruirPassoGenerico, CompararPassosGenerico);
 
    passoStr = strtok(str, SEPARADOR_PASSOS);
 
    while (passoStr != NULL)
    {
-      PAR_tpPasso *pPasso;
+      PAS_tppPasso pPasso;
       pPasso = LerPasso(passoStr);
       LIS_InserirElementoApos(passos, pPasso);
       passoStr = strtok(NULL, SEPARADOR_PASSOS);
@@ -107,9 +107,9 @@ ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
    return ISP_CondRetOK;
 }
 
-PAR_tpPasso* LerPasso(char *passoInput)
+PAS_tppPasso LerPasso(char *passoInput)
 {
-   PAR_tpPasso *pPasso;
+   PAS_tppPasso pPasso;
    int *pQnt;
    char *strDirecao;
 
@@ -117,9 +117,7 @@ PAR_tpPasso* LerPasso(char *passoInput)
    MEM_Alloc(sizeof(int), (void **) &pQnt);
    sscanf(passoInput, FORMATO_PASSO_STR, pQnt, strDirecao);
 
-   MEM_Alloc(sizeof(PAR_tpPasso), (void **) &pPasso);
-   pPasso->direcao = LerDirecao(strDirecao);
-   pPasso->quantidade = *pQnt;
+   PAS_CriarPasso(&pPasso, LerDirecao(strDirecao), *pQnt);
 
    return pPasso;
 }
@@ -167,15 +165,18 @@ DIR_tpDirecao LerDirecao(char *direcaoInput)
 }
 
 
-void DestruirPasso(void *pValor)
+void DestruirPassoGenerico(void *pValor)
 {
-   MEM_Free(pValor);
+   PAS_DestruirPasso((PAS_tppPasso*) &pValor);
 }
 
-int CompararPassos(void *pValor1, void *pValor2)
+int CompararPassosGenerico(void *pValor1, void *pValor2)
 {
-   // TODO: função para comparar passos
-   return 0;
+   int resp;
+
+   PAS_CompararPassos((PAS_tppPasso) pValor1, (PAS_tppPasso) pValor2, &resp);
+
+   return resp;
 }
 
 /********** Fim do módulo de implementação: GRA Grafo direcionado **********/
