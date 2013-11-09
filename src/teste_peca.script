@@ -7,6 +7,7 @@
 == Declarar as condicoes de retorno
 
 =declararparm   OK             int  0
+=declararparm   NaoAlterou     int  2
 
 //*********************************
 == Declarar tipos de movimento
@@ -22,7 +23,13 @@
 =criar  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
 =destruir                                                      OK
 =criar  "touro"      "[2]norte"                           ANDA OK
+=destruir                                                      OK
 
+== Testar alterar peca
+=criar    "touro"      "[2]norte"                           ANDA OK
+=alterar  "cavalo"     "[3]sul"                             VOA  OK
+=destruir                                                        OK
+=alterar  "cavalo"     "[3]sul"                             VOA  NaoAlterou
 
 
 

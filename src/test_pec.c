@@ -53,7 +53,7 @@
 // #define     IR_PARA_CMD        "=irPara"
 // #define     IR_CASA_CMD        "=ircasa"
 // #define     CRIAR_PECA_CMD     "=criarPeca"
-// #define     ALTERAR_PECA_CMD   "=alterarPeca"
+ #define     ALTERAR_PECA_CMD   "=alterar"
 // #define     INSERIR_PECA_CMD   "=inserirPeca"
 // #define     REMOVER_PECA_CMD   "=removerPeca"
 // #define     INSERIR_REI_CMD    "=inserirRei"
@@ -87,7 +87,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
    PEC_tpCondRet CondRetObtido;
    PEC_tpCondRet CondRetEsperada;
-   
+
    int IndiceValorEsperado = -1;
    int IndiceValorObtido = -1;
    int IndiceValorDado = -1;
@@ -98,11 +98,10 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
    if ( strcmp( ComandoTeste , CRIAR_PEC_CMD ) == 0 )
    {
-      char *pNomePeca, *pPassos, *nome;
+      char *pNomePeca, *pPassos;
       PEC_tpTipoMovimento tipoMovimento;
 
       MEM_Alloc(sizeof(char)*20,(void**)&pNomePeca);
-      MEM_Alloc(sizeof(char)*20,(void**)&nome);
       MEM_Alloc(sizeof(char)*50,(void**)&pPassos);
 
       NumLidos = LER_LerParametros( "ssii" , pNomePeca, pPassos, &tipoMovimento, &CondRetEsperada ) ;
@@ -118,6 +117,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
    } 
 
+   // Testar destruir peça
 
    else if ( strcmp( ComandoTeste , DESTROI_PEC_CMD ) == 0 )
    {
@@ -131,7 +131,28 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
       return TST_CompararInt( CondRetEsperada , CondRetObtido ,
          "Nao foi possivel destruir peca.") ;
+   } 
 
+   // Testar Alterar peça
+
+   else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
+   {
+      char *pNovoNome, *pNovosPassos;
+      PEC_tpTipoMovimento novoTipoMovimento;
+
+      MEM_Alloc(sizeof(char)*20,(void**)&pNovoNome);
+      MEM_Alloc(sizeof(char)*50,(void**)&pNovosPassos);
+
+      NumLidos = LER_LerParametros( "ssii" , pNovoNome, pNovosPassos, &novoTipoMovimento ,&CondRetEsperada ) ;
+      if ( NumLidos != 4 )
+      {
+         return TST_CondRetParm ;
+      }
+
+      CondRetObtido = PEC_AlterarPeca(ppPeca,pNovoNome,pNovosPassos,novoTipoMovimento);
+
+      return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+         "Nao foi possivel alterar peca.") ;
    } 
 
    return TST_CondRetNaoConhec ;

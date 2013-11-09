@@ -80,6 +80,35 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
 
 }
 
+PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPassos, PEC_tpTipoMovimento novoTipoMovimento)
+{
+   LIS_tppLista pPassos;
+   LIS_tpCondRet lisCondRet;
+   ISP_tpCondRet ispCondRet;
+
+   PEC_stPeca *pPeca = (PEC_stPeca*) ppPeca;
+   if(pPeca == NULL)
+      return PEC_CondRetNaoAlterou;
+
+   MEM_Free(pPeca->pModelo->nome);
+   pPeca->pModelo->nome = novoNome;
+
+   lisCondRet = LIS_DestruirLista(pPeca->pModelo->pMovimento->passos);
+   if(lisCondRet != LIS_CondRetOK)
+      return PEC_CondRetNaoAlterou;
+   
+
+   ispCondRet = ISP_LerPassos(pNovosPassos,&pPassos);
+   if(ispCondRet != ISP_CondRetOK)
+      return PEC_CondRetNaoAlterou;
+   
+
+   pPeca->pModelo->pMovimento->passos = pPassos;
+   pPeca->pModelo->pMovimento->tipo = novoTipoMovimento;
+   
+   return PEC_CondRetOK;
+}
+
 #define PECA_OWN
 #include "peca.h"
 #undef PECA_OWN
