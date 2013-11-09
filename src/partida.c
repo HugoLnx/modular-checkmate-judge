@@ -18,6 +18,7 @@
 #include "tabuleiro.h"
 #include "mem_manager.h"
 #include "direcao.h"
+#include "peca.h"
 
 #include <string.h>
 
@@ -27,29 +28,16 @@
 
 #define NOME_REI "rei"
 
-typedef struct stMovimento {
-   LIS_tppLista passos;
-   PAR_tpTipoMovimento tipo;
-} tpMovimento;
 
-typedef struct stModeloPeca {
-   tpMovimento *pMovimento;
-   char *nome;
-} tpModeloPeca;
-
-typedef struct stPeca {
-   tpModeloPeca *pModelo;
-   PAR_tpTimePeca time;
-} tpPeca;
 
 typedef struct stPegada {
-   tpPeca *pPeca;
+   PEC_tppPeca *pPeca;
    struct stPegada *pAnterior;
 } tpPegada;
 
 typedef struct stCasa {
    char *nome;
-   tpPeca *pPeca;
+   PEC_tppPeca *pPeca;
    LIS_tppLista pegadas;
 } tpCasa;
 
@@ -74,7 +62,7 @@ typedef struct stCasa {
    typedef struct PAR_stPartida* PAR_tppPartida;
 
    typedef PAR_tpCondRet (*tpCallbackIterarCasasAlcancePeca)
-      (tpPartida *pPartida, tpPeca *pPeca, tpPegada *pPegAnt);
+      (tpPartida *pPartida, PEC_tppPeca *pPeca, tpPegada *pPegAnt);
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -83,11 +71,11 @@ typedef struct stCasa {
 
    static tpCasa* CriarCasa();
    
-   static void DestroiMovimento(void *pValor);
+   //static void DestroiMovimento(void *pValor);
    
-   static void DestruirModeloPeca(void *pValor);
+   //static void DestruirModeloPeca(void *pValor);
    
-   static void DestruirPeca(void *pValor);
+   //static void DestruirPeca(void *pValor);
    
    static void DestruirCasa(void *pValor);
    
@@ -99,32 +87,32 @@ typedef struct stCasa {
 
    static int CompararPassos(void *pValor1, void *pValor2);
 
-   static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, tpPeca **pPeca);
+   static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca **pPeca);
    
-   static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
-      PAR_tpTimePeca time, tpPeca **ppPeca);
+   /*static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
+      PAR_tpTimePeca time, PEC_tppPeca **ppPeca);*/
 
 
    // criar pegadas
    
-   static PAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpPartida *pPartida, tpPeca *pPeca,
+   static PAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpPartida *pPartida, PEC_tppPeca *pPeca,
       tpPegada *pPegAnt);
 
    static PAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpPartida *pPartida,
       tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
    
    static PAR_tpCondRet SeguirPassosDaPeca(tpPartida *pPartida, LIS_tppLista pPassos,
-      tpPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
+      PEC_tppPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
 
    static PAR_tpCondRet SeguirPassoDaPeca(tpPartida *pPartida,
-      PAR_tpPasso *pPasso, tpPeca *pPeca, DIR_tpDirecao orientacao,
+      PAR_tpPasso *pPasso, PEC_tppPeca *pPeca, DIR_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar);
 
    static PAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpPartida *pPartida,
-      DIR_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
+      DIR_tpDirecao direcao, PEC_tppPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
    
    static PAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpPartida *pPartida,
-      DIR_tpDirecao direcao, int quantidade, tpPeca *pPeca,
+      DIR_tpDirecao direcao, int quantidade, PEC_tppPeca *pPeca,
       tpCallbackIterarCasasAlcancePeca operar);
    
    // fim criar pegada
@@ -211,7 +199,8 @@ typedef struct stCasa {
          }
       }
 
-      LIS_CriarLista(&pPartida->pModelosPecas, DestruirModeloPeca, CompararNomeModeloPeca);
+      // TODO [RCS]
+      //LIS_CriarLista(&pPartida->pModelosPecas, DestruirModeloPeca, CompararNomeModeloPeca);
 
 	  *ppPartida = pPartida;
 
@@ -496,7 +485,9 @@ typedef struct stCasa {
       tpCasa *pCasa = (tpCasa*) pValor;
 
       LIS_DestruirLista(pCasa->pegadas);
-      DestruirPeca((void*) pCasa->pPeca);
+
+      // TODO [RCS] inserir funcao exportada do modulo PECA
+      //DestruirPeca((void*) pCasa->pPeca);
 
       MEM_Free(pCasa);
    }
@@ -517,8 +508,8 @@ typedef struct stCasa {
    }
 
 
-
-   void DestruirPeca(void *pValor)
+   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
+   /*void DestruirPeca(void *pValor)
    {
       tpPeca *pPeca = (tpPeca*) pValor;
       if (pValor == NULL)
@@ -527,10 +518,11 @@ typedef struct stCasa {
       }
 
       MEM_Free(pPeca);
-   }
+   }*/
 
 
-   void DestruirModeloPeca(void *pValor)
+   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
+   /*void DestruirModeloPeca(void *pValor)
    {
       tpModeloPeca *pModelo = (tpModeloPeca*) pValor;
 
@@ -541,15 +533,16 @@ typedef struct stCasa {
       MEM_Free(pModelo->nome);
       DestroiMovimento(pModelo->pMovimento);
       MEM_Free(pModelo);
-   }
+   }*/
 
-
+   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
+/*
    void DestroiMovimento(void *pValor)
    {
       tpMovimento *pMovimento = (tpMovimento*) pValor;
       LIS_DestruirLista(pMovimento->passos);
       MEM_Free(pMovimento);
-   }
+   }*/
 
    
    void DestruirPasso(void *pValor)
@@ -560,18 +553,22 @@ typedef struct stCasa {
    int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
    {
       tpPegada *pPegada = (tpPegada*) pPonteiro1;
-      tpPeca *pPeca = (tpPeca*) pPonteiro2;
+      // TODO [RCS] PER_CriarPeca
+      //tpPeca *pPeca = (tpPeca*) pPonteiro2;
    
-      return strcmp(pPegada->pPeca->pModelo->nome, pPeca->pModelo->nome);
+      // TODO [RCS] pensar em como implementar linha abaixo
+      //return strcmp(pPegada->pPeca->pModelo->nome, pPeca->pModelo->nome);
+      return 0;
    }
 
-   int CompararNomeModeloPeca(void *pValor1, void *pValor2)
+   // TODO [RCS] pensar em como implementar linha abaixo
+   /*int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
       tpModeloPeca *pModelo1 = (tpModeloPeca*) pValor1;
       char *nomeProcurado = (char*) pValor2;
 
       return strcmp(pModelo1->nome, nomeProcurado);
-   }
+   }*/
 
    
    int CompararPassos(void *pValor1, void *pValor2)

@@ -34,6 +34,51 @@
 #define PECA_EXT extern
 #endif
 
+//TODO fazer o do peca
+typedef struct PEC_stPeca* PEC_tppPeca;
+
+typedef enum {
+   ANDA = 0,
+   VOA = 1
+} PEC_tpTipoMovimento;
+
+
+typedef enum {
+   ALIADA = 0,
+   INIMIGA = 1
+} PEC_tpTimePeca;
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: TAB Condicoes de retorno
+*
+*
+***********************************************************************/
+
+typedef enum {
+
+   PEC_CondRetOK = 0 ,
+   /* Executou correto */
+
+   PEC_CondRetNaoCriouOrigem = 1 ,
+   /* Não criou nó origem */
+
+   PEC_CondRetNaoEhNo = 2 ,
+   /* Não é nó na direção desejada */
+
+   PEC_CondRetMatrizNaoExiste = 3 ,
+   /* Matriz não existe */
+
+   PEC_CondRetNaoTemCorrente = 4 ,
+   /* Matriz está vazia */
+
+   PEC_CondRetFaltouMemoria = 5 ,
+   /* Faltou memória ao alocar dados */
+   PEC_CondRetPecaNaoEncontrada = 6
+
+} PEC_tpCondRet ;
+
+
 #undef PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

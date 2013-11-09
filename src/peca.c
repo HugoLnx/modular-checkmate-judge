@@ -15,7 +15,24 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "lista.h"
+#include "peca.h"
 
+
+typedef struct stMovimento {
+   LIS_tppLista passos;
+   PEC_tpTipoMovimento tipo;
+} PEC_tpMovimento;
+
+typedef struct stModeloPeca {
+   PEC_tpMovimento *pMovimento;
+   char *nome;
+} PEC_tpModeloPeca;
+
+typedef struct stPeca {
+   PEC_tpModeloPeca *pModelo;
+   PEC_tpTimePeca time;
+} PEC_stPeca;
 
 
 #define PECA_OWN

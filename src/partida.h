@@ -40,17 +40,6 @@
 
 typedef struct PAR_stPartida* PAR_tppPartida;
 
-typedef enum {
-   ANDA = 0,
-   VOA = 1
-} PAR_tpTipoMovimento;
-
-
-typedef enum {
-   ALIADA = 0,
-   INIMIGA = 1
-} PAR_tpTimePeca;
-
 typedef struct PAR_stPasso
 {
    DIR_tpDirecao direcao;

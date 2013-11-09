@@ -373,13 +373,13 @@
 == Verificar quando ir casa recebe um nome invalido
 =ircasa "X0"    NaoFolha
 
-== Destroi a matriz
-=destruir OK
+//== Destroi a matriz
+//=destruir OK
 //=selecionar 1
 //=destruir OK
 
-== Verificar erro ao destruir matriz duas vezes seguidas
-=destruir NaoMatriz
+//== Verificar erro ao destruir matriz duas vezes seguidas
+//=destruir NaoMatriz
 
 
 == finaliza script

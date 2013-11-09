@@ -39,6 +39,7 @@
 
 #include "partida.h"
 #include "lista.h"
+#include "peca.h"
 
 /***** Declarações exportadas pelo módulo *****/
 
@@ -66,7 +67,7 @@ typedef enum {
  
 } ISP_tpCondRet ;
 
-ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PAR_tpTipoMovimento *pTipo);
+ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PEC_tpTipoMovimento *pTipo);
 
 ISP_tpCondRet ISP_LerPassos(char *passosStr, LIS_tppLista *ppPassos);
 

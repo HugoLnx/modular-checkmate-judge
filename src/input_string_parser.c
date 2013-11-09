@@ -62,7 +62,7 @@ DIR_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PAR_tpTipoMovimento *pTipo)
+ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, PEC_tpTipoMovimento *pTipo)
 {
    if (strcmp(strupr(tipoStr), VOA_STR) == 0)
    {

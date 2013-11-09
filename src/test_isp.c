@@ -73,7 +73,7 @@ static const int PASSOS_SIZE[] = {1, 2, 3};
          {
             char *tipoStr;
             int tipoEsperado;
-            PAR_tpTipoMovimento tipoObtido;
+            PEC_tpTipoMovimento tipoObtido;
             MEM_Alloc(sizeof(tipoStr)*MAX_TIPO_STR, (void **) &tipoStr);
 
             numLidos = LER_LerParametros("sii", tipoStr, &tipoEsperado, &CondRetEsp);
