@@ -48,7 +48,7 @@
 #define     CRIAR_PEC_CMD       "=criar"
 // #define     OBTER_VAL_CMD       "=obter"
 // #define     ATRIBUIR_VAL_CMD    "=atribuir"
-// #define     DESTROI_CMD         "=destruir"
+#define     DESTROI_PEC_CMD         "=destruir"
 // 
 // #define     IR_PARA_CMD        "=irPara"
 // #define     IR_CASA_CMD        "=ircasa"
@@ -115,6 +115,22 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
       return TST_CompararInt( CondRetEsperada , CondRetObtido ,
          "Nao foi possivel criar peca.") ;
+
+   } 
+
+
+   else if ( strcmp( ComandoTeste , DESTROI_PEC_CMD ) == 0 )
+   {
+      NumLidos = LER_LerParametros( "i" , &CondRetEsperada ) ;
+      if ( NumLidos != 1 )
+      {
+         return TST_CondRetParm ;
+      }
+
+      CondRetObtido = PEC_DestruirPeca(&ppPeca);
+
+      return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+         "Nao foi possivel destruir peca.") ;
 
    } 
 

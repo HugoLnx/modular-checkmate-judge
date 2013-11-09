@@ -1,7 +1,7 @@
 // Script:    teste_peca.script
 // Autor:     Robert Correa
 // Data:      15/set/2013
-// Propósito: Testar completamente o módulo lista de char duplamente encadeada
+// Propósito: Testar completamente o módulo peça
 //
 
 == Declarar as condicoes de retorno
@@ -14,11 +14,18 @@
 =declararparm   ANDA             int  0
 =declararparm   VOA              int   1
 
-== Testar cria a lista
+== Testar cria e destruir peca
 =criar  "cavalo"     "[2]norte [1]este"                   VOA  OK
+=destruir                                                      OK
 =criar  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
+=destruir                                                      OK
 =criar  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
+=destruir                                                      OK
 =criar  "touro"      "[2]norte"                           ANDA OK
+
+
+
+
 
 
 

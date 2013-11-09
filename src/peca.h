@@ -83,7 +83,7 @@ typedef enum {
 
 
 PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_tpTipoMovimento tipoMovimento);
-void PEC_ObterNomeModeloPEca(PEC_tppPeca ppPeca, char *nomePeca);
+PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
 #undef PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

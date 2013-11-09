@@ -62,15 +62,19 @@ PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_t
 }
 
 
-
-//TODO [RCS] falta testar
-PEC_tpCondRet DestruirPeca(PEC_tppPeca *ppPeca)
+PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
 {
    PEC_stPeca* pPeca = (PEC_stPeca*)*ppPeca;
    if(pPeca == NULL)
       return PEC_CondRetOK;
 
+
+   MEM_Free(pPeca->pModelo->nome);
+   LIS_DestruirLista(pPeca->pModelo->pMovimento->passos);
+   MEM_Free(pPeca->pModelo->pMovimento);
    MEM_Free(pPeca);
+
+   *ppPeca = NULL;
 
    return PEC_CondRetOK;
 
