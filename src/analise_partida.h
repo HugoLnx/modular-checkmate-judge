@@ -78,6 +78,8 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 
    APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta);
 
+   APAR_tpCondRet APAR_ReiPodeMoverParaCorrente(APAR_tppAnalise pAnalise, int *pResposta);
+
    APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
 
 /***********************************************************************

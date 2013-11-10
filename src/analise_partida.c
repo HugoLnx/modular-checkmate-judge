@@ -126,6 +126,23 @@ typedef struct stCasa {
    }
 
 
+
+   APAR_tpCondRet APAR_ReiPodeMoverParaCorrente(APAR_tppAnalise pAnalise, int *pResposta)
+   {
+      tpCasa *pCasa;
+      PEC_tpTimePeca time;
+      PEC_tpCondRet condRet;
+
+      TAB_ObterValor(pAnalise->pTabuleiro, (void**) &pCasa);
+      
+      condRet = PEC_ObterTime(pCasa->pPeca, &time);
+      
+      *pResposta = condRet == PEC_CondRetOK && time == ALIADA;
+
+      return APAR_CondRetOK;
+   }
+
+
    
 /***********************************************************************
 *
@@ -270,6 +287,7 @@ typedef struct stCasa {
    {
       tpCasa *pCasa;
       MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
+      pCasa->pegadas = NULL;
       LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
       pCasa->pPeca = pPeca;
       pCasa->nome = nome;

@@ -1,0 +1,137 @@
+// Script:    TesteMatriz.script
+// Autor:     Hugo Roque / Nino Fabrizio
+// Data:      15/set/2013
+// Propósito: Testar se a matriz está sendo criada corretamente
+// e se os possíveis erros estão sendo lançados nos momentos
+// adequados.
+//
+
+== Declarar as condicoes de retorno
+=declararparm  OK                     int 0
+=declararparm  NaoOrigem              int 1 
+=declararparm  NaoFolha               int 2
+=declararparm  NaoMatriz              int 3
+=declararparm  NaoCorr                int 4
+=declararparm  Memoria                int 5
+=declararparm  PecaNaoEncontrada      int 6
+
+== Declarar os conteúdos dos nós
+=declararparm  ValorErro    int -1
+
+=declararparm  TRUE         int 1
+=declararparm  FALSE        int 0
+
+=declararparm  VOA          int 1
+=declararparm  ANDA         int 0
+
+=declararparm  ALIADA       int 0
+=declararparm  INIMIGA      int 1
+
+=declararparm  NORTE        int 0
+=declararparm  NORDESTE     int 1
+=declararparm  ESTE         int 2
+=declararparm  SUDESTE      int 3
+=declararparm  SUL          int 4
+=declararparm  SUDOESTE     int 5
+=declararparm  OESTE        int 6
+=declararparm  NOROESTE     int 7
+
+=criarPeca   "zorro"                  "[2]este [2]sudoeste [2]este"        ANDA OK
+=criarPeca   "touro"                  "[0]norte"                           ANDA OK
+=criarPeca   "peao"                   "[1]norte"                           ANDA OK
+=criarPeca   "torreAlada"             "[2]norte"                           VOA  OK
+
+
+== Testar EhCheckmate? rei sozinho
+=inserirRei   "A1"                OK
+=ehCheckmate? FALSE               OK
+
+
+//== Testar EhCheckmate? check, mas não checkmate
+//=selecionar 5
+//=copiarTabuleiro 2                OK
+//=selecionar 2
+//=ircasa "A1"                      OK
+//=inserirRei                       OK
+//=ircasa "A3"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "C1"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=criarPegadas                     OK
+//=ehCheckmate? FALSE               OK
+//=destruir                         OK
+//
+//
+//
+//== Testar EhCheckmate? rei totalmente encurralado
+//=selecionar 5
+//=copiarTabuleiro 2                OK
+//=selecionar 2
+//=ircasa "A1"                      OK
+//=inserirRei                       OK
+//=ircasa "A3"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "C1"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "C2"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=criarPegadas                     OK
+//=ehCheckmate? TRUE                OK
+//=destruir                         OK
+//
+//
+//== Testar EhCheckmate? rei se salva pois peça anda e tem outra peça na frente
+//=selecionar 5
+//=copiarTabuleiro 2                OK
+//=selecionar 2
+//=ircasa "A1"                      OK
+//=inserirRei                       OK
+//=ircasa "A5"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "E1"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "E2"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "C2"                      OK
+//=inserirPeca "peao"   ALIADA      OK
+//=criarPegadas                     OK
+//=ehCheckmate? FALSE               OK
+//=destruir                         OK
+//
+//
+//
+//== Testar EhCheckmate? rei não se salva pois aliados impedem passagem
+//=selecionar 5
+//=copiarTabuleiro 2                OK
+//=selecionar 2
+//=ircasa "A1"                      OK
+//=inserirRei                       OK
+//=ircasa "A5"                      OK
+//=inserirPeca "touro"  INIMIGA     OK
+//=ircasa "B1"                      OK
+//=inserirPeca "peao"   ALIADA      OK
+//=ircasa "B2"                      OK
+//=inserirPeca "peao"   ALIADA      OK
+//=criarPegadas                     OK
+//=ehCheckmate? TRUE                OK
+//=destruir                         OK
+//
+//
+//== Testar EhCheckmate? rei pode fugir pois a peça voa
+//=selecionar 5
+//=copiarTabuleiro 2                     OK
+//=selecionar 2
+//=criarPegadas                          OK
+//=ircasa "A1"                           OK
+//=inserirRei                            OK
+//=ircasa "A3"                           OK
+//=inserirPeca "torreAlada"  INIMIGA     OK
+//=ircasa "C1"                           OK
+//=inserirPeca "torreAlada"  INIMIGA     OK
+//=ircasa "C2"                           OK
+//=inserirPeca "torreAlada"  INIMIGA     OK
+//=ehCheckmate? FALSE                    OK
+//=destruir                              OK
+
+== finaliza script
+=fim
