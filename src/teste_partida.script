@@ -174,11 +174,11 @@
 //
 //== Teste copiar tabuleiro
 //=copiarTabuleiro 1 OK
-//
-//=selecionar 1
-//== Teste remover peca
-//=ircasa "D4" OK
-//=removerPeca OK
+
+== Teste remover peca
+=ircasa "H4" OK
+=inserirPeca "torre" ALIADA OK
+=removerPeca OK
 
 == Testar ir casa rei
 =ircasarei   OK

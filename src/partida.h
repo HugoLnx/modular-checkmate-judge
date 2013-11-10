@@ -117,7 +117,7 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    
    PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PEC_tpTimePeca time);
    
-   //PAR_tpCondRet PAR_RemoverPeca(PAR_tpPartida *pPartida);
+   PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida);
 
 
 

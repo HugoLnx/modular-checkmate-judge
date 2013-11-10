@@ -300,22 +300,22 @@ static int iPar = 0 ;
        }
        
        
-//		/* Testar PAR Remover peca*/
-//
-//		 else if (strcmp( ComandoTeste, REMOVER_PECA_CMD) == 0 )
-//       {
-//			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-//         if (NumLidos != 1)
-//         {
-//            return TST_CondRetParm ;
-//         }
-//
-//         CondRetObtido = PAR_RemoverPeca(Partidas[iPar]);
-//
-//         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//								"Não foi possível remover a peça.");
-//
-//       }
+		/* Testar PAR Remover peca*/
+
+		 else if (strcmp( ComandoTeste, REMOVER_PECA_CMD) == 0 )
+       {
+			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+         if (NumLidos != 1)
+         {
+            return TST_CondRetParm ;
+         }
+
+         CondRetObtido = PAR_RemoverPeca(Partidas[iPar]);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível remover a peça.");
+
+       }
        
        
 		/* Testar PAR Remover rei*/

@@ -312,22 +312,22 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   //PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida)
-   //{
-   //   tpCasa *pCasa;
-   //   
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
-   //
-   //   if(pCasa->pPeca == NULL)
-   //   {
-   //      return PAR_CondRetPecaNaoEncontrada;
-   //   }
-   //
-   //   DestruirPeca(pCasa->pPeca);
-   //   pCasa->pPeca = NULL;
-   //
-   //   return PAR_CondRetOK;
-   //}
+   PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida)
+   {
+      tpCasa *pCasa;
+      
+      TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
+   
+      if(pCasa->pPeca == NULL)
+      {
+         return PAR_CondRetPecaNaoEncontrada;
+      }
+   
+      PEC_DestruirPeca(&pCasa->pPeca);
+      pCasa->pPeca = NULL;
+   
+      return PAR_CondRetOK;
+   }
    
    PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida)
    {
