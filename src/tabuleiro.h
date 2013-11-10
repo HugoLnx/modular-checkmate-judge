@@ -96,6 +96,8 @@ typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 
    TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(TAB_tppTabuleiro pTabuleiro, char *nome));
 
+   TAB_tpCondRet TAB_NomeDaCasa(int x, int y, char **pNome);
+
 /***************************************************************************
 *
 *  $FC Função: MAT Ir para nó genérico.

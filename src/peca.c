@@ -75,4 +75,20 @@ PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovo
    return PEC_CondRetOK;
 }
 
+PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei)
+{
+   tpPeca *pPeca = (tpPeca*) pPecaParm;
+
+   if (pPeca == NULL)
+   {
+      *ehRei = 0;
+   }
+   else
+   {
+      *ehRei = pPeca->pModelo == NULL;
+   }
+
+   return PEC_CondRetOK;
+}
+
 /********** Fim do módulo de implementação: Módulo matriz **********/

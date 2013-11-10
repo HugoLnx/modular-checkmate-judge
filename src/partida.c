@@ -26,11 +26,6 @@
 #include "partida.h"
 #undef PARTIDA_OWN
 
-typedef struct stPegada {
-   PEC_tppPeca *pPeca;
-   struct stPegada *pAnterior;
-} tpPegada;
-
 typedef struct stCasa {
    char *nome;
    PEC_tppPeca pPeca;
@@ -253,7 +248,15 @@ typedef struct stCasa {
    
       return PAR_CondRetOK;
    }
-   
+
+   PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca)
+   {
+      tpCasa *pCasa;
+      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
+      *ppPeca = pCasa->pPeca;
+
+      return PAR_CondRetOK;
+   }
 
 /*****  Código das funções encapsuladas no módulo  *****/
    int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome)

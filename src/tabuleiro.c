@@ -242,6 +242,25 @@
       return TAB_CondRetOK;
    }
 
+   TAB_tpCondRet TAB_NomeDaCasa(int x, int y, char **pNome)
+   {
+      char *nome;
+
+      if (x >= LARGURA || x < 0 || y >= ALTURA || y < 0)
+      {
+         *pNome = NULL;
+         return TAB_CondRetOK;
+      }
+
+      MEM_Alloc(sizeof(char)*3, (void **) &nome);
+      nome[0] = x + 'A';
+      nome[1] = y + '1';
+      nome[2] = 0;
+
+      *pNome = nome;
+      return TAB_CondRetOK;
+   }
+
 
 /***********************************************************************
 *
@@ -304,16 +323,8 @@
    {
       char *nome;
 
-      if (x >= LARGURA || x < 0 || y >= ALTURA || y < 0)
-      {
-         return NULL;
-      }
-
-      MEM_Alloc(sizeof(char)*3, (void **) &nome);
-      nome[0] = x + 'A';
-      nome[1] = y + '1';
-      nome[2] = 0;
-
+      TAB_NomeDaCasa(x, y, &nome);
+      
       return nome;
    }
 

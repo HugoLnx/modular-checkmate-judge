@@ -51,6 +51,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "passo", "passo\passo.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "modelo_peca", "modelo_peca\modelo_peca.vcxproj", "{39960336-A590-463F-B780-B185C3798A4F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "partida_marcada", "partida_marcada\partida_marcada.vcxproj", "{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -105,6 +107,10 @@ Global
 		{39960336-A590-463F-B780-B185C3798A4F}.Debug|Win32.Build.0 = Debug|Win32
 		{39960336-A590-463F-B780-B185C3798A4F}.Release|Win32.ActiveCfg = Release|Win32
 		{39960336-A590-463F-B780-B185C3798A4F}.Release|Win32.Build.0 = Release|Win32
+		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Debug|Win32.Build.0 = Debug|Win32
+		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Release|Win32.ActiveCfg = Release|Win32
+		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
