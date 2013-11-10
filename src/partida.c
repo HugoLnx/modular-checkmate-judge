@@ -26,8 +26,6 @@
 #include "partida.h"
 #undef PARTIDA_OWN
 
-#define NOME_REI "rei"
-
 typedef struct stPegada {
    PEC_tppPeca *pPeca;
    struct stPegada *pAnterior;
@@ -36,7 +34,6 @@ typedef struct stPegada {
 typedef struct stCasa {
    char *nome;
    PEC_tppPeca pPeca;
-   //LIS_tppLista pegadas;
 } tpCasa;
 
 /***********************************************************************
@@ -59,95 +56,25 @@ typedef struct stCasa {
 
    typedef struct PAR_stPartida* PAR_tppPartida;
 
-   typedef PAR_tpCondRet (*tpCallbackIterarCasasAlcancePeca)
-      (tpPartida *pPartida, PEC_tppPeca *pPeca, tpPegada *pPegAnt);
-
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   static char* NomeDaCasa(int x, int y);
+   static int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome);
 
    static tpCasa* CriarCasa();
    
    static void DestruirModeloPecaGenerico(void *pValor);
    
-   //static void DestruirPeca(void *pValor);
-   
    static void DestruirCasa(void *pValor);
-   
-   static void DestruirPegada(void *pValor);
-
-   static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
    static int CompararNomeModeloPeca(void *pValor1, void *pValor2);
-
-   static int CompararPassos(void *pValor1, void *pValor2);
 
    static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca);
    
    static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
       PEC_tpTimePeca time, PEC_tppPeca *ppPeca);
 
-
-   // criar pegadas
-   
-   static PAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpPartida *pPartida, PEC_tppPeca *pPeca,
-      tpPegada *pPegAnt);
-
-   static PAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpPartida *pPartida,
-      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
-   
-   static PAR_tpCondRet SeguirPassosDaPeca(tpPartida *pPartida, LIS_tppLista pPassos,
-      PEC_tppPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
-
-   static PAR_tpCondRet SeguirPassoDaPeca(tpPartida *pPartida,
-      PAS_tppPasso pPasso, PEC_tppPeca *pPeca, DIR_tpDirecao orientacao,
-      tpCallbackIterarCasasAlcancePeca operar);
-
-   static PAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpPartida *pPartida,
-      DIR_tpDirecao direcao, PEC_tppPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
-   
-   static PAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpPartida *pPartida,
-      DIR_tpDirecao direcao, int quantidade, PEC_tppPeca *pPeca,
-      tpCallbackIterarCasasAlcancePeca operar);
-   
-   // fim criar pegada
-
-   static void DestruirPasso(void *pValor);
-
-   static PAR_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, tpPartida *pPartida);
-   
-   static LIS_tppLista CopiarPassos(LIS_tppLista pPassos);
-
 /*****  Código das funções exportadas pelo módulo  *****/
-
-   //PAR_tpCondRet PAR_AlgumaPegadaInimiga(PAR_tppPartida pPartida, int *pResposta)
-   //{
-   //   tpCasa *pCasa;
-   //   int estaVazia;
-   //   LIS_tpCondRet condRet = LIS_CondRetOK;
-   //
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-   //
-   //   LIS_EstaVazia(pCasa->pegadas, &estaVazia);
-   //   LIS_IrInicioLista(pCasa->pegadas);
-   //   while (condRet == LIS_CondRetOK && !estaVazia)
-   //   {
-   //      tpPegada *pPegada;
-   //      LIS_ObterValor(pCasa->pegadas, (void **) &pPegada);
-   //      if (pPegada->pPeca->time == INIMIGA)
-   //      {
-   //         *pResposta = 1;
-   //         return PAR_CondRetOK;
-   //      }
-   //      condRet =  LIS_AvancarElementoCorrente(pCasa->pegadas, 1);
-   //   }
-   //
-   //   *pResposta = 0;
-   //   return PAR_CondRetOK;
-   //}
-
-
    
 /***********************************************************************
 *
@@ -183,15 +110,7 @@ typedef struct stCasa {
 
       TAB_CriarTabuleiro(&pPartida->pTabuleiro, DestruirCasa);
 
-      for (x = 0; x < LARGURA; x++)
-      {
-         for (y = 0; y < ALTURA; y++)
-         {
-            tpCasa *pCasa = CriarCasa(NomeDaCasa(x, y));
-            TAB_IrCasa(pPartida->pTabuleiro, pCasa->nome);
-            TAB_AlterarValor(pPartida->pTabuleiro, pCasa);
-         }
-      }
+      TAB_PercorrerCasas(pPartida->pTabuleiro, InserirCasaNoTabuleiro);
 
       LIS_CriarLista(&pPartida->pModelosPecas, DestruirModeloPecaGenerico, CompararNomeModeloPeca);
 
@@ -223,35 +142,6 @@ typedef struct stCasa {
 		return PAR_CondRetOK;
    }
 
-   //PAR_tpCondRet PAR_CriarPegadas(PAR_tppPartida pPartida)
-   //{
-   //   tpCasa *pCasaOriginal;
-   //   int x, y;
-   //
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasaOriginal);
-   //
-   //   for (x = 0; x < LARGURA; x++)
-   //   {
-   //      for (y = 0; y < ALTURA; y++)
-   //      {
-   //         tpCasa *pCasa;
-   //         char *nome = NomeDaCasa(x, y);
-   //         PAR_IrCasa(pPartida, nome);
-   //
-   //         TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-   //
-   //         if (pCasa->pPeca && pCasa->pPeca->pModelo)
-   //         {
-   //            IterarPelasCasasDeAlcanceDaPeca(pPartida, pCasa, InserirPegadaDaPecaNaCasaAtual);
-   //         }
-   //      }
-   //   }
-   //
-   //   PAR_IrCasa(pPartida, pCasaOriginal->nome);
-   //
-   //   return PAR_CondRetOK;
-   //}
-   
    PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
    {
@@ -364,95 +254,19 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   
-   
-   //PAR_tpCondRet PAR_IrPara(PAR_tppPartida pPartida , DIR_tpDirecao direcao)
-   //{
-   //   TAB_tpCondRet condRet;
-   //
-   //  if (pPartida == NULL)
-   //  {
-   //     return PAR_CondRetMatrizNaoExiste ;
-   //  }
-   //
-   //  condRet = TAB_IrPara(pPartida->pTabuleiro, direcao);
-   //  
-   //  if (condRet != TAB_CondRetOK)
-   //  {
-   //     return PAR_CondRetNaoEhNo;
-   //  }
-   //
-	//  return PAR_CondRetOK ;
-   //}
-   //
-   //
-   //PAR_tpCondRet PAR_EhCheckmate(PAR_tppPartida pPartida, int *pResposta)
-   //{
-   //   DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
-   //      NORTE, NORDESTE, ESTE, SUDESTE,
-   //      SUL, SUDOESTE, OESTE, NOROESTE
-   //   };
-   //   tpCasa *pCasa;
-   //   int i;
-   //   int temPegadaInimiga;
-   //   PAR_IrCasaRei(pPartida);
-   //
-   //   PAR_AlgumaPegadaInimiga(pPartida, &temPegadaInimiga);
-   //   if (!temPegadaInimiga)
-   //   {
-   //      *pResposta = 0;
-   //      return PAR_CondRetOK;
-   //   }
-   //
-   //   for (i = 0; i < TOTAL_DIRECOES; i++)
-   //   {
-   //      DIR_tpDirecao direcao = DIRECOES[i];
-   //      
-   //      PAR_IrCasaRei(pPartida);
-   //      if (PAR_IrPara(pPartida, direcao) == PAR_CondRetOK)
-   //      {
-   //         TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-   //         if (pCasa->pPeca && pCasa->pPeca->time == ALIADA)
-   //         {
-   //            continue;
-   //         }
-   //
-   //         PAR_AlgumaPegadaInimiga(pPartida, &temPegadaInimiga);
-   //         if (!temPegadaInimiga) {
-   //            *pResposta = 0;
-   //            return PAR_CondRetOK;
-   //         }
-   //      }
-   //   }
-   //
-   //   *pResposta = 1;
-   //   return PAR_CondRetOK;
-   //}
 
 /*****  Código das funções encapsuladas no módulo  *****/
-
-   char* NomeDaCasa(int x, int y)
+   int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome)
    {
-      char *nome;
-
-      if (x >= LARGURA || x < 0 || y >= ALTURA || y < 0)
-      {
-         return NULL;
-      }
-
-      MEM_Alloc(sizeof(char)*3, (void **) &nome);
-      nome[0] = x + 'A';
-      nome[1] = y + '1';
-      nome[2] = 0;
-
-      return nome;
+      tpCasa *pCasa = CriarCasa(nome);
+      TAB_AlterarValor(pTabuleiro, pCasa);
+      return 1;
    }
 
    tpCasa* CriarCasa(char *nome)
    {
       tpCasa *pCasa;
       MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
-      //LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
       pCasa->pPeca = NULL;
       pCasa->nome = nome;
    
@@ -465,43 +279,16 @@ typedef struct stCasa {
    {
       tpCasa *pCasa = (tpCasa*) pValor;
 
-      //LIS_DestruirLista(pCasa->pegadas);
-
       PEC_DestruirPeca(&pCasa->pPeca);
 
       MEM_Free(pCasa);
    }
-
-//   void DestruirPegada(void *pValor)
-//   {
-//      tpPegada *pPegada = (tpPegada*) pValor;
-//      
-//      if (pValor == NULL)
-//      {
-//         return;
-//      }
-//
-//      DestruirPegada((void *) pPegada->pAnterior);
-//      MEM_Free(pValor);
-//   }
 
 
    void DestruirModeloPecaGenerico(void *pValor)
    {
       MPEC_DestruirModeloPeca((MPEC_tppModeloPeca*) &pValor);
    }
-
-   int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
-   {
-      tpPegada *pPegada = (tpPegada*) pPonteiro1;
-      // TODO [RCS] PER_CriarPeca
-      //tpPeca *pPeca = (tpPeca*) pPonteiro2;
-   
-      // TODO [RCS] pensar em como implementar linha abaixo
-      //return strcmp(pPegada->pPeca->pModelo->nome, pPeca->pModelo->nome);
-      return 0;
-   }
-
    
    int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
@@ -512,13 +299,6 @@ typedef struct stCasa {
       MPEC_RecuperarNome(pModelo1, &nome);
 
       return strcmp(nome, nomeProcurado);
-   }
-
-   
-   int CompararPassos(void *pValor1, void *pValor2)
-   {
-      // TODO: função para comparar passos
-      return 0;
    }
    
    PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
@@ -547,169 +327,5 @@ typedef struct stCasa {
    
       return PAR_CondRetOK;
    }
-   
-   
-   //PAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpPartida *pPartida,
-   //   tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   PAR_tpCondRet condRet;
-   //   LIS_tppLista pPassos;
-   //   int estaVazia;
-   //   
-   //   pPassos =pCasa->pPeca->pModelo->pMovimento->passos;
-   //
-   //   LIS_EstaVazia(pPassos, &estaVazia);
-   //
-   //   if (estaVazia)
-   //   {
-   //      return PAR_CondRetOK;
-   //   }
-   //
-   //   SeguirPassosDaPeca(pPartida, pPassos, pCasa->pPeca, NORTE, operar);
-   //   PAR_IrCasa(pPartida, pCasa->nome);
-   //   SeguirPassosDaPeca(pPartida, pPassos, pCasa->pPeca, ESTE , operar);
-   //   PAR_IrCasa(pPartida, pCasa->nome);
-   //   SeguirPassosDaPeca(pPartida, pPassos, pCasa->pPeca, SUL  , operar);
-   //   PAR_IrCasa(pPartida, pCasa->nome);
-   //   SeguirPassosDaPeca(pPartida, pPassos, pCasa->pPeca, OESTE, operar);
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //PAR_tpCondRet SeguirPassosDaPeca(tpPartida *pPartida, LIS_tppLista pPassos,
-   //   tpPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   PAR_tpCondRet tabCondRet;
-   //   LIS_tpCondRet lisCondRet = LIS_CondRetOK;
-   // 
-   //   LIS_IrInicioLista(pPassos);
-   //   while (lisCondRet == LIS_CondRetOK)
-   //   {
-   //      PAR_tpPasso *pPasso;
-   //      LIS_ObterValor(pPassos, (void **) &pPasso);
-   //      
-   //      tabCondRet = SeguirPassoDaPeca(pPartida, pPasso, pPeca, orientacao, operar);
-   //      
-   //      if (tabCondRet != PAR_CondRetOK)
-   //      {
-   //         break;
-   //      }
-   //
-   //      lisCondRet = LIS_AvancarElementoCorrente(pPassos, 1);
-   //   }
-   //
-   //   if (pPeca->pModelo->pMovimento->tipo == VOA && tabCondRet == PAR_CondRetOK)
-   //   {
-   //      operar(pPartida, pPeca, NULL);
-   //   }
-   //
-   //   return PAR_CondRetOK;
-   //
-   //}
-   //
-   //PAR_tpCondRet SeguirPassoDaPeca(tpPartida *pPartida,
-   //   PAR_tpPasso *pPasso, tpPeca *pPeca, DIR_tpDirecao orientacao,
-   //   tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   PAR_tpCondRet condRet;
-   //   DIR_tpDirecao direcao;
-   //
-   //   DIR_DirecaoOrientadaPara(pPasso->direcao, orientacao, &direcao);
-   //
-   //   if (pPasso->quantidade == 0)
-   //   {
-   //      condRet = SeguirDirecaoAteNaoPoderMais(pPartida, direcao, pPeca, operar);
-   //   }
-   //   else
-   //   {
-   //      condRet = SeguirDirecaoEmUmaQuantidadeFixaDeVezes(pPartida, direcao,
-   //         pPasso->quantidade, pPeca, operar);
-   //   }
-   //
-   //   return condRet;
-   //}
-   //
-   //
-   //
-   //PAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpPartida *pPartida,
-   //   DIR_tpDirecao direcao, int quantidade, tpPeca *pPeca,
-   //   tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   tpPeca *pPecaBarreirando = NULL;
-   //   tpPegada *pPegAnt = NULL;
-   //   int i;
-   //   for (i = 0; i < quantidade && !pPecaBarreirando; i++)
-   //   {
-   //      PAR_tpCondRet condRet;
-   //      condRet = PAR_IrPara(pPartida, direcao);
-   //      if (condRet != PAR_CondRetOK)
-   //      {
-   //         // chegou no final do tabuleiro
-   //         return PAR_CondRetNaoEhNo;
-   //      }
-   //
-   //      if (pPeca->pModelo->pMovimento->tipo == ANDA)
-   //      {
-   //         tpCasa *pCasa;
-   //         TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-   //         pPecaBarreirando = pCasa->pPeca;
-   //
-   //         operar(pPartida, pPeca, pPegAnt);
-   //      }
-   //
-   //   }
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
-   //PAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpPartida *pPartida,
-   //   DIR_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   tpPegada *pPegAnt = NULL;
-   //   tpPeca *pPecaBarreirando = NULL;
-   //   int i;
-   //   PAR_tpCondRet condRet;
-   //   condRet = PAR_IrPara(pPartida, direcao);
-   //   while(condRet == PAR_CondRetOK && !pPecaBarreirando)
-   //   {
-   //      if (pPeca->pModelo->pMovimento->tipo == ANDA)
-   //      {
-   //         tpCasa *pCasa;
-   //         TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-   //         pPecaBarreirando = pCasa->pPeca;
-   //
-   //         operar(pPartida, pPeca, pPegAnt);
-   //      }
-   //
-   //      condRet = PAR_IrPara(pPartida, direcao);
-   //   }
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
-   //PAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpPartida *pPartida, tpPeca *pPeca,
-   //   tpPegada *pPegAnt)
-   //{
-   //   tpCasa *pCasaAtual;
-   //   tpPegada *pPegada;
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasaAtual);
-   //   
-   //   MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
-   //   pPegada->pAnterior = pPegAnt;
-   //   pPegada->pPeca = pPeca;
-   //
-   //   LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
-   //   pPegada->pAnterior = pPegAnt;
-   //
-   //   return PAR_CondRetOK;
-   //}
-
-   void ExtrairPosicao(char *nomeCasa, int *x, int *y)
-   {
-      *x = nomeCasa[0] - 'A';
-      *y = nomeCasa[1] - '1';
-   }
-
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

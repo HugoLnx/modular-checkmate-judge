@@ -218,7 +218,7 @@
    }
    
 
-   TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(char *nome, void *pValor))
+   TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(TAB_tppTabuleiro pTabuleiro, char *nome))
    {
       int x, y, continuar = 1;
 
@@ -230,7 +230,7 @@
             char *nome = NomeDaCasa(x, y);
             TAB_IrCasa(pTabuleiro, nome);
             TAB_ObterValor(pTabuleiro, &pValor);
-            continuar = fazerNaCasa(nome, pValor);
+            continuar = fazerNaCasa(pTabuleiro, nome);
 
             if (!continuar)
             {
