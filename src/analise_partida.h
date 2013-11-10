@@ -76,7 +76,7 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
    
    APAR_tpCondRet APAR_CriarAnalise(APAR_tppAnalise *ppAnalise, PAR_tppPartida pPartida);
 
-   //APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tpAnalise *pAnalise, int *pResposta);
+   APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta);
 
    APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
 

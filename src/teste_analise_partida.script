@@ -75,7 +75,7 @@
 =inserirPeca "D4" "zorro" INIMIGA   OK
 
 == Testar inserir rei
-=inserirRei  "C5" OK
+=inserirRei  "H8" OK
 
 == Criar tabuleiro
 =criar      OK
@@ -86,81 +86,81 @@
 == Verificar pegadas do zorro
 // pegadas com orientacao norte
 =ircasa "E4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "F4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "E5"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "D6"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "E6"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "F6"         OK
-//=pegadaInimiga? TRUE OK
-//
-//// pegadas com orientacao este
-//=ircasa "D5"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "D6"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "C5"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "B4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "B5"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "B6"         OK
-//=pegadaInimiga? TRUE OK
-//
-//
-//// pegadas com orientacao sul
-//=ircasa "C4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "B4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "C3"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "D2"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "C2"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "B2"         OK
-//=pegadaInimiga? TRUE OK
-//
-//
-//// pegadas com orientacao oeste
-//=ircasa "D3"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "D2"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "E3"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "F4"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "F3"         OK
-//=pegadaInimiga? TRUE OK
-//
-//=ircasa "F2"         OK
-//=pegadaInimiga? TRUE OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F6"         OK
+=pegadaInimiga? TRUE OK
+
+// pegadas com orientacao este
+=ircasa "D5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D6"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B5"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B6"         OK
+=pegadaInimiga? TRUE OK
+
+
+// pegadas com orientacao sul
+=ircasa "C4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "C2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "B2"         OK
+=pegadaInimiga? TRUE OK
+
+
+// pegadas com orientacao oeste
+=ircasa "D3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "D2"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "E3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F4"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F3"         OK
+=pegadaInimiga? TRUE OK
+
+=ircasa "F2"         OK
+=pegadaInimiga? TRUE OK
 
 //== Criar tabuleiro com as peças para testes checkmate
 //=selecionar 5

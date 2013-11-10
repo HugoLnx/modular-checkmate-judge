@@ -333,35 +333,35 @@ static int iAna = 0;
        }
 
 
-//		/* Testar PAR Alguma pegada inimiga*/
-//
-//		 else if (strcmp( ComandoTeste, PEGADA_INIMIGA_CMD) == 0 )
-//       {
-//          int respostaEsperada, respostaObtida;
-//          TST_tpCondRet condRet;
-//			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
-//          
-//          if (NumLidos != 2)
-//          {
-//             return TST_CondRetParm ;
-//          }
-//          
-//          CondRetObtido = PAR_AlgumaPegadaInimiga(Analises[iAna], &respostaObtida);
-//          
-//          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
-//                     "Não foi possível verificar se existe alguma pegada inimiga.");
-//
-//          if (condRet != TST_CondRetOK)
-//          {
-//             return condRet;
-//          }
-//
-//          return TST_CompararInt(respostaEsperada, respostaObtida,
-//                     "Foi obtida uma resposta diferente da esperada");
-//
-//       }
-//       
-//
+		/* Testar PAR Alguma pegada inimiga*/
+
+		 else if (strcmp( ComandoTeste, PEGADA_INIMIGA_CMD) == 0 )
+       {
+          int respostaEsperada, respostaObtida;
+          TST_tpCondRet condRet;
+			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
+          
+          if (NumLidos != 2)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = APAR_AlgumaPegadaInimiga(Analises[iAna], &respostaObtida);
+          
+          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
+                     "Não foi possível verificar se existe alguma pegada inimiga.");
+
+          if (condRet != TST_CondRetOK)
+          {
+             return condRet;
+          }
+
+          return TST_CompararInt(respostaEsperada, respostaObtida,
+                     "Foi obtida uma resposta diferente da esperada");
+
+       }
+       
+
 //		/* Testar PAR Eh checkmate*/
 //
 //		 else if (strcmp( ComandoTeste, EH_CHECKMATE_CMD) == 0 )

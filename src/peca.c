@@ -106,4 +106,17 @@ PEC_tpCondRet PEC_ObterModelo(PEC_tppPeca pPecaParm, MPEC_tppModeloPeca *ppModel
    return PEC_CondRetOK;
 }
 
+PEC_tpCondRet PEC_ObterTime(PEC_tppPeca pPecaParm, PEC_tpTimePeca *pTime)
+{
+   tpPeca *pPeca = (tpPeca*) pPecaParm;
+
+   if (pPecaParm == NULL)
+   {
+      return PEC_CondRetPecaNaoExiste;
+   }
+
+   *pTime = pPeca->time;
+   return PEC_CondRetOK;
+}
+
 /********** Fim do módulo de implementação: Módulo matriz **********/

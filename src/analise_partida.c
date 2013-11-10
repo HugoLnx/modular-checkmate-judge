@@ -105,31 +105,33 @@ typedef struct stCasa {
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-   //APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta)
-   //{
-   //   tpCasa *pCasa;
-   //   int estaVazia;
-   //   LIS_tpCondRet condRet = LIS_CondRetOK;
-   //
-   //   TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
-   //
-   //   LIS_EstaVazia(pCasa->pegadas, &estaVazia);
-   //   LIS_IrInicioLista(pCasa->pegadas);
-   //   while (condRet == LIS_CondRetOK && !estaVazia)
-   //   {
-   //      tpPegada *pPegada;
-   //      LIS_ObterValor(pCasa->pegadas, (void **) &pPegada);
-   //      if (pPegada->pPeca->time == INIMIGA)
-   //      {
-   //         *pResposta = 1;
-   //         return APAR_CondRetOK;
-   //      }
-   //      condRet =  LIS_AvancarElementoCorrente(pCasa->pegadas, 1);
-   //   }
-   //
-   //   *pResposta = 0;
-   //   return APAR_CondRetOK;
-   //}
+   APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta)
+   {
+      tpCasa *pCasa;
+      int estaVazia;
+      LIS_tpCondRet condRet = LIS_CondRetOK;
+   
+      TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
+   
+      LIS_EstaVazia(pCasa->pegadas, &estaVazia);
+      LIS_IrInicioLista(pCasa->pegadas);
+      while (condRet == LIS_CondRetOK && !estaVazia)
+      {
+         tpPegada *pPegada;
+         PEC_tpTimePeca time;
+         LIS_ObterValor(pCasa->pegadas, (void **) &pPegada);
+         PEC_ObterTime(pPegada->pPeca, &time);
+         if (time == INIMIGA)
+         {
+            *pResposta = 1;
+            return APAR_CondRetOK;
+         }
+         condRet =  LIS_AvancarElementoCorrente(pCasa->pegadas, 1);
+      }
+   
+      *pResposta = 0;
+      return APAR_CondRetOK;
+   }
 
 
    
