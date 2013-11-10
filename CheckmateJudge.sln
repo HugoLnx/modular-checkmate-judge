@@ -65,6 +65,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "analise_partida", "partida_
 		{21ADD9CA-211C-4661-B4A6-B694AFD7B929} = {21ADD9CA-211C-4661-B4A6-B694AFD7B929}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "checkmate_judge", "checkmate_judge\checkmate_judge.vcxproj", "{37CF3C10-A1AA-4A5A-859B-C9E66144937F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -123,6 +125,10 @@ Global
 		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Debug|Win32.Build.0 = Debug|Win32
 		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Release|Win32.ActiveCfg = Release|Win32
 		{B2E3E77B-1D4D-4D50-A214-B880C07A4AAB}.Release|Win32.Build.0 = Release|Win32
+		{37CF3C10-A1AA-4A5A-859B-C9E66144937F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{37CF3C10-A1AA-4A5A-859B-C9E66144937F}.Debug|Win32.Build.0 = Debug|Win32
+		{37CF3C10-A1AA-4A5A-859B-C9E66144937F}.Release|Win32.ActiveCfg = Release|Win32
+		{37CF3C10-A1AA-4A5A-859B-C9E66144937F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

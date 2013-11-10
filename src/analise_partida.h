@@ -80,8 +80,6 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 
    APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
 
-   //APAR_tpCondRet APAR_EhCheckmate(APAR_tpAnalise *pAnalise, int *pResposta);
-
 /***********************************************************************
 *
 *  $FC Função: TAB Destruir matriz

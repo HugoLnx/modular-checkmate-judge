@@ -360,37 +360,6 @@ static int iAna = 0;
                      "Foi obtida uma resposta diferente da esperada");
 
        }
-       
-
-//		/* Testar PAR Eh checkmate*/
-//
-//		 else if (strcmp( ComandoTeste, EH_CHECKMATE_CMD) == 0 )
-//       {
-//          int respostaEsperada, respostaObtida;
-//          TST_tpCondRet condRet;
-//			 NumLidos = LER_LerParametros("ii", &respostaEsperada, &CondRetEsperada) ;
-//          
-//          if (NumLidos != 2)
-//          {
-//             return TST_CondRetParm ;
-//          }
-//          
-//          CondRetObtido = PAR_EhCheckmate(Analises[iAna], &respostaObtida);
-//          
-//          condRet = TST_CompararInt(CondRetEsperada, CondRetObtido,
-//                     "Não foi possível verificar se eh checkmate.");
-//
-//          if (condRet != TST_CondRetOK)
-//          {
-//             return condRet;
-//          }
-//
-//          return TST_CompararInt(respostaEsperada, respostaObtida,
-//                     "Foi obtida uma resposta diferente da esperada para a verificação de checkmate");
-//
-//       }
-
-
 
       /* Testar Selecionar indice na array de matrizes */
 
@@ -418,6 +387,7 @@ static int iAna = 0;
 
          else if ( strcmp( ComandoTeste , FIM_CMD ) == 0 )
          {
+            PAR_DestruirPartida(&pPartida);
             MEM_LiberarTodaMemoriaAlocada();
             return TST_CondRetOK;
          }

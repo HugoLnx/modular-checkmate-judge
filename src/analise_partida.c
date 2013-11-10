@@ -63,8 +63,6 @@ typedef struct stCasa {
 
    static void DestruirModeloPecaGenerico(void *pValor);
    
-   //static void DestruirPeca(void *pValor);
-   
    static void DestruirCasa(void *pValor);
    
    static void DestruirPegada(void *pValor);
@@ -72,8 +70,6 @@ typedef struct stCasa {
    static int CompararPegadas(void *pPonteiro1, void *pPonteiro2);
 
    static int CompararPassos(void *pValor1, void *pValor2);
-
-   // criar pegadas
 
    static APAR_tpCondRet CriarPegadas(APAR_tppAnalise pAnalise);
    
@@ -83,7 +79,7 @@ typedef struct stCasa {
    static APAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpAnalise *pAnalise,
       tpCasa *pCasa);
    
-   static APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, LIS_tppLista pPassos,
+   static APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, MPEC_tppModeloPeca pModelo,
       PEC_tppPeca pPeca, DIR_tpDirecao orientacao);
 
    static APAR_tpCondRet SeguirPassoDaPeca(tpAnalise *pAnalise,
@@ -95,14 +91,10 @@ typedef struct stCasa {
    static APAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpAnalise *pAnalise,
       DIR_tpDirecao direcao, PAS_tppPasso pPasso, PEC_tppPeca pPeca);
    
-   // fim criar pegada
+   static APAR_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, tpAnalise *pAnalise);
 
    static void DestruirPasso(void *pValor);
-
-   static APAR_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, tpAnalise *pAnalise);
    
-   static LIS_tppLista CopiarPassos(LIS_tppLista pPassos);
-
 /*****  Código das funções exportadas pelo módulo  *****/
 
    APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta)
@@ -271,49 +263,6 @@ typedef struct stCasa {
 	  return APAR_CondRetOK ;
    }
    
-   
-   //APAR_tpCondRet APAR_EhCheckmate(APAR_tppAnalise pAnalise, int *pResposta)
-   //{
-   //   DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
-   //      NORTE, NORDESTE, ESTE, SUDESTE,
-   //      SUL, SUDOESTE, OESTE, NOROESTE
-   //   };
-   //   tpCasa *pCasa;
-   //   int i;
-   //   int temPegadaInimiga;
-   //   APAR_IrCasaRei(pAnalise);
-   //
-   //   APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
-   //   if (!temPegadaInimiga)
-   //   {
-   //      *pResposta = 0;
-   //      return APAR_CondRetOK;
-   //   }
-   //
-   //   for (i = 0; i < TOTAL_DIRECOES; i++)
-   //   {
-   //      DIR_tpDirecao direcao = DIRECOES[i];
-   //      
-   //      APAR_IrCasaRei(pAnalise);
-   //      if (APAR_IrPara(pAnalise, direcao) == APAR_CondRetOK)
-   //      {
-   //         TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
-   //         if (pCasa->pPeca && pCasa->pPeca->time == ALIADA)
-   //         {
-   //            continue;
-   //         }
-   //
-   //         APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
-   //         if (!temPegadaInimiga) {
-   //            *pResposta = 0;
-   //            return APAR_CondRetOK;
-   //         }
-   //      }
-   //   }
-   //
-   //   *pResposta = 1;
-   //   return APAR_CondRetOK;
-   //}
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
@@ -382,13 +331,6 @@ typedef struct stCasa {
    }
 
    
-   int CompararPassos(void *pValor1, void *pValor2)
-   {
-      // TODO: função para comparar passos
-      return 0;
-   }
-
-   
    APAR_tpCondRet CriarPegadas(APAR_tppAnalise pAnalise)
    {
       tpCasa *pCasaOriginal;
@@ -426,7 +368,6 @@ typedef struct stCasa {
       tpCasa *pCasa)
    {
       MPEC_tppModeloPeca pModelo;
-      APAR_tpCondRet condRet;
       LIS_tppLista pPassos;
       int estaVazia;
       
@@ -557,7 +498,6 @@ typedef struct stCasa {
    {
       tpPegada *pPegAnt = NULL;
       PEC_tppPeca pPecaBarreirando = NULL;
-      int i;
       MPEC_tppModeloPeca pModelo;
       MPEC_tpTipoMovimento tipo;
       APAR_tpCondRet condRet;
