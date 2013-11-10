@@ -244,37 +244,37 @@ static int iPar = 0 ;
 
        }
 
-//       /* Testar PAR Alterar peca*/
-//
-//       else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
-//       {
-//
-//          char *nomeAtual, *passosStr, *novoNome;
-//          int iTipoMovimento;
-//          PAR_tpTipoMovimento tipo;
-//          LIS_tppLista pPassos;
-//          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nomeAtual);
-//          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &novoNome);
-//          MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
-//
-//          NumLidos = LER_LerParametros("sssii", nomeAtual, novoNome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
-//          if (NumLidos != 5)
-//          {
-//             return TST_CondRetParm ;
-//          }
-//
-//          ISP_LerPassos(passosStr, &pPassos);
-//
-//          tipo = (PAR_tpTipoMovimento) iTipoMovimento;
-//          CondRetObtido = PAR_AlterarPeca(Partidas[iPar], nomeAtual, novoNome, pPassos, tipo);
-//
-//          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//             "Não foi possível criar a casa.");
-//
-//       }
-//
-//
-//       
+       /* Testar PAR Alterar peca*/
+
+       else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
+       {
+
+          char *nomeAtual, *passosStr, *novoNome;
+          int iTipoMovimento;
+          MPEC_tpTipoMovimento tipo;
+          LIS_tppLista pPassos;
+          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nomeAtual);
+          MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &novoNome);
+          MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
+
+          NumLidos = LER_LerParametros("sssii", nomeAtual, novoNome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
+          if (NumLidos != 5)
+          {
+             return TST_CondRetParm ;
+          }
+
+          ISP_LerPassos(passosStr, &pPassos);
+
+          tipo = (MPEC_tpTipoMovimento) iTipoMovimento;
+          CondRetObtido = PAR_AlterarPeca(Partidas[iPar], nomeAtual, novoNome, pPassos, tipo);
+
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+             "Não foi possível criar a casa.");
+
+       }
+
+
+       
 //		/* Testar PAR Inserir peca*/
 //
 //		 else if (strcmp( ComandoTeste, INSERIR_PECA_CMD) == 0 )

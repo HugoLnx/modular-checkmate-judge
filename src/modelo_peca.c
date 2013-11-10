@@ -72,11 +72,11 @@ MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo)
 
 }
 // TODO [RCS] - PEC_CondRetNaoAlterou, espera que ISP_LerPassos retorne algo diferente de OK para quando não não receber argumentos válidos
-MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca ppModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento)
+MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModeloParm, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento)
 {
    LIS_tpCondRet lisCondRet;
 
-   tpModeloPeca *pModelo = (tpModeloPeca*) ppModelo;
+   tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
    if (pModelo == NULL)
    {
       return MPEC_CondRetModeloNaoExiste;

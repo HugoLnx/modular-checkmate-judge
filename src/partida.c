@@ -265,32 +265,28 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   //PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
-   //   LIS_tppLista pNovosPassos, PAR_tpTipoMovimento novoTipoMovimento)
-   //{
-   //   tpModeloPeca *pModelo;
-   //   LIS_tpCondRet lisCondRet;
-   //
-   //   LIS_IrInicioLista(pPartida->pModelosPecas);
-   //   
-   //   lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas,nomeAtual);
-   //
-   //   if(lisCondRet != LIS_CondRetOK)
-   //   {
-   //      return PAR_CondRetPecaNaoEncontrada;
-   //   }
-   //
-   //   LIS_ObterValor(pPartida->pModelosPecas, (void **) &pModelo);
-   //
-   //   MEM_Free(pModelo->nome);
-   //
-   //   pModelo->nome = nomeNovo;
-   //   pModelo->pMovimento->passos= pNovosPassos;
-   //   pModelo->pMovimento->tipo = novoTipoMovimento;
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
+   PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
+      LIS_tppLista pNovosPassos, MPEC_tpTipoMovimento novoTipoMovimento)
+   {
+      MPEC_tppModeloPeca pModelo;
+      LIS_tpCondRet lisCondRet;
+   
+      LIS_IrInicioLista(pPartida->pModelosPecas);
+      
+      lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nomeAtual);
+   
+      if(lisCondRet != LIS_CondRetOK)
+      {
+         return PAR_CondRetPecaNaoEncontrada;
+      }
+   
+      LIS_ObterValor(pPartida->pModelosPecas, (void **) &pModelo);
+
+      MPEC_AlterarModeloPeca(pModelo, nomeNovo, pNovosPassos, novoTipoMovimento);
+   
+      return PAR_CondRetOK;
+   }
+   
    //PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida)
    //{
    //   TAB_ObterValor(pPartida->pTabuleiro, (void **) &pPartida->pCasaRei);

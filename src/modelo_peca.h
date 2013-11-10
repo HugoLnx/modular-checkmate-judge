@@ -71,7 +71,7 @@ typedef struct MPEC_stModeloPeca* MPEC_tppModeloPeca;
 
 MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
 MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo);
-MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca ppModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento);
+MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento);
 MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModelo, char **pNome);
 
 #undef MODELO_PECA_EXT

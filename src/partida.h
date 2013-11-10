@@ -112,9 +112,9 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
    
-   //PAR_tpCondRet PAR_AlterarPeca(PAR_tpPartida *pPartida, char *nomeAtual, char* nomeNovo,
-   //   LIS_tppLista pNovosPassos, PAR_tpTipoMovimento novoTipoMovimento);
-   //
+   PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
+      LIS_tppLista pNovosPassos, MPEC_tpTipoMovimento novoTipoMovimento);
+   
    //PAR_tpCondRet PAR_InserirPeca(PAR_tpPartida *pPartida, char *nome, PAR_tpTimePeca time);
    //
    //PAR_tpCondRet PAR_RemoverPeca(PAR_tpPartida *pPartida);
