@@ -24,37 +24,18 @@
 #include "peca.h"
 #undef PECA_OWN
 
-typedef struct stMovimento {
-   LIS_tppLista passos;
-   PEC_tpTipoMovimento tipo;
-} PEC_tpMovimento;
-
-typedef struct stModeloPeca {
-   PEC_tpMovimento *pMovimento;
-   char *nome;
-} PEC_tpModeloPeca;
-
-typedef struct stPeca {
-   PEC_tpModeloPeca *pModelo;
+typedef struct PEC_stPeca {
+   MPEC_tppModeloPeca pModelo;
    PEC_tpTimePeca time;
-} PEC_stPeca;
+} tpPeca;
 
-PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, LIS_tppLista pPassos, PEC_tpTipoMovimento tipoMovimento)
+PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, MPEC_tppModeloPeca pModelo, PEC_tpTimePeca time)
 {
-   PEC_stPeca *pPeca;
-   PEC_tpModeloPeca *pModeloPeca;
-   PEC_tpMovimento *pTipoMovimento;
-   MEM_Alloc(sizeof(PEC_stPeca),(void**)&pPeca);
-   MEM_Alloc(sizeof(PEC_tpModeloPeca),(void**)&pModeloPeca);
-   MEM_Alloc(sizeof(PEC_tpMovimento),(void**)&pTipoMovimento);
+   tpPeca *pPeca;
+   MEM_Alloc(sizeof(tpPeca), (void**)&pPeca);
 
-   pTipoMovimento->passos = pPassos;
-   pTipoMovimento->tipo = tipoMovimento;
-
-   pModeloPeca->nome = nome;
-   pModeloPeca->pMovimento = pTipoMovimento;
-
-   pPeca->pModelo = pModeloPeca;
+   pPeca->pModelo = pModelo;
+   pPeca->time = time;
 
    *ppPeca = (PEC_tppPeca)pPeca;
 
@@ -64,15 +45,13 @@ PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, LIS_tppLista pPasso
 
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
 {
-   PEC_stPeca* pPeca = (PEC_stPeca*)*ppPeca;
+   tpPeca* pPeca = (tpPeca*)*ppPeca;
    if (pPeca == NULL)
    {
       return PEC_CondRetOK;
    }
 
-   MEM_Free(pPeca->pModelo->nome);
-   LIS_DestruirLista(pPeca->pModelo->pMovimento->passos);
-   MEM_Free(pPeca->pModelo->pMovimento);
+   MPEC_DestruirModeloPeca(&pPeca->pModelo);
    MEM_Free(pPeca);
 
    *ppPeca = NULL;
@@ -80,42 +59,21 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
    return PEC_CondRetOK;
 
 }
-// TODO [RCS] - PEC_CondRetNaoAlterou, espera que ISP_LerPassos retorne algo diferente de OK para quando não não receber argumentos válidos
-PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, LIS_tppLista pPassos, PEC_tpTipoMovimento novoTipoMovimento)
+
+
+PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo)
 {
    LIS_tpCondRet lisCondRet;
 
-   PEC_stPeca *pPeca = (PEC_stPeca*) ppPeca;
+   tpPeca *pPeca = (tpPeca*) ppPeca;
    if (pPeca == NULL)
    {
       return PEC_CondRetPecaNaoExiste;
    }
 
-   MEM_Free(pPeca->pModelo->nome);
-   pPeca->pModelo->nome = novoNome;
-
-   lisCondRet = LIS_DestruirLista(pPeca->pModelo->pMovimento->passos);
-   if(lisCondRet != LIS_CondRetOK)
-   {
-      return PEC_CondRetNaoAlterou;
-   }
-
-   pPeca->pModelo->pMovimento->passos = pPassos;
-   pPeca->pModelo->pMovimento->tipo = novoTipoMovimento;
+   pPeca->pModelo = pNovoModelo;
    
    return PEC_CondRetOK;
-}
-
-PEC_tpCondRet PEC_AdicionarTime(PEC_tppPeca ppPeca, PEC_tpTimePeca time)
-{
-   PEC_stPeca *pPeca = (PEC_stPeca*) ppPeca;
-   if(pPeca == NULL)
-      return PEC_CondRetPecaNaoExiste;
-
-   pPeca->time = time;
-
-   return PEC_CondRetOK;
-
 }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

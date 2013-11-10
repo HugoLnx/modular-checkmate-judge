@@ -163,14 +163,15 @@ static int iTab = 0 ;
 		 else if ( strcmp( ComandoTeste , IR_CASA_CMD ) == 0 )
        {
 
-         int x, y;
-			NumLidos = LER_LerParametros( "iii", &x, &y, &CondRetEsperada ) ;
-            if ( NumLidos != 3 )
-            {
-               return TST_CondRetParm ;
-            }
+         char *nome;
+         MEM_Alloc(sizeof(char)*50, (void**) &nome);
+         NumLidos = LER_LerParametros( "si", nome, &CondRetEsperada ) ;
+         if (NumLidos != 2)
+         {
+            return TST_CondRetParm ;
+         }
 
-			CondRetObtido = TAB_IrCasa(Tabuleiros[iTab], x, y) ;
+			CondRetObtido = TAB_IrCasa(Tabuleiros[iTab], nome) ;
 
          return TST_CompararInt( CondRetEsperada , CondRetObtido ,
 								"Não foi possível ir para a casa.") ;

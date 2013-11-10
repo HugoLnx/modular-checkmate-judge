@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{21ADD9CA-211C-4661-B4A6-B694AFD7B929}</ProjectGuid>
+    <ProjectGuid>{39960336-A590-463F-B780-B185C3798A4F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>peca</RootNamespace>
+    <RootNamespace>modelo_peca</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,32 +74,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\mem_manager\isp_main.c" />
-    <ClCompile Include="..\src\input_string_parser.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\mem_manager.c" />
     <ClCompile Include="..\src\modelo_peca.c" />
-    <ClCompile Include="..\src\passo.c" />
-    <ClCompile Include="..\src\peca.c" />
-    <ClCompile Include="..\src\test_pec.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\input_string_parser.h" />
     <ClInclude Include="..\src\lista.h" />
     <ClInclude Include="..\src\mem_manager.h" />
     <ClInclude Include="..\src\modelo_peca.h" />
-    <ClInclude Include="..\src\passo.h" />
-    <ClInclude Include="..\src\peca.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\src\teste_peca.script" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\src\ArcaboucoTeste.lib">
-      <FileType>Document</FileType>
-    </Library>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

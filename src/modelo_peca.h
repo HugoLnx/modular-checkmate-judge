@@ -1,10 +1,10 @@
-#if ! defined( PECA_ )
-#define PECA_
+#if ! defined( MODELO_PECA_ )
+#define MODELO_PECA_
 /***************************************************************************
 *
 *  $MCD Módulo de definição: Módulo matriz
 *
-*  Arquivo gerado:              PECA.H
+*  Arquivo gerado:              MODELO_PECA.H
 *  Letras identificadoras:      PEC
 *
 *  Autores: hg - Hugo Roque
@@ -28,19 +28,20 @@
 *
 ***************************************************************************/
 
-#if defined( PECA_OWN )
-#define PECA_EXT
+#if defined( MODELO_PECA_OWN )
+#define MODELO_PECA_EXT
 #else
-#define PECA_EXT extern
+#define MODELO_PECA_EXT extern
 #endif
 
 #include "lista.h"
-#include "modelo_peca.h"
+
 
 typedef enum {
-   ALIADA = 0,
-   INIMIGA = 1
-} PEC_tpTimePeca;
+   ANDA = 0,
+   VOA = 1
+} MPEC_tpTipoMovimento;
+
 
 /***********************************************************************
 *
@@ -51,26 +52,27 @@ typedef enum {
 
 typedef enum {
 
-   PEC_CondRetOK,
+   MPEC_CondRetOK,
    /* Executou correto */
       
-   PEC_CondRetFaltouMemoria,
+   MPEC_CondRetFaltouMemoria,
    /* Faltou memória ao alocar dados */
 
-   PEC_CondRetNaoAlterou,
+   MPEC_CondRetNaoAlterou,
    /* Não foi possivel alterar a peca */
 
-   PEC_CondRetPecaNaoExiste
+   MPEC_CondRetModeloNaoExiste
    /* Peça não existe */
 
-} PEC_tpCondRet;
+} MPEC_tpCondRet ;
 
-typedef struct PEC_stPeca* PEC_tppPeca;
 
-PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, MPEC_tppModeloPeca pModelo, PEC_tpTimePeca time);
-PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
-PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo);
-#undef PECA_EXT
+typedef struct MPEC_stModeloPeca* MPEC_tppModeloPeca;
+
+MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
+MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo);
+MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca ppModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento);
+#undef MODELO_PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/
 

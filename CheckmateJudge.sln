@@ -38,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peca", "peca\peca.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "passo", "passo\passo.vcxproj", "{895A02BC-EA31-4183-AB3E-771F5D557982}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "modelo_peca", "modelo_peca\modelo_peca.vcxproj", "{39960336-A590-463F-B780-B185C3798A4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -88,6 +90,10 @@ Global
 		{895A02BC-EA31-4183-AB3E-771F5D557982}.Debug|Win32.Build.0 = Debug|Win32
 		{895A02BC-EA31-4183-AB3E-771F5D557982}.Release|Win32.ActiveCfg = Release|Win32
 		{895A02BC-EA31-4183-AB3E-771F5D557982}.Release|Win32.Build.0 = Release|Win32
+		{39960336-A590-463F-B780-B185C3798A4F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{39960336-A590-463F-B780-B185C3798A4F}.Debug|Win32.Build.0 = Debug|Win32
+		{39960336-A590-463F-B780-B185C3798A4F}.Release|Win32.ActiveCfg = Release|Win32
+		{39960336-A590-463F-B780-B185C3798A4F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
