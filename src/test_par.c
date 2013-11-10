@@ -275,31 +275,31 @@ static int iPar = 0 ;
 
 
        
-//		/* Testar PAR Inserir peca*/
-//
-//		 else if (strcmp( ComandoTeste, INSERIR_PECA_CMD) == 0 )
-//       {
-//         char *nome;
-//         int iTime;
-//         PAR_tpTimePeca time;
-//         LIS_tppLista pPassos;
-//         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
-//
-//			NumLidos = LER_LerParametros("sii", nome, &iTime, &CondRetEsperada) ;
-//         if (NumLidos != 3)
-//         {
-//            return TST_CondRetParm ;
-//         }
-//
-//         time = (PAR_tpTimePeca) iTime;
-//         CondRetObtido = PAR_InserirPeca(Partidas[iPar], nome, time);
-//
-//         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//								"Não foi possível inserir a peça.");
-//
-//       }
-//       
-//       
+		/* Testar PAR Inserir peca*/
+
+		 else if (strcmp( ComandoTeste, INSERIR_PECA_CMD) == 0 )
+       {
+         char *nome;
+         int iTime;
+         PEC_tpTimePeca time;
+         LIS_tppLista pPassos;
+         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
+
+			NumLidos = LER_LerParametros("sii", nome, &iTime, &CondRetEsperada) ;
+         if (NumLidos != 3)
+         {
+            return TST_CondRetParm ;
+         }
+
+         time = (PEC_tpTimePeca) iTime;
+         CondRetObtido = PAR_InserirPeca(Partidas[iPar], nome, time);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir a peça.");
+
+       }
+       
+       
 //		/* Testar PAR Remover peca*/
 //
 //		 else if (strcmp( ComandoTeste, REMOVER_PECA_CMD) == 0 )

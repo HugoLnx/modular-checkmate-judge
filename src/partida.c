@@ -85,8 +85,8 @@ typedef struct stCasa {
 
    static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca **pPeca);
    
-   /*static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
-      PAR_tpTimePeca time, PEC_tppPeca **ppPeca);*/
+   static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
+      PEC_tpTimePeca time, PEC_tppPeca *ppPeca);
 
 
    // criar pegadas
@@ -295,23 +295,23 @@ typedef struct stCasa {
    //
    //   return PAR_CondRetOK;
    //}
-   //
-   //PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PAR_tpTimePeca time)
-   //{
-   //   tpCasa *pCasa;
-   //   PAR_tpCondRet tabCondRet;
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
-   //
-   //   tabCondRet = CriarInstanciaDePeca(pPartida, nome, time, &pCasa->pPeca);
-   //
-   //   if(tabCondRet != PAR_CondRetOK)
-   //   {
-   //      return tabCondRet;
-   //   }
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
+   
+   PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PEC_tpTimePeca time)
+   {
+      tpCasa *pCasa;
+      PAR_tpCondRet tabCondRet;
+      TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
+
+      tabCondRet = CriarInstanciaDePeca(pPartida, nome, time, &pCasa->pPeca);
+   
+      if(tabCondRet != PAR_CondRetOK)
+      {
+         return tabCondRet;
+      }
+   
+      return PAR_CondRetOK;
+   }
+   
    //PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida)
    //{
    //   tpCasa *pCasa;
@@ -537,31 +537,26 @@ typedef struct stCasa {
       return 0;
    }
    
-   //PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
-   //   PAR_tpTimePeca time, tpPeca **ppPeca)
-   //{
-   //   tpPeca *pPeca;
-   //   tpModeloPeca *pModelo;
-   //   LIS_tpCondRet lisCondRet;
-   //   MEM_Alloc(sizeof(tpPeca), (void **) &pPeca);
-   //   
-   //   LIS_IrInicioLista(pPartida->pModelosPecas);
-   //   lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nome);
-   //   if(lisCondRet != LIS_CondRetOK)
-   //   {
-   //      return PAR_CondRetPecaNaoEncontrada;
-   //   }
-   //   LIS_ObterValor(pPartida->pModelosPecas, (void**) &pModelo);
-   //   
-   //   pPeca->pModelo = pModelo;
-   //   pPeca->time = time;
-   //
-   //   *ppPeca = pPeca;
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
+   PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
+      PEC_tpTimePeca time, PEC_tppPeca *ppPeca)
+   {
+      MPEC_tppModeloPeca pModelo;
+      LIS_tpCondRet lisCondRet;
+      
+      LIS_IrInicioLista(pPartida->pModelosPecas);
+      lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nome);
+      if(lisCondRet != LIS_CondRetOK)
+      {
+         return PAR_CondRetPecaNaoEncontrada;
+      }
+      LIS_ObterValor(pPartida->pModelosPecas, (void**) &pModelo);
+      
+      PEC_CriarPeca(ppPeca, pModelo, time);
+   
+      return PAR_CondRetOK;
+   }
+   
+   
    //PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, tpPeca **pPeca)
    //{
    //   tpPeca *pRei;

@@ -75,14 +75,14 @@
 =alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
 =alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
 
-//== Inserir torre aliado no A1
-//=ircasa "A1"                   OK
-//=inserirPeca "torre" ALIADA    OK
-//
-//== Inserir zorro inimigo no D4
-//=ircasa "D4"                   OK
-//=inserirPeca "zorro" INIMIGA   OK
-//
+== Inserir torre aliado no A1
+=ircasa "A1"                   OK
+=inserirPeca "torre" ALIADA    OK
+
+== Inserir zorro inimigo no D4
+=ircasa "D4"                   OK
+=inserirPeca "zorro" INIMIGA   OK
+
 //== Criar pegadas do tabuleiro
 //=criarPegadas OK
 //
