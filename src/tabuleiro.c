@@ -99,8 +99,8 @@
          for (y = 0; y < ALTURA; y++)
          {
             void *pValor;
-            TAB_IrCasa(pTabuleiro, x, y);
-            TAB_IrCasa(pCopia, x, y);
+            TAB_IrCasa(pTabuleiro, NomeDaCasa(x, y));
+            TAB_IrCasa(pCopia, NomeDaCasa(x, y));
             GRA_ObterValorCorrente(pTabuleiro->pGrafo, (void **) &pValor);
             GRA_AlterarValorCorrente(pCopia->pGrafo, pValor);
          }
@@ -112,7 +112,7 @@
    }
 
 
-   TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, int x, int y)
+   TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, char *nome)
    {
       GRA_tpCondRet condRet;
 
@@ -121,7 +121,7 @@
          return TAB_CondRetTabuleiroNaoExiste;
       }
       
-      condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, NomeDaCasa(x, y));
+      condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, nome);
       if (condRet != GRA_CondRetOK)
       {
          return TAB_CondRetNaoEhNo;
@@ -216,6 +216,31 @@
 
       return TAB_CondRetOK;
    }
+   
+
+   TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(char *nome, void *pValor))
+   {
+      int x, y, continuar = 1;
+
+      for (x = 0; x < LARGURA; x++)
+      {
+         for (y = 0; y < ALTURA; y++)
+         {
+            void *pValor;
+            char *nome = NomeDaCasa(x, y);
+            TAB_IrCasa(pTabuleiro, nome);
+            TAB_ObterValor(pTabuleiro, &pValor);
+            continuar = fazerNaCasa(nome, pValor);
+
+            if (!continuar)
+            {
+               return TAB_CondRetOK;
+            }
+         }
+      }
+
+      return TAB_CondRetOK;
+   }
 
 
 /***********************************************************************
@@ -285,8 +310,8 @@
       }
 
       MEM_Alloc(sizeof(char)*3, (void **) &nome);
-      nome[0] = x + '0';
-      nome[1] = y + '0';
+      nome[0] = x + 'A';
+      nome[1] = y + '1';
       nome[2] = 0;
 
       return nome;

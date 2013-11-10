@@ -116,8 +116,6 @@ typedef struct stCasa {
    
    // fim criar pegada
 
-   static void ExtrairPosicao(char *nomeCasa, int *x, int *y);
-
    static void DestruirPasso(void *pValor);
 
    static PAR_tpCondRet InserirModelosPecas(LIS_tppLista pModelosPecas, tpPartida *pPartida);
@@ -193,7 +191,7 @@ typedef struct stCasa {
          for (y = 0; y < ALTURA; y++)
          {
             tpCasa *pCasa = CriarCasa(NomeDaCasa(x, y));
-            TAB_IrCasa(pPartida->pTabuleiro, x, y);
+            TAB_IrCasa(pPartida->pTabuleiro, pCasa->nome);
             TAB_AlterarValor(pPartida->pTabuleiro, pCasa);
          }
       }
@@ -365,8 +363,7 @@ typedef struct stCasa {
          return PAR_CondRetMatrizNaoExiste;
       }
       
-      ExtrairPosicao(nomeCasa, &x, &y);
-      condRet = TAB_IrCasa(pPartida->pTabuleiro, x, y);
+      condRet = TAB_IrCasa(pPartida->pTabuleiro, nomeCasa);
       if (condRet != TAB_CondRetOK)
       {
          return PAR_CondRetNaoEhNo;

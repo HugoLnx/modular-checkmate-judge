@@ -43,7 +43,7 @@
 =irPara SUDESTE             NaoTabuleiro
 =irPara SUDOESTE            NaoTabuleiro
 =irPara NOROESTE            NaoTabuleiro
-=ircasa 0 0                 NaoTabuleiro
+=ircasa "A1"                NaoTabuleiro
 
 == Verificar comando recuperar
 =destruir OK
@@ -64,75 +64,82 @@
  
 // Navegando por todo o tabuleiro pelo nome da casa
 == Verificar ir para as casa pelo nome
-=ircasa  0  0    OK
-=ircasa  0  1    OK
-=ircasa  0  2    OK
-=ircasa  0  3    OK
-=ircasa  0  4    OK
-=ircasa  0  5    OK
-=ircasa  0  6    OK
-=ircasa  0  7    OK
-=ircasa  1  0    OK
-=ircasa  1  1    OK
-=ircasa  1  2    OK
-=ircasa  1  3    OK
-=ircasa  1  4    OK
-=ircasa  1  5    OK
-=ircasa  1  6    OK
-=ircasa  1  7    OK
-=ircasa  2  0    OK
-=ircasa  2  1    OK
-=ircasa  2  2    OK
-=ircasa  2  3    OK
-=ircasa  2  4    OK
-=ircasa  2  5    OK
-=ircasa  2  6    OK
-=ircasa  2  7    OK
-=ircasa  3  0    OK
-=ircasa  3  1    OK
-=ircasa  3  2    OK
-=ircasa  3  3    OK
-=ircasa  3  4    OK
-=ircasa  3  5    OK
-=ircasa  3  6    OK
-=ircasa  3  7    OK
-=ircasa  4  0    OK
-=ircasa  4  1    OK
-=ircasa  4  2    OK
-=ircasa  4  3    OK
-=ircasa  4  4    OK
-=ircasa  4  5    OK
-=ircasa  4  6    OK
-=ircasa  4  7    OK
-=ircasa  5  0    OK
-=ircasa  5  1    OK
-=ircasa  5  2    OK
-=ircasa  5  3    OK
-=ircasa  5  4    OK
-=ircasa  5  5    OK
-=ircasa  5  6    OK
-=ircasa  5  7    OK
-=ircasa  6  0    OK
-=ircasa  6  1    OK
-=ircasa  6  2    OK
-=ircasa  6  3    OK
-=ircasa  6  4    OK
-=ircasa  6  5    OK
-=ircasa  6  6    OK
-=ircasa  6  7    OK
-=ircasa  7  0    OK
-=ircasa  7  1    OK
-=ircasa  7  2    OK
-=ircasa  7  3    OK
-=ircasa  7  4    OK
-=ircasa  7  5    OK
-=ircasa  7  6    OK
-=ircasa  7  7    OK
-=ircasa  0  0    OK
+=ircasa  "A1"    OK
+=ircasa  "A2"    OK
+=ircasa  "A3"    OK
+=ircasa  "A4"    OK
+=ircasa  "A5"    OK
+=ircasa  "A6"    OK
+=ircasa  "A7"    OK
+=ircasa  "A8"    OK
+
+=ircasa  "B1"    OK
+=ircasa  "B2"    OK
+=ircasa  "B3"    OK
+=ircasa  "B4"    OK
+=ircasa  "B5"    OK
+=ircasa  "B6"    OK
+=ircasa  "B7"    OK
+=ircasa  "B8"    OK
+
+=ircasa  "C1"    OK
+=ircasa  "C2"    OK
+=ircasa  "C3"    OK
+=ircasa  "C4"    OK
+=ircasa  "C5"    OK
+=ircasa  "C6"    OK
+=ircasa  "C7"    OK
+=ircasa  "C8"    OK
+
+=ircasa  "D1"    OK
+=ircasa  "D2"    OK
+=ircasa  "D3"    OK
+=ircasa  "D4"    OK
+=ircasa  "D5"    OK
+=ircasa  "D6"    OK
+=ircasa  "D7"    OK
+=ircasa  "D8"    OK
+
+=ircasa  "E1"    OK
+=ircasa  "E2"    OK
+=ircasa  "E3"    OK
+=ircasa  "E4"    OK
+=ircasa  "E5"    OK
+=ircasa  "E6"    OK
+=ircasa  "E7"    OK
+=ircasa  "E8"    OK
+
+=ircasa  "F1"    OK
+=ircasa  "F2"    OK
+=ircasa  "F3"    OK
+=ircasa  "F4"    OK
+=ircasa  "F5"    OK
+=ircasa  "F6"    OK
+=ircasa  "F7"    OK
+=ircasa  "F8"    OK
+
+=ircasa  "G1"    OK
+=ircasa  "G2"    OK
+=ircasa  "G3"    OK
+=ircasa  "G4"    OK
+=ircasa  "G5"    OK
+=ircasa  "G6"    OK
+=ircasa  "G7"    OK
+=ircasa  "G8"    OK
+
+=ircasa  "H1"    OK
+=ircasa  "H2"    OK
+=ircasa  "H3"    OK
+=ircasa  "H4"    OK
+=ircasa  "H5"    OK
+=ircasa  "H6"    OK
+=ircasa  "H7"    OK
+=ircasa  "H8"    OK
+=ircasa  "A1"    OK
 
 == Verificar quando ir casa recebe um nome invalido
-=ircasa  0  8    NaoFolha
-=ircasa  8  0    NaoFolha
+=ircasa "X0"    NaoFolha
+=ircasa "hh"    NaoFolha
 
 
 // Navegando por todo o tabuleiro exercitando todos os ponteiros

@@ -92,9 +92,9 @@ typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 ***********************************************************************/
    TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tppTabuleiro *ppTabuleiro);
 
-   TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, int x, int y);
+   TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, char *nome);
 
-   TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tppTabuleiro pTabuleiro, TAB_tppTabuleiro *ppCopia);
+   TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(char *nome, void *pValor));
 
 /***************************************************************************
 *
