@@ -35,7 +35,7 @@ typedef struct stPegada {
 
 typedef struct stCasa {
    char *nome;
-   PEC_tppPeca *pPeca;
+   PEC_tppPeca pPeca;
    LIS_tppLista pegadas;
 } tpCasa;
 
@@ -83,7 +83,7 @@ typedef struct stCasa {
 
    static int CompararPassos(void *pValor1, void *pValor2);
 
-   static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca **pPeca);
+   static PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca);
    
    static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
       PEC_tpTimePeca time, PEC_tppPeca *ppPeca);
@@ -287,14 +287,14 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   //PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida)
-   //{
-   //   TAB_ObterValor(pPartida->pTabuleiro, (void **) &pPartida->pCasaRei);
-   //
-   //   CriarInstanciaDeRei(pPartida, &pPartida->pCasaRei->pPeca);
-   //
-   //   return PAR_CondRetOK;
-   //}
+   PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida)
+   {
+      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pPartida->pCasaRei);
+   
+      CriarInstanciaDeRei(pPartida, &pPartida->pCasaRei->pPeca);
+   
+      return PAR_CondRetOK;
+   }
    
    PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PEC_tpTimePeca time)
    {
@@ -328,16 +328,16 @@ typedef struct stCasa {
    //
    //   return PAR_CondRetOK;
    //}
-   //
-   //PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida)
-   //{
-   //   MEM_Free(pPartida->pCasaRei->pPeca);
-   //   pPartida->pCasaRei = NULL;
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
+   
+   PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida)
+   {
+      PEC_DestruirPeca(&pPartida->pCasaRei->pPeca);
+      pPartida->pCasaRei = NULL;
+   
+      return PAR_CondRetOK;
+   }
+   
+   
 
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa)
    {
@@ -357,15 +357,15 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   //PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida)
-   //{
-   //   PAR_IrCasa(pPartida, pPartida->pCasaRei->nome);
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
-   //
+   PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida)
+   {
+      PAR_IrCasa(pPartida, pPartida->pCasaRei->nome);
+   
+      return PAR_CondRetOK;
+   }
+   
+   
+   
    //PAR_tpCondRet PAR_IrPara(PAR_tppPartida pPartida , DIR_tpDirecao direcao)
    //{
    //   TAB_tpCondRet condRet;
@@ -557,20 +557,14 @@ typedef struct stCasa {
    }
    
    
-   //PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, tpPeca **pPeca)
-   //{
-   //   tpPeca *pRei;
-   //   MEM_Alloc(sizeof(tpPeca), (void **) &pRei);
-   //
-   //   pRei->pModelo = NULL;
-   //   pRei->time = ALIADA;
-   //
-   //   *pPeca = pRei;
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
-   //
+   PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca)
+   {
+      PEC_CriarPeca(ppPeca, NULL, ALIADA);
+   
+      return PAR_CondRetOK;
+   }
+   
+   
    //PAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpPartida *pPartida,
    //   tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar)
    //{

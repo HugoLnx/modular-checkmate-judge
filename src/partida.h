@@ -76,12 +76,12 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    PAR_tpCondRet PAR_CriarPartida(PAR_tppPartida *ppPartida);
 
    //PAR_tpCondRet PAR_AlgumaPegadaInimiga(PAR_tpPartida *pPartida, int *pResposta);
-   //
-   //PAR_tpCondRet PAR_InserirRei(PAR_tpPartida *pPartida);
-   //
-   //PAR_tpCondRet PAR_RemoverRei(PAR_tpPartida *pPartida);
-   //
-   //PAR_tpCondRet PAR_IrCasaRei(PAR_tpPartida *pPartida);
+   
+   PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida);
+   
+   PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida);
+   
+   PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida);
    //
    //PAR_tpCondRet PAR_EhCheckmate(PAR_tpPartida *pPartida, int *pResposta);
    //

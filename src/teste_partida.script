@@ -164,11 +164,11 @@
 //
 //=ircasa "F2"         OK
 //=pegadaInimiga? TRUE OK
-//
-//== Testar inserir rei
-//=ircasa "C5" OK
-//=inserirRei  OK
-//
+
+== Testar inserir rei
+=ircasa "C5" OK
+=inserirRei  OK
+
 //=ircasa "H8" OK
 //=pegadaInimiga? FALSE OK
 //
@@ -179,15 +179,15 @@
 //== Teste remover peca
 //=ircasa "D4" OK
 //=removerPeca OK
-//
-//== Testar ir casa rei
-//=ircasarei   OK
-//
-//== Testar remover rei
-//=ircasa "H1" OK
-//=removerRei  OK
-//=selecionar 0
-//
+
+== Testar ir casa rei
+=ircasarei   OK
+
+== Testar remover rei
+=ircasa "H1" OK
+=removerRei  OK
+=selecionar 0
+
 //== Criar tabuleiro com as peças para testes checkmate
 //=selecionar 5
 //=criar OK

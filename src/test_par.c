@@ -198,22 +198,22 @@ static int iPar = 0 ;
          }
 
 
-//		/* Testar PAR Ir casa rei */
-//
-//		 else if (strcmp(ComandoTeste, IR_REI_CMD) == 0)
-//       {
-//           NumLidos = LER_LerParametros("i", &CondRetEsperada);
-//           if (NumLidos != 1)
-//           {
-//              return TST_CondRetParm ;
-//           }
-//           
-//           CondRetObtido = PAR_IrCasaRei(Partidas[iPar]) ;
-//           
-//           return TST_CompararInt( CondRetEsperada , CondRetObtido ,
-//               "Não foi possível ir para a casa do rei.") ;
-//
-//       }
+		/* Testar PAR Ir casa rei */
+
+		 else if (strcmp(ComandoTeste, IR_REI_CMD) == 0)
+       {
+           NumLidos = LER_LerParametros("i", &CondRetEsperada);
+           if (NumLidos != 1)
+           {
+              return TST_CondRetParm ;
+           }
+           
+           CondRetObtido = PAR_IrCasaRei(Partidas[iPar]) ;
+           
+           return TST_CompararInt( CondRetEsperada , CondRetObtido ,
+               "Não foi possível ir para a casa do rei.") ;
+
+       }
 
 
 		/* Testar PAR Criar peca*/
@@ -316,26 +316,26 @@ static int iPar = 0 ;
 //								"Não foi possível remover a peça.");
 //
 //       }
-//       
-//       
-//		/* Testar PAR Remover rei*/
-//
-//		 else if (strcmp( ComandoTeste, REMOVER_REI_CMD) == 0 )
-//       {
-//			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-//         if (NumLidos != 1)
-//         {
-//            return TST_CondRetParm ;
-//         }
-//
-//         CondRetObtido = PAR_RemoverRei(Partidas[iPar]);
-//
-//         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//								"Não foi possível remover o rei.");
-//
-//       }
-//       
-//       
+       
+       
+		/* Testar PAR Remover rei*/
+
+		 else if (strcmp( ComandoTeste, REMOVER_REI_CMD) == 0 )
+       {
+			NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+         if (NumLidos != 1)
+         {
+            return TST_CondRetParm ;
+         }
+
+         CondRetObtido = PAR_RemoverRei(Partidas[iPar]);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível remover o rei.");
+
+       }
+       
+       
 //		/* Testar PAR Copiar tabuleiro */
 //
 //		 else if (strcmp( ComandoTeste, COPIAR_PAR_CMD) == 0 )
@@ -372,27 +372,27 @@ static int iPar = 0 ;
 //								"Não foi possível criar as pegadas.");
 //
 //       }
-//
-//
-//		/* Testar PAR Inserir rei */
-//
-//		 else if (strcmp( ComandoTeste, INSERIR_REI_CMD) == 0 )
-//       {
-//			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
-//          
-//          if (NumLidos != 1)
-//          {
-//             return TST_CondRetParm ;
-//          }
-//          
-//          CondRetObtido = PAR_InserirRei(Partidas[iPar]);
-//          
-//          return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//								"Não foi possível inserir o rei.");
-//
-//       }
-//
-//
+
+
+		/* Testar PAR Inserir rei */
+
+		 else if (strcmp( ComandoTeste, INSERIR_REI_CMD) == 0 )
+       {
+			 NumLidos = LER_LerParametros("i", &CondRetEsperada) ;
+          
+          if (NumLidos != 1)
+          {
+             return TST_CondRetParm ;
+          }
+          
+          CondRetObtido = PAR_InserirRei(Partidas[iPar]);
+          
+          return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível inserir o rei.");
+
+       }
+
+
 //		/* Testar PAR Alguma pegada inimiga*/
 //
 //		 else if (strcmp( ComandoTeste, PEGADA_INIMIGA_CMD) == 0 )
