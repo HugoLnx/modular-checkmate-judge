@@ -73,6 +73,7 @@ typedef struct PAS_stPasso* PAS_tppPasso;
    PAS_tpCondRet PAS_CriarPasso(PAS_tppPasso *ppPasso, DIR_tpDirecao direcao, int quantidade);
    PAS_tpCondRet PAS_DestruirPasso(PAS_tppPasso *ppPasso);
    PAS_tpCondRet PAS_CompararPassos(PAS_tppPasso pPasso1, PAS_tppPasso pPasso2, int *pResposta);
+   PAS_tpCondRet PAS_Percorrer(PAS_tppPasso pPasso, int (*FazerNaDirecao)(DIR_tpDirecao direcao));
 
 #undef PASSO_EXT
 

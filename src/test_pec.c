@@ -41,6 +41,7 @@
 #include    "lerparm.h"
 
 #include "peca.h"
+#include "input_string_parser.h"
 #include "mem_manager.h"
 
 /* Tabela dos nomes dos comandos de teste relacionados ao módulo */
@@ -76,17 +77,20 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
    if ( strcmp( ComandoTeste , CRIAR_PEC_CMD ) == 0 )
    {
-      char *pNomePeca, *pPassos;
+      char *pNomePeca, *passosStr;
+      LIS_tppLista pPassos;
       PEC_tpTipoMovimento tipoMovimento;
 
       MEM_Alloc(sizeof(char)*20,(void**)&pNomePeca);
-      MEM_Alloc(sizeof(char)*50,(void**)&pPassos);
+      MEM_Alloc(sizeof(char)*50,(void**)&passosStr);
 
-      NumLidos = LER_LerParametros( "ssii" , pNomePeca, pPassos, &tipoMovimento, &CondRetEsperada ) ;
+      NumLidos = LER_LerParametros( "ssii" , pNomePeca, passosStr, &tipoMovimento, &CondRetEsperada ) ;
       if ( NumLidos != 4 )
       {
          return TST_CondRetParm ;
       }
+
+      ISP_LerPassos(passosStr, &pPassos);
 
       CondRetObtido = PEC_CriarPeca(&ppPeca,pNomePeca,pPassos,tipoMovimento);
 
@@ -115,19 +119,22 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
    else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )
    {
-      char *pNovoNome, *pNovosPassos;
+      char *pNovoNome, *passosStr;
       PEC_tpTipoMovimento novoTipoMovimento;
+      LIS_tppLista pNovosPassos;
 
       MEM_Alloc(sizeof(char)*20,(void**)&pNovoNome);
-      MEM_Alloc(sizeof(char)*50,(void**)&pNovosPassos);
+      MEM_Alloc(sizeof(char)*50,(void**)&passosStr);
 
-      NumLidos = LER_LerParametros( "ssii" , pNovoNome, pNovosPassos, &novoTipoMovimento ,&CondRetEsperada ) ;
+      NumLidos = LER_LerParametros( "ssii" , pNovoNome, passosStr, &novoTipoMovimento ,&CondRetEsperada ) ;
       if ( NumLidos != 4 )
       {
          return TST_CondRetParm ;
       }
+      
+      ISP_LerPassos(passosStr, &pNovosPassos);
 
-      CondRetObtido = PEC_AlterarPeca(ppPeca,pNovoNome,pNovosPassos,novoTipoMovimento);
+      CondRetObtido = PEC_AlterarPeca(ppPeca,pNovoNome, pNovosPassos,novoTipoMovimento);
 
       return TST_CompararInt( CondRetEsperada , CondRetObtido ,
          "Nao foi possivel alterar peca.") ;

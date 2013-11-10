@@ -40,12 +40,6 @@
 
 typedef struct PAR_stPartida* PAR_tppPartida;
 
-typedef struct PAR_stPasso
-{
-   DIR_tpDirecao direcao;
-   int quantidade;
-} PAR_tpPasso;
-
 /***********************************************************************
 *
 *  $TC Tipo de dados: TAB Condicoes de retorno

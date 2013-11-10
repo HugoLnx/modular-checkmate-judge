@@ -34,6 +34,8 @@
 #define PECA_EXT extern
 #endif
 
+#include "lista.h"
+
 //TODO fazer o do peca
 typedef struct PEC_stPeca* PEC_tppPeca;
 
@@ -75,9 +77,9 @@ typedef enum {
 } PEC_tpCondRet ;
 
 
-PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, char* passos, PEC_tpTipoMovimento tipoMovimento);
+PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, char* nome, LIS_tppLista pPassos, PEC_tpTipoMovimento tipoMovimento);
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
-PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, char *pNovosPassos, PEC_tpTipoMovimento novoTipoMovimento);
+PEC_tpCondRet PEC_AlterarPeca(PEC_tppPeca ppPeca, char *novoNome, LIS_tppLista pPassos, PEC_tpTipoMovimento novoTipoMovimento);
 PEC_tpCondRet PEC_AdicionarTime(PEC_tppPeca ppPeca, PEC_tpTimePeca time);
 #undef PECA_EXT
 

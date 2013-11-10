@@ -19,6 +19,7 @@
 #include "mem_manager.h"
 #include "direcao.h"
 #include "peca.h"
+#include "passo.h"
 
 #include <string.h>
 
@@ -27,8 +28,6 @@
 #undef PARTIDA_OWN
 
 #define NOME_REI "rei"
-
-
 
 typedef struct stPegada {
    PEC_tppPeca *pPeca;
@@ -105,7 +104,7 @@ typedef struct stCasa {
       PEC_tppPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
 
    static PAR_tpCondRet SeguirPassoDaPeca(tpPartida *pPartida,
-      PAR_tpPasso *pPasso, PEC_tppPeca *pPeca, DIR_tpDirecao orientacao,
+      PAS_tppPasso pPasso, PEC_tppPeca *pPeca, DIR_tpDirecao orientacao,
       tpCallbackIterarCasasAlcancePeca operar);
 
    static PAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpPartida *pPartida,

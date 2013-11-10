@@ -83,6 +83,21 @@ typedef struct PAR_stPasso
       return PAS_CondRetOK;
    }
 
+   PAS_tpCondRet PAS_Percorrer(PAS_tppPasso pPassoParm, int (*fazerNaDirecao)(DIR_tpDirecao direcao))
+   {
+      int continuar = 1;
+      int i;
+      tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+      i = 0;
+      while (continuar && (pPasso->quantidade == 0 || i < pPasso->quantidade))
+      {
+         continuar = fazerNaDirecao(pPasso->direcao);
+      }
+
+      return PAS_CondRetOK;
+   }
+
 /*****  Código das funções encapsuladas no módulo  *****/
 
 
