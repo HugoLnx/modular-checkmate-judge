@@ -81,7 +81,7 @@ static const char *FIM_CMD                        = "=fim"              ;
          {
             char *tipoStr;
             int tipoEsperado;
-            PEC_tpTipoMovimento tipoObtido;
+            MPEC_tpTipoMovimento tipoObtido;
             MEM_Alloc(sizeof(tipoStr)*MAX_TIPO_STR, (void **) &tipoStr);
 
             numLidos = LER_LerParametros("sii", tipoStr, &tipoEsperado, &CondRetEsp);
