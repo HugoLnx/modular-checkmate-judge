@@ -119,6 +119,52 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+   
+PAS_tpCondRet PAS_ObterQuantidade(PAS_tppPasso pPassoParm, int *pQuantidade)
+{
+   tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+   if (pPasso == NULL)
+   {
+      *pQuantidade = NULL;
+      return PAS_CondRetMatrizNaoExiste;
+   }
+   
+   *pQuantidade = pPasso->quantidade;
+
+   return PAS_CondRetOK;
+}
+
+PAS_tpCondRet PAS_EhInfinito(PAS_tppPasso pPassoParm, int *pEhInfinito)
+{
+   tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+   if (pPasso == NULL)
+   {
+      *pEhInfinito = 0;
+      return PAS_CondRetMatrizNaoExiste;
+   }
+   
+   *pEhInfinito = pPasso->quantidade == 0;
+   return PAS_CondRetOK;
+}
+
+
+PAS_tpCondRet PAS_ObterDirecao(PAS_tppPasso pPassoParm, DIR_tpDirecao *pDirecao)
+{
+   tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+   if (pPasso == NULL)
+   {
+      *pDirecao == NULL;
+      return PAS_CondRetMatrizNaoExiste;
+   }
+   
+   *pDirecao = pPasso->direcao;
+
+   return PAS_CondRetOK;
+}
+
 /*****  Código das funções encapsuladas no módulo  *****/
 
 

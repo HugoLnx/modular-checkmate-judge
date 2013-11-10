@@ -14,6 +14,7 @@
 ***************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "lista.h"
 #include "peca.h"
@@ -88,6 +89,20 @@ PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei)
       *ehRei = pPeca->pModelo == NULL;
    }
 
+   return PEC_CondRetOK;
+}
+
+PEC_tpCondRet PEC_ObterModelo(PEC_tppPeca pPecaParm, MPEC_tppModeloPeca *ppModelo)
+{
+   tpPeca *pPeca = (tpPeca*) pPecaParm;
+
+   if (pPecaParm == NULL)
+   {
+      *ppModelo = NULL;
+      return PEC_CondRetPecaNaoExiste;
+   }
+
+   *ppModelo = pPeca->pModelo;
    return PEC_CondRetOK;
 }
 

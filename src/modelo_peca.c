@@ -106,4 +106,31 @@ MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
    return MPEC_CondRetOK;
 }
 
+MPEC_tpCondRet MPEC_ObterPassos(MPEC_tppModeloPeca pModeloParm, LIS_tppLista *ppPassos)
+{
+   tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
+
+   if (pModelo == NULL)
+   {
+      *ppPassos = NULL;
+      return MPEC_CondRetModeloNaoExiste;
+   }
+
+   *ppPassos = pModelo->pMovimento->passos;
+   return MPEC_CondRetOK;
+}
+
+MPEC_tpCondRet MPEC_ObterTipo(MPEC_tppModeloPeca pModeloParm, MPEC_tpTipoMovimento *pTipo)
+{
+   tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
+
+   if (pModelo == NULL)
+   {
+      return MPEC_CondRetModeloNaoExiste;
+   }
+   
+   *pTipo = pModelo->pMovimento->tipo;
+   return MPEC_CondRetOK;
+}
+
 /********** Fim do módulo de implementação: Módulo matriz **********/

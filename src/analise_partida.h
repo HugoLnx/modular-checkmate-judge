@@ -78,11 +78,9 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 
    //APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tpAnalise *pAnalise, int *pResposta);
 
-   //APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
+   APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
 
    //APAR_tpCondRet APAR_EhCheckmate(APAR_tpAnalise *pAnalise, int *pResposta);
-
-   //APAR_tpCondRet APAR_CriarPegadas(APAR_tpAnalise *pAnalise);
 
 /***********************************************************************
 *
@@ -105,6 +103,8 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 
    APAR_tpCondRet APAR_IrCasa(APAR_tppAnalise pAnalise, char *nomeCasa);
    
+   APAR_tpCondRet APAR_IrPara(APAR_tppAnalise pAnalise , DIR_tpDirecao direcao);
+
    APAR_tpCondRet APAR_CriarPeca(APAR_tppAnalise pAnalise, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
    

@@ -73,6 +73,8 @@ MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LI
 MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo);
 MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento);
 MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModelo, char **pNome);
+MPEC_tpCondRet MPEC_ObterPassos(MPEC_tppModeloPeca pModeloParm, LIS_tppLista *ppPassos);
+MPEC_tpCondRet MPEC_ObterTipo(MPEC_tppModeloPeca pModeloParm, MPEC_tpTipoMovimento *pTipo);
 
 #undef MODELO_PECA_EXT
 

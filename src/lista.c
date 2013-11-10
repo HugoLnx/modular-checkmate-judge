@@ -420,10 +420,9 @@
 /***************************************************************************
 *  Função: LIS Esta Vazia
 *  ****/
-   LIS_tpCondRet LIS_EstaVazia(LIS_tppLista pLista,
-                                              int *pResposta)
+   LIS_tpCondRet LIS_EstaVazia(LIS_tppLista pLista, int *pResposta)
    {
-      if(pLista->pElemCorr == NULL)
+      if (pLista == NULL || pLista->pElemCorr == NULL)
       {
          *pResposta = 1;
       }

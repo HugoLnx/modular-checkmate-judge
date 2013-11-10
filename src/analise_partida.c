@@ -26,10 +26,8 @@
 #include "analise_partida.h"
 #undef ANALISE_PARTIDA_OWN
 
-#define NOME_REI "rei"
-
 typedef struct stPegada {
-   PEC_tppPeca *pPeca;
+   PEC_tppPeca pPeca;
    struct stPegada *pAnterior;
 } tpPegada;
 
@@ -58,9 +56,6 @@ typedef struct stCasa {
 
    typedef struct APAR_stAnalise* APAR_tppAnalise;
 
-   typedef APAR_tpCondRet (*tpCallbackIterarCasasAlcancePeca)
-      (tpAnalise *pAnalise, PEC_tppPeca *pPeca, tpPegada *pPegAnt);
-
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
@@ -79,26 +74,26 @@ typedef struct stCasa {
    static int CompararPassos(void *pValor1, void *pValor2);
 
    // criar pegadas
+
+   static APAR_tpCondRet CriarPegadas(APAR_tppAnalise pAnalise);
    
-   static APAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpAnalise *pAnalise, PEC_tppPeca *pPeca,
+   static APAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpAnalise *pAnalise, PEC_tppPeca pPeca,
       tpPegada *pPegAnt);
 
    static APAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpAnalise *pAnalise,
-      tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar);
+      tpCasa *pCasa);
    
    static APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, LIS_tppLista pPassos,
-      PEC_tppPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar);
+      PEC_tppPeca pPeca, DIR_tpDirecao orientacao);
 
    static APAR_tpCondRet SeguirPassoDaPeca(tpAnalise *pAnalise,
-      PAS_tppPasso pPasso, PEC_tppPeca *pPeca, DIR_tpDirecao orientacao,
-      tpCallbackIterarCasasAlcancePeca operar);
+      PAS_tppPasso pPasso, PEC_tppPeca pPeca, DIR_tpDirecao orientacao);
 
    static APAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpAnalise *pAnalise,
-      DIR_tpDirecao direcao, PEC_tppPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar);
+      DIR_tpDirecao direcao, PEC_tppPeca pPeca);
    
    static APAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpAnalise *pAnalise,
-      DIR_tpDirecao direcao, int quantidade, PEC_tppPeca *pPeca,
-      tpCallbackIterarCasasAlcancePeca operar);
+      DIR_tpDirecao direcao, PAS_tppPasso pPasso, PEC_tppPeca pPeca);
    
    // fim criar pegada
 
@@ -199,6 +194,8 @@ typedef struct stCasa {
          }
       }
 
+      CriarPegadas(pAnalise);
+
 	  *ppAnalise = pAnalise;
 
       return APAR_CondRetOK;
@@ -225,36 +222,6 @@ typedef struct stCasa {
 
 		return APAR_CondRetOK;
    }
-
-   //APAR_tpCondRet APAR_CriarPegadas(APAR_tppAnalise pAnalise)
-   //{
-   //   tpCasa *pCasaOriginal;
-   //   int x, y;
-   //
-   //   TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaOriginal);
-   //
-   //   for (x = 0; x < LARGURA; x++)
-   //   {
-   //      for (y = 0; y < ALTURA; y++)
-   //      {
-   //         tpCasa *pCasa;
-   //         char *nome = NomeDaCasa(x, y);
-   //         APAR_IrCasa(pAnalise, nome);
-   //
-   //         TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
-   //
-   //         if (pCasa->pPeca && pCasa->pPeca->pModelo)
-   //         {
-   //            IterarPelasCasasDeAlcanceDaPeca(pAnalise, pCasa, InserirPegadaDaPecaNaCasaAtual);
-   //         }
-   //      }
-   //   }
-   //
-   //   APAR_IrCasa(pAnalise, pCasaOriginal->nome);
-   //
-   //   return APAR_CondRetOK;
-   //}
-   
 
    APAR_tpCondRet APAR_IrCasa(APAR_tppAnalise pAnalise, char *nomeCasa)
    {
@@ -283,26 +250,26 @@ typedef struct stCasa {
    
    
    
-   //APAR_tpCondRet APAR_IrPara(APAR_tppAnalise pAnalise , DIR_tpDirecao direcao)
-   //{
-   //   TAB_tpCondRet condRet;
-   //
-   //  if (pAnalise == NULL)
-   //  {
-   //     return APAR_CondRetMatrizNaoExiste ;
-   //  }
-   //
-   //  condRet = TAB_IrPara(pAnalise->pTabuleiro, direcao);
-   //  
-   //  if (condRet != TAB_CondRetOK)
-   //  {
-   //     return APAR_CondRetNaoEhNo;
-   //  }
-   //
-	//  return APAR_CondRetOK ;
-   //}
-   //
-   //
+   APAR_tpCondRet APAR_IrPara(APAR_tppAnalise pAnalise , DIR_tpDirecao direcao)
+   {
+      TAB_tpCondRet condRet;
+   
+     if (pAnalise == NULL)
+     {
+        return APAR_CondRetMatrizNaoExiste ;
+     }
+   
+     condRet = TAB_IrPara(pAnalise->pTabuleiro, direcao);
+     
+     if (condRet != TAB_CondRetOK)
+     {
+        return APAR_CondRetNaoEhNo;
+     }
+   
+	  return APAR_CondRetOK ;
+   }
+   
+   
    //APAR_tpCondRet APAR_EhCheckmate(APAR_tppAnalise pAnalise, int *pResposta)
    //{
    //   DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
@@ -418,168 +385,218 @@ typedef struct stCasa {
       // TODO: função para comparar passos
       return 0;
    }
-   
-   
-   //APAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpAnalise *pAnalise,
-   //   tpCasa *pCasa, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   APAR_tpCondRet condRet;
-   //   LIS_tppLista pPassos;
-   //   int estaVazia;
-   //   
-   //   pPassos =pCasa->pPeca->pModelo->pMovimento->passos;
-   //
-   //   LIS_EstaVazia(pPassos, &estaVazia);
-   //
-   //   if (estaVazia)
-   //   {
-   //      return APAR_CondRetOK;
-   //   }
-   //
-   //   SeguirPassosDaPeca(pAnalise, pPassos, pCasa->pPeca, NORTE, operar);
-   //   APAR_IrCasa(pAnalise, pCasa->nome);
-   //   SeguirPassosDaPeca(pAnalise, pPassos, pCasa->pPeca, ESTE , operar);
-   //   APAR_IrCasa(pAnalise, pCasa->nome);
-   //   SeguirPassosDaPeca(pAnalise, pPassos, pCasa->pPeca, SUL  , operar);
-   //   APAR_IrCasa(pAnalise, pCasa->nome);
-   //   SeguirPassosDaPeca(pAnalise, pPassos, pCasa->pPeca, OESTE, operar);
-   //
-   //   return APAR_CondRetOK;
-   //}
-   //
-   //APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, LIS_tppLista pPassos,
-   //   tpPeca *pPeca, DIR_tpDirecao orientacao, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   APAR_tpCondRet tabCondRet;
-   //   LIS_tpCondRet lisCondRet = LIS_CondRetOK;
-   // 
-   //   LIS_IrInicioLista(pPassos);
-   //   while (lisCondRet == LIS_CondRetOK)
-   //   {
-   //      APAR_tpPasso *pPasso;
-   //      LIS_ObterValor(pPassos, (void **) &pPasso);
-   //      
-   //      tabCondRet = SeguirPassoDaPeca(pAnalise, pPasso, pPeca, orientacao, operar);
-   //      
-   //      if (tabCondRet != APAR_CondRetOK)
-   //      {
-   //         break;
-   //      }
-   //
-   //      lisCondRet = LIS_AvancarElementoCorrente(pPassos, 1);
-   //   }
-   //
-   //   if (pPeca->pModelo->pMovimento->tipo == VOA && tabCondRet == APAR_CondRetOK)
-   //   {
-   //      operar(pAnalise, pPeca, NULL);
-   //   }
-   //
-   //   return APAR_CondRetOK;
-   //
-   //}
-   //
-   //APAR_tpCondRet SeguirPassoDaPeca(tpAnalise *pAnalise,
-   //   APAR_tpPasso *pPasso, tpPeca *pPeca, DIR_tpDirecao orientacao,
-   //   tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   APAR_tpCondRet condRet;
-   //   DIR_tpDirecao direcao;
-   //
-   //   DIR_DirecaoOrientadaPara(pPasso->direcao, orientacao, &direcao);
-   //
-   //   if (pPasso->quantidade == 0)
-   //   {
-   //      condRet = SeguirDirecaoAteNaoPoderMais(pAnalise, direcao, pPeca, operar);
-   //   }
-   //   else
-   //   {
-   //      condRet = SeguirDirecaoEmUmaQuantidadeFixaDeVezes(pAnalise, direcao,
-   //         pPasso->quantidade, pPeca, operar);
-   //   }
-   //
-   //   return condRet;
-   //}
-   //
-   //
-   //
-   //APAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpAnalise *pAnalise,
-   //   DIR_tpDirecao direcao, int quantidade, tpPeca *pPeca,
-   //   tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   tpPeca *pPecaBarreirando = NULL;
-   //   tpPegada *pPegAnt = NULL;
-   //   int i;
-   //   for (i = 0; i < quantidade && !pPecaBarreirando; i++)
-   //   {
-   //      APAR_tpCondRet condRet;
-   //      condRet = APAR_IrPara(pAnalise, direcao);
-   //      if (condRet != APAR_CondRetOK)
-   //      {
-   //         // chegou no final do tabuleiro
-   //         return APAR_CondRetNaoEhNo;
-   //      }
-   //
-   //      if (pPeca->pModelo->pMovimento->tipo == ANDA)
-   //      {
-   //         tpCasa *pCasa;
-   //         TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
-   //         pPecaBarreirando = pCasa->pPeca;
-   //
-   //         operar(pAnalise, pPeca, pPegAnt);
-   //      }
-   //
-   //   }
-   //   return APAR_CondRetOK;
-   //}
-   //
-   //
-   //APAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpAnalise *pAnalise,
-   //   DIR_tpDirecao direcao, tpPeca *pPeca, tpCallbackIterarCasasAlcancePeca operar)
-   //{
-   //   tpPegada *pPegAnt = NULL;
-   //   tpPeca *pPecaBarreirando = NULL;
-   //   int i;
-   //   APAR_tpCondRet condRet;
-   //   condRet = APAR_IrPara(pAnalise, direcao);
-   //   while(condRet == APAR_CondRetOK && !pPecaBarreirando)
-   //   {
-   //      if (pPeca->pModelo->pMovimento->tipo == ANDA)
-   //      {
-   //         tpCasa *pCasa;
-   //         TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
-   //         pPecaBarreirando = pCasa->pPeca;
-   //
-   //         operar(pAnalise, pPeca, pPegAnt);
-   //      }
-   //
-   //      condRet = APAR_IrPara(pAnalise, direcao);
-   //   }
-   //
-   //   return APAR_CondRetOK;
-   //}
-   //
-   //
-   //APAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpAnalise *pAnalise, tpPeca *pPeca,
-   //   tpPegada *pPegAnt)
-   //{
-   //   tpCasa *pCasaAtual;
-   //   tpPegada *pPegada;
-   //   TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaAtual);
-   //   
-   //   MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
-   //   pPegada->pAnterior = pPegAnt;
-   //   pPegada->pPeca = pPeca;
-   //
-   //   LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
-   //   pPegada->pAnterior = pPegAnt;
-   //
-   //   return APAR_CondRetOK;
-   //}
 
-   void ExtrairPosicao(char *nomeCasa, int *x, int *y)
+   
+   APAR_tpCondRet CriarPegadas(APAR_tppAnalise pAnalise)
    {
-      *x = nomeCasa[0] - 'A';
-      *y = nomeCasa[1] - '1';
+      tpCasa *pCasaOriginal;
+      int x, y;
+   
+      TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaOriginal);
+   
+      for (x = 0; x < LARGURA; x++)
+      {
+         for (y = 0; y < ALTURA; y++)
+         {
+            int ehRei;
+            tpCasa *pCasa;
+            char *nome;
+            TAB_NomeDaCasa(x, y, &nome);
+            APAR_IrCasa(pAnalise, nome);
+   
+            TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
+            PEC_EhORei(pCasa->pPeca, &ehRei);
+            if (!ehRei)
+            {
+               IterarPelasCasasDeAlcanceDaPeca(pAnalise, pCasa);
+            }
+         }
+      }
+   
+      APAR_IrCasa(pAnalise, pCasaOriginal->nome);
+   
+      return APAR_CondRetOK;
+   }
+   
+   
+   
+   APAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpAnalise *pAnalise,
+      tpCasa *pCasa)
+   {
+      MPEC_tppModeloPeca pModelo;
+      APAR_tpCondRet condRet;
+      LIS_tppLista pPassos;
+      int estaVazia;
+      
+      PEC_ObterModelo(pCasa->pPeca, &pModelo);
+      MPEC_ObterPassos(pModelo, &pPassos);
+   
+      LIS_EstaVazia(pPassos, &estaVazia);
+   
+      if (estaVazia)
+      {
+         return APAR_CondRetOK;
+      }
+   
+      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, NORTE);
+      APAR_IrCasa(pAnalise, pCasa->nome);
+      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, ESTE );
+      APAR_IrCasa(pAnalise, pCasa->nome);
+      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, SUL  );
+      APAR_IrCasa(pAnalise, pCasa->nome);
+      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, OESTE);
+   
+      return APAR_CondRetOK;
+   }
+   
+   APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, MPEC_tppModeloPeca pModelo,
+      PEC_tppPeca pPeca, DIR_tpDirecao orientacao)
+   {
+      MPEC_tpTipoMovimento tipo;
+      LIS_tppLista pPassos;
+      APAR_tpCondRet tabCondRet;
+      LIS_tpCondRet lisCondRet = LIS_CondRetOK;
+
+      MPEC_ObterPassos(pModelo, &pPassos);
+      MPEC_ObterTipo(pModelo, &tipo);
+    
+      LIS_IrInicioLista(pPassos);
+      while (lisCondRet == LIS_CondRetOK)
+      {
+         PAS_tppPasso pPasso;
+         LIS_ObterValor(pPassos, (void **) &pPasso);
+         
+         tabCondRet = SeguirPassoDaPeca(pAnalise, pPasso, pPeca, orientacao);
+         
+         if (tabCondRet != APAR_CondRetOK)
+         {
+            break;
+         }
+   
+         lisCondRet = LIS_AvancarElementoCorrente(pPassos, 1);
+      }
+   
+      if (tipo == VOA && tabCondRet == APAR_CondRetOK)
+      {
+         InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, NULL);
+      }
+   
+      return APAR_CondRetOK;
+   
+   }
+   
+   APAR_tpCondRet SeguirPassoDaPeca(tpAnalise *pAnalise,
+      PAS_tppPasso pPasso, PEC_tppPeca pPeca, DIR_tpDirecao orientacao)
+   {
+      APAR_tpCondRet condRet;
+      int ehInfinito;
+      DIR_tpDirecao direcao;
+
+      PAS_ObterDirecao(pPasso, &direcao);
+      PAS_EhInfinito(pPasso, &ehInfinito);
+   
+      DIR_DirecaoOrientadaPara(direcao, orientacao, &direcao);
+   
+      if (ehInfinito)
+      {
+         condRet = SeguirDirecaoAteNaoPoderMais(pAnalise, direcao, pPeca);
+      }
+      else
+      {
+         condRet = SeguirDirecaoEmUmaQuantidadeFixaDeVezes(pAnalise, direcao,
+            pPasso, pPeca);
+      }
+   
+      return condRet;
+   }
+   
+   
+   
+   APAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpAnalise *pAnalise,
+      DIR_tpDirecao direcao, PAS_tppPasso pPasso, PEC_tppPeca pPeca)
+   {
+      PEC_tppPeca pPecaBarreirando = NULL;
+      tpPegada *pPegAnt = NULL;
+      MPEC_tppModeloPeca pModelo;
+      MPEC_tpTipoMovimento tipo;
+      int i, quantidade;
+
+      PAS_ObterQuantidade(pPasso, &quantidade);
+
+      PEC_ObterModelo(pPeca, &pModelo);
+      MPEC_ObterTipo(pModelo, &tipo);
+
+      for (i = 0; i < quantidade && !pPecaBarreirando; i++)
+      {
+         APAR_tpCondRet condRet;
+         condRet = APAR_IrPara(pAnalise, direcao);
+         if (condRet != APAR_CondRetOK)
+         {
+            // chegou no final do tabuleiro
+            return APAR_CondRetNaoEhNo;
+         }
+   
+         if (tipo == ANDA)
+         {
+            tpCasa *pCasa;
+            TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
+            pPecaBarreirando = pCasa->pPeca;
+   
+            InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+         }
+   
+      }
+      return APAR_CondRetOK;
+   }
+   
+   
+   APAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpAnalise *pAnalise,
+      DIR_tpDirecao direcao, PEC_tppPeca pPeca)
+   {
+      tpPegada *pPegAnt = NULL;
+      PEC_tppPeca pPecaBarreirando = NULL;
+      int i;
+      MPEC_tppModeloPeca pModelo;
+      MPEC_tpTipoMovimento tipo;
+      APAR_tpCondRet condRet;
+      condRet = APAR_IrPara(pAnalise, direcao);
+      
+      PEC_ObterModelo(pPeca, &pModelo);
+      MPEC_ObterTipo(pModelo, &tipo);
+
+      while(condRet == APAR_CondRetOK && !pPecaBarreirando)
+      {
+         if (tipo == ANDA)
+         {
+            tpCasa *pCasa;
+            TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
+            pPecaBarreirando = pCasa->pPeca;
+   
+            InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+         }
+   
+         condRet = APAR_IrPara(pAnalise, direcao);
+      }
+   
+      return APAR_CondRetOK;
+   }
+   
+   
+   APAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpAnalise *pAnalise, PEC_tppPeca pPeca,
+      tpPegada *pPegAnt)
+   {
+      tpCasa *pCasaAtual;
+      tpPegada *pPegada;
+      TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaAtual);
+      
+      MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
+      pPegada->pAnterior = pPegAnt;
+      pPegada->pPeca = pPeca;
+      
+      LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
+      pPegada->pAnterior = pPegAnt;
+   
+      return APAR_CondRetOK;
    }
 
 

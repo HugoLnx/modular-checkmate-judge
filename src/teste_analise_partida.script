@@ -36,21 +36,21 @@
 =declararparm  OESTE        int 6
 =declararparm  NOROESTE     int 7
 
-//== Verificar erros nas operações inválidas quando a está matriz inexistente
-//=destruir                     NaoMatriz
-//=irPara NORTE               NaoMatriz
-//=irPara SUL                 NaoMatriz
-//=irPara ESTE                NaoMatriz
-//=irPara OESTE               NaoMatriz
-//=irPara NORDESTE            NaoMatriz
-//=irPara SUDESTE             NaoMatriz
-//=irPara SUDOESTE            NaoMatriz
-//=irPara NOROESTE            NaoMatriz
-//=ircasa       "X0"            NaoMatriz
+== Verificar erros nas operações inválidas quando a está matriz inexistente
+=destruir                     NaoMatriz
+=irPara NORTE               NaoMatriz
+=irPara SUL                 NaoMatriz
+=irPara ESTE                NaoMatriz
+=irPara OESTE               NaoMatriz
+=irPara NORDESTE            NaoMatriz
+=irPara SUDESTE             NaoMatriz
+=irPara SUDOESTE            NaoMatriz
+=irPara NOROESTE            NaoMatriz
+=ircasa       "X0"            NaoMatriz
 
-//== Verificar comando recuperar
-//=destruir OK
-//=recuperar
+== Verificar comando recuperar
+=destruir OK
+=recuperar
 
 == Verificar erro ao selecionar posicoes inexistentes na array de matrizes
 =selecionar -1
@@ -74,12 +74,18 @@
 == Inserir zorro inimigo no D4
 =inserirPeca "D4" "zorro" INIMIGA   OK
 
+== Testar inserir rei
+=inserirRei  "C5" OK
+
 == Criar tabuleiro
 =criar      OK
 
-//== Verificar pegadas do zorro
-//// pegadas com orientacao norte
-//=ircasa "E4"         OK
+== Testar ir casa rei
+=ircasarei   OK
+
+== Verificar pegadas do zorro
+// pegadas com orientacao norte
+=ircasa "E4"         OK
 //=pegadaInimiga? TRUE OK
 //
 //=ircasa "F4"         OK
@@ -155,19 +161,6 @@
 //
 //=ircasa "F2"         OK
 //=pegadaInimiga? TRUE OK
-
-//== Testar inserir rei
-//=ircasa "C5" OK
-//=inserirRei  OK
-
-//=ircasa "H8" OK
-//=pegadaInimiga? FALSE OK
-//
-//== Teste copiar tabuleiro
-//=copiarTabuleiro 1 OK
-
-//== Testar ir casa rei
-//=ircasarei   OK
 
 //== Criar tabuleiro com as peças para testes checkmate
 //=selecionar 5
@@ -282,83 +275,83 @@
 //=selecionar 5
 //=destruir OK
 //=selecionar 0
-//
+
 // Navegando por todo o tabuleiro pelo nome da casa
-//== Verificar ir para as casa pelo nome
-//=ircasa "A1"    OK
-//=ircasa "A2"    OK
-//=ircasa "A3"    OK
-//=ircasa "A4"    OK
-//=ircasa "A5"    OK
-//=ircasa "A6"    OK
-//=ircasa "A7"    OK
-//=ircasa "A8"    OK
-//=ircasa "B1"    OK
-//=ircasa "B2"    OK
-//=ircasa "B3"    OK
-//=ircasa "B4"    OK
-//=ircasa "B5"    OK
-//=ircasa "B6"    OK
-//=ircasa "B7"    OK
-//=ircasa "B8"    OK
-//=ircasa "C1"    OK
-//=ircasa "C2"    OK
-//=ircasa "C3"    OK
-//=ircasa "C4"    OK
-//=ircasa "C5"    OK
-//=ircasa "C6"    OK
-//=ircasa "C7"    OK
-//=ircasa "C8"    OK
-//=ircasa "D1"    OK
-//=ircasa "D2"    OK
-//=ircasa "D3"    OK
-//=ircasa "D4"    OK
-//=ircasa "D5"    OK
-//=ircasa "D6"    OK
-//=ircasa "D7"    OK
-//=ircasa "D8"    OK
-//=ircasa "E1"    OK
-//=ircasa "E2"    OK
-//=ircasa "E3"    OK
-//=ircasa "E4"    OK
-//=ircasa "E5"    OK
-//=ircasa "E6"    OK
-//=ircasa "E7"    OK
-//=ircasa "E8"    OK
-//=ircasa "F1"    OK
-//=ircasa "F2"    OK
-//=ircasa "F3"    OK
-//=ircasa "F4"    OK
-//=ircasa "F5"    OK
-//=ircasa "F6"    OK
-//=ircasa "F7"    OK
-//=ircasa "F8"    OK
-//=ircasa "G1"    OK
-//=ircasa "G2"    OK
-//=ircasa "G3"    OK
-//=ircasa "G4"    OK
-//=ircasa "G5"    OK
-//=ircasa "G6"    OK
-//=ircasa "G7"    OK
-//=ircasa "G8"    OK
-//=ircasa "H1"    OK
-//=ircasa "H2"    OK
-//=ircasa "H3"    OK
-//=ircasa "H4"    OK
-//=ircasa "H5"    OK
-//=ircasa "H6"    OK
-//=ircasa "H7"    OK
-//=ircasa "H8"    OK
-//=ircasa "A1"    OK
-//
-//== Verificar quando ir casa recebe um nome invalido
-//=ircasa "X0"    NaoFolha
-//
-//== Destroi a matriz
-//=destruir OK
-//
-//== Verificar erro ao destruir matriz duas vezes seguidas
-//=destruir NaoMatriz
+== Verificar ir para as casa pelo nome
+=ircasa "A1"    OK
+=ircasa "A2"    OK
+=ircasa "A3"    OK
+=ircasa "A4"    OK
+=ircasa "A5"    OK
+=ircasa "A6"    OK
+=ircasa "A7"    OK
+=ircasa "A8"    OK
+=ircasa "B1"    OK
+=ircasa "B2"    OK
+=ircasa "B3"    OK
+=ircasa "B4"    OK
+=ircasa "B5"    OK
+=ircasa "B6"    OK
+=ircasa "B7"    OK
+=ircasa "B8"    OK
+=ircasa "C1"    OK
+=ircasa "C2"    OK
+=ircasa "C3"    OK
+=ircasa "C4"    OK
+=ircasa "C5"    OK
+=ircasa "C6"    OK
+=ircasa "C7"    OK
+=ircasa "C8"    OK
+=ircasa "D1"    OK
+=ircasa "D2"    OK
+=ircasa "D3"    OK
+=ircasa "D4"    OK
+=ircasa "D5"    OK
+=ircasa "D6"    OK
+=ircasa "D7"    OK
+=ircasa "D8"    OK
+=ircasa "E1"    OK
+=ircasa "E2"    OK
+=ircasa "E3"    OK
+=ircasa "E4"    OK
+=ircasa "E5"    OK
+=ircasa "E6"    OK
+=ircasa "E7"    OK
+=ircasa "E8"    OK
+=ircasa "F1"    OK
+=ircasa "F2"    OK
+=ircasa "F3"    OK
+=ircasa "F4"    OK
+=ircasa "F5"    OK
+=ircasa "F6"    OK
+=ircasa "F7"    OK
+=ircasa "F8"    OK
+=ircasa "G1"    OK
+=ircasa "G2"    OK
+=ircasa "G3"    OK
+=ircasa "G4"    OK
+=ircasa "G5"    OK
+=ircasa "G6"    OK
+=ircasa "G7"    OK
+=ircasa "G8"    OK
+=ircasa "H1"    OK
+=ircasa "H2"    OK
+=ircasa "H3"    OK
+=ircasa "H4"    OK
+=ircasa "H5"    OK
+=ircasa "H6"    OK
+=ircasa "H7"    OK
+=ircasa "H8"    OK
+=ircasa "A1"    OK
+
+== Verificar quando ir casa recebe um nome invalido
+=ircasa "X0"    NaoFolha
+
+== Destroi a matriz
+=destruir OK
+
+== Verificar erro ao destruir matriz duas vezes seguidas
+=destruir NaoMatriz
 
 
 == finaliza script
