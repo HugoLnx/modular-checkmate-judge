@@ -106,7 +106,6 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 ***********************************************************************/
    PAR_tpCondRet PAR_DestruirPartida(PAR_tppPartida *ppPartida);
 
-
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa);
    
    PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,

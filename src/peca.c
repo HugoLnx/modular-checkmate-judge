@@ -51,7 +51,6 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
       return PEC_CondRetOK;
    }
 
-   MPEC_DestruirModeloPeca(&pPeca->pModelo);
    MEM_Free(pPeca);
 
    *ppPeca = NULL;

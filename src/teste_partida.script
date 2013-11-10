@@ -70,12 +70,10 @@
 =criarPeca  "zorro"      "[2]este [2]sudoeste [2]este"        ANDA OK
 =criarPeca  "meiavolta"  "[2]este [2]sul [2]oeste [2]norte"   ANDA OK
 =criarPeca  "touro"      "[2]norte"                           ANDA OK
-=criarPeca  "torre"      "[2]norte"                           VOA  OK
 
-
-//== Testar alteracao de peça
-//=alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
-//=alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
+== Testar alteracao de peça
+=alterarPeca "cavalo" "torre" "[2]norte"                      VOA  OK
+=alterarPeca "rainha" "peao" "[2]norte"                       VOA  PecaNaoEncontrada
 
 == Inserir torre aliado no A1
 =ircasa "A1"                   OK

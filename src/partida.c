@@ -36,7 +36,7 @@ typedef struct stPegada {
 typedef struct stCasa {
    char *nome;
    PEC_tppPeca pPeca;
-   LIS_tppLista pegadas;
+   //LIS_tppLista pegadas;
 } tpCasa;
 
 /***********************************************************************
@@ -452,7 +452,7 @@ typedef struct stCasa {
    {
       tpCasa *pCasa;
       MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
-      LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
+      //LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
       pCasa->pPeca = NULL;
       pCasa->nome = nome;
    
@@ -465,41 +465,25 @@ typedef struct stCasa {
    {
       tpCasa *pCasa = (tpCasa*) pValor;
 
-      LIS_DestruirLista(pCasa->pegadas);
+      //LIS_DestruirLista(pCasa->pegadas);
 
-      // TODO [RCS] inserir funcao exportada do modulo PECA
-      //DestruirPeca((void*) pCasa->pPeca);
+      PEC_DestruirPeca(&pCasa->pPeca);
 
       MEM_Free(pCasa);
    }
-   
-   
 
-   void DestruirPegada(void *pValor)
-   {
-      tpPegada *pPegada = (tpPegada*) pValor;
-      
-      if (pValor == NULL)
-      {
-         return;
-      }
-
-      DestruirPegada((void *) pPegada->pAnterior);
-      MEM_Free(pValor);
-   }
-
-
-   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
-   /*void DestruirPeca(void *pValor)
-   {
-      tpPeca *pPeca = (tpPeca*) pValor;
-      if (pValor == NULL)
-      {
-         return;
-      }
-
-      MEM_Free(pPeca);
-   }*/
+//   void DestruirPegada(void *pValor)
+//   {
+//      tpPegada *pPegada = (tpPegada*) pValor;
+//      
+//      if (pValor == NULL)
+//      {
+//         return;
+//      }
+//
+//      DestruirPegada((void *) pPegada->pAnterior);
+//      MEM_Free(pValor);
+//   }
 
 
    void DestruirModeloPecaGenerico(void *pValor)
