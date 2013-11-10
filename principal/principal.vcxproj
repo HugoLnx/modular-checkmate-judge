@@ -17,8 +17,10 @@
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mem_manager.c" />
+    <ClCompile Include="..\src\modelo_peca.c" />
     <ClCompile Include="..\src\partida.c" />
     <ClCompile Include="..\src\passo.c" />
+    <ClCompile Include="..\src\peca.c" />
     <ClCompile Include="..\src\tabuleiro.c" />
   </ItemGroup>
   <ItemGroup>
@@ -27,8 +29,10 @@
     <ClInclude Include="..\src\input_string_parser.h" />
     <ClInclude Include="..\src\lista.h" />
     <ClInclude Include="..\src\mem_manager.h" />
+    <ClInclude Include="..\src\modelo_peca.h" />
     <ClInclude Include="..\src\partida.h" />
     <ClInclude Include="..\src\passo.h" />
+    <ClInclude Include="..\src\peca.h" />
     <ClInclude Include="..\src\tabuleiro.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

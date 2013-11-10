@@ -24,6 +24,9 @@
     <ClCompile Include="..\src\mem_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\mem_manager\isp_main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\modelo_peca.h">

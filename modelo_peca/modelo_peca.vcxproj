@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\mem_manager\isp_main.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\mem_manager.c" />
     <ClCompile Include="..\src\modelo_peca.c" />

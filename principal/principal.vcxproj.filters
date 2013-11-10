@@ -42,6 +42,12 @@
     <ClCompile Include="..\src\passo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\peca.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\modelo_peca.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mem_manager.h">
@@ -66,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\passo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\peca.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\modelo_peca.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
