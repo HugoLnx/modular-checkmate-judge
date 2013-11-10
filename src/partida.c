@@ -18,7 +18,6 @@
 #include "tabuleiro.h"
 #include "mem_manager.h"
 #include "direcao.h"
-#include "peca.h"
 #include "passo.h"
 
 #include <string.h>
@@ -70,9 +69,7 @@ typedef struct stCasa {
 
    static tpCasa* CriarCasa();
    
-   //static void DestroiMovimento(void *pValor);
-   
-   //static void DestruirModeloPeca(void *pValor);
+   static void DestruirModeloPecaGenerico(void *pValor);
    
    //static void DestruirPeca(void *pValor);
    
@@ -178,7 +175,7 @@ typedef struct stCasa {
       MEM_Alloc(sizeof(tpPartida), (void **) &pPartida);
       if (pPartida == NULL)
       {
-         return PAR_CondRetFaltouMemoria ;
+         return PAR_CondRetFaltouMemoria;
       }
 
       pPartida->pTabuleiro = NULL;
@@ -196,8 +193,7 @@ typedef struct stCasa {
          }
       }
 
-      // TODO [RCS]
-      //LIS_CriarLista(&pPartida->pModelosPecas, DestruirModeloPeca, CompararNomeModeloPeca);
+      LIS_CriarLista(&pPartida->pModelosPecas, DestruirModeloPecaGenerico, CompararNomeModeloPeca);
 
 	  *ppPartida = pPartida;
 
@@ -255,26 +251,20 @@ typedef struct stCasa {
    //
    //   return PAR_CondRetOK;
    //}
-   //
-   //PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
-   //   LIS_tppLista pPassos, PAR_tpTipoMovimento tipoMovimento)
-   //{
-   //   tpModeloPeca *pModelo;
-   //   tpMovimento *pMovimento;
-   //   MEM_Alloc(sizeof(tpModeloPeca), (void **) &pModelo);
-   //   MEM_Alloc(sizeof(tpMovimento), (void **) &pMovimento);
-   //
-   //   pModelo->nome = nome;
-   //   pMovimento->passos = pPassos;
-   //   pMovimento->tipo = tipoMovimento;
-   //   pModelo->pMovimento = pMovimento;
-   //
-   //   LIS_IrFinalLista(pPartida->pModelosPecas);
-   //   LIS_InserirElementoApos(pPartida->pModelosPecas, pModelo);
-   //
-   //   return PAR_CondRetOK;
-   //}
-   //
+   
+   PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
+      LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
+   {
+      MPEC_tppModeloPeca pModelo;
+
+      MPEC_CriarModeloPeca(&pModelo, nome, pPassos, tipoMovimento);
+
+      LIS_IrFinalLista(pPartida->pModelosPecas);
+      LIS_InserirElementoApos(pPartida->pModelosPecas, pModelo);
+   
+      return PAR_CondRetOK;
+   }
+   
    //PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
    //   LIS_tppLista pNovosPassos, PAR_tpTipoMovimento novoTipoMovimento)
    //{
@@ -356,7 +346,6 @@ typedef struct stCasa {
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa)
    {
       TAB_tpCondRet condRet;
-      int x, y;
    
       if (pPartida == NULL)
       {
@@ -517,35 +506,11 @@ typedef struct stCasa {
    }*/
 
 
-   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
-   /*void DestruirModeloPeca(void *pValor)
+   void DestruirModeloPecaGenerico(void *pValor)
    {
-      tpModeloPeca *pModelo = (tpModeloPeca*) pValor;
-
-      if (pModelo == NULL)
-      {
-         return;
-      }
-      MEM_Free(pModelo->nome);
-      DestroiMovimento(pModelo->pMovimento);
-      MEM_Free(pModelo);
-   }*/
-
-   // TODO [RCS] deverá ser uma funcão exportada pelo módulo peca
-/*
-   void DestroiMovimento(void *pValor)
-   {
-      tpMovimento *pMovimento = (tpMovimento*) pValor;
-      LIS_DestruirLista(pMovimento->passos);
-      MEM_Free(pMovimento);
-   }*/
-
-   
-   void DestruirPasso(void *pValor)
-   {
-      MEM_Free(pValor);
+      MPEC_DestruirModeloPeca((MPEC_tppModeloPeca*) &pValor);
    }
-   
+
    int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
    {
       tpPegada *pPegada = (tpPegada*) pPonteiro1;
@@ -557,14 +522,17 @@ typedef struct stCasa {
       return 0;
    }
 
-   // TODO [RCS] pensar em como implementar linha abaixo
-   /*int CompararNomeModeloPeca(void *pValor1, void *pValor2)
+   
+   int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
-      tpModeloPeca *pModelo1 = (tpModeloPeca*) pValor1;
+      MPEC_tppModeloPeca pModelo1 = (MPEC_tppModeloPeca) pValor1;
+      char *nome;
       char *nomeProcurado = (char*) pValor2;
 
-      return strcmp(pModelo1->nome, nomeProcurado);
-   }*/
+      MPEC_RecuperarNome(pModelo1, &nome);
+
+      return strcmp(nome, nomeProcurado);
+   }
 
    
    int CompararPassos(void *pValor1, void *pValor2)

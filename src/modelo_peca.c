@@ -34,7 +34,7 @@ typedef struct MPEC_stModeloPeca {
    char *nome;
 } tpModeloPeca;
 
-MPEC_tpCondRet PEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
+MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
 {
    tpModeloPeca *pModeloPeca;
    tpMovimento *pTipoMovimento;
@@ -94,6 +94,15 @@ MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca ppModelo, char *novoNom
    pModelo->pMovimento->passos = pPassos;
    pModelo->pMovimento->tipo = novoTipoMovimento;
    
+   return MPEC_CondRetOK;
+}
+
+MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
+{
+   tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
+
+   *pNome = pModelo->nome;
+
    return MPEC_CondRetOK;
 }
 

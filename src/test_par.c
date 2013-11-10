@@ -214,36 +214,36 @@ static int iPar = 0 ;
 //               "Não foi possível ir para a casa do rei.") ;
 //
 //       }
-//
-//
-//		/* Testar PAR Criar peca*/
-//
-//		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
-//       {
-//
-//         char *nome, *passosStr;
-//         int iTipoMovimento;
-//         PAR_tpTipoMovimento tipo;
-//         LIS_tppLista pPassos;
-//         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
-//         MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
-//
-//			NumLidos = LER_LerParametros("ssii", nome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
-//         if (NumLidos != 4)
-//         {
-//            return TST_CondRetParm ;
-//         }
-//
-//         ISP_LerPassos(passosStr, &pPassos);
-//
-//         tipo = (PAR_tpTipoMovimento) iTipoMovimento;
-//			CondRetObtido = PAR_CriarPeca(Partidas[iPar], nome, pPassos, tipo);
-//
-//         return TST_CompararInt(CondRetEsperada, CondRetObtido,
-//								"Não foi possível criar a casa.");
-//
-//       }
-//
+
+
+		/* Testar PAR Criar peca*/
+
+		 else if ( strcmp( ComandoTeste , CRIAR_PECA_CMD ) == 0 )
+       {
+
+         char *nome, *passosStr;
+         int iTipoMovimento;
+         MPEC_tpTipoMovimento tipo;
+         LIS_tppLista pPassos;
+         MEM_Alloc(sizeof(char)*MAX_NOME_PECA, (void**) &nome);
+         MEM_Alloc(sizeof(char)*MAX_PASSOS_STR, (void**) &passosStr);
+
+			NumLidos = LER_LerParametros("ssii", nome, passosStr, &iTipoMovimento, &CondRetEsperada) ;
+         if (NumLidos != 4)
+         {
+            return TST_CondRetParm ;
+         }
+
+         ISP_LerPassos(passosStr, &pPassos);
+
+         tipo = (MPEC_tpTipoMovimento) iTipoMovimento;
+			CondRetObtido = PAR_CriarPeca(Partidas[iPar], nome, pPassos, tipo);
+
+         return TST_CompararInt(CondRetEsperada, CondRetObtido,
+								"Não foi possível criar a casa.");
+
+       }
+
 //       /* Testar PAR Alterar peca*/
 //
 //       else if ( strcmp( ComandoTeste , ALTERAR_PECA_CMD ) == 0 )

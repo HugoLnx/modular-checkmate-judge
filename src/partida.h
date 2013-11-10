@@ -37,6 +37,8 @@
 #include "lista.h"
 #include "direcao.h"
 #include "tabuleiro.h"
+#include "peca.h"
+#include "modelo_peca.h"
 
 typedef struct PAR_stPartida* PAR_tppPartida;
 
@@ -107,9 +109,9 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa);
    
-   //PAR_tpCondRet PAR_CriarPeca(PAR_tpPartida *pPartida, char *nome,
-   //   LIS_tppLista pPassos, PAR_tpTipoMovimento tipoMovimento);
-   //
+   PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
+      LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
+   
    //PAR_tpCondRet PAR_AlterarPeca(PAR_tpPartida *pPartida, char *nomeAtual, char* nomeNovo,
    //   LIS_tppLista pNovosPassos, PAR_tpTipoMovimento novoTipoMovimento);
    //
