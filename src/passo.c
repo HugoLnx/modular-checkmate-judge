@@ -14,11 +14,7 @@
 ***************************************************************************/
 
 #include <stdio.h>
-#include "lista.h"
-#include "tabuleiro.h"
 #include "mem_manager.h"
-#include "direcao.h"
-#include "peca.h"
 
 #include <string.h>
 
@@ -39,7 +35,7 @@
 *
 ***********************************************************************/
 
-typedef struct PAR_stPasso
+typedef struct PAS_stPasso
 {
    DIR_tpDirecao direcao;
    int quantidade;
@@ -93,6 +89,31 @@ typedef struct PAR_stPasso
       while (continuar && (pPasso->quantidade == 0 || i < pPasso->quantidade))
       {
          continuar = fazerNaDirecao(pPasso->direcao);
+      }
+
+      return PAS_CondRetOK;
+   }
+
+   
+   PAS_tpCondRet PAS_PercorrerPassos(LIS_tppLista pPassos, int (*fazerNaDirecao)(DIR_tpDirecao direcao))
+   {
+      PAS_tppPasso pPasso;
+      LIS_tpCondRet condRet = LIS_CondRetOK;
+      int estaVazia;
+
+      LIS_IrInicioLista(pPassos);
+      LIS_EstaVazia(pPassos, &estaVazia);
+      if (estaVazia)
+      {
+         return PAS_CondRetOK;
+      }
+
+      while (condRet == LIS_CondRetOK)
+      {
+         LIS_ObterValor(pPassos, (void**) &pPasso);
+         PAS_Percorrer(pPasso, fazerNaDirecao);
+
+         condRet = LIS_AvancarElementoCorrente(pPassos, 1);
       }
 
       return PAS_CondRetOK;
