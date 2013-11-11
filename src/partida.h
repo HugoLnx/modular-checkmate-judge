@@ -121,6 +121,9 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    
    PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida);
 
+
+   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char *caminho);
+
    PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca);
 
    PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char *caminho);

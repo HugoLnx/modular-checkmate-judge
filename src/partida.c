@@ -20,6 +20,7 @@
 #include "mem_manager.h"
 #include "direcao.h"
 #include "passo.h"
+#include "input_string_parser.h"
 
 #include <string.h>
 
@@ -250,15 +251,6 @@ typedef struct stCasa {
    
       return PAR_CondRetOK;
    }
-
-   PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca)
-   {
-      tpCasa *pCasa;
-      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
-      *ppPeca = pCasa->pPeca;
-
-      return PAR_CondRetOK;
-   }
    
    PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
       PEC_tpTimePeca time, PEC_tppPeca *ppPeca)
@@ -282,6 +274,15 @@ typedef struct stCasa {
    PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca)
    {
       PEC_CriarPeca(ppPeca, NULL, ALIADA);
+
+      return PAR_CondRetOK;
+   }
+
+   PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca)
+   {
+      tpCasa *pCasa;
+      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
+      *ppPeca = pCasa->pPeca;
 
       return PAR_CondRetOK;
    }
@@ -360,7 +361,7 @@ typedef struct stCasa {
             strcpy(nomeModelo,linhaASerLida);
 
             linhaASerLida = strtok(NULL, "-");
-            tipoMovimento = atoi(linhaASerLida);
+            tipoMovimento = (MPEC_tpTipoMovimento) atoi(linhaASerLida);
 
             linhaASerLida = strtok(NULL, "-");
             strcpy(passos,linhaASerLida);
@@ -383,7 +384,7 @@ typedef struct stCasa {
             strcpy(nomeCasa,linhaASerLida);
 
             linhaASerLida = strtok(NULL, "-");
-            time = atoi(linhaASerLida);
+            time = (PEC_tpTimePeca) atoi(linhaASerLida);
 
             linhaASerLida = strtok(NULL, "-");
             strcpy(nomeModelo,linhaASerLida);

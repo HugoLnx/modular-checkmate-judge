@@ -88,6 +88,7 @@ PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei)
    }
 
    return PEC_CondRetOK;
+
 }
 
 PEC_tpCondRet PEC_ObterModelo(PEC_tppPeca pPecaParm, MPEC_tppModeloPeca *ppModelo)

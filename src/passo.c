@@ -203,5 +203,4 @@ typedef struct PAS_stPasso
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-
 /********** Fim do módulo de implementação: Módulo PASSO **********/
