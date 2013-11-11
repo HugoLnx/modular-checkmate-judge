@@ -84,6 +84,8 @@
 =ircasarei   OK
 
 == Verificar pegadas do zorro
+=ircasa "H6"   FALSE OK
+
 // pegadas com orientacao norte
 =ircasa "E4"         OK
 =pegadaInimiga? TRUE OK

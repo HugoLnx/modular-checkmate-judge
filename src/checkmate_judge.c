@@ -40,15 +40,27 @@
 
    JUD_tpCondRet JUD_EhCheckmate(PAR_tppPartida pPartida, int *pResposta)
    {
+      JUD_tpCondRet condRet;
+      APAR_tppAnalise pAnalise;
+      
+      pAnalise = NULL;
+      APAR_CriarAnalise(&pAnalise, pPartida);
+
+      condRet = VerificarCheckmate(pAnalise, pResposta);
+
+      APAR_DestruirAnalise(&pAnalise);
+
+      return condRet;
+   }
+
+   JUD_tpCondRet VerificarCheckmate(APAR_tppAnalise pAnalise, int *pResposta)
+   {
       DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
          NORTE, NORDESTE, ESTE, SUDESTE,
          SUL, SUDOESTE, OESTE, NOROESTE
       };
       int i;
       int temPegadaInimiga;
-      APAR_tppAnalise pAnalise = NULL;
-      
-      APAR_CriarAnalise(&pAnalise, pPartida);
       
       APAR_IrCasaRei(pAnalise);
    

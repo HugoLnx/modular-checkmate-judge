@@ -46,92 +46,71 @@
 =inserirRei   "A1"                OK
 =ehCheckmate? FALSE               OK
 
+=removerRei                       OK
 
-//== Testar EhCheckmate? check, mas não checkmate
-//=selecionar 5
-//=copiarTabuleiro 2                OK
-//=selecionar 2
-//=ircasa "A1"                      OK
-//=inserirRei                       OK
-//=ircasa "A3"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "C1"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=criarPegadas                     OK
-//=ehCheckmate? FALSE               OK
-//=destruir                         OK
-//
-//
-//
-//== Testar EhCheckmate? rei totalmente encurralado
-//=selecionar 5
-//=copiarTabuleiro 2                OK
-//=selecionar 2
-//=ircasa "A1"                      OK
-//=inserirRei                       OK
-//=ircasa "A3"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "C1"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "C2"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=criarPegadas                     OK
-//=ehCheckmate? TRUE                OK
-//=destruir                         OK
-//
-//
-//== Testar EhCheckmate? rei se salva pois peça anda e tem outra peça na frente
-//=selecionar 5
-//=copiarTabuleiro 2                OK
-//=selecionar 2
-//=ircasa "A1"                      OK
-//=inserirRei                       OK
-//=ircasa "A5"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "E1"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "E2"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "C2"                      OK
-//=inserirPeca "peao"   ALIADA      OK
-//=criarPegadas                     OK
-//=ehCheckmate? FALSE               OK
-//=destruir                         OK
-//
-//
-//
-//== Testar EhCheckmate? rei não se salva pois aliados impedem passagem
-//=selecionar 5
-//=copiarTabuleiro 2                OK
-//=selecionar 2
-//=ircasa "A1"                      OK
-//=inserirRei                       OK
-//=ircasa "A5"                      OK
-//=inserirPeca "touro"  INIMIGA     OK
-//=ircasa "B1"                      OK
-//=inserirPeca "peao"   ALIADA      OK
-//=ircasa "B2"                      OK
-//=inserirPeca "peao"   ALIADA      OK
-//=criarPegadas                     OK
-//=ehCheckmate? TRUE                OK
-//=destruir                         OK
-//
-//
-//== Testar EhCheckmate? rei pode fugir pois a peça voa
-//=selecionar 5
-//=copiarTabuleiro 2                     OK
-//=selecionar 2
-//=criarPegadas                          OK
-//=ircasa "A1"                           OK
-//=inserirRei                            OK
-//=ircasa "A3"                           OK
-//=inserirPeca "torreAlada"  INIMIGA     OK
-//=ircasa "C1"                           OK
-//=inserirPeca "torreAlada"  INIMIGA     OK
-//=ircasa "C2"                           OK
-//=inserirPeca "torreAlada"  INIMIGA     OK
-//=ehCheckmate? FALSE                    OK
-//=destruir                              OK
+== Testar EhCheckmate? check, mas não checkmate
+=inserirRei  "A1"                      OK
+=inserirPeca "A3" "touro"  INIMIGA     OK
+=inserirPeca "C1" "touro"  INIMIGA     OK
+=ehCheckmate? FALSE                    OK
+
+=removerRei                            OK
+=removerPeca "A3"                      OK
+=removerPeca "C1"                      OK
+
+
+
+== Testar EhCheckmate? rei totalmente encurralado
+=inserirRei  "A1"                      OK
+=inserirPeca "A3" "touro"  INIMIGA     OK
+=inserirPeca "C1" "touro"  INIMIGA     OK
+=inserirPeca "C2" "touro"  INIMIGA     OK
+=ehCheckmate? TRUE                     OK
+
+=removerRei                            OK
+=removerPeca "A3"                      OK
+=removerPeca "C1"                      OK
+=removerPeca "C2"                      OK
+
+== Testar EhCheckmate? rei se salva pois peça anda e tem outra peça na frente
+=inserirRei  "A1"                      OK
+=inserirPeca "A5" "touro"  INIMIGA     OK
+=inserirPeca "E1" "touro"  INIMIGA     OK
+=inserirPeca "E2" "touro"  INIMIGA     OK
+=inserirPeca "C2" "peao"   ALIADA      OK
+=ehCheckmate? FALSE                    OK
+
+=removerRei                            OK
+=removerPeca "A5"                      OK
+=removerPeca "E1"                      OK
+=removerPeca "E2"                      OK
+=removerPeca "C2"                      OK
+
+
+== Testar EhCheckmate? rei não se salva pois aliados impedem passagem
+=inserirRei  "A1"                      OK
+=inserirPeca "A5" "touro"  INIMIGA     OK
+=inserirPeca "B1" "peao"   ALIADA      OK
+=inserirPeca "B2" "peao"   ALIADA      OK
+=ehCheckmate? TRUE                     OK
+
+=removerRei                            OK
+=removerPeca "A5"                      OK
+=removerPeca "B1"                      OK
+=removerPeca "B2"                      OK
+
+== Testar EhCheckmate? rei pode fugir pois a peça voa
+=inserirRei  "A1"                           OK
+=inserirPeca "A3" "torreAlada"  INIMIGA     OK
+=inserirPeca "C1" "torreAlada"  INIMIGA     OK
+=inserirPeca "C2" "torreAlada"  INIMIGA     OK
+=ehCheckmate? FALSE                         OK
+
+
+=removerRei                            OK
+=removerPeca "A3"                      OK
+=removerPeca "C1"                      OK
+=removerPeca "C2"                      OK
 
 == finaliza script
 =fim

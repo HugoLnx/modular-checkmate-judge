@@ -137,7 +137,7 @@ typedef struct stCasa {
       
       condRet = PEC_ObterTime(pCasa->pPeca, &time);
       
-      *pResposta = condRet == PEC_CondRetOK && time == ALIADA;
+      *pResposta = (condRet != PEC_CondRetOK || time == INIMIGA);
 
       return APAR_CondRetOK;
    }
