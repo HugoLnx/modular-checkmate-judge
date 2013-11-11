@@ -7,13 +7,10 @@
 //
 
 == Declarar as condicoes de retorno
-=declararparm  OK                     int 0
-=declararparm  NaoOrigem              int 1 
-=declararparm  NaoFolha               int 2
-=declararparm  NaoMatriz              int 3
-=declararparm  NaoCorr                int 4
-=declararparm  Memoria                int 5
-=declararparm  PecaNaoEncontrada      int 6
+=declararparm  OK                     int 0 
+=declararparm  NaoCasa                int 1
+=declararparm  NaoAnalise             int 2
+=declararparm  Memoria                int 3
 
 == Declarar os conteúdos dos nós
 =declararparm  ValorErro    int -1
@@ -37,16 +34,16 @@
 =declararparm  NOROESTE     int 7
 
 == Verificar erros nas operações inválidas quando a está matriz inexistente
-=destruir                     NaoMatriz
-=irPara NORTE               NaoMatriz
-=irPara SUL                 NaoMatriz
-=irPara ESTE                NaoMatriz
-=irPara OESTE               NaoMatriz
-=irPara NORDESTE            NaoMatriz
-=irPara SUDESTE             NaoMatriz
-=irPara SUDOESTE            NaoMatriz
-=irPara NOROESTE            NaoMatriz
-=ircasa       "X0"            NaoMatriz
+=destruir                     NaoAnalise
+=irPara NORTE               NaoAnalise
+=irPara SUL                 NaoAnalise
+=irPara ESTE                NaoAnalise
+=irPara OESTE               NaoAnalise
+=irPara NORDESTE            NaoAnalise
+=irPara SUDESTE             NaoAnalise
+=irPara SUDOESTE            NaoAnalise
+=irPara NOROESTE            NaoAnalise
+=ircasa       "X0"            NaoAnalise
 
 == Verificar comando recuperar
 =destruir OK
@@ -347,13 +344,13 @@
 =ircasa "A1"    OK
 
 == Verificar quando ir casa recebe um nome invalido
-=ircasa "X0"    NaoFolha
+=ircasa "X0"    NaoCasa
 
 == Destroi a matriz
 =destruir OK
 
 == Verificar erro ao destruir matriz duas vezes seguidas
-=destruir NaoMatriz
+=destruir NaoAnalise
 
 
 == finaliza script
