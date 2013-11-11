@@ -1,65 +1,64 @@
+
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              ANALISE_PARTIDA.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: APAR  Analise Partida
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              analise_partida.h
+*  Letras identificadoras:      APAR
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Marcação sobre as casas que as peças podem chegar
 *
 ***************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
+
 #include "lista.h"
 #include "tabuleiro.h"
 #include "mem_manager.h"
-#include "direcao.h"
 #include "passo.h"
-
-#include <string.h>
 
 #define ANALISE_PARTIDA_OWN
 #include "analise_partida.h"
 #undef ANALISE_PARTIDA_OWN
 
+
+/***********************************************************************
+*  Tipo de dados: APAR Indica que peça pode chegar na casa
+***********************************************************************/
 typedef struct stPegada {
    PEC_tppPeca pPeca;
    struct stPegada *pAnterior;
 } tpPegada;
 
+
+/***********************************************************************
+*  Tipo de dados: APAR Casa do tabuleiro
+***********************************************************************/
 typedef struct stCasa {
    char *nome;
    PEC_tppPeca pPeca;
    LIS_tppLista pegadas;
 } tpCasa;
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
-*
-*
-*  $ED Descrição do tipo
-*     A cabeça da matriz é o ponto de acesso para uma determinada matriz.
-*     Por intermédio da referência para o nó corrente e do ponteiro
-*     pai pode-se navegar a matriz sem necessitar de uma pilha.
-*
-***********************************************************************/
 
+/***********************************************************************
+*  Tipo de dados: APAR Estrutura da Analise da Partida
+***********************************************************************/
    typedef struct APAR_stAnalise {
          TAB_tppTabuleiro pTabuleiro;
          tpCasa *pCasaRei;
    } tpAnalise;
 
-   typedef struct APAR_stAnalise* APAR_tppAnalise;
-
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
-   static tpCasa* CriarCasa(char *nome, PEC_tppPeca pPeca);
+   static APAR_tpCondRet CriarCasa(char *nome, PEC_tppPeca pPeca, tpCasa** ppCasa);
 
    static void DestruirModeloPecaGenerico(void *pValor);
    
@@ -97,6 +96,10 @@ typedef struct stCasa {
    
 /*****  Código das funções exportadas pelo módulo  *****/
 
+   
+/***************************************************************************
+*  Função: APAR Alguma pegada inimiga?
+*  ****/
    APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta)
    {
       tpCasa *pCasa;
@@ -126,7 +129,9 @@ typedef struct stCasa {
    }
 
 
-
+/***************************************************************************
+*  Função: APAR Rei pode mover para corrente?
+*  ****/
    APAR_tpCondRet APAR_ReiPodeMoverParaCorrente(APAR_tppAnalise pAnalise, int *pResposta)
    {
       tpCasa *pCasa;
@@ -144,29 +149,17 @@ typedef struct stCasa {
 
 
    
-/***********************************************************************
-*
-*  $FC Função: TAB Criar analise_partida
-*
-*  $ED Descrição da função
-*     Cria uma nova matriz vazia.
-*     Caso já exista uma matriz, esta será destruída.
-*
-*  $FV Valor retornado
-*     APAR_CondRetOK
-*     APAR_CondRetFaltouMemoria
-*
-***********************************************************************/
+
+/***************************************************************************
+*  Função: APAR Criar análise
+*  ****/
    APAR_tpCondRet APAR_CriarAnalise(APAR_tppAnalise *ppAnalise, PAR_tppPartida pPartida)
    {
-	  tpAnalise *pAnalise;
-     int x, y;
+      APAR_tpCondRet condRet;
+      tpAnalise *pAnalise;
+      int x, y;
+      TAB_tpCondRet tabCondRet;
 
-      if (ppAnalise != NULL && *ppAnalise != NULL)
-      {
-         APAR_DestruirAnalise(ppAnalise);
-      }
-	  
       MEM_Alloc(sizeof(tpAnalise), (void **) &pAnalise);
       if (pAnalise == NULL)
       {
@@ -176,7 +169,11 @@ typedef struct stCasa {
       pAnalise->pTabuleiro = NULL;
       pAnalise->pCasaRei = NULL;
 
-      TAB_CriarTabuleiro(&pAnalise->pTabuleiro, DestruirCasa);
+      tabCondRet = TAB_CriarTabuleiro(&pAnalise->pTabuleiro, DestruirCasa);
+      if (tabCondRet == TAB_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
 
       for (x = 0; x < LARGURA; x++)
       {
@@ -184,15 +181,39 @@ typedef struct stCasa {
          {
             tpCasa *pCasa;
             PEC_tppPeca pPeca;
+            PAR_tpCondRet parCondRet;
             char *nomeCasa;
             int ehRei;
-            TAB_NomeDaCasa(x, y, &nomeCasa);
 
-            PAR_IrCasa(pPartida, nomeCasa);
-            TAB_IrCasa(pAnalise->pTabuleiro, nomeCasa);
-            PAR_ObterPeca(pPartida, &pPeca);
+            tabCondRet = TAB_NomeDaCasa(x, y, &nomeCasa);
+            if (tabCondRet == TAB_CondRetFaltouMemoria)
+            {
+               return APAR_CondRetFaltouMemoria;
+            }
 
-            pCasa = CriarCasa(nomeCasa, pPeca);
+            parCondRet = PAR_IrCasa(pPartida, nomeCasa);
+            if (parCondRet != PAR_CondRetOK)
+            {
+               return APAR_CondRetNaoEhCasa;
+            }
+
+            tabCondRet = TAB_IrCasa(pAnalise->pTabuleiro, nomeCasa);
+            if (tabCondRet != TAB_CondRetOK)
+            {
+               return APAR_CondRetNaoEhCasa;
+            }
+            
+            parCondRet = PAR_ObterPeca(pPartida, &pPeca);
+            if (parCondRet != PAR_CondRetOK)
+            {
+               return APAR_CondRetNaoEhCasa;
+            }
+
+            condRet = CriarCasa(nomeCasa, pPeca, &pCasa);
+            if (condRet == APAR_CondRetFaltouMemoria)
+            {
+               return APAR_CondRetFaltouMemoria;
+            }
 
             PEC_EhORei(pPeca, &ehRei);
 
@@ -205,16 +226,20 @@ typedef struct stCasa {
          }
       }
 
-      CriarPegadas(pAnalise);
+      condRet = CriarPegadas(pAnalise);
+      if (condRet == APAR_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
 
 	  *ppAnalise = pAnalise;
 
       return APAR_CondRetOK;
    }
 
+
 /***************************************************************************
-*
-*  Função: MAT Destruir analise_partida
+*  Função: APAR Destruir análise
 *  ****/
    APAR_tpCondRet APAR_DestruirAnalise(tpAnalise **ppAnalise)
    {
@@ -222,7 +247,7 @@ typedef struct stCasa {
       
 		if (ppAnalise == NULL || *ppAnalise == NULL)
 		{
-			return APAR_CondRetMatrizNaoExiste ;
+			return APAR_CondRetAnaliseNaoExiste ;
 		}
       
 		pAnalise = *ppAnalise;
@@ -240,18 +265,22 @@ typedef struct stCasa {
    
       if (pAnalise == NULL)
       {
-         return APAR_CondRetMatrizNaoExiste;
+         return APAR_CondRetAnaliseNaoExiste;
       }
       
       condRet = TAB_IrCasa(pAnalise->pTabuleiro, nomeCasa);
       if (condRet != TAB_CondRetOK)
       {
-         return APAR_CondRetNaoEhNo;
+         return APAR_CondRetNaoEhCasa;
       }
    
       return APAR_CondRetOK;
    }
-   
+ 
+
+/***************************************************************************
+*  Função: APAR Ir casa para do rei
+*  ****/
    APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise)
    {
       APAR_IrCasa(pAnalise, pAnalise->pCasaRei->nome);
@@ -260,21 +289,24 @@ typedef struct stCasa {
    }
    
    
-   
+
+/***************************************************************************
+*  Função: APAR Ir para
+*  ****/
    APAR_tpCondRet APAR_IrPara(APAR_tppAnalise pAnalise , DIR_tpDirecao direcao)
    {
       TAB_tpCondRet condRet;
    
      if (pAnalise == NULL)
      {
-        return APAR_CondRetMatrizNaoExiste ;
+        return APAR_CondRetAnaliseNaoExiste ;
      }
    
      condRet = TAB_IrPara(pAnalise->pTabuleiro, direcao);
      
      if (condRet != TAB_CondRetOK)
      {
-        return APAR_CondRetNaoEhNo;
+        return APAR_CondRetNaoEhCasa;
      }
    
 	  return APAR_CondRetOK ;
@@ -283,18 +315,45 @@ typedef struct stCasa {
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-   tpCasa* CriarCasa(char *nome, PEC_tppPeca pPeca)
+/***********************************************************************
+*
+*  Função: APAR Criar casa
+*
+*  Descrição:
+*    Aloca espaço e atribui valores para uma instância de stCasa.
+*
+***********************************************************************/
+   APAR_tpCondRet CriarCasa(char *nome, PEC_tppPeca pPeca, tpCasa **ppCasa)
    {
       tpCasa *pCasa;
+      LIS_tpCondRet lisCondRet;
       MEM_Alloc(sizeof(tpCasa), (void **) &pCasa);
+      if (pCasa == NULL)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
+
       pCasa->pegadas = NULL;
-      LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
+      lisCondRet = LIS_CriarLista(&pCasa->pegadas, DestruirPegada, CompararPegadas);
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       pCasa->pPeca = pPeca;
       pCasa->nome = nome;
    
-      return pCasa;
+      *ppCasa = pCasa;
+      return APAR_CondRetOK;
    }
 
+/***********************************************************************
+*
+*  Função: APAR Destruir Casa
+*
+*  Descrição:
+*    Libera o espaço da estrutura casa e das estruturas que a compõe.
+*
+***********************************************************************/
    void DestruirCasa(void *pValor)
    {
       tpCasa *pCasa = (tpCasa*) pValor;
@@ -306,37 +365,62 @@ typedef struct stCasa {
       MEM_Free(pCasa);
    }
 
+/***********************************************************************
+*
+*  Função: APAR Destruir pegada
+*
+*  Descrição:
+*    Libera espaço da estrutura da pegada.
+*
+***********************************************************************/
    void DestruirPegada(void *pValor)
    {
-      tpPegada *pPegada = (tpPegada*) pValor;
-      
-      if (pValor == NULL)
-      {
-         return;
-      }
-
-      DestruirPegada((void *) pPegada->pAnterior);
       MEM_Free(pValor);
    }
 
 
+/***********************************************************************
+*
+*  Função: APAR Destruir modelo peca generico
+*
+*  Descrição:
+*    Função genérica que tem como objetivo ser utilizada em alguma
+*    estrutura de dados como lista, grafo, etc.
+*    Ela utiliza o módulo MPEC para destruir um modelo de peça.
+*
+***********************************************************************/
    void DestruirModeloPecaGenerico(void *pValor)
    {
       MPEC_DestruirModeloPeca((MPEC_tppModeloPeca*) &pValor);
    }
 
+/***********************************************************************
+*
+*  Função: APAR Comparar pegadas
+*
+*  Descrição:
+*    Função genérica que tem como objetivo ser utilizada em alguma
+*    estrutura de dados como lista, grafo, etc.
+*    Ela compara dois ponteiros de pegadas.
+*
+***********************************************************************/
    int CompararPegadas(void *pPonteiro1, void *pPonteiro2)
    {
-      tpPegada *pPegada = (tpPegada*) pPonteiro1;
-      // TODO [RCS] PER_CriarPeca
-      //tpPeca *pPeca = (tpPeca*) pPonteiro2;
-   
-      // TODO [RCS] pensar em como implementar linha abaixo
-      //return strcmp(pPegada->pPeca->pModelo->nome, pPeca->pModelo->nome);
-      return 0;
+      return pPonteiro1 == pPonteiro2;
    }
 
-   
+
+/***********************************************************************
+*
+*  Função: APAR Comparar nome do modelo de peça
+*
+*  Descrição:
+*    Função genérica que tem como objetivo ser utilizada em alguma
+*    estrutura de dados como lista, grafo, etc.
+*    Ela compara o nome de um modelo de peça com uma string. É útil
+*    na lista, para buscar um modelo de peça pelo seu nome.
+*
+***********************************************************************/
    int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
       MPEC_tppModeloPeca pModelo1 = (MPEC_tppModeloPeca) pValor1;
@@ -348,10 +432,20 @@ typedef struct stCasa {
       return strcmp(nome, nomeProcurado);
    }
 
-   
+
+/***********************************************************************
+*
+*  Função: APAR Criar pegadas
+*
+*  Descrição:
+*    Navega pelas casas adicionando pegadas nas casas que têm alguma
+*    peça podendo se mover para ela.
+*
+***********************************************************************/
    APAR_tpCondRet CriarPegadas(APAR_tppAnalise pAnalise)
    {
       tpCasa *pCasaOriginal;
+      APAR_tpCondRet condRet;
       int x, y;
    
       TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaOriginal);
@@ -370,7 +464,12 @@ typedef struct stCasa {
             PEC_EhORei(pCasa->pPeca, &ehRei);
             if (!ehRei)
             {
-               IterarPelasCasasDeAlcanceDaPeca(pAnalise, pCasa);
+               condRet = IterarPelasCasasDeAlcanceDaPeca(pAnalise, pCasa);
+               if (condRet == APAR_CondRetFaltouMemoria)
+               {
+                  APAR_IrCasa(pAnalise, pCasaOriginal->nome);
+                  return APAR_CondRetFaltouMemoria;
+               }
             }
          }
       }
@@ -381,10 +480,19 @@ typedef struct stCasa {
    }
    
    
-   
+/***********************************************************************
+*
+*  Função: APAR Iterar pelas casas de alcance da peça
+*
+*  Descrição:
+*    Itera por todas as casas que a peça pode se mover, inserindo
+*    as pegadas.
+*
+***********************************************************************/
    APAR_tpCondRet IterarPelasCasasDeAlcanceDaPeca(tpAnalise *pAnalise,
       tpCasa *pCasa)
    {
+      APAR_tpCondRet condRet;
       MPEC_tppModeloPeca pModelo;
       LIS_tppLista pPassos;
       int estaVazia;
@@ -399,20 +507,49 @@ typedef struct stCasa {
          return APAR_CondRetOK;
       }
    
-      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, NORTE);
+      condRet = SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, NORTE);
+      if (condRet == APAR_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       APAR_IrCasa(pAnalise, pCasa->nome);
-      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, ESTE );
+      
+      condRet = SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, ESTE);
+      if (condRet == APAR_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       APAR_IrCasa(pAnalise, pCasa->nome);
-      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, SUL  );
+      
+      condRet = SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, SUL);
+      if (condRet == APAR_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       APAR_IrCasa(pAnalise, pCasa->nome);
-      SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, OESTE);
-   
+      
+      condRet = SeguirPassosDaPeca(pAnalise, pModelo, pCasa->pPeca, OESTE);
+      if (condRet == APAR_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
+
       return APAR_CondRetOK;
    }
-   
+
+/***********************************************************************
+*
+*  Função: APAR Seguir passos da peça
+*
+*  Descrição:
+*    Navega pelas casas baseado na lista de passos de uma determinada peça
+*    e em uma direção de orientação.
+*
+***********************************************************************/
    APAR_tpCondRet SeguirPassosDaPeca(tpAnalise *pAnalise, MPEC_tppModeloPeca pModelo,
       PEC_tppPeca pPeca, DIR_tpDirecao orientacao)
    {
+      APAR_tpCondRet condRet;
       MPEC_tpTipoMovimento tipo;
       LIS_tppLista pPassos;
       APAR_tpCondRet tabCondRet;
@@ -439,13 +576,26 @@ typedef struct stCasa {
    
       if (tipo == VOA && tabCondRet == APAR_CondRetOK)
       {
-         InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, NULL);
+         condRet = InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, NULL);
+         if (condRet == APAR_CondRetFaltouMemoria)
+         {
+            return APAR_CondRetFaltouMemoria;
+         }
       }
    
       return APAR_CondRetOK;
    
    }
-   
+
+/***********************************************************************
+*
+*  Função: APAR Seguir passo da peça
+*
+*  Descrição:
+*    Navega pelas casas baseado em um passo de uma determinada lista de
+*    passos e em uma direção de orientação.
+*
+***********************************************************************/
    APAR_tpCondRet SeguirPassoDaPeca(tpAnalise *pAnalise,
       PAS_tppPasso pPasso, PEC_tppPeca pPeca, DIR_tpDirecao orientacao)
    {
@@ -472,7 +622,15 @@ typedef struct stCasa {
    }
    
    
-   
+/***********************************************************************
+*
+*  Função: APAR Seguir direção em uma quantidade fixa de vezes
+*
+*  Descrição:
+*    Navega pelas casas seguindo uma direção em uma quantidade fixa
+*    de vezes.
+*
+***********************************************************************/
    APAR_tpCondRet SeguirDirecaoEmUmaQuantidadeFixaDeVezes(tpAnalise *pAnalise,
       DIR_tpDirecao direcao, PAS_tppPasso pPasso, PEC_tppPeca pPeca)
    {
@@ -494,7 +652,7 @@ typedef struct stCasa {
          if (condRet != APAR_CondRetOK)
          {
             // chegou no final do tabuleiro
-            return APAR_CondRetNaoEhNo;
+            return APAR_CondRetNaoEhCasa;
          }
    
          if (tipo == ANDA)
@@ -503,14 +661,26 @@ typedef struct stCasa {
             TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
             pPecaBarreirando = pCasa->pPeca;
    
-            InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+            condRet = InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+            if (condRet == APAR_CondRetFaltouMemoria)
+            {
+               return APAR_CondRetFaltouMemoria;
+            }
          }
    
       }
       return APAR_CondRetOK;
    }
    
-   
+/***********************************************************************
+*
+*  Função: APAR Seguir direção até não poder mais
+*
+*  Descrição:
+*    Navega pelas casas seguindo uma direção até encontrar com uma peça
+*    ou com a borda do tabuleiro.
+*
+***********************************************************************/
    APAR_tpCondRet SeguirDirecaoAteNaoPoderMais(tpAnalise *pAnalise,
       DIR_tpDirecao direcao, PEC_tppPeca pPeca)
    {
@@ -532,7 +702,11 @@ typedef struct stCasa {
             TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasa);
             pPecaBarreirando = pCasa->pPeca;
    
-            InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+            condRet = InserirPegadaDaPecaNaCasaAtual(pAnalise, pPeca, pPegAnt);
+            if (condRet == APAR_CondRetFaltouMemoria)
+            {
+               return APAR_CondRetFaltouMemoria;
+            }
          }
    
          condRet = APAR_IrPara(pAnalise, direcao);
@@ -541,23 +715,40 @@ typedef struct stCasa {
       return APAR_CondRetOK;
    }
    
-   
+
+/***********************************************************************
+*
+*  Função: APAR Inserir pegada da peça na casa atual
+*
+*  Descrição:
+*    Cria e insere uma pegada de uma determinada peça na casa corrente.
+*
+***********************************************************************/
    APAR_tpCondRet InserirPegadaDaPecaNaCasaAtual(tpAnalise *pAnalise, PEC_tppPeca pPeca,
       tpPegada *pPegAnt)
    {
       tpCasa *pCasaAtual;
+      LIS_tpCondRet lisCondRet;
       tpPegada *pPegada;
       TAB_ObterValor(pAnalise->pTabuleiro, (void **) &pCasaAtual);
       
       MEM_Alloc(sizeof(tpPegada), (void **) &pPegada);
+      if (pPegada == NULL)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       pPegada->pAnterior = pPegAnt;
       pPegada->pPeca = pPeca;
       
-      LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
+      lisCondRet = LIS_InserirElementoApos(pCasaAtual->pegadas, pPegada);
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return APAR_CondRetFaltouMemoria;
+      }
       pPegada->pAnterior = pPegAnt;
    
       return APAR_CondRetOK;
    }
 
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: APAR Analise Partida **********/

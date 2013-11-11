@@ -77,18 +77,12 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 
 
    PAR_tpCondRet PAR_CriarPartida(PAR_tppPartida *ppPartida);
-
-   //PAR_tpCondRet PAR_AlgumaPegadaInimiga(PAR_tpPartida *pPartida, int *pResposta);
    
    PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida);
    
    PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida);
    
    PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida);
-   //
-   //PAR_tpCondRet PAR_EhCheckmate(PAR_tpPartida *pPartida, int *pResposta);
-   //
-   //PAR_tpCondRet PAR_CriarPegadas(PAR_tpPartida *pPartida);
 
 /***********************************************************************
 *
@@ -110,7 +104,35 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    PAR_tpCondRet PAR_DestruirPartida(PAR_tppPartida *ppPartida);
 
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa);
+
    
+/***********************************************************************
+*
+*  Função: PAR Criar peca
+*
+*  Descrição
+*     Cria uma peça para ser inserida posteriormente em uma casa.
+*
+*  Parâmetros
+*     pPartida       - Partida que será usada como base.
+*     nome           - Nome da peça que está sendo criada.
+*     pPassos        - Lista de passos que a peça seguirá.
+*     tipoMovimento  - Tipo de movimento da peça.
+*
+*  Condições de retorno
+*     PAR_CondRetOK
+*     PAR_CondRetNaoExisteAnalise
+*     PAR_CondRetPecaJaExiste
+*
+*  Assertivas de entrada
+*     - pPartida aponta para uma Partida válida.
+*     - nome é uma string válida.
+*     - Valem as assertivas estruturais da lista para pPassos.
+*
+*  Assertivas de saida
+*     A organização do tabuleiro da partida permanece a mesma.
+*
+***********************************************************************/
    PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
    
