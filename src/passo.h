@@ -74,9 +74,12 @@ typedef struct PAS_stPasso* PAS_tppPasso;
    PAS_tpCondRet PAS_CompararPassos(PAS_tppPasso pPasso1, PAS_tppPasso pPasso2, int *pResposta);
    PAS_tpCondRet PAS_Percorrer(PAS_tppPasso pPasso, int (*FazerNaDirecao)(DIR_tpDirecao direcao));
    PAS_tpCondRet PAS_PercorrerPassos(LIS_tppLista pPassos, int (*fazerNaDirecao)(DIR_tpDirecao direcao));
+
    PAS_tpCondRet PAS_ObterQuantidade(PAS_tppPasso pPassoParm, int *pQuantidade);
    PAS_tpCondRet PAS_ObterDirecao(PAS_tppPasso pPassoParm, DIR_tpDirecao *pDirecao);
    PAS_tpCondRet PAS_EhInfinito(PAS_tppPasso pPassoParm, int *pEhInfinito);
+
+   PAS_tpCondRet PAS_Salvar(LIS_tppLista ppPassos, FILE* pFile);
 
 #undef PASSO_EXT
 

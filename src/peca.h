@@ -70,10 +70,12 @@ typedef struct PEC_stPeca* PEC_tppPeca;
 PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, MPEC_tppModeloPeca pModelo, PEC_tpTimePeca time);
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
 PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo);
+
 PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei);
 PEC_tpCondRet PEC_ObterModelo(PEC_tppPeca pPecaParm, MPEC_tppModeloPeca *ppModelo);
 PEC_tpCondRet PEC_ObterTime(PEC_tppPeca pPecaParm, PEC_tpTimePeca *pTime);
 
+PEC_tpCondRet PEC_SalvarPeca(PEC_tppPeca ppPeca,FILE* pFile);
 #undef PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

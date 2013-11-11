@@ -14,6 +14,7 @@
 ***************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "lista.h"
 #include "tabuleiro.h"
 #include "mem_manager.h"
@@ -51,7 +52,8 @@ typedef struct stCasa {
 
    typedef struct PAR_stPartida* PAR_tppPartida;
 
-
+   static FILE *pFile;
+   static char *pCaminho;
 /***** Protótipos das funções encapuladas no módulo *****/
 
    static int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome);
@@ -68,6 +70,8 @@ typedef struct stCasa {
    
    static PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
       PEC_tpTimePeca time, PEC_tppPeca *ppPeca);
+
+   static int SalvaCasas(char *nome, void* pValor);
 
 /*****  Código das funções exportadas pelo módulo  *****/
    
@@ -221,8 +225,6 @@ typedef struct stCasa {
    
       return PAR_CondRetOK;
    }
-   
-   
 
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa)
    {
@@ -257,6 +259,140 @@ typedef struct stCasa {
 
       return PAR_CondRetOK;
    }
+   
+   PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
+      PEC_tpTimePeca time, PEC_tppPeca *ppPeca)
+   {
+      MPEC_tppModeloPeca pModelo;
+      LIS_tpCondRet lisCondRet;
+
+      LIS_IrInicioLista(pPartida->pModelosPecas);
+      lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nome);
+      if(lisCondRet != LIS_CondRetOK)
+      {
+         return PAR_CondRetPecaNaoEncontrada;
+      }
+      LIS_ObterValor(pPartida->pModelosPecas, (void**) &pModelo);
+
+      PEC_CriarPeca(ppPeca, pModelo, time);
+
+      return PAR_CondRetOK;
+   }
+
+   PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca)
+   {
+      PEC_CriarPeca(ppPeca, NULL, ALIADA);
+
+      return PAR_CondRetOK;
+   }
+
+   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char* caminho)
+   {
+      tpPartida *pPartida = (tpPartida *) ppPartida;
+      tpCasa *pCasa;
+      int numElementos;
+      MPEC_tppModeloPeca *pModeloPeca;
+
+      pCaminho = caminho;
+
+      pFile = fopen(caminho,"w");
+
+      if(pFile == NULL)
+         return PAR_CondRetCaminhoErrado;
+
+      fputs("ListaModeloPecas\n",pFile);
+
+      MPEC_SalvarLista(pPartida->pModelosPecas,pFile);
+
+      fputs("\nTabuleiro",pFile);
+
+      fclose(pFile);
+
+      TAB_PercorrerCasas(ppPartida->pTabuleiro, SalvaCasas);
+
+      return PAR_CondRetOK;
+   }
+   
+   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char* caminho)
+   {
+      char *line;
+      int ehTabuleiro = -1;
+      pCaminho = caminho;
+
+      PAR_CriarPartida(&ppPartida);
+
+      pFile = fopen(pCaminho,"r");
+
+      if(pFile == NULL)
+         return PAR_CondRetCaminhoErrado;
+
+      MEM_Alloc(sizeof(char)*200,(void**)&line);
+
+      while(fgets(line,199,pFile) != NULL)
+      {
+         char *linhaASerLida;
+         MEM_Alloc(sizeof(char)*200,(void**)&linhaASerLida);
+         sscanf(line,"%s",linhaASerLida);
+
+         if(strcmp(linhaASerLida,"ListaModeloPecas") == 0)
+         {
+            ehTabuleiro = 0;
+            continue;
+         }
+
+         if(strcmp(linhaASerLida,"Tabuleiro") == 0)
+         {
+            ehTabuleiro = 1;
+            continue;
+         }
+
+         if(ehTabuleiro == 0)
+         {
+            MPEC_tppModeloPeca ppModeloPeca;
+            LIS_tppLista pPassos;
+            char *nomeModelo, *passos;
+            MPEC_tpTipoMovimento tipoMovimento;
+
+            MEM_Alloc(sizeof(char)*200,(void**)&nomeModelo);
+            MEM_Alloc(sizeof(char)*200,(void**)&passos);
+
+            linhaASerLida = strtok(line, "-");
+            strcpy(nomeModelo,linhaASerLida);
+
+            linhaASerLida = strtok(NULL, "-");
+            tipoMovimento = atoi(linhaASerLida);
+
+            linhaASerLida = strtok(NULL, "-");
+            strcpy(passos,linhaASerLida);
+
+            ISP_LerPassos(passos,&pPassos);
+
+            PAR_CriarPeca(ppPartida,nomeModelo,pPassos,tipoMovimento);
+         }
+         else
+         {
+            MPEC_tppModeloPeca ppModeloPeca;
+            LIS_tppLista pPassos;
+            PEC_tpTimePeca time;
+            char *nomeCasa, *nomeModelo;
+
+            MEM_Alloc(sizeof(char)*200,(void**)&nomeCasa);
+            MEM_Alloc(sizeof(char)*200,(void**)&nomeModelo);
+
+            linhaASerLida = strtok(line, "-");
+            strcpy(nomeCasa,linhaASerLida);
+
+            linhaASerLida = strtok(NULL, "-");
+            time = atoi(linhaASerLida);
+
+            linhaASerLida = strtok(NULL, "-");
+            strcpy(nomeModelo,linhaASerLida);
+
+            PAR_IrCasa(ppPartida,nomeCasa);
+            PAR_InserirPeca(ppPartida,nomeModelo,time);
+         }
+      }
+   }
 
 /*****  Código das funções encapsuladas no módulo  *****/
    int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome)
@@ -276,7 +412,32 @@ typedef struct stCasa {
       return pCasa;
    }
 
+   int SalvaCasas(TAB_tppTabuleiro pTabuleiro, char *pNome)
+   {
+      if(pTabuleiro != NULL)
+      {
+         FILE *fp;
+         char *destino;
+         tpCasa *pCasa;
 
+         TAB_ObterValor(pTabuleiro,(void**)&pCasa);
+
+         if(pCasa != NULL && pCasa->pPeca != NULL)
+         {
+            MEM_Alloc(sizeof(char)*200,(void**)&destino);
+
+            fp = fopen(pCaminho,"a");
+
+            sprintf(destino,"\n%s-",pCasa->nome);
+            fputs(destino,fp);
+
+            PEC_SalvarPeca(pCasa->pPeca,fp);
+
+            fclose(fp);
+         }
+         return 1;
+      }
+   }
 
    void DestruirCasa(void *pValor)
    {
@@ -286,7 +447,6 @@ typedef struct stCasa {
 
       MEM_Free(pCasa);
    }
-
 
    void DestruirModeloPecaGenerico(void *pValor)
    {
@@ -303,32 +463,7 @@ typedef struct stCasa {
 
       return strcmp(nome, nomeProcurado);
    }
-   
-   PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
-      PEC_tpTimePeca time, PEC_tppPeca *ppPeca)
-   {
-      MPEC_tppModeloPeca pModelo;
-      LIS_tpCondRet lisCondRet;
-      
-      LIS_IrInicioLista(pPartida->pModelosPecas);
-      lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nome);
-      if(lisCondRet != LIS_CondRetOK)
-      {
-         return PAR_CondRetPecaNaoEncontrada;
-      }
-      LIS_ObterValor(pPartida->pModelosPecas, (void**) &pModelo);
-      
-      PEC_CriarPeca(ppPeca, pModelo, time);
-   
-      return PAR_CondRetOK;
-   }
-   
-   
-   PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca)
-   {
-      PEC_CriarPeca(ppPeca, NULL, ALIADA);
-   
-      return PAR_CondRetOK;
-   }
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/***** FIM do código das funções encapsuladas no módulo  *****/   
+
+/********** Fim do módulo de implementação: Módulo partida **********/

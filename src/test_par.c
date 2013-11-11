@@ -64,6 +64,8 @@
 #define     PEGADA_INIMIGA_CMD "=pegadaInimiga?"
 #define     EH_CHECKMATE_CMD   "=ehCheckmate?"
 #define     CRIAR_PEG_CMD      "=criarPegadas"
+#define     SALVAR_PAR_CMD      "=salvarPartida"
+#define     CARREGAR_PAR_CMD    "=carregarPartida"
 
 #define     FIM_CMD         "=fim"
 
@@ -473,7 +475,37 @@ static int iPar = 0 ;
 
          }
 
+       /* Testar salvar casas */
 
+         else if ( strcmp( ComandoTeste , SALVAR_PAR_CMD) == 0 )
+         {
+            NumLidos = LER_LerParametros( "ii", &iPar, &CondRetEsperada) ;
+            if ( NumLidos != 2 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = PAR_Salvar(Partidas[iPar],"save1.txt");
+
+            return TST_CompararInt(CondRetObtido,CondRetEsperada,"Nao foi possivel salvar partida");
+
+         }
+
+         /* Testar carregar casas */
+
+         else if ( strcmp( ComandoTeste , CARREGAR_PAR_CMD) == 0 )
+         {
+            NumLidos = LER_LerParametros( "ii", &iPar, &CondRetEsperada) ;
+            if ( NumLidos != 2 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+            CondRetObtido = PAR_Carregar(Partidas[iPar],"save1.txt");
+
+            return TST_CompararInt(CondRetObtido,CondRetEsperada,"Nao foi possivel salvar partida");
+
+         }
       /* Testar Finalizar teste */
 
          else if ( strcmp( ComandoTeste , FIM_CMD ) == 0 )

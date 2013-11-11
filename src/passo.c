@@ -119,53 +119,89 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
-   
-PAS_tpCondRet PAS_ObterQuantidade(PAS_tppPasso pPassoParm, int *pQuantidade)
-{
-   tpPasso *pPasso = (tpPasso*) pPassoParm;
-
-   if (pPasso == NULL)
+   PAS_tpCondRet PAS_ObterQuantidade(PAS_tppPasso pPassoParm, int *pQuantidade)
    {
-      *pQuantidade = NULL;
-      return PAS_CondRetMatrizNaoExiste;
-   }
+      tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+      if (pPasso == NULL)
+      {
+         *pQuantidade = NULL;
+         return PAS_CondRetMatrizNaoExiste;
+      }
    
-   *pQuantidade = pPasso->quantidade;
+      *pQuantidade = pPasso->quantidade;
 
-   return PAS_CondRetOK;
-}
+      return PAS_CondRetOK;
+   }
 
-PAS_tpCondRet PAS_EhInfinito(PAS_tppPasso pPassoParm, int *pEhInfinito)
-{
-   tpPasso *pPasso = (tpPasso*) pPassoParm;
-
-   if (pPasso == NULL)
+   PAS_tpCondRet PAS_EhInfinito(PAS_tppPasso pPassoParm, int *pEhInfinito)
    {
-      *pEhInfinito = 0;
-      return PAS_CondRetMatrizNaoExiste;
-   }
+      tpPasso *pPasso = (tpPasso*) pPassoParm;
+
+      if (pPasso == NULL)
+      {
+         *pEhInfinito = 0;
+         return PAS_CondRetMatrizNaoExiste;
+      }
    
-   *pEhInfinito = pPasso->quantidade == 0;
-   return PAS_CondRetOK;
-}
+      *pEhInfinito = pPasso->quantidade == 0;
+      return PAS_CondRetOK;
+   }
 
 
-PAS_tpCondRet PAS_ObterDirecao(PAS_tppPasso pPassoParm, DIR_tpDirecao *pDirecao)
-{
-   tpPasso *pPasso = (tpPasso*) pPassoParm;
-
-   if (pPasso == NULL)
+   PAS_tpCondRet PAS_ObterDirecao(PAS_tppPasso pPassoParm, DIR_tpDirecao *pDirecao)
    {
-      *pDirecao == NULL;
-      return PAS_CondRetMatrizNaoExiste;
-   }
-   
-   *pDirecao = pPasso->direcao;
+      tpPasso *pPasso = (tpPasso*) pPassoParm;
 
-   return PAS_CondRetOK;
-}
+      if (pPasso == NULL)
+      {
+         *pDirecao == NULL;
+         return PAS_CondRetMatrizNaoExiste;
+      }
+   
+      *pDirecao = pPasso->direcao;
+
+      return PAS_CondRetOK;
+   }
+
+   PAS_tpCondRet PAS_Salvar(LIS_tppLista ppPassos, FILE* pFile)
+   {
+      int numElementos;
+      tpPasso *pPasso;
+      char *linhaASerEscrita;
+      char *direcao;
+
+      LIS_IrInicioLista(ppPassos);
+      LIS_NumELementos(ppPassos,&numElementos);
+
+      MEM_Alloc(sizeof(char)*200,(void**)&linhaASerEscrita);
+      MEM_Alloc(sizeof(char)*50,(void**)&direcao);
+
+      
+      while(numElementos >= 0)
+      {
+         LIS_ObterValor(ppPassos, (void**)&pPasso);
+
+         DIR_DirecaoComoString(pPasso->direcao,&direcao);
+
+         if(numElementos == 0)
+         {
+            sprintf(linhaASerEscrita,"[%d]%s",pPasso->quantidade,direcao);
+         }
+         else
+         {
+            sprintf(linhaASerEscrita,"[%d]%s_",pPasso->quantidade,direcao);
+         }
+
+         fputs(linhaASerEscrita,pFile);
+         LIS_AvancarElementoCorrente(ppPassos,1);
+         numElementos--;
+      }
+      
+      return PAS_CondRetOK;
+   }
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: Módulo PASSO **********/
