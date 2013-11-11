@@ -1,15 +1,16 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              CHECKMATE_JUDGE.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: JUD - Checkmate Judge
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              checkmate_judge.c
+*  Letras identificadoras:      JUD
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Verificações que envolvem locomoção de peças
 *
 ***************************************************************************/
 
@@ -21,30 +22,33 @@
 #include "checkmate_judge.h"
 #undef CHECKMATE_JUDGE_OWN
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
-*
-*
-*  $ED Descrição do tipo
-*     A cabeça da matriz é o ponto de acesso para uma determinada matriz.
-*     Por intermédio da referência para o nó corrente e do ponteiro
-*     pai pode-se navegar a matriz sem necessitar de uma pilha.
-*
-***********************************************************************/
 
 /***** Protótipos das funções encapuladas no módulo *****/
 
+   JUD_tpCondRet VerificarCheckmate(APAR_tppAnalise pAnalise, int *pResposta);
 
 /*****  Código das funções exportadas pelo módulo  *****/
-
+   
+/***************************************************************************
+*  Função: JUD Eh checkmate
+*  ****/
    JUD_tpCondRet JUD_EhCheckmate(PAR_tppPartida pPartida, int *pResposta)
    {
       JUD_tpCondRet condRet;
       APAR_tppAnalise pAnalise;
-      
+      APAR_tpCondRet aparCondRet;
+
       pAnalise = NULL;
-      APAR_CriarAnalise(&pAnalise, pPartida);
+      aparCondRet = APAR_CriarAnalise(&pAnalise, pPartida);
+      if (aparCondRet == APAR_CondRetFaltouMemoria)
+      {
+         return JUD_CondRetFaltouMemoria;
+      }
+
+      if (aparCondRet != APAR_CondRetOK)
+      {
+         return JUD_CondRetNaoFoiPossivelVerificar;
+      }
 
       condRet = VerificarCheckmate(pAnalise, pResposta);
 
@@ -53,6 +57,19 @@
       return condRet;
    }
 
+   
+/*****  Código das funções encapsuladas no módulo  *****/
+
+   
+/***********************************************************************
+*
+*  Função: JUD Verificar checkmate
+*
+*  Descrição:
+*    Função com a lógica de verificação de checkmate apartir de uma
+*    analise de partida.
+*
+***********************************************************************/
    JUD_tpCondRet VerificarCheckmate(APAR_tppAnalise pAnalise, int *pResposta)
    {
       DIR_tpDirecao DIRECOES[TOTAL_DIRECOES] = {
@@ -61,10 +78,19 @@
       };
       int i;
       int temPegadaInimiga;
+      APAR_tpCondRet aparCondRet;
       
-      APAR_IrCasaRei(pAnalise);
-   
-      APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
+      aparCondRet = APAR_IrCasaRei(pAnalise);
+      if (aparCondRet != JUD_CondRetOK)
+      {
+         return JUD_CondRetNaoFoiPossivelVerificar;
+      }
+
+      aparCondRet = APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
+      if (aparCondRet != JUD_CondRetOK)
+      {
+         return JUD_CondRetNaoFoiPossivelVerificar;
+      }
       if (!temPegadaInimiga)
       {
          *pResposta = 0;
@@ -75,17 +101,29 @@
       {
          DIR_tpDirecao direcao = DIRECOES[i];
          
-         APAR_IrCasaRei(pAnalise);
+         aparCondRet = APAR_IrCasaRei(pAnalise);
+         if (aparCondRet != JUD_CondRetOK)
+         {
+            return JUD_CondRetNaoFoiPossivelVerificar;
+         }
          if (APAR_IrPara(pAnalise, direcao) == APAR_CondRetOK)
          {
             int reiPodeMover;
-            APAR_ReiPodeMoverParaCorrente(pAnalise, &reiPodeMover);
+            aparCondRet = APAR_ReiPodeMoverParaCorrente(pAnalise, &reiPodeMover);
+            if (aparCondRet != JUD_CondRetOK)
+            {
+               return JUD_CondRetNaoFoiPossivelVerificar;
+            }
             if (!reiPodeMover)
             {
                continue;
             }
    
-            APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
+            aparCondRet = APAR_AlgumaPegadaInimiga(pAnalise, &temPegadaInimiga);
+            if (aparCondRet != JUD_CondRetOK)
+            {
+               return JUD_CondRetNaoFoiPossivelVerificar;
+            }
             if (!temPegadaInimiga) {
                *pResposta = 0;
                return JUD_CondRetOK;
@@ -97,7 +135,5 @@
       return JUD_CondRetOK;
    }
 
-/*****  Código das funções encapsuladas no módulo  *****/
 
-
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: Módulo Checkmate Judge **********/

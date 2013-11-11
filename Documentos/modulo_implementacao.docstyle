@@ -2,7 +2,7 @@
 >> No topo
 /***************************************************************************
 *
-*  Módulo de implementação: <abreviação>  <estrutura manipulada pelo módulo>
+*  Módulo de implementação: <abreviação> -  <nome-do-módulo>
 *
 *  Arquivo gerado:              <nome-do-arquivo>.c
 *  Letras identificadoras:      <abreviação>
@@ -62,4 +62,4 @@
 
 
 >> No final do módulo
-/********** Fim do módulo de implementação: LIS Lista duplamente encadeada genérica **********/
+/********** Fim do módulo de implementação: <abreviação> <nome-do-módulo> **********/

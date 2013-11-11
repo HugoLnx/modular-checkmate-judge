@@ -2,7 +2,7 @@
 >> No topo:
 /***************************************************************************
 *
-*  Módulo de definição: <abreviação>  <estrutura manipulada pelo módulo>
+*  Módulo de definição: <abreviação>  <nome-do-módulo>
 *
 *  Arquivo gerado:              <nome-do-arquivo>.h
 *  Letras identificadoras:      <abreviação>
@@ -91,4 +91,4 @@ typedef <estrutura exportada> * <nome do tipo> ;
 
 
 >> acima do #else#endif
-/********** Fim do módulo de definição: LIS  Lista duplamente encadeada **********/
+/********** Fim do módulo de definição: <abreviação> <nome-do-módulo> **********/
