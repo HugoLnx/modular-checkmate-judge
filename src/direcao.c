@@ -30,14 +30,14 @@
       MEM_Alloc(sizeof(char)*2, (void **) pRetornoStr);
       switch(direcao)
       {
-         case NORTE:     *pRetornoStr = "N" ; break;
-         case ESTE:      *pRetornoStr = "E" ; break;
-         case SUL:       *pRetornoStr = "S" ; break;
-         case OESTE:     *pRetornoStr = "O" ; break;
-         case NORDESTE:  *pRetornoStr = "NE"; break;
-         case SUDESTE:   *pRetornoStr = "SE"; break;
-         case SUDOESTE:  *pRetornoStr = "SO"; break;
-         case NOROESTE:  *pRetornoStr = "NO"; break;
+         case NORTE:     *pRetornoStr = "NORTE" ; break;
+         case ESTE:      *pRetornoStr = "ESTE" ; break;
+         case SUL:       *pRetornoStr = "SUL" ; break;
+         case OESTE:     *pRetornoStr = "OEST" ; break;
+         case NORDESTE:  *pRetornoStr = "NORDEST"; break;
+         case SUDESTE:   *pRetornoStr = "SUDESTE"; break;
+         case SUDOESTE:  *pRetornoStr = "SUSOESTE"; break;
+         case NOROESTE:  *pRetornoStr = "NOROESTE"; break;
          default: return DIR_CondRetNaoPodeSeTornarString; break;
       }
       return DIR_CondRetOK;

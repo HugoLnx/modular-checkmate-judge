@@ -50,6 +50,7 @@
 #define     ADICIONAR_TIME_PEC_CMD       "=adicionarTime"
 #define     DESTROI_PEC_CMD              "=destruir"
 #define     ALTERAR_PECA_CMD             "=alterar"
+#define     OBTER_MODELO_PECA_CMD        "=obterModelo"
 
  
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -156,7 +157,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
       return TST_CompararInt( CondRetEsperada , CondRetObtido ,
          "Nao foi possivel Adicionar time a peca.") ;
-   } 
+   }
+
+
 
    return TST_CondRetNaoConhec ;
 

@@ -370,6 +370,12 @@
 =ircasa "H8"    OK
 =ircasa "A1"    OK
 
+== teste salvar partida
+=salvarPartida 0 OK
+
+== testar carregar partida
+=carregarPartida 1 OK
+
 == Verificar quando ir casa recebe um nome invalido
 =ircasa "X0"    NaoFolha
 

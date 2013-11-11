@@ -68,7 +68,10 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 
          PAR_CondRetFaltouMemoria = 5 ,
                /* Faltou memória ao alocar dados */
-         PAR_CondRetPecaNaoEncontrada = 6
+         PAR_CondRetPecaNaoEncontrada = 6,
+
+         PAR_CondRetCaminhoErrado
+         /* caminho para salvar e/ou carregar é inválido */
 
    } PAR_tpCondRet ;
 
@@ -118,7 +121,9 @@ typedef struct PAR_stPartida* PAR_tppPartida;
    
    PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida);
 
+   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char *caminho);
 
+   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char *caminho);
 
 #undef PARTIDA_EXT
 

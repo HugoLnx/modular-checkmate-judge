@@ -42,7 +42,6 @@ PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, MPEC_tppModeloPeca pModelo, PEC
    return PEC_CondRetOK;
 }
 
-
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
 {
    tpPeca* pPeca = (tpPeca*)*ppPeca;
@@ -59,7 +58,6 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
 
 }
 
-
 PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo)
 {
    LIS_tpCondRet lisCondRet;
@@ -73,6 +71,24 @@ PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovo
    pPeca->pModelo = pNovoModelo;
    
    return PEC_CondRetOK;
+}
+
+PEC_tpCondRet PEC_SalvarPeca(PEC_tppPeca ppPeca,FILE* pFile)
+{
+   char *linhaASerEscrita;
+   
+   tpPeca *pPeca = (tpPeca*) ppPeca;
+   if (pPeca == NULL)
+   {
+      return PEC_CondRetPecaNaoExiste;
+   }
+
+   MEM_Alloc(sizeof(char*)*200,(void**)&linhaASerEscrita);
+   
+   sprintf(linhaASerEscrita,"%d-",(int)pPeca->time);
+   fputs(linhaASerEscrita,pFile);
+
+   return (PEC_tpCondRet)MPEC_Salvar(pPeca->pModelo,pFile);
 }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

@@ -75,14 +75,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\mem_manager\isp_main.c" />
+    <ClCompile Include="..\src\direcao.c" />
     <ClCompile Include="..\src\lista.c" />
     <ClCompile Include="..\src\mem_manager.c" />
     <ClCompile Include="..\src\modelo_peca.c" />
+    <ClCompile Include="..\src\passo.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\direcao.h" />
     <ClInclude Include="..\src\lista.h" />
     <ClInclude Include="..\src\mem_manager.h" />
     <ClInclude Include="..\src\modelo_peca.h" />
+    <ClInclude Include="..\src\passo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,6 +18,7 @@
 #include "lista.h"
 #include "modelo_peca.h"
 #include "mem_manager.h"
+#include "passo.h"
 
 
 #define MODELO_PECA_OWN
@@ -104,6 +105,43 @@ MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
    *pNome = pModelo->nome;
 
    return MPEC_CondRetOK;
+}
+
+MPEC_tpCondRet MPEC_SalvarLista(LIS_tppLista ppModelosPeca, FILE *pFile)
+{
+   int numElementos;
+   tpModeloPeca *pModeloPeca;
+
+   LIS_IrInicioLista(ppModelosPeca);
+   LIS_NumELementos(ppModelosPeca,&numElementos);
+
+   while(numElementos >= 0)
+   {
+      LIS_ObterValor(ppModelosPeca,(void**)&pModeloPeca);
+
+      MPEC_Salvar(pModeloPeca,pFile);
+
+      if(numElementos != 0)
+         fputs("\n",pFile);
+
+      LIS_AvancarElementoCorrente(ppModelosPeca,1);
+      numElementos--;
+   }
+
+   return MPEC_CondRetOK;
+}
+
+MPEC_tpCondRet MPEC_Salvar(MPEC_tppModeloPeca pModeloPeca, FILE *pFile)
+{
+   char *linhaASerEscrita;
+   tpModeloPeca *pModelo = (tpModeloPeca*) pModeloPeca;
+
+   MEM_Alloc(sizeof(char*)*200,(void**)&linhaASerEscrita);
+
+   sprintf(linhaASerEscrita,"%s-%d-",pModelo->nome,pModelo->pMovimento->tipo);
+   fputs(linhaASerEscrita,pFile);
+
+   return (MPEC_tpCondRet )PAS_Salvar(pModelo->pMovimento->passos,pFile);
 }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

@@ -73,7 +73,8 @@ MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LI
 MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo);
 MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModelo, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento);
 MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModelo, char **pNome);
-
+MPEC_tpCondRet MPEC_Salvar(MPEC_tppModeloPeca pModeloPeca, FILE *pFile);
+MPEC_tpCondRet MPEC_SalvarLista(LIS_tppLista ppModelosPeca, FILE *pFile);
 #undef MODELO_PECA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/

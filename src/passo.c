@@ -119,7 +119,44 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+   PAS_tpCondRet PAS_Salvar(LIS_tppLista ppPassos, FILE* pFile)
+   {
+      int numElementos;
+      tpPasso *pPasso;
+      char *linhaASerEscrita;
+      char *direcao;
+
+      LIS_IrInicioLista(ppPassos);
+      LIS_NumELementos(ppPassos,&numElementos);
+
+      MEM_Alloc(sizeof(char)*200,(void**)&linhaASerEscrita);
+      MEM_Alloc(sizeof(char)*50,(void**)&direcao);
+
+      
+      while(numElementos >= 0)
+      {
+         LIS_ObterValor(ppPassos, (void**)&pPasso);
+
+         DIR_DirecaoComoString(pPasso->direcao,&direcao);
+
+         if(numElementos == 0)
+         {
+            sprintf(linhaASerEscrita,"[%d]%s",pPasso->quantidade,direcao);
+         }
+         else
+         {
+            sprintf(linhaASerEscrita,"[%d]%s_",pPasso->quantidade,direcao);
+         }
+
+         fputs(linhaASerEscrita,pFile);
+         LIS_AvancarElementoCorrente(ppPassos,1);
+         numElementos--;
+      }
+      
+      return PAS_CondRetOK;
+   }
+
 /*****  Código das funções encapsuladas no módulo  *****/
 
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: Módulo PASSO **********/
