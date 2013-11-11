@@ -1,10 +1,10 @@
-#if ! defined( PARTIDA_ )
-#define PARTIDA_
+#if ! defined( ANALISE_PARTIDA_ )
+#define ANALISE_PARTIDA_
 /***************************************************************************
 *
 *  $MCD Módulo de definição: Módulo matriz
 *
-*  Arquivo gerado:              PARTIDA.H
+*  Arquivo gerado:              ANALISE_PARTIDA.H
 *  Letras identificadoras:      TAB
 *
 *  Autores: hg - Hugo Roque
@@ -28,10 +28,10 @@
 *
 ***************************************************************************/
  
-#if defined( PARTIDA_OWN )
-   #define PARTIDA_EXT
+#if defined( ANALISE_PARTIDA_OWN )
+   #define ANALISE_PARTIDA_EXT
 #else
-   #define PARTIDA_EXT extern
+   #define ANALISE_PARTIDA_EXT extern
 #endif
 
 #include "lista.h"
@@ -39,8 +39,9 @@
 #include "tabuleiro.h"
 #include "peca.h"
 #include "modelo_peca.h"
+#include "partida.h"
 
-typedef struct PAR_stPartida* PAR_tppPartida;
+typedef struct APAR_stAnalise* APAR_tppAnalise;
 
 /***********************************************************************
 *
@@ -51,44 +52,37 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 
    typedef enum {
 
-         PAR_CondRetOK = 0 ,
+         APAR_CondRetOK = 0 ,
                /* Executou correto */
 
-         PAR_CondRetNaoCriouOrigem = 1 ,
+         APAR_CondRetNaoCriouOrigem = 1 ,
                /* Não criou nó origem */
 
-         PAR_CondRetNaoEhNo = 2 ,
+         APAR_CondRetNaoEhNo = 2 ,
                /* Não é nó na direção desejada */
 
-         PAR_CondRetMatrizNaoExiste = 3 ,
+         APAR_CondRetMatrizNaoExiste = 3 ,
                /* Matriz não existe */
 
-         PAR_CondRetNaoTemCorrente = 4 ,
+         APAR_CondRetNaoTemCorrente = 4 ,
                /* Matriz está vazia */
 
-         PAR_CondRetFaltouMemoria = 5 ,
+         APAR_CondRetFaltouMemoria = 5 ,
                /* Faltou memória ao alocar dados */
-         PAR_CondRetPecaNaoEncontrada = 6,
+         APAR_CondRetPecaNaoEncontrada = 6
 
-         PAR_CondRetCaminhoErrado
-         /* caminho para salvar e/ou carregar é inválido */
+   } APAR_tpCondRet ;
 
-   } PAR_tpCondRet ;
-
-
-   PAR_tpCondRet PAR_CriarPartida(PAR_tppPartida *ppPartida);
-
-   //PAR_tpCondRet PAR_AlgumaPegadaInimiga(PAR_tpPartida *pPartida, int *pResposta);
    
-   PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida);
-   
-   PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida);
-   
-   PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida);
-   //
-   //PAR_tpCondRet PAR_EhCheckmate(PAR_tpPartida *pPartida, int *pResposta);
-   //
-   //PAR_tpCondRet PAR_CriarPegadas(PAR_tpPartida *pPartida);
+   APAR_tpCondRet APAR_CriarAnalise(APAR_tppAnalise *ppAnalise, PAR_tppPartida pPartida);
+
+   //APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tpAnalise *pAnalise, int *pResposta);
+
+   //APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
+
+   //APAR_tpCondRet APAR_EhCheckmate(APAR_tpAnalise *pAnalise, int *pResposta);
+
+   //APAR_tpCondRet APAR_CriarPegadas(APAR_tpAnalise *pAnalise);
 
 /***********************************************************************
 *
@@ -99,36 +93,31 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *     Faz nada caso a matriz corrente não exista.
 *
 *  $EP Parâmetros
-*     $P ppPartida - é o ponteiro para a matriz que será destruida.
+*     $P ppAnalise - é o ponteiro para a matriz que será destruida.
 *                    Este parâmetro é passado por referência.
 *
 *  $FV Valor retornado
-*     PAR_CondRetOK
-*     PAR_CondRetMatrizNaoExiste
+*     APAR_CondRetOK
+*     APAR_CondRetMatrizNaoExiste
 *
 ***********************************************************************/
-   PAR_tpCondRet PAR_DestruirPartida(PAR_tppPartida *ppPartida);
+   APAR_tpCondRet APAR_DestruirAnalise(APAR_tppAnalise *ppAnalise);
 
-   PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa);
+   APAR_tpCondRet APAR_IrCasa(APAR_tppAnalise pAnalise, char *nomeCasa);
    
-   PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
+   APAR_tpCondRet APAR_CriarPeca(APAR_tppAnalise pAnalise, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
    
-   PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
+   APAR_tpCondRet APAR_AlterarPeca(APAR_tppAnalise pAnalise, char *nomeAtual, char* nomeNovo,
       LIS_tppLista pNovosPassos, MPEC_tpTipoMovimento novoTipoMovimento);
    
-   PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PEC_tpTimePeca time);
+   APAR_tpCondRet APAR_InserirPeca(APAR_tppAnalise pAnalise, char *nome, PEC_tpTimePeca time);
    
-   PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida);
+   APAR_tpCondRet APAR_RemoverPeca(APAR_tppAnalise pAnalise);
 
 
-   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char *caminho);
 
-   PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca);
-
-   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char *caminho);
-
-#undef PARTIDA_EXT
+#undef ANALISE_PARTIDA_EXT
 
 /********** Fim do módulo de definição: Módulo matriz **********/
 

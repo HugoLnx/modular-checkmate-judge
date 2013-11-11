@@ -91,4 +91,21 @@ PEC_tpCondRet PEC_SalvarPeca(PEC_tppPeca ppPeca,FILE* pFile)
    return (PEC_tpCondRet)MPEC_Salvar(pPeca->pModelo,pFile);
 }
 
+PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei)
+{
+   tpPeca *pPeca = (tpPeca*) pPecaParm;
+
+   if (pPeca == NULL)
+   {
+      *ehRei = 0;
+   }
+   else
+   {
+      *ehRei = pPeca->pModelo == NULL;
+   }
+
+   return PEC_CondRetOK;
+
+}
+
 /********** Fim do módulo de implementação: Módulo matriz **********/
