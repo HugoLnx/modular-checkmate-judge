@@ -21,7 +21,7 @@
 
 >> Definição de tipos
 /***********************************************************************
-*  Tipo de dados: <abreviacao do modulo> <descricao do tipo>
+*  Tipo de dados: <abreviação> <descricao do tipo>
 ***********************************************************************/
 
 
@@ -39,7 +39,7 @@
 >> Cabeçalho das funções exportadas
 
 /***************************************************************************
-*  Função: <abreviacao> <nome da função por extenso>
+*  Função: <abreviação> <nome da função por extenso>
 *  ****/
 
 
@@ -52,7 +52,7 @@
 >> Cabeçalho das funções encapsuladas
 /***********************************************************************
 *
-*  Função: <abreviacao> <nome da função por extenso>
+*  Função: <abreviação> <nome da função por extenso>
 *
 *  Descrição:
 *    <descrição da função>

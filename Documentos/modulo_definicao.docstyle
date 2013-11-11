@@ -64,7 +64,7 @@ typedef <estrutura exportada> * <nome do tipo> ;
 >> Funções exportadas
 /***********************************************************************
 *
-*  Função: <abreviacao do modulo> <nome da funcao por extenso>
+*  Função: <abreviação> <nome da funcao por extenso>
 *
 *  Descrição
 *     <descricao da função>
