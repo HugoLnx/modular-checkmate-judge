@@ -142,13 +142,13 @@ MPEC_tpCondRet MPEC_SalvarLista(LIS_tppLista ppModelosPeca, FILE *pFile)
    LIS_IrInicioLista(ppModelosPeca);
    LIS_NumELementos(ppModelosPeca,&numElementos);
 
-   while(numElementos >= 0)
+   while(numElementos > 0)
    {
       LIS_ObterValor(ppModelosPeca,(void**)&pModeloPeca);
 
       MPEC_Salvar(pModeloPeca,pFile);
 
-      if(numElementos != 0)
+      if(numElementos != 1)
          fputs("\n",pFile);
 
       LIS_AvancarElementoCorrente(ppModelosPeca,1);

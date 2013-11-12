@@ -178,13 +178,13 @@ typedef struct PAS_stPasso
       MEM_Alloc(sizeof(char)*50,(void**)&direcao);
 
       
-      while(numElementos >= 0)
+      while(numElementos > 0)
       {
          LIS_ObterValor(ppPassos, (void**)&pPasso);
 
          DIR_DirecaoComoString(pPasso->direcao,&direcao);
 
-         if(numElementos == 0)
+         if(numElementos == 1)
          {
             sprintf(linhaASerEscrita,"[%d]%s",pPasso->quantidade,direcao);
          }

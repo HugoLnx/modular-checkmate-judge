@@ -395,16 +395,16 @@ typedef struct stCasa {
 /***************************************************************************
 *  Função: PAR Salvar
 *  ****/
-   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char* caminho)
+   PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char* pNomeArquivo)
    {
       tpPartida *pPartida = (tpPartida *) ppPartida;
       tpCasa *pCasa;
       int numElementos;
       MPEC_tppModeloPeca *pModeloPeca;
 
-      pCaminho = caminho;
+      pCaminho = pNomeArquivo;
 
-      pFile = fopen(caminho,"w");
+      pFile = fopen(pNomeArquivo,"w");
 
       if(pFile == NULL)
       {
@@ -425,17 +425,19 @@ typedef struct stCasa {
    }
    
 
+   
 
 /***************************************************************************
 *  Função: PAR Carregar
 *  ****/
-   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char* caminho)
+   PAR_tpCondRet PAR_Carregar(PAR_tppPartida *ppPartida, char* caminho)
    {
       char *line;
       int ehTabuleiro = -1;
+
       pCaminho = caminho;
 
-      PAR_CriarPartida(&ppPartida);
+      PAR_CriarPartida(ppPartida);
 
       pFile = fopen(pCaminho,"r");
 
@@ -483,7 +485,7 @@ typedef struct stCasa {
 
             ISP_LerPassos(passos,&pPassos);
 
-            PAR_CriarPeca(ppPartida,nomeModelo,pPassos,tipoMovimento);
+            PAR_CriarPeca(*ppPartida,nomeModelo,pPassos,tipoMovimento);
          }
          else
          {
@@ -504,10 +506,12 @@ typedef struct stCasa {
             linhaASerLida = strtok(NULL, "-");
             strcpy(nomeModelo,linhaASerLida);
 
-            PAR_IrCasa(ppPartida,nomeCasa);
-            PAR_InserirPeca(ppPartida,nomeModelo,time);
+            PAR_IrCasa(*ppPartida,nomeCasa);
+            PAR_InserirPeca(*ppPartida,nomeModelo,time);
          }
       }
+
+    
    }
 
 /*****  Código das funções encapsuladas no módulo  *****/

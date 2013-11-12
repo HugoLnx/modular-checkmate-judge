@@ -413,8 +413,8 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *     Salva uma versão serializada da partida em um arquivo texto.
 *
 *  Parâmetros
-*     pPartida   - Partida que será usada como base.
-*     caminho    - caminho do arquivo que será criado.
+*     pPartida     - Partida que será usada como base.
+*     pNomeArquivo - Nome do arquivo que será criado.
 *
 *  Condições de retorno
 *     PAR_CondRetOK
@@ -429,7 +429,7 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *     - É criado um arquivo com a partida serializada no caminho especificado.
 *
 ***********************************************************************/
-   PAR_tpCondRet PAR_Salvar(PAR_tppPartida pPartida, char *caminho);
+   PAR_tpCondRet PAR_Salvar(PAR_tppPartida pPartida, char *pNomeArquivo);
 
 
 /***********************************************************************
@@ -441,8 +441,8 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *     de partida baseado no conteúdo do arquivo.
 *
 *  Parâmetros
-*     ppPartida   - Referência para retorno da nova partida.
-*     caminho    - Caminho para o arquivo que será carregado.
+*     ppPartida    - Referência para retorno da nova partida.
+*     pNomeArquivo - Nome do arquivo que será carregado.
 *
 *  Condições de retorno
 *     PAR_CondRetOK
@@ -460,7 +460,7 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *     - É criada uma partida de acordo com o conteúdo do arquivo texto.
 *
 ***********************************************************************/
-   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char *caminho);
+   PAR_tpCondRet PAR_Carregar(PAR_tppPartida *ppPartida, char* pNomeArquivo);
 
 #undef PARTIDA_EXT
 
