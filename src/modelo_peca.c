@@ -1,15 +1,16 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              MODELO_PECA.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: MPEC  Modelo de Peça
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              modelo_peca.c
+*  Letras identificadoras:      MPEC
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Manipulação básica de modelo de peça
 *
 ***************************************************************************/
 
@@ -25,16 +26,32 @@
 #include "peca.h"
 #undef MODELO_PECA_OWN
 
+/***********************************************************************
+*  Tipo de dados: MPEC Movimento do modelo
+***********************************************************************/
 typedef struct stMovimento {
    LIS_tppLista passos;
+      /* Valem as assertivas estruturais da lista */
+
    MPEC_tpTipoMovimento tipo;
 } tpMovimento;
 
+/***********************************************************************
+*  Tipo de dados: MPEC Modelo de peça
+***********************************************************************/
 typedef struct MPEC_stModeloPeca {
    tpMovimento *pMovimento;
+      /* Valem as assertivas estruturais do movimento */
+
    char *nome;
+      /* Não pode ser nulo */
 } tpModeloPeca;
 
+/* Funções exportadas pelo módulo */
+
+/***************************************************************************
+*  Função: MPEC Criar modelo de peça
+*  ****/
 MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
 {
    tpModeloPeca *pModeloPeca;
@@ -55,6 +72,9 @@ MPEC_tpCondRet MPEC_CriarModeloPeca(MPEC_tppModeloPeca *ppModelo, char* nome, LI
 }
 
 
+/***************************************************************************
+*  Função: MPEC Destruir modelo de peça
+*  ****/
 MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo)
 {
    tpModeloPeca* pModelo = (tpModeloPeca*)*ppModelo;
@@ -72,7 +92,11 @@ MPEC_tpCondRet MPEC_DestruirModeloPeca(MPEC_tppModeloPeca *ppModelo)
    return MPEC_CondRetOK;
 
 }
-// TODO [RCS] - PEC_CondRetNaoAlterou, espera que ISP_LerPassos retorne algo diferente de OK para quando não não receber argumentos válidos
+
+
+/***************************************************************************
+*  Função: MPEC Alterar modelo de peça
+*  ****/
 MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModeloParm, char *novoNome, LIS_tppLista pPassos, MPEC_tpTipoMovimento novoTipoMovimento)
 {
    LIS_tpCondRet lisCondRet;
@@ -98,7 +122,11 @@ MPEC_tpCondRet MPEC_AlterarModeloPeca(MPEC_tppModeloPeca pModeloParm, char *novo
    return MPEC_CondRetOK;
 }
 
-MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
+
+/***************************************************************************
+*  Função: MPEC Obter nome
+*  ****/
+MPEC_tpCondRet MPEC_ObterNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
 {
    tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
 
@@ -107,6 +135,10 @@ MPEC_tpCondRet MPEC_RecuperarNome(MPEC_tppModeloPeca pModeloParm, char **pNome)
    return MPEC_CondRetOK;
 }
 
+
+/***************************************************************************
+*  Função: MPEC Obter passos
+*  ****/
 MPEC_tpCondRet MPEC_ObterPassos(MPEC_tppModeloPeca pModeloParm, LIS_tppLista *ppPassos)
 {
    tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
@@ -121,6 +153,10 @@ MPEC_tpCondRet MPEC_ObterPassos(MPEC_tppModeloPeca pModeloParm, LIS_tppLista *pp
    return MPEC_CondRetOK;
 }
 
+
+/***************************************************************************
+*  Função: MPEC Obter tipo
+*  ****/
 MPEC_tpCondRet MPEC_ObterTipo(MPEC_tppModeloPeca pModeloParm, MPEC_tpTipoMovimento *pTipo)
 {
    tpModeloPeca *pModelo = (tpModeloPeca*) pModeloParm;
@@ -134,6 +170,10 @@ MPEC_tpCondRet MPEC_ObterTipo(MPEC_tppModeloPeca pModeloParm, MPEC_tpTipoMovimen
    return MPEC_CondRetOK;
 }
 
+
+/***************************************************************************
+*  Função: MPEC Salvar lista
+*  ****/
 MPEC_tpCondRet MPEC_SalvarLista(LIS_tppLista ppModelosPeca, FILE *pFile)
 {
    int numElementos;
@@ -158,6 +198,10 @@ MPEC_tpCondRet MPEC_SalvarLista(LIS_tppLista ppModelosPeca, FILE *pFile)
    return MPEC_CondRetOK;
 }
 
+
+/***************************************************************************
+*  Função: MPEC Salvar
+*  ****/
 MPEC_tpCondRet MPEC_Salvar(MPEC_tppModeloPeca pModeloPeca, FILE *pFile)
 {
    char *linhaASerEscrita;

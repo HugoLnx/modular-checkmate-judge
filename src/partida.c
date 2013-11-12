@@ -576,7 +576,7 @@ static int Exibir(TAB_tppTabuleiro pTabuleiro, char *pNome)
             }
             else
             {
-               MPEC_RecuperarNome(pModelo,&nomeModelo);
+               MPEC_ObterNome(pModelo,&nomeModelo);
                sprintf(destino,"\ncasa: %s | peca: %s ",pCasa->nome,nomeModelo);
             }
          }
@@ -673,7 +673,7 @@ int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    char *nome;
    char *nomeProcurado = (char*) pValor2;
 
-   MPEC_RecuperarNome(pModelo1, &nome);
+   MPEC_ObterNome(pModelo1, &nome);
 
    return strcmp(nome, nomeProcurado);
 }

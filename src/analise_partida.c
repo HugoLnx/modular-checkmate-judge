@@ -430,7 +430,7 @@ typedef struct stCasa {
       char *nome;
       char *nomeProcurado = (char*) pValor2;
 
-      MPEC_RecuperarNome(pModelo1, &nome);
+      MPEC_ObterNome(pModelo1, &nome);
 
       return strcmp(nome, nomeProcurado);
    }
