@@ -202,8 +202,29 @@ typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 ***********************************************************************/
    TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, char *nome);
 
+
 /***********************************************************************
-* TODO: APAGAR
+*
+*  Função: TAB Percorrer casas
+*
+*  Descrição
+*     Percorre todas as casas aplicando operações definidas pelo módulo cliente
+*     através de uma função passada por ponteiro.
+*
+*  Parâmetros
+*     pTabuleiro - Tabuleiro que será usada como base.
+*     fazerNaCasa - Ponteiro para função que será aplicada em cada casa do tabuleiro.
+*
+*  Condições de retorno
+*     TAB_CondRetOK
+*     TAB_CondRetTabuleiroNaoExiste
+*
+*  Assertivas de entrada
+*     - pTabuleiro aponta para um Tabuleiro válido.
+*
+*  Assertivas de saida
+*     - Função terá sido aplicada em todas as casas do tabuleiro.
+*
 ***********************************************************************/
    TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(TAB_tppTabuleiro pTabuleiro, char *nome));
 
