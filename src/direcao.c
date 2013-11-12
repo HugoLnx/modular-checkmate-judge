@@ -1,15 +1,16 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              DIRECAO.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: DIR  Direção
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              direcao.c
+*  Letras identificadoras:      DIR
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Manipulação básica de direção
 *
 ***************************************************************************/
 
@@ -24,10 +25,17 @@
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
-
+/***************************************************************************
+*  Função: DIR Direção como string
+*  ****/
    DIR_tpCondRet DIR_DirecaoComoString(DIR_tpDirecao direcao, char **pRetornoStr)
    {
-      MEM_Alloc(sizeof(char)*2, (void **) pRetornoStr);
+      MEM_Alloc(sizeof(char)*10, (void **) pRetornoStr);
+      if (pRetornoStr == NULL)
+      {
+         return DIR_CondRetFaltouMemoria;
+      }
+
       switch(direcao)
       {
          case NORTE:     *pRetornoStr = "NORTE" ; break;
@@ -44,6 +52,10 @@
    }
 
 
+
+/***************************************************************************
+*  Função: DIR Direção orientada para
+*  ****/
    DIR_tpCondRet DIR_DirecaoOrientadaPara(DIR_tpDirecao direcao,
       DIR_tpDirecao orientacao, DIR_tpDirecao *dirRetorno)
    {
@@ -51,4 +63,4 @@
       return DIR_CondRetOK;
    }
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: Módulo Direção **********/
