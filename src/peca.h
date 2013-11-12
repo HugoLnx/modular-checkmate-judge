@@ -69,6 +69,10 @@ typedef struct PEC_stPeca* PEC_tppPeca;
 
 PEC_tpCondRet PEC_CriarPeca(PEC_tppPeca *ppPeca, MPEC_tppModeloPeca pModelo, PEC_tpTimePeca time);
 PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca);
+
+PEC_tpCondRet PEC_CriarRei(PEC_tppPeca *ppPeca);
+PEC_tpCondRet PEC_DestruirRei(PEC_tppPeca *ppPeca);
+
 PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo);
 
 PEC_tpCondRet PEC_EhORei(PEC_tppPeca pPecaParm, int *ehRei);

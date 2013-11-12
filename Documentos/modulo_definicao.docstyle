@@ -41,7 +41,7 @@ typedef <estrutura exportada> * <nome do tipo> ;
 >> Para enums:
 /***********************************************************************
 *
-*  Tipo de dados: <abreviacao> <descricao-do-enum>
+*  Tipo de dados: <abreviação> <descricao-do-enum>
 *
 *
 *  Descrição do tipo

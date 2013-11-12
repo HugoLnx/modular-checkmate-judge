@@ -173,7 +173,6 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 *  Condições de retorno
 *     APAR_CondRetOK
 *     APAR_CondRetAnaliseNaoExiste
-*     APAR_CondRetNaoEhCasa
 *
 *  Assertivas de entrada
 *     - pAnalise aponta para uma PartidaAnalise válida.

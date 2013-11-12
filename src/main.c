@@ -105,7 +105,7 @@ int main()
 // 
 //    condRet = PAR_IrCasa(*ppPartida, nomeCasa);
 // 
-//    if(condRet == PAR_CondRetNaoEhNo)
+//    if(condRet == PAR_CondRetNaoEhCasa)
 //    {
 //       printf("\nErro ao inserir - Casa nao existe!\n");
 //       system("pause");
@@ -202,7 +202,7 @@ int main()
 // 
 //    condRet = PAR_IrCasa(*ppPartida,nomeDaCasa);
 // 
-//    if(condRet == PAR_CondRetNaoEhNo)
+//    if(condRet == PAR_CondRetNaoEhCasa)
 //    {
 //       printf("\nErro ao remover - Casa nao existe!\n");
 //       system("pause");

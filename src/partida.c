@@ -1,15 +1,17 @@
+
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              PARTIDA.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: PAR  Partida
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              partida.h
+*  Letras identificadoras:      PAR
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Manipulação das informações que compões uma partida.
 *
 ***************************************************************************/
 
@@ -28,30 +30,28 @@
 #include "partida.h"
 #undef PARTIDA_OWN
 
+/***********************************************************************
+*  Tipo de dados: PAR Estrutura de uma casa do tabuleiro
+***********************************************************************/
 typedef struct stCasa {
    char *nome;
    PEC_tppPeca pPeca;
+      /* Valem as assertivas estruturais da peça */
 } tpCasa;
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
-*
-*
-*  $ED Descrição do tipo
-*     A cabeça da matriz é o ponto de acesso para uma determinada matriz.
-*     Por intermédio da referência para o nó corrente e do ponteiro
-*     pai pode-se navegar a matriz sem necessitar de uma pilha.
-*
-***********************************************************************/
 
+/***********************************************************************
+*  Tipo de dados: PAR Estrutura principal de uma partida
+***********************************************************************/
    typedef struct PAR_stPartida {
          TAB_tppTabuleiro pTabuleiro;
+            /* Valem as assertivas estruturais do tabuleiro */
+
          LIS_tppLista pModelosPecas;
+            /* Valem as assertivas estruturais da lista */
+
          tpCasa *pCasaRei;
    } tpPartida;
-
-   typedef struct PAR_stPartida* PAR_tppPartida;
 
    static FILE *pFile;
    static char *pCaminho;
@@ -75,20 +75,11 @@ typedef struct stCasa {
    static int SalvaCasas(char *nome, void* pValor);
 
 /*****  Código das funções exportadas pelo módulo  *****/
+
    
-/***********************************************************************
-*
-*  $FC Função: TAB Criar partida
-*
-*  $ED Descrição da função
-*     Cria uma nova matriz vazia.
-*     Caso já exista uma matriz, esta será destruída.
-*
-*  $FV Valor retornado
-*     PAR_CondRetOK
-*     PAR_CondRetFaltouMemoria
-*
-***********************************************************************/
+/***************************************************************************
+*  Função: PAR Criar partida
+*  ****/
    PAR_tpCondRet PAR_CriarPartida(PAR_tppPartida *ppPartida)
    {
 	  tpPartida *pPartida;
@@ -119,9 +110,9 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
 
+
 /***************************************************************************
-*
-*  Função: MAT Destruir partida
+*  Função: PAR Destruir partida
 *  ****/
    PAR_tpCondRet PAR_DestruirPartida(tpPartida **ppPartida)
    {
@@ -129,7 +120,7 @@ typedef struct stCasa {
       
 		if (ppPartida == NULL || *ppPartida == NULL)
 		{
-			return PAR_CondRetMatrizNaoExiste ;
+			return PAR_CondRetPartidaNaoExiste;
 		}
       
 		pPartida = *ppPartida;
@@ -142,10 +133,20 @@ typedef struct stCasa {
 		return PAR_CondRetOK;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Criar peça
+*  ****/
    PAR_tpCondRet PAR_CriarPeca(PAR_tppPartida pPartida, char *nome,
       LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento)
    {
       MPEC_tppModeloPeca pModelo;
+
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
 
       MPEC_CriarModeloPeca(&pModelo, nome, pPassos, tipoMovimento);
 
@@ -155,16 +156,30 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Alterar peça
+*  ****/
    PAR_tpCondRet PAR_AlterarPeca(PAR_tppPartida pPartida, char *nomeAtual, char* nomeNovo,
       LIS_tppLista pNovosPassos, MPEC_tpTipoMovimento novoTipoMovimento)
    {
       MPEC_tppModeloPeca pModelo;
       LIS_tpCondRet lisCondRet;
+
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
    
       LIS_IrInicioLista(pPartida->pModelosPecas);
-      
+      lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nomeNovo);
+      if (lisCondRet != LIS_CondRetNaoAchou)
+      {
+         return PAR_CondRetPecaJaExiste;
+      }
+
       lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nomeAtual);
-   
       if(lisCondRet != LIS_CondRetOK)
       {
          return PAR_CondRetPecaNaoEncontrada;
@@ -177,19 +192,46 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Inserir rei
+*  ****/
    PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida)
    {
-      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pPartida->pCasaRei);
+      tpCasa *pCasa;
+      
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
+      
+      TAB_ObterValor(pPartida->pTabuleiro, (void **) &pCasa);
    
-      CriarInstanciaDeRei(pPartida, &pPartida->pCasaRei->pPeca);
-   
-      return PAR_CondRetOK;
+      if (pCasa->pPeca != NULL)
+      {
+         return PAR_CondRetCasaJahTemPeca;
+      }
+
+      pPartida->pCasaRei = pCasa;
+      return CriarInstanciaDeRei(pPartida, &pPartida->pCasaRei->pPeca);
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Inserir peça
+*  ****/
    PAR_tpCondRet PAR_InserirPeca(PAR_tppPartida pPartida, char *nome, PEC_tpTimePeca time)
    {
       tpCasa *pCasa;
       PAR_tpCondRet tabCondRet;
+      
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
+
       TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
 
       tabCondRet = CriarInstanciaDePeca(pPartida, nome, time, &pCasa->pPeca);
@@ -202,9 +244,19 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Remover peça
+*  ****/
    PAR_tpCondRet PAR_RemoverPeca(PAR_tppPartida pPartida)
    {
       tpCasa *pCasa;
+      
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
       
       TAB_ObterValor(pPartida->pTabuleiro, (void **)&pCasa);
    
@@ -219,32 +271,57 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Remover rei
+*  ****/
    PAR_tpCondRet PAR_RemoverRei(PAR_tppPartida pPartida)
    {
-      PEC_DestruirPeca(&pPartida->pCasaRei->pPeca);
+      if (pPartida == NULL)
+      {
+         return PAR_CondRetPartidaNaoExiste;
+      }
+
+      if (pPartida->pCasaRei == NULL)
+      {
+         return PAR_CondRetPecaNaoEncontrada;
+      }
+      
+      PEC_DestruirRei(&pPartida->pCasaRei->pPeca);
       pPartida->pCasaRei = NULL;
    
       return PAR_CondRetOK;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Ir casa
+*  ****/
    PAR_tpCondRet PAR_IrCasa(PAR_tppPartida pPartida, char *nomeCasa)
    {
       TAB_tpCondRet condRet;
    
       if (pPartida == NULL)
       {
-         return PAR_CondRetMatrizNaoExiste;
+         return PAR_CondRetPartidaNaoExiste;
       }
       
       condRet = TAB_IrCasa(pPartida->pTabuleiro, nomeCasa);
       if (condRet != TAB_CondRetOK)
       {
-         return PAR_CondRetNaoEhNo;
+         return PAR_CondRetNaoEhCasa;
       }
    
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Ir casa rei
+*  ****/
    PAR_tpCondRet PAR_IrCasaRei(PAR_tppPartida pPartida)
    {
       PAR_IrCasa(pPartida, pPartida->pCasaRei->nome);
@@ -252,11 +329,17 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Criar instância de peça
+*  ****/
    PAR_tpCondRet CriarInstanciaDePeca(tpPartida *pPartida, char *nome,
       PEC_tpTimePeca time, PEC_tppPeca *ppPeca)
    {
       MPEC_tppModeloPeca pModelo;
       LIS_tpCondRet lisCondRet;
+      PEC_tpCondRet pecCondRet;
 
       LIS_IrInicioLista(pPartida->pModelosPecas);
       lisCondRet = LIS_ProcurarValor(pPartida->pModelosPecas, nome);
@@ -266,18 +349,38 @@ typedef struct stCasa {
       }
       LIS_ObterValor(pPartida->pModelosPecas, (void**) &pModelo);
 
-      PEC_CriarPeca(ppPeca, pModelo, time);
+      pecCondRet = PEC_CriarPeca(ppPeca, pModelo, time);
+      if (pecCondRet == PEC_CondRetFaltouMemoria)
+      {
+         return PAR_CondRetFaltouMemoria;
+      }
 
       return PAR_CondRetOK;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Criar instância de rei
+*  ****/
    PAR_tpCondRet CriarInstanciaDeRei(tpPartida *pPartida, PEC_tppPeca *ppPeca)
    {
-      PEC_CriarPeca(ppPeca, NULL, ALIADA);
+      PEC_tpCondRet condRet;
+      condRet = PEC_CriarRei(ppPeca);
+
+      if (condRet == PEC_CondRetFaltouMemoria)
+      {
+         return PAR_CondRetFaltouMemoria;
+      }
 
       return PAR_CondRetOK;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Obter peça
+*  ****/
    PAR_tpCondRet PAR_ObterPeca(PAR_tppPartida pPartida, PEC_tppPeca *ppPeca)
    {
       tpCasa *pCasa;
@@ -287,6 +390,11 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Salvar
+*  ****/
    PAR_tpCondRet PAR_Salvar(PAR_tppPartida ppPartida, char* caminho)
    {
       tpPartida *pPartida = (tpPartida *) ppPartida;
@@ -299,7 +407,9 @@ typedef struct stCasa {
       pFile = fopen(caminho,"w");
 
       if(pFile == NULL)
+      {
          return PAR_CondRetCaminhoErrado;
+      }
 
       fputs("ListaModeloPecas\n",pFile);
 
@@ -314,6 +424,11 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Carregar
+*  ****/
    PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char* caminho)
    {
       char *line;
@@ -396,6 +511,10 @@ typedef struct stCasa {
    }
 
 /*****  Código das funções encapsuladas no módulo  *****/
+
+/***************************************************************************
+*  Função: PAR Inserir casa no tabuleiro
+*  ****/
    int InserirCasaNoTabuleiro(TAB_tppTabuleiro pTabuleiro, char *nome)
    {
       tpCasa *pCasa = CriarCasa(nome);
@@ -403,6 +522,11 @@ typedef struct stCasa {
       return 1;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Criar casa
+*  ****/
    tpCasa* CriarCasa(char *nome)
    {
       tpCasa *pCasa;
@@ -413,6 +537,11 @@ typedef struct stCasa {
       return pCasa;
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Salva casas
+*  ****/
    int SalvaCasas(TAB_tppTabuleiro pTabuleiro, char *pNome)
    {
       if(pTabuleiro != NULL)
@@ -440,6 +569,11 @@ typedef struct stCasa {
       }
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Destruir casa
+*  ****/
    void DestruirCasa(void *pValor)
    {
       tpCasa *pCasa = (tpCasa*) pValor;
@@ -449,11 +583,21 @@ typedef struct stCasa {
       MEM_Free(pCasa);
    }
 
+
+
+/***************************************************************************
+*  Função: PAR Destruir modelo peça genérico
+*  ****/
    void DestruirModeloPecaGenerico(void *pValor)
    {
       MPEC_DestruirModeloPeca((MPEC_tppModeloPeca*) &pValor);
    }
    
+
+
+/***************************************************************************
+*  Função: PAR Comparar nome modelo peça
+*  ****/
    int CompararNomeModeloPeca(void *pValor1, void *pValor2)
    {
       MPEC_tppModeloPeca pModelo1 = (MPEC_tppModeloPeca) pValor1;
@@ -467,4 +611,4 @@ typedef struct stCasa {
 
 /***** FIM do código das funções encapsuladas no módulo  *****/   
 
-/********** Fim do módulo de implementação: Módulo partida **********/
+/********** Fim do módulo de implementação: Módulo Partida **********/
