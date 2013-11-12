@@ -15,8 +15,10 @@
 *     1       hg       11/nov/2013      Matriz adaptada para ser tabuleiro.
 *
 *  Descrição do módulo
-*     <descrição do módulo>
-*     TODO: (incluir assertivas estruturais)
+*     Módulo que manipula uma matriz genérica de largura e altura 8.
+*     A estrutura matricial do tabuleiro é representada atravpes de um grafo.
+*     Cada casa possui 8 arestas com destino às casas existentes nas 8 direções
+*     ao redor da casa.
 *
 ***************************************************************************/
  
@@ -33,16 +35,15 @@
 #include "direcao.h"
 
 
-/* Tipo referência para uma <estrutura-manipulada> */
+/* Tipo referência para um Tabuleiro */
 typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 
 /***********************************************************************
 *
-*  Tipo de dados: TAB <descricao-do-enum>
-*
+*  Tipo de dados: TAB Condições de retorno
 *
 *  Descrição do tipo
-*     <descricao do enum>
+*     Condições de retorno das funções exportadas.
 *
 ***********************************************************************/
    typedef enum {
@@ -61,184 +62,176 @@ typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 
    } TAB_tpCondRet;
 
-   /***********************************************************************
+/***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Criar tabuleiro
 *
 *  Descrição
-*     <descricao da função>
+*     Cria uma instância de tabuleiro.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     ppTabuleiro      - Referência para retornar o novo tabuleiro.
+*     destruirValor    - Referência para a função que será utilizada para
+*                        liberar os valores de cada casa do tabuleiro da
+*                        memória.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
+*     TAB_CondRetOK
+*     TAB_CondRetFaltaMemoria
 *
 *  Retorno por referência
-*     <descrição do retorno>
+*     ppTabuleiro - Retorno da nova instância de tabuleiro.
+*
+*  Hipóteses
+*     - ppTabuleiro não apontará para nenhuma estrutura que necessite ser
+*       tratada de forma alguma.
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     - ppTabuleiro é um ponteiro válido
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - Valem as assertivas estruturais do Tabuleiro.
+*     - ppTabuleiro possui uma instância válida de Tabuleiro.
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tppTabuleiro *ppTabuleiro, void (*destruirValor)(void *pValor));
 
 /***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Obter valor
 *
 *  Descrição
-*     <descricao da função>
+*     Obter o valor da casa corrente.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     pTabuleiro    - Tabuleiro que será usada como base.
+*     ppValor       - Referencia para retornar o valor na casa corrente.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
+*     TAB_CondRetOK
+*     TAB_CondRetTabuleiroNaoExiste
 *
 *  Retorno por referência
-*     <descrição do retorno>
+*     ppValor        - valor da casa corrente.
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     Valem as assertivas estruturais do tabuleiro.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - Tabuleiro não foi alterado.
+*     - ppValor aponta para o valor da casa corrente.
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_ObterValor(TAB_tppTabuleiro pTabuleiro, void **ppValor);
 
 /***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Alterar valor
 *
 *  Descrição
-*     <descricao da função>
+*     Substitui valor da casa corrente por um novo.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     pTabuleiro   - Tabuleiro que será usada como base.
+*     pValor       - Novo valor para a casa corrente.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
-*
-*  Retorno por referência
-*     <descrição do retorno>
+*     TAB_CondRetOK
+*     TAB_CondRetTabuleiroNaoExiste
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     - Valem as assertivas estruturais do tabuleiro.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - Valem as assertivas estruturais do tabuleiro.
+*     - Valor da casa corrente mudou para o passado por parâmetro.
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_AlterarValor(TAB_tppTabuleiro pTabuleiro, void *pValor);
 
 /***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Destruir tabuleiro
 *
 *  Descrição
-*     <descricao da função>
+*     Destroi a instância, liberando-a a memória.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     ppTabuleiro      - Referencia para o tabuleiro à ser destruido.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
+*     TAB_CondRetOK
+*     TAB_CondRetTabuleiroNaoExiste
 *
 *  Retorno por referência
-*     <descrição do retorno>
+*     ppTabuleiro  - retorna NULL
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     - ppTabuleiro é NULL ou aponta para uma Tabuleiro válida.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - A instância apontada por ppTabuleiro é liberada da memória.
+*     - ppTabuleiro aponta para NULL
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tppTabuleiro *ppTabuleiro);
 
 /***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Ir casa
 *
 *  Descrição
-*     <descricao da função>
+*     Muda corrente baseado no nome da casa.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     pTabuleiro - Tabuleiro que será usada como base.
+*     nomeCasa - Nome de uma casa no tabuleiro da partida.
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
-*
-*  Retorno por referência
-*     <descrição do retorno>
+*     TAB_CondRetOK
+*     TAB_CondRetNaoEhCasa
+*     TAB_CondRetTabuleiroNaoExiste
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     - pTabuleiro aponta para um Tabuleiro válido.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - O corrente de pTabuleiro aponta para a casa com o nome igual ao passado
+*       por parâmetro, ou permanece o mesmo, caso não exista casa com este nome.
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, char *nome);
 
 /***********************************************************************
-*
-*  Função: TAB <nome da funcao por extenso>
-*
-*  Descrição
-*     <descricao da função>
-*
-*  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
-*
-*  Condições de retorno
-*     <listar os possíveis tpCondRet>
-*
-*  Retorno por referência
-*     <descrição do retorno>
-*
-*  Assertivas de entrada
-*     <assertivas de entrada>
-*
-*  Assertivas de saida
-*     <assertivas de saida>
-*
+* TODO: APAGAR
 ***********************************************************************/
    TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(TAB_tppTabuleiro pTabuleiro, char *nome));
 
 /***********************************************************************
 *
-*  Função: TAB <nome da funcao por extenso>
+*  Função: TAB Nome da casa
 *
 *  Descrição
-*     <descricao da função>
+*     Recebe as coordenadas e retorna o nome da casa nesta coordenada.
 *
 *  Parâmetros
-*     <param 1>      - <explicação sobre parametro 1>
-*     <parametro 2>  - <explicação sobre parametro 2>
+*     x, y   - Coordenada da casa.
+*     pNome  - Referência para retornar o nome da casa
 *
 *  Condições de retorno
-*     <listar os possíveis tpCondRet>
+*     TAB_CondRetOK
+*     TAB_CondRetFaltouMemoria
 *
 *  Retorno por referência
-*     <descrição do retorno>
+*     pNome  - Nome da casa nesta coordenada.
 *
 *  Assertivas de entrada
-*     <assertivas de entrada>
+*     - x está entre zero e a largura-1.
+*     - y está entre zero e a altura-1.
+*     - pNome é um ponteiro válido.
 *
 *  Assertivas de saida
-*     <assertivas de saida>
+*     - pNome é uma string de 2 caracteres com o nome da casa.
 *
 ***********************************************************************/
    TAB_tpCondRet TAB_NomeDaCasa(int x, int y, char **pNome);

@@ -40,11 +40,11 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 
 /***********************************************************************
 *
-*  Tipo de dados: <abreviacao> <descricao-do-enum>
+*  Tipo de dados: APAR Condições de retorno
 *
 *
 *  Descrição do tipo
-*     <descricao do enum>
+*     Condições de retorno das funções exportadas.
 *
 ***********************************************************************/
 
@@ -87,6 +87,10 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
 *
 *  Retorno por referência
 *     ppAnalise - Nova instancia de Analise.
+*
+*  Hipóteses
+*     - ppAnalise não apontará para nenhuma estrutura que necessite ser
+*       tratada de forma alguma.
 *
 *  Assertivas de entrada
 *     - ppAnalise é um ponteiro válido

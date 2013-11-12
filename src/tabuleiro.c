@@ -1,15 +1,16 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              TABULEIRO.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: TAB  Tabuleiro
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              tabuleiro.c
+*  Letras identificadoras:      TAB
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Matriz adaptada para ser tabuleiro.
 *
 ***************************************************************************/
 
@@ -25,24 +26,21 @@
 #include "tabuleiro.h"
 #undef TABULEIRO_OWN
 
-/***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
-*
-*
-*  $ED Descrição do tipo
-*     A cabeça da matriz é o ponto de acesso para uma determinada matriz.
-*     Por intermédio da referência para o nó corrente e do ponteiro
-*     pai pode-se navegar a matriz sem necessitar de uma pilha.
-*
-***********************************************************************/
 
+/***********************************************************************
+*  Tipo de dados: TAB estrutura principal do tabuleiro
+***********************************************************************/
    typedef struct TAB_stTabuleiro {
          GRA_tppGrafo pGrafo;
+         /* - Valem as assertivas estruturais do grafo
+          * - Dado 2 casas c1 e c2, se c1 tem uma aresta representando a direção
+          * d apontando para c2, então c2 tem uma aresta representando a direção
+          * oposta à d apontando para c1.
+          * - Grafo nunca estará vazio.
+          */
+
          void (*destruirValor)(void *pValor);
    } tpTabuleiro;
-
-   typedef struct TAB_stTabuleiro* TAB_tppTabuleiro;
 
 
 /***** Protótipos das funções encapuladas no módulo *****/
@@ -58,16 +56,26 @@
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
+/***************************************************************************
+*  Função: TAB Criar tabuleiro
+*  ****/
    TAB_tpCondRet TAB_CriarTabuleiro(TAB_tppTabuleiro *ppTabuleiro,
       void (*destruirValor)(void *pValor))
    {
-     CriarTabuleiro(ppTabuleiro, destruirValor);
+      TAB_tpCondRet condRet;
+
+     condRet = CriarTabuleiro(ppTabuleiro, destruirValor);
+     if (condRet != TAB_CondRetOK)
+     {
+        return condRet;
+     }
+
      return InicializarTabuleiro(*ppTabuleiro);
    }
 
+
 /***************************************************************************
-*
-*  Função: MAT Destruir matriz
+*  Função: TAB Destruir tabuleiro
 *  ****/
    TAB_tpCondRet TAB_DestruirTabuleiro(TAB_tppTabuleiro *ppTabuleiro)
    {
@@ -87,6 +95,10 @@
 		return TAB_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: TAB Copiar tabuleiro
+*  ****/
    TAB_tpCondRet TAB_CopiarTabuleiro(TAB_tppTabuleiro pTabuleiro, TAB_tppTabuleiro *ppCopia)
    {
       TAB_tppTabuleiro pCopia = NULL;
@@ -112,6 +124,9 @@
    }
 
 
+/***************************************************************************
+*  Função: TAB Ir casa
+*  ****/
    TAB_tpCondRet TAB_IrCasa(TAB_tppTabuleiro pTabuleiro, char *nome)
    {
       GRA_tpCondRet condRet;
@@ -131,6 +146,9 @@
    }
 
 
+/***************************************************************************
+*  Função: TAB Ir para
+*  ****/
    TAB_tpCondRet TAB_IrPara(TAB_tppTabuleiro pTabuleiro , DIR_tpDirecao direcao)
    {
       GRA_tpCondRet condRet;
@@ -155,69 +173,34 @@
    }
 
 
+/***************************************************************************
+*  Função: TAB Alterar valor
+*  ****/
    TAB_tpCondRet TAB_AlterarValor(TAB_tppTabuleiro pTabuleiro, void *pValor)
    {
       GRA_AlterarValorCorrente(pTabuleiro->pGrafo, pValor);
       return TAB_CondRetOK;
    }
 
-   
 
-
+/***************************************************************************
+*  Função: TAB Obter valor
+*  ****/
    TAB_tpCondRet TAB_ObterValor(TAB_tppTabuleiro pTabuleiro, void **ppValor)
    {
+      if (pTabuleiro == NULL)
+      {
+         return TAB_CondRetTabuleiroNaoExiste;
+      }
       GRA_ObterValorCorrente(pTabuleiro->pGrafo, ppValor);
       return TAB_CondRetOK;
    }
 
-/*****  Código das funções encapsuladas no módulo  *****/
-
-   char* DirecaoComoString(DIR_tpDirecao direcao)
-   {
-      char *dirStr;
-      DIR_DirecaoComoString(direcao, &dirStr);
-      return dirStr;
-   }
 
 
-   
-/***********************************************************************
-*
-*  $FC Função: TAB Criar matriz
-*
-*  $ED Descrição da função
-*     Cria uma nova matriz vazia.
-*     Caso já exista uma matriz, esta será destruída.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
-   TAB_tpCondRet CriarTabuleiro(TAB_tppTabuleiro *ppTabuleiro, void (*destruirValor)(void *pValor))
-   {
-	   TAB_tppTabuleiro pTabuleiro;
-
-      if (ppTabuleiro != NULL && *ppTabuleiro != NULL)
-      {
-         TAB_DestruirTabuleiro(ppTabuleiro);
-      }
-	  
-      MEM_Alloc(sizeof(tpTabuleiro), (void **) &pTabuleiro);
-      if (pTabuleiro == NULL)
-      {
-         return TAB_CondRetFaltouMemoria ;
-      }
-
-      GRA_CriarGrafo(&pTabuleiro->pGrafo, destruirValor);
-      pTabuleiro->destruirValor = destruirValor;
-
-	  *ppTabuleiro = pTabuleiro;
-
-      return TAB_CondRetOK;
-   }
-   
-
+/***************************************************************************
+*  Função: TAB Percorrer casas
+*  ****/
    TAB_tpCondRet TAB_PercorrerCasas(TAB_tppTabuleiro pTabuleiro, int (*fazerNaCasa)(TAB_tppTabuleiro pTabuleiro, char *nome))
    {
       int x, y, continuar = 1;
@@ -242,6 +225,10 @@
       return TAB_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: TAB Nome da casa
+*  ****/
    TAB_tpCondRet TAB_NomeDaCasa(int x, int y, char **pNome)
    {
       char *nome;
@@ -253,6 +240,10 @@
       }
 
       MEM_Alloc(sizeof(char)*3, (void **) &nome);
+      if (nome == NULL)
+      {
+         return TAB_CondRetFaltouMemoria;
+      }
       nome[0] = x + 'A';
       nome[1] = y + '1';
       nome[2] = 0;
@@ -262,30 +253,12 @@
    }
 
 
-/***********************************************************************
-*
-*  $FC Função: TAB Inicializar a matriz
-*
-*  $EP Parâmetros
-*     $P pTabuleiro - matriz que será inicializada.
-*                    Este parâmetro é passado por referência.
-*     $P Linhas - quantidade de linhas que a matriz terá.
-*     $P Colunas - quantidade de colunas que a matriz terá.
-*
-*  $FV Valor retornado
-*     TAB_CondRetOK
-*     TAB_CondRetTabuleiroNaoExiste
-*     TAB_CondRetFaltouMemoria
-*
-***********************************************************************/
+/***************************************************************************
+*  Função: TAB Inicializar tabuleiro
+*  ****/
    TAB_tpCondRet InicializarTabuleiro(TAB_tppTabuleiro pTabuleiro)
    {
 	   int x, y;
-
-	   if( pTabuleiro == NULL )
-	   {
-		   return TAB_CondRetTabuleiroNaoExiste ;
-	   }
 
       for (x = 0; x < LARGURA; x++)
       {
@@ -319,6 +292,50 @@
 	   return TAB_CondRetOK ;
    }
 
+/*****  Código das funções encapsuladas no módulo  *****/
+
+/***************************************************************************
+*  Função: TAB Direção como string
+*  ****/
+   char* DirecaoComoString(DIR_tpDirecao direcao)
+   {
+      char *dirStr;
+      DIR_DirecaoComoString(direcao, &dirStr);
+      return dirStr;
+   }
+
+
+   
+/***************************************************************************
+*  Função: TAB Criar tabuleiro
+*  ****/
+   TAB_tpCondRet CriarTabuleiro(TAB_tppTabuleiro *ppTabuleiro, void (*destruirValor)(void *pValor))
+   {
+	   TAB_tppTabuleiro pTabuleiro;
+      GRA_tpCondRet graCondRet;
+	  
+      MEM_Alloc(sizeof(tpTabuleiro), (void **) &pTabuleiro);
+      if (pTabuleiro == NULL)
+      {
+         return TAB_CondRetFaltouMemoria ;
+      }
+
+      graCondRet = GRA_CriarGrafo(&pTabuleiro->pGrafo, destruirValor);
+      if (graCondRet == GRA_CondRetFaltouMemoria)
+      {
+         return TAB_CondRetFaltouMemoria;
+      }
+      pTabuleiro->destruirValor = destruirValor;
+
+	  *ppTabuleiro = pTabuleiro;
+
+      return TAB_CondRetOK;
+   }
+
+
+/***************************************************************************
+*  Função: TAB Nome da casa
+*  ****/
    char* NomeDaCasa(int x, int y)
    {
       char *nome;
@@ -330,4 +347,4 @@
 
 
 
-/********** Fim do módulo de implementação: Módulo matriz **********/
+/********** Fim do módulo de implementação: Módulo Tabuleiro **********/
