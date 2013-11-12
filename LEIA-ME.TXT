@@ -60,9 +60,9 @@ Para a criação do programa, os seguintes módulos foram utilizados:
 	* lista: usada internamente para auxílio.
 	* mem_manager: módulo responsável pelo house keeping, garantindo que, ao final, toda mémoria usada tenha sido liberada.
 	* modelo_peca: responsável por definir os modelos de peças criados pelo usuário.
-	* partida: módulo responsável por gerenciar uma partida pré avaliação de xeque-mate.
+	* partida: módulo responsável por gerenciar uma partida pré-avaliação de xeque-mate.
 	* peca: responsável por representar uma peça inserida no tabuleiro.
-	* passo: módulo com a responsábilidade de representar os passos que uma peça pode efetuar.
+	* passo: módulo com a responsabilidade de representar os passos que uma peça pode efetuar.
 	* tabuleiro: responsável por gerenciar o grafo para se obter um comportamento de tabuleiro.
 	* analise_partida: módulo com a responsábilidade de, uma partida, analisar os movimentos das peças e mapear as casas onde essas peças podem estar.
 	* principal: interface com o usuário.
@@ -73,41 +73,6 @@ Para a criação do programa, os seguintes módulos foram utilizados:
 
 = Diretórios
 
-Diretório ferramentas: Contém ferramentas de apoio a geração e acumulo de dado de estátisticas a partir dos resultados de testes dos módulos LISTA, VERTICE e GRAFO, usado pelo TestaTudo.bat.
-
-Diretório documentos: Contém relatórios dos integrantes do grupo e modelo físico dos módulos.
-
-Diretório TRAB2-1: Contém os artefatos gerados para uso do módulo LISTA.
-
-Diretório TRAB2-2: Contém os artefatos gerados para uso do módulo VERTICE.
-
-Diretório TRAB2-3: Contém os artefatos gerados para uso do módulo GRAFO
-
-Diretório batches: Contém arquivos .bat de uso do módulo.
-
-Diretório executável: Contém o executável do módulo.
-
-Diretório lib: Contém bibliotecas utilizadas pelo módulo.
-
-Diretório scripts: Contém scripts de testes do módulo.
-
-Diretório src: Contém o código fonte do módulo, separado em implementação e definição.
-
-= Arquivos
-
-Arquivo TestaTudo.bat: Executa os testes de todos os módulos e cria uma pasta chamada resultadoDosTestes contendo os arquivos de log e estatisticas (acumulado).
-
-Arquivo LimpaTudo.bat: Remove dados de log e estatisticas gerados pelo teste.
-
-Arquivo TestaLista.bat: Executa teste do módulo LISTA. Gera arquivo de log e estatisticas.
-
-Arquivo TestaVertice.bat: Executa teste do módulo VERTICE. Gera arquivo de log e estatisticas.
-
-Arquivo TestaGrafo.bat: Executa teste do módulo Grafo. Gera arquivo de log e estatisticas.
-
-== Execução de testes ==
-
-Testar todos os módulos: rodar TestaTudo.bat, contido no diretório raiz.
-Testar módulo LISTA: rodar TestaLista.bat contido em TRAB2-1\batches
-Testar módulo VERTICE: rodar TestaVertice.bat contido em TRAB2-2\batches
-Testar módulo GRAFO: rodar TestaGrafo.bat contido em TRAB2-3\batches
+Executável: contém o executável da aplicação.
+Módulos: Contem os arquivos fonte de todos os módulos usados para compor a aplicação.
+Documentos: Documentos gerados para a aplicação (Modelo físco, exemplo, relatorios);
