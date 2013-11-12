@@ -48,6 +48,8 @@ int main()
 
    while(opcao != 13)
    {
+      printf("*********************Avaliador de xeque-mate*********************\n");
+
       printf("1  - Cadastrar pecas\n");
       printf("2  - Alterar pecas\n");
       printf("3  - Inserir pecas para o jogador ALIADO\n");
@@ -141,6 +143,9 @@ int main()
 
 /********** Implementação das funções encapsuladas **********/
 
+/***************************************************************************
+*  Função:  Menu Inserir Peça
+*  ****/
 static void MenuInserirPeca(PAR_tppPartida ppPartida, const PEC_tpTimePeca time)
 {
    char *nome, *nomeCasa;
@@ -174,6 +179,10 @@ static void MenuInserirPeca(PAR_tppPartida ppPartida, const PEC_tpTimePeca time)
    return Mensagem("Peca inserida no time com sucesso!");
 }
 
+
+/***************************************************************************
+*  Função:  Menu Cadastrar Peça
+*  ****/
 static void MenuCadastrarPeca(PAR_tppPartida ppPartida)
 {
    char *nome, *passos, *tipoMov;
@@ -206,6 +215,10 @@ static void MenuCadastrarPeca(PAR_tppPartida ppPartida)
    return Mensagem("Peca cadastrada com sucesso!");
 }
 
+
+/***************************************************************************
+*  Função:  Menu Alterar Peça
+*  ****/
 static void MenuAlterarPeca(PAR_tppPartida ppPartida)
 {
    char *nomeAtual, *novoNome, *novosPassos, *movimento;
@@ -247,6 +260,9 @@ static void MenuAlterarPeca(PAR_tppPartida ppPartida)
    return Mensagem("Peca alterada com sucesso!");
 }
 
+/***************************************************************************
+*  Função:  Menu Remover Peça
+*  ****/
 static void MenuRemoverPeca(PAR_tppPartida ppPartida)
 {
    char *nomeDaCasa;
@@ -276,6 +292,9 @@ static void MenuRemoverPeca(PAR_tppPartida ppPartida)
    return Mensagem("Peca removida com sucesso!");
 }
 
+/***************************************************************************
+*  Função:  Menu Salvar Peça
+*  ****/
 static void MenuSalvarPartida(PAR_tppPartida ppPartida)
 {
    char *pNomeArquivo;
@@ -295,6 +314,9 @@ static void MenuSalvarPartida(PAR_tppPartida ppPartida)
    return Mensagem("Partida salva com sucesso!");
 }
 
+/***************************************************************************
+*  Função:  Menu Carregar Peça
+*  ****/
 static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
 {
    char *pNomeArquivo;
@@ -318,6 +340,9 @@ static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
 
 }
 
+/***************************************************************************
+*  Função:  Menu Inserir Rei
+*  ****/
 static void MenuInserirRei(PAR_tppPartida ppPartida)
 {
    char *nomeCasa;
@@ -347,6 +372,9 @@ static void MenuInserirRei(PAR_tppPartida ppPartida)
    return Mensagem("Rei inserido com sucesso!");
 }
 
+/***************************************************************************
+*  Função:  Menu Xeque-mate
+*  ****/
 static void MenuXequeMate(PAR_tppPartida ppPartida)
 {
    int resposta;
@@ -368,6 +396,9 @@ static void MenuXequeMate(PAR_tppPartida ppPartida)
    }
 }
 
+/***************************************************************************
+*  Função:  Menu Remover Rei
+*  ****/
 static void MenuRemoverRei(PAR_tppPartida ppPartida)
 {
    PAR_tpCondRet parCondRet;
@@ -382,6 +413,9 @@ static void MenuRemoverRei(PAR_tppPartida ppPartida)
    Mensagem("Rei removido com sucesso");
 }
 
+/***************************************************************************
+*  Função:  Mensagem
+*  ****/
 static void Mensagem(char *erroMsg)
 {
    printf("\n%s\n",erroMsg);
