@@ -1,30 +1,26 @@
 #if ! defined( ANALISE_PARTIDA_ )
 #define ANALISE_PARTIDA_
+
 /***************************************************************************
 *
-*  $MCD Módulo de definição: Módulo matriz
+*  Módulo de definição: APAR  Analise Partida
 *
-*  Arquivo gerado:              ANALISE_PARTIDA.H
-*  Letras identificadoras:      TAB
+*  Arquivo gerado:              analise_partida.h
+*  Letras identificadoras:      APAR
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*	Autores:
+*     - hg: Hugo Roque
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Marcação sobre as casas que as peças podem chegar
 *
-*  $ED Descrição do módulo
-*     Este módulo implementa um conjunto simples de funções para criar e
-*     explorar matrizes.
-*     A matriz possui uma cabeça que contém uma referência para a raíz da
-*     matriz e outra para um nó corrente da matriz.
-*     O modulo permite a manipulação de múltiplas matrizes, porém as funções
-*     só manipulam uma matriz de cada vez.
-*     Ao iniciar a execução do programa não existe matriz.
-*     A matriz poderá estar vazia. Neste caso a origem e o nó corrente
-*     serão nulos, embora a cabeça esteja definida.
-*     O nó corrente será nulo se e somente se a matriz estiver vazia.
+*  Descrição do módulo
+*     Permite obter uma analise detalhada sobre uma partida, em relação às casas
+*     que as peças podem chegar, iinclusive as casas que as peças podem chegar.
+*     O módulo utiliza a estrutura stPegada para marcar as casas que podem ser
+*     alcançadas por outras peças.
+*     Uma vez criada sua estrutura não pode ser alterada pelo cliente.
 *
 ***************************************************************************/
  
@@ -34,92 +30,246 @@
    #define ANALISE_PARTIDA_EXT extern
 #endif
 
-#include "lista.h"
 #include "direcao.h"
-#include "tabuleiro.h"
-#include "peca.h"
-#include "modelo_peca.h"
 #include "partida.h"
 
+/***** Declarações exportadas pelo módulo *****/
+
+/* Tipo referência para uma Analise de Partida */
 typedef struct APAR_stAnalise* APAR_tppAnalise;
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: TAB Condicoes de retorno
+*  Tipo de dados: <abreviacao> <descricao-do-enum>
 *
+*
+*  Descrição do tipo
+*     <descricao do enum>
 *
 ***********************************************************************/
 
    typedef enum {
 
-         APAR_CondRetOK = 0 ,
+         APAR_CondRetOK = 0,
                /* Executou correto */
 
-         APAR_CondRetNaoCriouOrigem = 1 ,
-               /* Não criou nó origem */
+         APAR_CondRetNaoEhCasa = 1,
+               /* Não é casa na direção ou com o nome desejado */
 
-         APAR_CondRetNaoEhNo = 2 ,
-               /* Não é nó na direção desejada */
+         APAR_CondRetAnaliseNaoExiste = 2,
+               /* Analise não existe */
 
-         APAR_CondRetMatrizNaoExiste = 3 ,
-               /* Matriz não existe */
-
-         APAR_CondRetNaoTemCorrente = 4 ,
-               /* Matriz está vazia */
-
-         APAR_CondRetFaltouMemoria = 5 ,
+         APAR_CondRetFaltouMemoria = 3
                /* Faltou memória ao alocar dados */
-         APAR_CondRetPecaNaoEncontrada = 6
 
    } APAR_tpCondRet ;
 
-   
+/******************************************/
+
+/***********************************************************************
+*
+*  Função: APAR Criar analise
+*
+*  Descrição
+*     Cria uma instância da analise.
+*
+*  Parâmetros
+*     ppAnalise - Referência que será usada para retornar a instância
+*     pPartida  - Partida que será usada como base na análise.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetNaoEhCasa
+*     APAR_CondRetFaltouMemoria
+*
+*  Retorno por referência
+*     ppAnalise - Nova instancia de Analise.
+*
+*  Assertivas de entrada
+*     - ppAnalise é um ponteiro válido
+*     - Valem as assertivas estruturais da Partida para pPartida.
+*
+*  Assertivas de saida
+*     - A estrutura apontada por pPartida não foi alterada.
+*     - ppAnalise possui uma instância válida de Analise Partida.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_CriarAnalise(APAR_tppAnalise *ppAnalise, PAR_tppPartida pPartida);
 
+
+/***********************************************************************
+*
+*  Função: APAR Alguma pegada inimiga
+*
+*  Descrição
+*     Verifica se alguma peça inimiga pode mover para
+*     a casa corrente.
+*
+*  Parâmetros
+*     pAnalise   - PartidaAnalise que será usada como base.
+*     pResposta  - Referencia usada para retornar a resposta da função.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Retorno por referência
+*     pResposta   - Será 1 caso haja alguma peça inimiga que possa se mover
+*                   para a casa corrente, e 0 caso contrário.
+*
+*  Assertivas de entrada
+*     - pAnalise aponta para uma PartidaAnalise válida.
+*     - pResposta é um ponteiro válido.
+*
+*  Assertivas de saida
+*     - A instância referenciada por pAnalise não foi alterada.
+*     - pResposta aponta para 0 ou 1.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_AlgumaPegadaInimiga(APAR_tppAnalise pAnalise, int *pResposta);
 
+
+/***********************************************************************
+*
+*  Função: APAR Rei pode mover para corrente
+*
+*  Descrição
+*     Verifica se o rei pode mover para a casa corrente.
+*
+*  Parâmetros
+*     pAnalise   - PartidaAnalise que será usada como base.
+*     pResposta  - Referencia usada para retornar a resposta da função.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Retorno por referência
+*     pResposta   - Será 1 caso o rei possa se mover
+*                   para a casa corrente, e 0 caso contrário.
+*
+*  Assertivas de entrada
+*     - pAnalise aponta para uma PartidaAnalise válida.
+*     - pResposta é um ponteiro válido.
+*
+*  Assertivas de saida
+*     - A instância referenciada por pAnalise não foi alterada.
+*     - pResposta aponta para 0 ou 1.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_ReiPodeMoverParaCorrente(APAR_tppAnalise pAnalise, int *pResposta);
 
+
+/***********************************************************************
+*
+*  Função: APAR Ir casa rei
+*
+*  Descrição
+*     Muda corrente para apontar para a casa onde se encontra o rei.
+*
+*  Parâmetros
+*     pAnalise       - PartidaAnalise que será usada como base.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Assertivas de entrada
+*     - pAnalise aponta para uma PartidaAnalise válida.
+*
+*  Assertivas de saida
+*     - O corrente de pAnalise aponta para a casa onde se encontra o rei.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_IrCasaRei(APAR_tppAnalise pAnalise);
 
 /***********************************************************************
 *
-*  $FC Função: TAB Destruir matriz
+*  Função: APAR Destruir analise
 *
-*  $ED Descrição da função
-*     Destrói o corpo e a cabeça da matriz, anulando a matriz corrente.
-*     Faz nada caso a matriz corrente não exista.
+*  Descrição da função
+*     Destroi a instancia de análise, liberando seu espaço da memória.
 *
-*  $EP Parâmetros
-*     $P ppAnalise - é o ponteiro para a matriz que será destruida.
-*                    Este parâmetro é passado por referência.
+*  Parâmetros
+*     ppAnalise - é o ponteiro para a análise que será destruida.
+*                 Este parâmetro é passado por referência.
 *
-*  $FV Valor retornado
+*  Condições de retorno
 *     APAR_CondRetOK
-*     APAR_CondRetMatrizNaoExiste
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Retorno por referência
+*     ppAnalise - retorno é NULL
+*
+*  Assertivas de entrada
+*     - ppAnalise é NULL ou aponta para uma PartidaAnalise válida.
+*
+*  Assertivas de saida
+*     - A instancia apontada por ppAnalise é liberada da memória.
+*     - ppAnalise aponta para NULL
 *
 ***********************************************************************/
    APAR_tpCondRet APAR_DestruirAnalise(APAR_tppAnalise *ppAnalise);
 
+
+/***********************************************************************
+*
+*  Função: APAR Ir casa
+*
+*  Descrição
+*     Muda corrente baseado no nome da casa.
+*
+*  Parâmetros
+*     pAnalise - PartidaAnalise que será usada como base.
+*     nomeCasa - Nome de uma casa no tabuleiro da partida.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetNaoEhCasa
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Assertivas de entrada
+*     - pAnalise aponta para uma PartidaAnalise válida.
+*
+*  Assertivas de saida
+*     - O corrente de pAnalise aponta para a casa com o nome igual ao passado
+*       por parâmetro, ou permanece o mesmo, caso não exista casa com este nome.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_IrCasa(APAR_tppAnalise pAnalise, char *nomeCasa);
-   
+
+
+/***********************************************************************
+*
+*  Função: APAR Ir Para
+*
+*  Descrição
+*     Muda corrente navegando para casa que está na direção passada por
+*     parâmetro, tendo como base o corrente atual.
+*
+*  Parâmetros
+*     pAnalise - PartidaAnalise que será usada como base.
+*     direcao  - Direção que será seguida.
+*
+*  Condições de retorno
+*     APAR_CondRetOK
+*     APAR_CondRetNaoEhCasa
+*     APAR_CondRetAnaliseNaoExiste
+*
+*  Assertivas de entrada
+*     - pAnalise aponta para uma PartidaAnalise válida.
+*
+*  Assertivas de saida
+*     - O corrente de pAnalise aponta para a casa na direção passada
+*       por parâmetro, ou permanece o mesmo caso não exista casa nesta direção.
+*
+***********************************************************************/
    APAR_tpCondRet APAR_IrPara(APAR_tppAnalise pAnalise , DIR_tpDirecao direcao);
-
-   APAR_tpCondRet APAR_CriarPeca(APAR_tppAnalise pAnalise, char *nome,
-      LIS_tppLista pPassos, MPEC_tpTipoMovimento tipoMovimento);
-   
-   APAR_tpCondRet APAR_AlterarPeca(APAR_tppAnalise pAnalise, char *nomeAtual, char* nomeNovo,
-      LIS_tppLista pNovosPassos, MPEC_tpTipoMovimento novoTipoMovimento);
-   
-   APAR_tpCondRet APAR_InserirPeca(APAR_tppAnalise pAnalise, char *nome, PEC_tpTimePeca time);
-   
-   APAR_tpCondRet APAR_RemoverPeca(APAR_tppAnalise pAnalise);
-
-
 
 #undef ANALISE_PARTIDA_EXT
 
-/********** Fim do módulo de definição: Módulo matriz **********/
+/********** Fim do módulo de definição: APAR Analise partida **********/
 
 #else
 #endif
+

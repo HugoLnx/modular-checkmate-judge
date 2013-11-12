@@ -56,8 +56,20 @@ PEC_tpCondRet PEC_DestruirPeca(PEC_tppPeca *ppPeca)
    *ppPeca = NULL;
 
    return PEC_CondRetOK;
-
 }
+
+
+PEC_tpCondRet PEC_CriarRei(PEC_tppPeca *ppPeca)
+{
+   return PEC_CriarPeca(ppPeca, NULL, ALIADA);
+}
+
+
+PEC_tpCondRet PEC_DestruirRei(PEC_tppPeca *ppPeca)
+{
+   return PEC_DestruirPeca(ppPeca);
+}
+
 
 PEC_tpCondRet PEC_AlterarModeloPeca(PEC_tppPeca ppPeca, MPEC_tppModeloPeca pNovoModelo)
 {

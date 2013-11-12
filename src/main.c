@@ -109,7 +109,7 @@ static void MenuInserirPeca(PAR_tppPartida ppPartida, const PEC_tpTimePeca time)
 
    condRet = PAR_IrCasa(ppPartida, nomeCasa);
 
-   if(condRet == PAR_CondRetNaoEhNo)
+   if(condRet !=  PAR_CondRetOK)
    {
       printf("\nErro ao inserir - Casa nao existe!\n");
       system("pause");
@@ -233,7 +233,7 @@ static void MenuRemoverPeca(PAR_tppPartida ppPartida)
 
    condRet = PAR_IrCasa(ppPartida,nomeDaCasa);
 
-   if(condRet == PAR_CondRetNaoEhNo)
+   if(condRet !=  PAR_CondRetOK)
    {
       printf("\nErro ao remover - Casa nao existe!\n");
       system("pause");
@@ -258,14 +258,14 @@ static void MenuRemoverPeca(PAR_tppPartida ppPartida)
 
 static void MenuSalvarPartida(PAR_tppPartida ppPartida)
 {
-   char *caminho;
+   char *pNomeArquivo;
    PAR_tpCondRet parCondRet;
-   MEM_Alloc(sizeof(char)*200,(void**)&caminho);
+   MEM_Alloc(sizeof(char)*200,(void**)&pNomeArquivo);
 
    printf("Nome do arquivo: (ex: save1.txt): ");
-   scanf("%s",caminho);
+   scanf("%s",pNomeArquivo);
 
-   parCondRet = PAR_Salvar(ppPartida,caminho);
+   parCondRet = PAR_Salvar(ppPartida,pNomeArquivo);
 
    if(parCondRet != PAR_CondRetOK)
    {
@@ -282,17 +282,17 @@ static void MenuSalvarPartida(PAR_tppPartida ppPartida)
 
 static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
 {
-   char *caminho;
+   char *pNomeArquivo;
    PAR_tpCondRet parCondRet;
    PAR_tppPartida **pPartuda = NULL;
-   MEM_Alloc(sizeof(char)*200,(void**)&caminho);
+   MEM_Alloc(sizeof(char)*200,(void**)&pNomeArquivo);
 
    printf("Nome do arquivo: (save1.txt): ");
-   scanf("%s",caminho);
+   scanf("%s",pNomeArquivo);
 
    PAR_DestruirPartida(ppPartida);
 
-   parCondRet = PAR_Carregar(ppPartida,caminho);
+   parCondRet = PAR_Carregar(ppPartida,pNomeArquivo);
 
    if(parCondRet != PAR_CondRetOK)
    {
