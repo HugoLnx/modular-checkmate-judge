@@ -1,24 +1,17 @@
 Data		Horas Trabalhadas	Tipo de Tarefa				Descrição
-30/set/2013	3			projetar				Começamos a projetar o modelo físico.
-
-01/out/2013	3			projetar				Finalizamos o modelo físico.
-01/out/2013	4			codificar módulo			Adaptação do módulo lista para ser genérica.
-
-02/out/2013	1.5			projetar				Finalizamos as assertivas.
-02/out/2013	1			especificar os módulos			Especificamos os módulos a serem criados.
-02/out/2013	1			especificar os funções			Especificamos as funções a serem criadas.
-02/out/2013	1			revisar código do módulo		Revisão das nossas convenções no módulo lista.
-02/out/2013	1			codificar módulo			Criação do módulo grafo, com um esboço do que será
-
-03/out/2013	1.5			codificar módulo			Criação das estruturas(grafo, vértice e aresta)
-03/out/2013	1.5			codificar módulo			Definindo assinatura das funções exportadas do gráfo.(módulo de definição)
-
-04/out/2013	4			codificar módulo			Implementação e testes das funções de criação e detruição do grafo, inserção de aresta e de vértice.
-
-05/out/2013	3			codificar módulo			Implementação e testes das funções de obter e alterar valor, e tornar origem.
-05/out/2013	3			revisar código do módulo		Utilizando mais condições de retorno nas funções que estava implementadas e usando o módulo conteúdo nos testes do grafo ao invés de strings.
-05/out/2013	2			revisar código do módulo		Revisando código do módulo conteúdo.
-
-06/out/2013	3			revisar código do módulo		Revisão completa dos testes, documentação e implementação do módulo conteúdo.
-06/out/2013	3			revisar código do módulo		Revisão completa dos testes, documentação e implementação do módulo lista.
-06/out/2013	6			revisar especificações			Revisão da documentação do grafo.c
+21/out/2013	3			projetar				Começamos a projetar o modelo físico.
+22/out/2013	3			projetar				Finalizamos o modelo físico.
+22/out/2013	1.5			projetar				Finalizamos as assertivas.
+23/out/2013	3			especificar os módulos			Especificamos os módulos a serem criados.
+22/out/2013	4			revisar código do módulo		Eliminando módulo vértice
+24/out/2013	4			codificar módulo			Matriz implementada com grafo
+29/out/2013	4			codificar módulo			Criação do tabuleiro com base na matriz
+30/out/2013	4			codificar módulo			Criação do tabuleiro com base na matriz
+02/nov/2013	10			codificar módulo			Implementação das estruturas do tabuleiro e manipulação de peças
+03/nov/2013	8			codificar módulo			Complementando o tabuleiro e o parser de string e inicio da implementação do verificador de checkmate.
+04/nov/2013	4			codificar módulo			Verificação de checkmate funcionando para os casos mais básicos.
+05/nov/2013	3			codificar módulo			Refatoração para dividir as responsabilidades do módulo Tabuleiro "Deus".
+06/nov/2013	3			codificar módulo			Refatoração para dividir as responsabilidades do módulo Tabuleiro "Deus".
+09/nov/2013	2			codificar módulo			Refatoração para dividir as responsabilidades do módulo Tabuleiro "Deus".
+10/nov/2013	13			codificar módulo			Refatoração para dividir as responsabilidades do módulo Tabuleiro "Deus".
+11/nov/2013	10			revisar especificações			Documentação dos módulos.
