@@ -36,7 +36,7 @@ int main()
       printf("7  - Remover peca\n");
       printf("8  - Exibir tabuleiro\n");
       printf("9  - Checar xeque mate\n");
-      printf("10  - Salvar jogo\n");
+      printf("10 - Salvar jogo\n");
       printf("11 - Carregar jogo\n");
       printf("12 - Resetar jogo\n");
       printf("13 - Sair\n");
@@ -86,7 +86,8 @@ int main()
          }break;
       case 8:
          {
-
+            PAR_Exibir(ppPartida);
+            system("cls");
 
          }break;
       case 9:
