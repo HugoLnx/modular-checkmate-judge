@@ -354,10 +354,10 @@ static void MenuRemoverRei(PAR_tppPartida ppPartida)
 
    if(parCondRet != PAR_CondRetOK)
    {
-      return Mensagem("Erro ao remover rei!");
+      return Mensagem("Erro ao remover rei - Não existe rei inserido no tabuleiro!");
    }
 
-   Mensagem("Erro removido com sucesso");
+   Mensagem("Rei removido com sucesso");
 }
 
 static void Mensagem(char *erroMsg)
