@@ -2,32 +2,21 @@
 #define INPUT_STRING_PARSER_
 /***************************************************************************
 *
-*  Módulo de definição: GRA  Grafo direcionado
+*  Módulo de definição: ISP  Input String Parser
 *
-*  Arquivo gerado:              grafo.c
-*  Letras identificadoras:      GRA
+*  Arquivo gerado:              input_string_parser.h
+*  Letras identificadoras:      ISP
 *
 *	Autores:
-*     - rc: Robert Corrêa
 *     - hg: Hugo Roque
 *
 *  Histórico de evolução:
-*     Versão  Autor    Data        Observações
-*     1.0     hg & rc  06/out/13   Preparação do módulo para trabalhar com grafos direcionados.
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Parseia alguns tipos básicos
 *
 *  Descrição do módulo
-*     Implementa grafos direcionados com manipulação, ou seja, é possivel criar, inserir
-*     vértices no grafo, conectá-los através de arestas direcionais além de destruir o grafo,
-*     um vértice ou uma aresta, navegar através das arestas usando o nome da aresta ou do
-*     vértice de destino como referência. É possível também marcar vértices como origem,
-*     estes vértices poderão ser acessados à qualquer momento utilizando a função de navegação
-*     para origens.
-*
-*     Podem existir n grafos em operação simultaneamente.
-*     Os grafos possuem uma cabeça encapsulando o seu estado.
-*
-*     Cada grafo armazena dados genéricos.
-*     Cada vétice do grafo possui uma referência para o valor.
+*     Módulo responsável por parsear representações de string para as instâncias
+*     das estruturas.
 *
 ***************************************************************************/
  
@@ -45,11 +34,11 @@
 
 /***********************************************************************
 *
-*  Tipo de dados: GRA Condições de retorno
+*  Tipo de dados: ISP Condições de retorno
 *
 *
 *  Descrição do tipo
-*     Condições de retorno das funções do grafo
+*     Condições de retorno das funções exportadas.
 *
 ***********************************************************************/
 
@@ -64,16 +53,73 @@ typedef enum {
    ISP_CondRetFaltouMemoria,
       /* Faltou memória ao tentar alocar algo */
  
-} ISP_tpCondRet ;
+} ISP_tpCondRet;
 
+/***********************************************************************
+*
+*  Função: ISP Ler tipo movimento
+*
+*  Descrição
+*     Recebe uma representação string do tipo de movimento e
+*     retorna o tipo correspondente.
+*
+*  Parâmetros
+*     tipoStr     - Representação string do tipo.
+*     pTipo       - Referência usada para retornar o tipo correspondente.
+*
+*  Condições de retorno
+*     ISP_CondRetOK
+*     ISP_CondRetFaltouMemoria
+*     ISP_CondRetNaoReconhecido
+*
+*  Retorno por referência
+*     pTipo - retorna o tipo de movimento correspondente à string.
+*
+*  Assertivas de entrada
+*     - pTipo é um ponteiro válido.
+*     - tipoStr é uma representação reconhecida de tipo de movimento.
+*
+*  Assertivas de saida
+*     - pTipo aponta para um tipo de movimento correspondente à string tipoStr.
+*
+***********************************************************************/
 ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, MPEC_tpTipoMovimento *pTipo);
 
+
+/***********************************************************************
+*
+*  Função: ISP Ler passos
+*
+*  Descrição
+*     Recebe uma representação string de uma lista de passos e
+*     retorna a lista correspondente.
+*
+*  Parâmetros
+*     passosStr   - Representação string da lista de passos.
+*     ppPassos    - Referência usada para retornar a lista correspondente.
+*
+*  Condições de retorno
+*     ISP_CondRetOK
+*     ISP_CondRetFaltouMemoria
+*     ISP_CondRetNaoReconhecido
+*
+*  Retorno por referência
+*     ppPassos - retorna a lista correspondente à string.
+*
+*  Assertivas de entrada
+*     - ppPassos é um ponteiro válido.
+*     - passosStr é uma representação reconhecida de lista de passos.
+*
+*  Assertivas de saida
+*     - ppPassos aponta para a lista de passos correspondente à string passosStr.
+*
+***********************************************************************/
 ISP_tpCondRet ISP_LerPassos(char *passosStr, LIS_tppLista *ppPassos);
 
 /***********************************************************************/
 #undef INPUT_STRING_PARSER_EXT
 
-/********** Fim do módulo de definição: GRA Grafo direcionado **********/
+/********** Fim do módulo de definição: Input string parser **********/
 
 #else
 #endif
