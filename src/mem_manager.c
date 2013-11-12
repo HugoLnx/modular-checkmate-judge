@@ -108,3 +108,5 @@ int CompararPonteiros(void *pointer1, void *pointer2)
 
    return -1;
 }
+
+/********** Fim do módulo de implementação: Módulo Memory Manager **********/

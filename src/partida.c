@@ -215,6 +215,11 @@ PAR_tpCondRet PAR_InserirRei(PAR_tppPartida pPartida)
       return PAR_CondRetCasaJahTemPeca;
    }
 
+   if (pPartida->pCasaRei != NULL)
+   {
+      return PAR_CondRetPecaJaExiste;
+   }
+
    pPartida->pCasaRei = pCasa;
    return CriarInstanciaDeRei(pPartida, &pPartida->pCasaRei->pPeca);
 }
