@@ -1,15 +1,16 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo matriz
 *
-*  Arquivo gerado:              PASSO.C
-*  Letras identificadoras:      MAT
+*  Módulo de definição: PAS  Passo
 *
-*  Autores: hg - Hugo Roque
-*           nf - Nino Fabrizio
+*  Arquivo gerado:              passo.c
+*  Letras identificadoras:      PAS
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor     Data     Observações
-*       1.00   hg e nf  15/09/2013 Adaptação do módulo para manipular matrizes
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Manipulação básica de passo
 *
 ***************************************************************************/
 
@@ -24,31 +25,27 @@
 
 
 /***********************************************************************
-*
-*  $TC Tipo de dados: MAT Descritor da cabeça de uma matriz
-*
-*
-*  $ED Descrição do tipo
-*     A cabeça da matriz é o ponto de acesso para uma determinada matriz.
-*     Por intermédio da referência para o nó corrente e do ponteiro
-*     pai pode-se navegar a matriz sem necessitar de uma pilha.
-*
+*  Tipo de dados: PAS Passo
 ***********************************************************************/
-
 typedef struct PAS_stPasso
 {
    DIR_tpDirecao direcao;
    int quantidade;
 } tpPasso;
 
-/***** Protótipos das funções encapuladas no módulo *****/
-
-
 /*****  Código das funções exportadas pelo módulo  *****/
+
+/***************************************************************************
+*  Função: PAS Criar passo
+*  ****/
    PAS_tpCondRet PAS_CriarPasso(PAS_tppPasso *ppPasso, DIR_tpDirecao direcao, int quantidade)
    {
       tpPasso *pPasso;
       MEM_Alloc(sizeof(tpPasso), (void**) &pPasso);
+      if (pPasso == NULL)
+      {
+         return PAS_CondRetFaltouMemoria;
+      }
       pPasso->direcao = direcao;
       pPasso->quantidade = quantidade;
 
@@ -57,11 +54,15 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: PAS Destruir passo
+*  ****/
    PAS_tpCondRet PAS_DestruirPasso(PAS_tppPasso *ppPasso)
    {
       if (ppPasso == NULL || *ppPasso == NULL)
       {
-         return PAS_CondRetMatrizNaoExiste;
+         return PAS_CondRetPassoNaoExiste;
       }
 
       MEM_Free(*ppPasso);
@@ -69,6 +70,10 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: PAS Comparar passos
+*  ****/
    PAS_tpCondRet PAS_CompararPassos(PAS_tppPasso pPassoParm1, PAS_tppPasso pPassoParm2, int *pResposta)
    {
       tpPasso *pPasso1 = (tpPasso*) pPassoParm1;
@@ -79,46 +84,10 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
-   PAS_tpCondRet PAS_Percorrer(PAS_tppPasso pPassoParm, int (*fazerNaDirecao)(DIR_tpDirecao direcao))
-   {
-      int continuar = 1;
-      int i;
-      tpPasso *pPasso = (tpPasso*) pPassoParm;
 
-      i = 0;
-      while (continuar && (pPasso->quantidade == 0 || i < pPasso->quantidade))
-      {
-         continuar = fazerNaDirecao(pPasso->direcao);
-      }
-
-      return PAS_CondRetOK;
-   }
-
-   
-   PAS_tpCondRet PAS_PercorrerPassos(LIS_tppLista pPassos, int (*fazerNaDirecao)(DIR_tpDirecao direcao))
-   {
-      PAS_tppPasso pPasso;
-      LIS_tpCondRet condRet = LIS_CondRetOK;
-      int estaVazia;
-
-      LIS_IrInicioLista(pPassos);
-      LIS_EstaVazia(pPassos, &estaVazia);
-      if (estaVazia)
-      {
-         return PAS_CondRetOK;
-      }
-
-      while (condRet == LIS_CondRetOK)
-      {
-         LIS_ObterValor(pPassos, (void**) &pPasso);
-         PAS_Percorrer(pPasso, fazerNaDirecao);
-
-         condRet = LIS_AvancarElementoCorrente(pPassos, 1);
-      }
-
-      return PAS_CondRetOK;
-   }
-
+/***************************************************************************
+*  Função: PAS Obter quantidade
+*  ****/
    PAS_tpCondRet PAS_ObterQuantidade(PAS_tppPasso pPassoParm, int *pQuantidade)
    {
       tpPasso *pPasso = (tpPasso*) pPassoParm;
@@ -126,7 +95,7 @@ typedef struct PAS_stPasso
       if (pPasso == NULL)
       {
          *pQuantidade = NULL;
-         return PAS_CondRetMatrizNaoExiste;
+         return PAS_CondRetPassoNaoExiste;
       }
    
       *pQuantidade = pPasso->quantidade;
@@ -134,6 +103,10 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: PAS É infinito
+*  ****/
    PAS_tpCondRet PAS_EhInfinito(PAS_tppPasso pPassoParm, int *pEhInfinito)
    {
       tpPasso *pPasso = (tpPasso*) pPassoParm;
@@ -141,7 +114,7 @@ typedef struct PAS_stPasso
       if (pPasso == NULL)
       {
          *pEhInfinito = 0;
-         return PAS_CondRetMatrizNaoExiste;
+         return PAS_CondRetPassoNaoExiste;
       }
    
       *pEhInfinito = pPasso->quantidade == 0;
@@ -149,6 +122,9 @@ typedef struct PAS_stPasso
    }
 
 
+/***************************************************************************
+*  Função: PAS Obter direção
+*  ****/
    PAS_tpCondRet PAS_ObterDirecao(PAS_tppPasso pPassoParm, DIR_tpDirecao *pDirecao)
    {
       tpPasso *pPasso = (tpPasso*) pPassoParm;
@@ -156,7 +132,7 @@ typedef struct PAS_stPasso
       if (pPasso == NULL)
       {
          *pDirecao == NULL;
-         return PAS_CondRetMatrizNaoExiste;
+         return PAS_CondRetPassoNaoExiste;
       }
    
       *pDirecao = pPasso->direcao;
@@ -164,6 +140,10 @@ typedef struct PAS_stPasso
       return PAS_CondRetOK;
    }
 
+
+/***************************************************************************
+*  Função: PAS Salvar
+*  ****/
    PAS_tpCondRet PAS_Salvar(LIS_tppLista ppPassos, FILE* pFile)
    {
       int numElementos;
@@ -203,4 +183,4 @@ typedef struct PAS_stPasso
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
-/********** Fim do módulo de implementação: Módulo PASSO **********/
+/********** Fim do módulo de implementação: Módulo Passo **********/
