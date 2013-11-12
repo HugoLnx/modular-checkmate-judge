@@ -3,7 +3,7 @@
 *
 *  Módulo de definição: PAR  Partida
 *
-*  Arquivo gerado:              partida.h
+*  Arquivo gerado:              partida.c
 *  Letras identificadoras:      PAR
 *
 *	Autores:

@@ -124,7 +124,7 @@
       condRet = GRA_IrParaAOrigem(pTabuleiro->pGrafo, nome);
       if (condRet != GRA_CondRetOK)
       {
-         return TAB_CondRetNaoEhNo;
+         return TAB_CondRetNaoEhCasa;
       }
 
       return TAB_CondRetOK;
@@ -148,7 +148,7 @@
      
      if (condRet != GRA_CondRetOK)
      {
-        return TAB_CondRetNaoEhNo;
+        return TAB_CondRetNaoEhCasa;
      }
 
 	  return TAB_CondRetOK ;
