@@ -14,6 +14,9 @@ static void MenuSalvarPartida(PAR_tppPartida ppPartida);
 static void MenuCarregarPartida(PAR_tppPartida* ppPartida);
 static void MenuInserirRei(PAR_tppPartida ppPartida);
 static void MenuXequeMate(PAR_tppPartida ppPartida);
+static void MenuRemoverRei(PAR_tppPartida ppPartida);
+
+static void Mensagem(char *erroMsg);
 
 int main()
 {
@@ -22,20 +25,21 @@ int main()
 
    PAR_CriarPartida(&ppPartida);
 
-   while(opcao != 12)
+   while(opcao != 13)
    {
       printf("1  - Cadastrar pecas\n");
       printf("2  - Alterar pecas\n");
       printf("3  - Inserir pecas para o jogador ALIADO\n");
       printf("4  - Inserir pecas para o jogador INIMIGO\n");
-      printf("5  - Inserir rei para jogador INIMIGO\n");
-      printf("6  - Remover peca\n");
-      printf("7  - Exibir tabuleiro\n");
-      printf("8  - Checar xeque mate\n");
-      printf("9  - Salvar jogo\n");
-      printf("10 - Carregar jogo\n");
-      printf("11 - Resetar jogo\n");
-      printf("12 - Sair\n");
+      printf("5  - Inserir rei para jogador ALIADO\n");
+      printf("6  - Remover Rei\n");
+      printf("7  - Remover peca\n");
+      printf("8  - Exibir tabuleiro\n");
+      printf("9  - Checar xeque mate\n");
+      printf("10  - Salvar jogo\n");
+      printf("11 - Carregar jogo\n");
+      printf("12 - Resetar jogo\n");
+      printf("13 - Sair\n");
 
 
       printf("\nEscolha uma opcao: ");
@@ -72,22 +76,33 @@ int main()
          }break;
       case 6:
          {
+            MenuRemoverRei(ppPartida);
+
+         }break;
+      case 7:
+         {
             MenuRemoverPeca(ppPartida);
+
          }break;
       case 8:
          {
-            MenuXequeMate(ppPartida);
+
 
          }break;
       case 9:
          {
-            MenuSalvarPartida(ppPartida);
+            MenuXequeMate(ppPartida);
+
          }break;
       case 10:
          {
-            MenuCarregarPartida(&ppPartida);
+            MenuSalvarPartida(ppPartida);
          }break;
       case 11:
+         {
+            MenuCarregarPartida(&ppPartida);
+         }break;
+      case 12:
          {
             PAR_DestruirPartida(&ppPartida);
             PAR_CriarPartida(&ppPartida);
@@ -124,26 +139,17 @@ static void MenuInserirPeca(PAR_tppPartida ppPartida, const PEC_tpTimePeca time)
 
    if(condRet !=  PAR_CondRetOK)
    {
-      printf("\nErro ao inserir - Casa nao existe!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao inserir - Casa nao existe!");
    }
 
    condRet = PAR_InserirPeca(ppPartida,nome,time);
 
    if(condRet == PAR_CondRetPecaNaoEncontrada)
    {
-      printf("\nErro ao inserir - Peca nao encontrada!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao inserir - Peca nao encontrada!");
    }
 
-   printf("\nPeca inserida no time com sucesso!\n");
-   system("pause");
-   system("cls");
-
+   return Mensagem("Peca inserida no time com sucesso!");
 }
 
 static void MenuCadastrarPeca(PAR_tppPartida ppPartida)
@@ -159,7 +165,7 @@ static void MenuCadastrarPeca(PAR_tppPartida ppPartida)
 
    printf("Nome da peca (20 caracteres): ");
    scanf("%s",nome);
-   printf("Movimentos ([n]coordenada): ");
+   printf("Movimentos ([n]coordenada_[n]coordenada): ");
    scanf("%s", passos);
    printf("Tipo de movimento(Anda | Voa): ");
    scanf("%s",tipoMov);
@@ -168,19 +174,14 @@ static void MenuCadastrarPeca(PAR_tppPartida ppPartida)
 
    if(ispCondRet != ISP_CondRetOK)
    {
-      printf("\nTipo de movimento invalido\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Tipo de movimento invalido!");
    }
 
    ISP_LerPassos(passos,&pPassos);
 
    PAR_CriarPeca(ppPartida, nome, pPassos, tipoMovimento);
 
-   printf("\nPeca cadastrada com sucesso!\n");
-   system("pause");
-   system("cls");
+   return Mensagem("Peca cadastrada com sucesso!");
 }
 
 static void MenuAlterarPeca(PAR_tppPartida ppPartida)
@@ -209,10 +210,7 @@ static void MenuAlterarPeca(PAR_tppPartida ppPartida)
 
    if(ispCondRet != ISP_CondRetOK)
    {
-      printf("\nTipo de movimento invalido\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Tipo de movimento invalido!");
    }
 
    ISP_LerPassos(novosPassos,&pPassos);
@@ -221,15 +219,10 @@ static void MenuAlterarPeca(PAR_tppPartida ppPartida)
 
    if(parCondRet != PAR_CondRetOK)
    {
-      printf("\nErro ao alterar peca!\n");
-      system("pause");
-      system("cls");
+      return Mensagem("Erro ao alterar peca!");
    }
 
-   printf("\nPeca alterada com sucesso!\n");
-   system("pause");
-   system("cls");
-
+   return Mensagem("Peca alterada com sucesso!");
 }
 
 static void MenuRemoverPeca(PAR_tppPartida ppPartida)
@@ -248,25 +241,17 @@ static void MenuRemoverPeca(PAR_tppPartida ppPartida)
 
    if(condRet !=  PAR_CondRetOK)
    {
-      printf("\nErro ao remover - Casa nao existe!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao remover - Casa nao existe!");
    }
 
    condRet = PAR_RemoverPeca(ppPartida);
 
    if(condRet == PAR_CondRetPecaNaoEncontrada)
    {
-      printf("\nErro ao remover - casa esta vazia!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao remover - casa esta vazia!");
    }
 
-   printf("\nPeca removida com sucesso!\n");
-   system("pause");
-   system("cls");
+   return Mensagem("Peca removida com sucesso!");
 }
 
 static void MenuSalvarPartida(PAR_tppPartida ppPartida)
@@ -282,15 +267,10 @@ static void MenuSalvarPartida(PAR_tppPartida ppPartida)
 
    if(parCondRet != PAR_CondRetOK)
    {
-      printf("\nErro ao salvar partida!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao salvar partida!");
    }
 
-   printf("\nPartida salva com sucesso!\n");
-   system("pause");
-   system("cls");
+   return Mensagem("Partida salva com sucesso!");
 }
 
 static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
@@ -309,15 +289,10 @@ static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
 
    if(parCondRet != PAR_CondRetOK)
    {
-      printf("\nErro ao carregar partida!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao carregar partida!");
    }
 
-   printf("\nPartida carregar com sucesso!\n");
-   system("pause");
-   system("cls");
+   return Mensagem("Partida carregar com sucesso!");
 
 }
 
@@ -327,7 +302,7 @@ static void MenuInserirRei(PAR_tppPartida ppPartida)
    PAR_tpCondRet condRet;
 
    MEM_Alloc(sizeof(char)*2,(void**)&nomeCasa);
-   
+
    printf("Nome da casa que deseja inserir o rei (2 caracteres - convenção do xadrez): ");
    scanf("%s", nomeCasa);
 
@@ -337,26 +312,17 @@ static void MenuInserirRei(PAR_tppPartida ppPartida)
 
    if(condRet !=  PAR_CondRetOK)
    {
-      printf("\nErro ao inserir - Casa nao existe!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao inserir - Casa nao existe!");
    }
 
    condRet = PAR_InserirRei(ppPartida);
 
    if(condRet != PAR_CondRetOK)
    {
-      printf("\nErro ao inserir o rei!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao inserir o rei!");
    }
 
-   printf("\nRei inserido com sucesso!\n");
-   system("pause");
-   system("cls");
-
+   return Mensagem("Rei inserido com sucesso!");
 }
 
 static void MenuXequeMate(PAR_tppPartida ppPartida)
@@ -367,24 +333,37 @@ static void MenuXequeMate(PAR_tppPartida ppPartida)
 
    if(judCondRet != JUD_CondRetOK)
    {
-      printf("\nErro ao analisar xeque mate - Rei não inserido!\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Erro ao analisar xeque mate - Rei não inserido!");
    }
 
    if(resposta == 1)
    {
-      printf("\nXeque-mate\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Xeque-mate!");
    }
    else
    {
-      printf("\nRei fora de perigo\n");
-      system("pause");
-      system("cls");
-      return;
+      return Mensagem("Rei fora de perigo!");
    }
+}
+
+static void MenuRemoverRei(PAR_tppPartida ppPartida)
+{
+   PAR_tpCondRet parCondRet;
+
+   parCondRet = PAR_RemoverRei(ppPartida);
+
+   if(parCondRet != PAR_CondRetOK)
+   {
+      return Mensagem("Erro ao remover rei!");
+   }
+
+   Mensagem("Erro removido com sucesso");
+}
+
+static void Mensagem(char *erroMsg)
+{
+   printf("\n%s\n",erroMsg);
+   system("pause");
+   system("cls");
+   return;
 }
