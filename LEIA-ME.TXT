@@ -1,79 +1,72 @@
 == Apresentação == 
 
-Este texto descreve brevemente o funcionamento e uso dos módulos LISTA genérica, VERTICE e GRAFO genérico, que utilizará o módulo LISTA e VERTICE. 
+Este texto descreve brevemente o funcionamento de uma implementação de um avaliador de xeque mate. 
 
 == Objetivo ==
 
-O objetivo dos construtos gerados é testar o funcionamento e manipulação correta de grafos genéricos dirigidos usando lista genéricas.
+O objetivo é avaliar, em um tabuleiro de 8x8 com peças de movimentos customizáveis, o acontecimento de xeque-mate.
 
-== Estrutura de diretórios ==
+== Menu do Programa ==
 
-->ferramentas
---------->compilebanner.exe.txt
---------->exbestat.exe.txt
+1  - Cadastrar pecas
+2  - Alterar pecas
+3  - Inserir pecas para o jogador ALIADO
+4  - Inserir pecas para o jogador INIMIGO
+5  - Inserir rei para jogador ALIADO
+6  - Remover Rei
+7  - Remover peca
+8  - Exibir tabuleiro
+9  - Checar xeque mate
+10 - Salvar jogo
+11 - Carregar jogo
+12 - Resetar jogo
+13 - Sair
 
+== Detalhes do menu == 
 
-->documentos
---------->RELATORIO-HUGO.TXT
---------->RELATORIO-ROBERT.TXT
---------->Modelo_fisico.pdf
+Opção 1: Cadastra peças no programa. Para a criação de peças é necessário um nome, um conjunto de movimentos e o tipo de movimento.
+Opção 2: Altera as peças já cadastradas, efetuando a busca pelo nome da peça e inserindo novos dados.
+Opção 3: Inserir no tabuleiro a peça criada no time do jogador ALIADO.
+Opção 4: Inserir no tabuleiro a peça criada no time do jogador INIMIGO.
+Opção 5: Inserir no tabuleiro a peça rei no time do jogador ALIADO.
+Opção 6: Remover do tabuleiro a peça rei do time ALIADO.
+Opção 7: Remover peça do tabuleiro, buscando pela casa onde foi inserida.
+Opção 8: Exibir o tabuleiro em formato de texto.
+Opção 9: Avaliar a existencia de xeque-mate.
+Opção 10: Salvar o jogo informando o nome do arquivo a ser salvo.
+Opção 11: Carregar o jogo informando o nome do arquivo a ser carregado.
+Opção 12: Resetar o tabuleiro, removendo todas as peças cadastradas e inseridas.
 
-->TRAB2-1
---------->batches
------------------>LimpaTudo.bat
------------------>TestaLista.bat
---------->executavel
------------------>TRAB2-1.EXE.TXT
---------->lib
------------------>ArcaboucoTeste.lib
---------->scripts
------------------>teste_lista.script
---------->src
------------------>definicao
-------------------------->lista.h
------------------>implementacao
-------------------------->lista.c
-------------------------->test_lis.c
+== Conjunto de movimentos == 
 
-->TRAB2-2
---------->batches
------------------>LimpaTudo.bat
------------------>TestaVertice.bat
---------->executavel
------------------>TRAB2-2.EXE.TXT
---------->lib
------------------>ArcaboucoTeste.lib
---------->scripts
------------------>teste_vertice.script
---------->src
------------------>definicao
-------------------------->vertice.h
------------------>implementacao
-------------------------->vertice.c
-------------------------->test_con.c
+Conjunto de movimentos possuem as seguintes definições:
+	* [n]coordenada -> onde n é um numero inteiro > que 0 e coordenada é apenas uma Coordenadas Geográficas.
+	* Ex: [2]norte -> seguir dois passos para o norte
+	* Para utilizar mais um tipo de coordenada, a seguinte convenção é adotada: [n]coordenada_[n]coordenada.
+	* Ex: [2]norte_[2]este
 
-->TRAB2-3
---------->batches
------------------>LimpaTudo.bat
------------------>TestaVertice.bat
---------->executavel
------------------>TRAB2-3.EXE.TXT
---------->lib
------------------>ArcaboucoTeste.lib
---------->scripts
------------------>teste_grafo.script
---------->src
------------------>definicao
-------------------------->grafo.h
------------------>implementacao
-------------------------->grafo.c
-------------------------->test_gra.c
+== Tipo de movimentos == 
+Existem dois tipos de movimentos:
+	* Anda: corresponde ao andar casa a casa.
+	* Voa: corresponde ao movimento estilo "cavalo" do xadrez, apenas a casa final é alcançada.
 
-->LimpaTudo.bat
+== Módulos == 
 
-->TestaTudo.bat
+Para a criação do programa, os seguintes módulos foram utilizados:
+	* input_string_parser: responsável interpretar os dados enviado pelo usuário e transformá-lo em dado útil para o programa.
+	* checkmate_judge: responsável por verificar se o rei está em xeque-mate.
+	* grafo: estrutura base para o tabuleiro.
+	* direção: responsável por adminstrar as diferentes direções que uma peça pode se mover.
+	* lista: usada internamente para auxílio.
+	* mem_manager: módulo responsável pelo house keeping, garantindo que, ao final, toda mémoria usada tenha sido liberada.
+	* modelo_peca: responsável por definir os modelos de peças criados pelo usuário.
+	* partida: módulo responsável por gerenciar uma partida pré avaliação de xeque-mate.
+	* peca: responsável por representar uma peça inserida no tabuleiro.
+	* passo: módulo com a responsábilidade de representar os passos que uma peça pode efetuar.
+	* tabuleiro: responsável por gerenciar o grafo para se obter um comportamento de tabuleiro.
+	* analise_partida: módulo com a responsábilidade de, uma partida, analisar os movimentos das peças e mapear as casas onde essas peças podem estar.
+	* principal: interface com o usuário.
 
-->LEIAME.TXT
 
 
 == Arquivos e diretórios detalhados ==

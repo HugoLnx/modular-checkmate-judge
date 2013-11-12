@@ -1,20 +1,16 @@
 Data                Horas Trabalhadas    Tipo de Tarefa                                             Descrição
-30/set/2013	        3                    projetar                                                   Começamos a projetar o modelo físico.
-01/out/2013	        3                    projetar                                                   Finalizamos o modelo físico.
-02/out/2013	        1.5                  projetar                                                   Finalizamos as assertivas.
-02/out/2013	        1                    especificar os módulos                                     Especificamos os módulos a serem criados.
-02/out/2013	        1                    especificar os funções                                     Especificamos as funções a serem criadas.
-03/out/2013	        1                    codificar módulo                                           Codificação do módulo Conteudo do vértice
-03/out/2013	        0.5                  redigir script de teste                                    Redigir script de teste para o módulo conteudo do vértice
-03/out/2013	        0.5                  revisar script de teste                                    revisar script de teste para o módulo conteudo do vértice
-03/out/2013	        1.5                  diagnosticar e corrigir os problemas encontrados           realizar os testes do módulo conteudo do vértice
-05/out/2013	        1.5                  codificar módulo                                           Implementação e testes das funções de seguir pela aresta, ir para vertice ajacente e ir para origem
-06/out/2013	        1                    revisar código do módulo                                   Refatorar codigo das funções descritas acima
-06/out/2013	        1                    revisar script de testes                                   Revisar e criar casos de testa para cada condição de retorno das funcoes seguir pela aresta, ir para vertice ajacente e ir para origem
-06/out/2013	        2                    codificar módulo                                           Implementar e  funções de destuir vértice corrente e destruir arestas adjacentes
-06/out/2013	        1                    realizar testes                                            Testes das funções de destuir vértice corrente e destruir arestas adjacentes
-06/out/2013	        1                    especificar os módulos                                     Especificar e documentar funções de navegação de destruição
-09/out/2013	        2.5                  revisar especificações                                     Revisar especificação dos módulos lista, grafo e conteudo
-13/out/2013	        2.5                  codificar módulo                                           Corrigir problema na destruição do vertice corrente. Não destruia aresta dos antecessores.
-13/out/2013	        1.5                  organizar codigo para entrega                              Criacao de arquivo .bat para criacao do .zip + organização do trabaho que será enviado ao professor.
-13/out/2013	        0.2                  organizar codigo para entrega                              Criação do arquivo LEIA-ME.txt e inclusao no arquivo .bat.
+21/out/2013	        3                    projetar                                                   Começamos a projetar o modelo físico.
+22/out/2013	        3                    projetar                                                   Finalizamos o modelo físico.
+22/out/2013	        1.5                  projetar                                                   Finalizamos as assertivas.
+23/out/2013	        3                    especificar os módulos                                     Especificamos os módulos a serem criados.
+23/out/2013	        3                    especificar os módulos                                     Especificamos os módulos a serem criados.
+09/nov/2013         2                    revisar script de teste                                    Revisçao script de teste dos módulos já criados
+09/nov/2013         3                    codificar módulo                                           Codificação do módulo principal
+09/nov/2013         3                    revisar especificações                                     revisar módulos já criados.
+10/nov/2013         4                    revisar especificações                                     revisar módulos já criados.
+10/nov/2013         3                    diagnosticar e corrigir os problemas encontrados           Correção de problemas de validação do módulo partida
+10/nov/2013         7                    codificar módulo                                           Codificação da funcionalidade de serialização dos módulos
+10/nov/2013         1.5                  codificar módulo                                           Codificação da funcionalidade de exibição do tabuleiro
+11/nov/2013         4                    revisar código do módulo                                   Revisao geral dos módulos
+11/nov/2013         4                    testar modulos                                             Bateria de testes dos módulos através do programa principal
+12/nov/2013	        2                    organizar codigo para entrega                              Criacao de arquivo .bat para criacao do .zip + organização do trabaho que será enviado ao professor.

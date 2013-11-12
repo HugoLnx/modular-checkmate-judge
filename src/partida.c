@@ -8,11 +8,12 @@
 *
 *	Autores:
 *     - hg: Hugo Roque
+      - rc: Robert Correa
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data             Observações
 *     1       hg       11/nov/2013      Manipulação das informações que compões uma partida.
-*
+*     2       rc       12/nov/2013      Serialização
 ***************************************************************************/
 
 #include <stdio.h>

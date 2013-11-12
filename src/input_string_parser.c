@@ -7,6 +7,7 @@
 *
 *	Autores:
 *     - hg: Hugo Roque
+*     - rc: Robert Correa
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data             Observações

@@ -7,10 +7,12 @@
 *
 *	Autores:
 *     - hg: Hugo Roque
+      - rs: Robert Correa
 *
 *  Histórico de evolução:
 *     Versão  Autor    Data             Observações
 *     1       hg       11/nov/2013      Manipulação básica de modelo de peça
+*     2       rc       12/nov/2013      Serialização
 *
 ***************************************************************************/
 

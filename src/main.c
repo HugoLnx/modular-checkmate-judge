@@ -1,3 +1,18 @@
+/***************************************************************************
+*
+*  Módulo de principal
+*
+*  Arquivo gerado:              main.c
+*
+*	Autores:
+*     - rc: Robert Correa
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       rc       11/nov/2013      Funções para menu.
+*
+***************************************************************************/
+
 #include<string.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -5,6 +20,8 @@
 #include"input_string_parser.h"
 #include"partida.h"
 #include "checkmate_judge.h"
+
+/***** Protótipos das funções encapuladas no módulo *****/
 
 static void MenuInserirPeca(PAR_tppPartida ppPartida, const int time);
 static void MenuCadastrarPeca(PAR_tppPartida ppPartida);
@@ -17,6 +34,10 @@ static void MenuXequeMate(PAR_tppPartida ppPartida);
 static void MenuRemoverRei(PAR_tppPartida ppPartida);
 
 static void Mensagem(char *erroMsg);
+
+/***** Protótipos das funções encapuladas no módulo *****/
+
+
 
 int main()
 {
@@ -41,12 +62,10 @@ int main()
       printf("12 - Resetar jogo\n");
       printf("13 - Sair\n");
 
-
       printf("\nEscolha uma opcao: ");
       scanf("%d",&opcao);
       system("cls");
 
-      //TODO [RCS] Criar módulo separado para cada uma das opcoes.
       switch(opcao)
       {
       case 1:
@@ -119,6 +138,8 @@ int main()
 
    return 0;
 }
+
+/********** Implementação das funções encapsuladas **********/
 
 static void MenuInserirPeca(PAR_tppPartida ppPartida, const PEC_tpTimePeca time)
 {
@@ -368,3 +389,5 @@ static void Mensagem(char *erroMsg)
    system("cls");
    return;
 }
+
+/********** Fim do módulo de implementação: Módulo principal **********/
