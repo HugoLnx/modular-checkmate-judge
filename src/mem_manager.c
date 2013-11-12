@@ -1,3 +1,19 @@
+/***************************************************************************
+*
+*  Módulo de definição: MEM  Memory Manager
+*
+*  Arquivo gerado:              mem_manager.c
+*  Letras identificadoras:      MEM
+*
+*	Autores:
+*     - hg: Hugo Roque
+*
+*  Histórico de evolução:
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Usando lista para armazenar os ponteiros para espaços alocados.
+*
+***************************************************************************/
+
 #include <malloc.h>
 #include <stdio.h>
 
@@ -9,33 +25,80 @@
 
 static LIS_tppLista pLista;
 
+/* Protótipos das funções encapsuladas no módulo */
+
 static int CompararPonteiros (void *pointer1, void *pointer2);
 
-void MEM_Alloc(int size, void ** ppResult)
+
+/* Funções exportadas pelo módulo */
+
+/***************************************************************************
+*  Função: MEM Alloc
+*  ****/
+MEM_tpCondRet MEM_Alloc(int size, void ** ppResult)
 {
+   LIS_tpCondRet lisCondRet;
+
+   if (size <= 0)
+   {
+      return MEM_CondRetTamanhoInvalido;
+   }
+
    if (pLista == NULL)
    {
-      LIS_CriarLista(&pLista, free, CompararPonteiros);
+      lisCondRet = LIS_CriarLista(&pLista, free, CompararPonteiros);
+
+      if (lisCondRet == LIS_CondRetFaltouMemoria)
+      {
+         return MEM_CondRetFaltouMemoria;
+      }
    }
    *ppResult = malloc(size);
-   LIS_InserirElementoApos(pLista, *ppResult);
+   if (ppResult == NULL)
+   {
+      return MEM_CondRetFaltouMemoria;
+   }
+
+   lisCondRet = LIS_InserirElementoApos(pLista, *ppResult);
+   if (lisCondRet == LIS_CondRetFaltouMemoria)
+   {
+      return MEM_CondRetFaltouMemoria;
+   }
+
+   return MEM_CondRetOK;
 }
 
 
-void MEM_Free(void *pointer)
+/***************************************************************************
+*  Função: MEM Free
+*  ****/
+MEM_tpCondRet MEM_Free(void *pointer)
 {
    LIS_IrInicioLista(pLista);
    if (LIS_ProcurarValor(pLista, pointer) == LIS_CondRetOK)
    {
       LIS_ExcluirElemento(pLista);
    }
+   return MEM_CondRetOK;
 }
 
-void MEM_LiberarTodaMemoriaAlocada()
+
+/***************************************************************************
+*  Função: MEM Liberar toda memória alocada
+*  ****/
+MEM_tpCondRet MEM_LiberarTodaMemoriaAlocada()
 {
    LIS_DestruirLista(pLista);
+   pLista = NULL;
+   return MEM_CondRetOK;
 }
 
+/**** Funções encapsuladas no módulo ****/
+
+
+/***************************************************************************
+*  Função: MEM Comparar ponteiros
+*  ****/
 int CompararPonteiros(void *pointer1, void *pointer2)
 {
    if (pointer1 == pointer2)

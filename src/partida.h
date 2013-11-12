@@ -487,7 +487,7 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 
 #undef PARTIDA_EXT
 
-/********** Fim do módulo de definição: PAR <nome-do-módulo> **********/
+/********** Fim do módulo de definição: PAR Partida **********/
 
 #else
 #endif
