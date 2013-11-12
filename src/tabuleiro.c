@@ -32,7 +32,12 @@
 ***********************************************************************/
    typedef struct TAB_stTabuleiro {
          GRA_tppGrafo pGrafo;
-         /* Valem as assertivas estruturais do grafo */
+         /* - Valem as assertivas estruturais do grafo
+          * - Dado 2 casas c1 e c2, se c1 tem uma aresta representando a direção
+          * d apontando para c2, então c2 tem uma aresta representando a direção
+          * oposta à d apontando para c1.
+          * - Grafo nunca estará vazio.
+          */
 
          void (*destruirValor)(void *pValor);
    } tpTabuleiro;
