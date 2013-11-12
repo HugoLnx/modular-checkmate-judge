@@ -59,8 +59,11 @@ typedef struct APAR_stAnalise* APAR_tppAnalise;
          APAR_CondRetAnaliseNaoExiste = 2,
                /* Analise não existe */
 
-         APAR_CondRetFaltouMemoria = 3
+         APAR_CondRetFaltouMemoria = 3,
                /* Faltou memória ao alocar dados */
+
+         APAR_CondRetReiNaoInserido
+               /* Nenhum rei foi inserido no tabuleiro */
 
    } APAR_tpCondRet ;
 

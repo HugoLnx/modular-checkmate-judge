@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\analise_partida.c" />
+    <ClCompile Include="..\src\checkmate_judge.c" />
     <ClCompile Include="..\src\direcao.c" />
     <ClCompile Include="..\src\grafo.c" />
     <ClCompile Include="..\src\input_string_parser.c" />
@@ -24,6 +26,8 @@
     <ClCompile Include="..\src\tabuleiro.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\analise_partida.h" />
+    <ClInclude Include="..\src\checkmate_judge.h" />
     <ClInclude Include="..\src\direcao.h" />
     <ClInclude Include="..\src\grafo.h" />
     <ClInclude Include="..\src\input_string_parser.h" />

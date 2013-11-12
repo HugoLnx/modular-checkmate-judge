@@ -226,6 +226,11 @@ typedef struct stCasa {
          }
       }
 
+      if(pAnalise->pCasaRei == NULL)
+      {
+         return APAR_CondRetReiNaoInserido;
+      }
+
       condRet = CriarPegadas(pAnalise);
       if (condRet == APAR_CondRetFaltouMemoria)
       {

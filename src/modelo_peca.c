@@ -163,12 +163,21 @@ MPEC_tpCondRet MPEC_Salvar(MPEC_tppModeloPeca pModeloPeca, FILE *pFile)
    char *linhaASerEscrita;
    tpModeloPeca *pModelo = (tpModeloPeca*) pModeloPeca;
 
-   MEM_Alloc(sizeof(char*)*200,(void**)&linhaASerEscrita);
+   if(pModeloPeca != NULL)
+   {
+      MEM_Alloc(sizeof(char*)*200,(void**)&linhaASerEscrita);
 
-   sprintf(linhaASerEscrita,"%s-%d-",pModelo->nome,pModelo->pMovimento->tipo);
-   fputs(linhaASerEscrita,pFile);
+      sprintf(linhaASerEscrita,"%s-%d-",pModelo->nome,pModelo->pMovimento->tipo);
+      fputs(linhaASerEscrita,pFile);
 
-   return (MPEC_tpCondRet )PAS_Salvar(pModelo->pMovimento->passos,pFile);
+      return (MPEC_tpCondRet )PAS_Salvar(pModelo->pMovimento->passos,pFile);
+   }
+   //rei
+
+   return MPEC_CondRetOK;
+   
+
+   
 }
 
 /********** Fim do módulo de implementação: Módulo matriz **********/

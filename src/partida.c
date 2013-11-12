@@ -425,8 +425,6 @@ typedef struct stCasa {
    }
    
 
-   
-
 /***************************************************************************
 *  Função: PAR Carregar
 *  ****/
@@ -553,6 +551,7 @@ typedef struct stCasa {
          FILE *fp;
          char *destino;
          tpCasa *pCasa;
+         int ehRei;
 
          TAB_ObterValor(pTabuleiro,(void**)&pCasa);
 
@@ -561,13 +560,16 @@ typedef struct stCasa {
             MEM_Alloc(sizeof(char)*200,(void**)&destino);
 
             fp = fopen(pCaminho,"a");
+            PEC_EhORei(pCasa->pPeca,&ehRei);
+            if(ehRei == 0)
+            {
+               sprintf(destino,"\n%s-",pCasa->nome);
+               fputs(destino,fp);
 
-            sprintf(destino,"\n%s-",pCasa->nome);
-            fputs(destino,fp);
+               PEC_SalvarPeca(pCasa->pPeca,fp);
 
-            PEC_SalvarPeca(pCasa->pPeca,fp);
-
-            fclose(fp);
+               fclose(fp);
+            }
          }
          return 1;
       }

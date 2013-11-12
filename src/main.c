@@ -4,6 +4,7 @@
 #include"mem_manager.h"
 #include"input_string_parser.h"
 #include"partida.h"
+#include "checkmate_judge.h"
 
 static void MenuInserirPeca(PAR_tppPartida ppPartida, const int time);
 static void MenuCadastrarPeca(PAR_tppPartida ppPartida);
@@ -11,6 +12,8 @@ static void MenuAlterarPeca(PAR_tppPartida ppPartida);
 static void MenuRemoverPeca(PAR_tppPartida ppPartida);
 static void MenuSalvarPartida(PAR_tppPartida ppPartida);
 static void MenuCarregarPartida(PAR_tppPartida* ppPartida);
+static void MenuInserirRei(PAR_tppPartida ppPartida);
+static void MenuXequeMate(PAR_tppPartida ppPartida);
 
 int main()
 {
@@ -62,9 +65,19 @@ int main()
             MenuInserirPeca(ppPartida,INIMIGA);
 
          }break;
+      case 5:
+         {
+            MenuInserirRei(ppPartida);
+
+         }break;
       case 6:
          {
             MenuRemoverPeca(ppPartida);
+         }break;
+      case 8:
+         {
+            MenuXequeMate(ppPartida);
+
          }break;
       case 9:
          {
@@ -306,4 +319,72 @@ static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
    system("pause");
    system("cls");
 
+}
+
+static void MenuInserirRei(PAR_tppPartida ppPartida)
+{
+   char *nomeCasa;
+   PAR_tpCondRet condRet;
+
+   MEM_Alloc(sizeof(char)*2,(void**)&nomeCasa);
+   
+   printf("Nome da casa que deseja inserir o rei (2 caracteres - convenção do xadrez): ");
+   scanf("%s", nomeCasa);
+
+   nomeCasa[0] = toupper(nomeCasa[0]);
+
+   condRet = PAR_IrCasa(ppPartida, nomeCasa);
+
+   if(condRet !=  PAR_CondRetOK)
+   {
+      printf("\nErro ao inserir - Casa nao existe!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   condRet = PAR_InserirRei(ppPartida);
+
+   if(condRet != PAR_CondRetOK)
+   {
+      printf("\nErro ao inserir o rei!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   printf("\nRei inserido com sucesso!\n");
+   system("pause");
+   system("cls");
+
+}
+
+static void MenuXequeMate(PAR_tppPartida ppPartida)
+{
+   int resposta;
+   JUD_tpCondRet judCondRet;
+   judCondRet = JUD_EhCheckmate(ppPartida,&resposta);
+
+   if(judCondRet != JUD_CondRetOK)
+   {
+      printf("\nErro ao analisar xeque mate - Rei não inserido!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   if(resposta == 1)
+   {
+      printf("\nXeque-mate\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+   else
+   {
+      printf("\nRei fora de perigo\n");
+      system("pause");
+      system("cls");
+      return;
+   }
 }

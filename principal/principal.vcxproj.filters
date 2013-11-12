@@ -48,6 +48,12 @@
     <ClCompile Include="..\src\modelo_peca.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\analise_partida.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\checkmate_judge.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mem_manager.h">
@@ -78,6 +84,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\modelo_peca.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\analise_partida.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\checkmate_judge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
