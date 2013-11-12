@@ -314,13 +314,14 @@ typedef struct stCasa {
       return PAR_CondRetOK;
    }
    
-   PAR_tpCondRet PAR_Carregar(PAR_tppPartida ppPartida, char* caminho)
+   PAR_tpCondRet PAR_Carregar(PAR_tppPartida *ppPartida, char* caminho)
    {
       char *line;
       int ehTabuleiro = -1;
+
       pCaminho = caminho;
 
-      PAR_CriarPartida(&ppPartida);
+      PAR_CriarPartida(ppPartida);
 
       pFile = fopen(pCaminho,"r");
 
@@ -368,7 +369,7 @@ typedef struct stCasa {
 
             ISP_LerPassos(passos,&pPassos);
 
-            PAR_CriarPeca(ppPartida,nomeModelo,pPassos,tipoMovimento);
+            PAR_CriarPeca(*ppPartida,nomeModelo,pPassos,tipoMovimento);
          }
          else
          {
@@ -389,10 +390,12 @@ typedef struct stCasa {
             linhaASerLida = strtok(NULL, "-");
             strcpy(nomeModelo,linhaASerLida);
 
-            PAR_IrCasa(ppPartida,nomeCasa);
-            PAR_InserirPeca(ppPartida,nomeModelo,time);
+            PAR_IrCasa(*ppPartida,nomeCasa);
+            PAR_InserirPeca(*ppPartida,nomeModelo,time);
          }
       }
+
+    
    }
 
 /*****  Código das funções encapsuladas no módulo  *****/
