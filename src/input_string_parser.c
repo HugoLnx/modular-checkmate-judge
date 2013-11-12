@@ -1,36 +1,16 @@
 /***************************************************************************
 *
-*  Módulo de implementação: GRA  Grafo direcionado
+*  Módulo de definição: ISP  Input String Parser
 *
-*  Arquivo gerado:              grafo.c
-*  Letras identificadoras:      GRA
+*  Arquivo gerado:              input_string_parser.c
+*  Letras identificadoras:      ISP
 *
 *	Autores:
-*     - rc: Robert Corrêa
 *     - hg: Hugo Roque
 *
 *  Histórico de evolução:
-*     Versão  Autor    Data        Observações
-*     1.0     hg & rc  06/out/13   Preparação do módulo para trabalhar com grafos direcionados.
-*
-*  Assertivas Estruturais
-*     Antecessor aponta de volta para o vértice como sucessor
-*        Para todo vértice pVerAnt em pVer->pAntecessores existirá uma aresta pAreSuc em pVerAnt->pSucessores tal que pAreSuc->pVertice = pVer
-*     
-*     Sucessor aponta de volta para o vértice como antecessor
-*        Para toda aresta pAreSuc em pVer->pSucessores existirá um vértice pVerAnt em pAreSuc->pVertice->pAntecessores tal que pVerAnt = pVer
-*     
-*     Se está na origem tem que estar na lista de vértices
-*        Para todo vértice pVerOri em pGrafo->pOrigens existirá um vértice pVer em pGrafo->pVertices tal que pVerOri = pVer
-*     
-*     Se tem corrente ele tem q estar na lista de vértices
-*        Se pGrafo->pCorrente != NULL => Existirá um vértice pVer em pGrafo->pVertices tal que pVer = pGrafo->pCorrente
-*     
-*     Todos os antecessores dos vértices de um grafo têm q estar na lista de vértices desse grafo  
-*        Para todo vértice pVer e pVerAnt tal que pVer pertence à pGrafo->pVertices e pVerAnt pertence à pVer->Antecessores existirá um pVer2 pertencente à pGrafo->pVertices tal que pVerAnt = pVer2
-*     
-*     Todas as arestas dos vértices de um grafo G têm que apontar para um vértice que está na lista desse grafo
-*        Para todo vértice pVer e aresta pAre tal que pVer pertence à pGrafo->pVertices e pAre pertence à pVer->pSucessores, existirá um pVer2 pertencente à pGrafo->pVertices tal que pVer2 = pAre->pVertice.
+*     Versão  Autor    Data             Observações
+*     1       hg       11/nov/2013      Parseia alguns tipos básicos
 *
 ***************************************************************************/
 
@@ -58,10 +38,13 @@
 static int CompararPassosGenerico(void *pValor1, void *pValor2);
 static void DestruirPassoGenerico(void *pValor);
 static PAS_tppPasso LerPasso(char *passoInput);
-DIR_tpDirecao LerDirecao(char *direcaoInput);
+static DIR_tpDirecao LerDirecao(char *direcaoInput);
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
+/***************************************************************************
+*  Função: ISP Ler tipo de movimento
+*  ****/
 ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, MPEC_tpTipoMovimento *pTipo)
 {
    if (strcmp(strupr(tipoStr), VOA_STR) == 0)
@@ -81,7 +64,9 @@ ISP_tpCondRet ISP_LerTipoMovimento(char *tipoStr, MPEC_tpTipoMovimento *pTipo)
 }
 
 
-//TODO [RCS] - condição de retorno para quando não conseguir criar os passos válidos.
+/***************************************************************************
+*  Função: ISP Ler passos
+*  ****/
 ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
 {
    LIS_tppLista passos;
@@ -107,6 +92,12 @@ ISP_tpCondRet ISP_LerPassos(const char *passosStr, LIS_tppLista *ppPassos)
    return ISP_CondRetOK;
 }
 
+
+/************* Código das funções encapsuladas *************/
+
+/***************************************************************************
+*  Função: ISP Ler passo
+*  ****/
 PAS_tppPasso LerPasso(char *passoInput)
 {
    PAS_tppPasso pPasso;
@@ -122,6 +113,10 @@ PAS_tppPasso LerPasso(char *passoInput)
    return pPasso;
 }
 
+
+/***************************************************************************
+*  Função: ISP Ler direção
+*  ****/
 DIR_tpDirecao LerDirecao(char *direcaoInput)
 {
    char *dirNormalizada = strlwr(direcaoInput);
@@ -165,11 +160,18 @@ DIR_tpDirecao LerDirecao(char *direcaoInput)
 }
 
 
+/***************************************************************************
+*  Função: ISP Destruir passo genérico
+*  ****/
 void DestruirPassoGenerico(void *pValor)
 {
    PAS_DestruirPasso((PAS_tppPasso*) &pValor);
 }
 
+
+/***************************************************************************
+*  Função: Comparar passos genérico
+*  ****/
 int CompararPassosGenerico(void *pValor1, void *pValor2)
 {
    int resp;
@@ -179,4 +181,4 @@ int CompararPassosGenerico(void *pValor1, void *pValor2)
    return resp;
 }
 
-/********** Fim do módulo de implementação: GRA Grafo direcionado **********/
+/********** Fim do módulo de implementação: Input String Parser **********/
