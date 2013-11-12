@@ -11,6 +11,7 @@ static void MenuAlterarPeca(PAR_tppPartida ppPartida);
 static void MenuRemoverPeca(PAR_tppPartida ppPartida);
 static void MenuSalvarPartida(PAR_tppPartida ppPartida);
 static void MenuCarregarPartida(PAR_tppPartida* ppPartida);
+static void MenuInserirRei(PAR_tppPartida* ppPartida);
 
 int main()
 {
@@ -60,6 +61,11 @@ int main()
       case 4:
          {
             MenuInserirPeca(ppPartida,INIMIGA);
+
+         }break;
+      case 5:
+         {
+            MenuInserirRei(ppPartida);
 
          }break;
       case 6:
@@ -303,6 +309,44 @@ static void MenuCarregarPartida(PAR_tppPartida *ppPartida)
    }
 
    printf("\nPartida carregar com sucesso!\n");
+   system("pause");
+   system("cls");
+
+}
+
+static void MenuInserirRei(PAR_tppPartida* ppPartida)
+{
+   char *nomeCasa;
+   PAR_tpCondRet condRet;
+
+   MEM_Alloc(sizeof(char)*2,(void**)&nomeCasa);
+   
+   printf("Nome da casa que deseja inserir o rei (2 caracteres - convenção do xadrez): ");
+   scanf("%s", nomeCasa);
+
+   nomeCasa[0] = toupper(nomeCasa[0]);
+
+   condRet = PAR_IrCasa(ppPartida, nomeCasa);
+
+   if(condRet !=  PAR_CondRetOK)
+   {
+      printf("\nErro ao inserir - Casa nao existe!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   condRet = PAR_InserirRei(ppPartida);
+
+   if(condRet != PAR_CondRetOK)
+   {
+      printf("\nErro ao inserir o rei!\n");
+      system("pause");
+      system("cls");
+      return;
+   }
+
+   printf("\nRei inserido com sucesso!\n");
    system("pause");
    system("cls");
 
