@@ -454,13 +454,36 @@ typedef struct PAR_stPartida* PAR_tppPartida;
 *
 *  Assertivas de entrada
 *     - ppPartida é um ponteiro válido.
-*     - Caminho aponta para um arquivo inexistente em um diretório existente.
+*     - pNomeArquivo aponta nome do arquivo a ser carregado.
 *
 *  Assertivas de saida
 *     - É criada uma partida de acordo com o conteúdo do arquivo texto.
 *
 ***********************************************************************/
    PAR_tpCondRet PAR_Carregar(PAR_tppPartida *ppPartida, char* pNomeArquivo);
+
+/***********************************************************************
+*
+*  Função: PAR Carregar
+*
+*  Descrição
+*     Exibe o estado atual do tabuleiro em formato de texto.
+*
+*  Parâmetros
+*     ppPartida    - partida que contém o tabuleiro.
+*
+*  Condições de retorno
+*     PAR_CondRetOK
+*
+*  Assertivas de entrada
+*     - ppPartida contém um tabuleiro criado.
+*     - 
+*
+*  Assertivas de saida
+*     - É exibido na saída padrão o estado atual do tabuleiro em formato de texto.
+*
+***********************************************************************/
+   PAR_tpCondRet PAR_Exibir(PAR_tppPartida ppPartida);
 
 #undef PARTIDA_EXT
 
