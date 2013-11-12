@@ -7,10 +7,11 @@ Data                Horas Trabalhadas    Tipo de Tarefa                         
 09/nov/2013         2                    revisar script de teste                                    Revisçao script de teste dos módulos já criados
 09/nov/2013         3                    codificar módulo                                           Codificação do módulo principal
 09/nov/2013         3                    revisar especificações                                     revisar módulos já criados.
-10/nov/2013         4                    revisar especificações                                     revisar módulos já criados.
+10/nov/2013         4                    revisar código                                             revisar módulos já criados.
 10/nov/2013         3                    diagnosticar e corrigir os problemas encontrados           Correção de problemas de validação do módulo partida
 10/nov/2013         7                    codificar módulo                                           Codificação da funcionalidade de serialização dos módulos
 10/nov/2013         1.5                  codificar módulo                                           Codificação da funcionalidade de exibição do tabuleiro
 11/nov/2013         4                    revisar código do módulo                                   Revisao geral dos módulos
-11/nov/2013         4                    testar modulos                                             Bateria de testes dos módulos através do programa principal
-12/nov/2013	        2                    organizar codigo para entrega                              Criacao de arquivo .bat para criacao do .zip + organização do trabaho que será enviado ao professor.
+12/nov/2013         4                    codificar modulos                                          Bateria de testes dos módulos através do programa principal
+12/nov/2013         1                    testar modulos                                             Bateria de testes dos módulos através do programa principal
+12/nov/2013	        3                    organizar codigo para entrega                              Criação do arquivo LEIA-ME, desenho do modelo fisico e estrutura de diretorios para entrega.
