@@ -365,8 +365,6 @@ typedef struct stCasa {
 
       LIS_DestruirLista(pCasa->pegadas);
 
-      PEC_DestruirPeca(&pCasa->pPeca);
-
       MEM_Free(pCasa);
    }
 
